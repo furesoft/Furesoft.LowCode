@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <IsPackable>True</IsPackable>
+    <Nullable>disable</Nullable>
+    <RootNamespace>NodeEditorDemo</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>NodeEditor.Base</PackageId>
+    <Description>A node editor control for Avalonia.</Description>
+    <PackageTags>node;editor;nodeeditor;graph;control;xaml;axaml;avalonia;avaloniaui</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <Import Project="..\..\build\Base.props" />
+  <Import Project="..\..\build\ReferenceAssemblies.props" />
+  <Import Project="..\..\build\Avalonia.props" />
+  <Import Project="..\..\build\Avalonia.Diagnostics.props" Condition="'$(Configuration)' == 'Debug'" />
+  <Import Project="..\..\build\Avalonia.Themes.Fluent.props" />
+  <Import Project="..\..\build\Avalonia.Xaml.Behaviors.props" />
+  <Import Project="..\..\build\Avalonia.Skia.props" />
+  <Import Project="..\..\build\Newtonsoft.Json.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NodeEditorAvalonia.Mvvm\NodeEditorAvalonia.Mvvm.csproj" />
+    <ProjectReference Include="..\..\src\NodeEditorAvalonia\NodeEditorAvalonia.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Core\NodeBuilding\DefaultNodeView.axaml.cs">
+      <DependentUpon>DefaultNodeView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Nodes\AndGateView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\EllipseView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\OrGateView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\RectangleView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\SignalView.axaml" />
+  </ItemGroup>
+
+</Project>
