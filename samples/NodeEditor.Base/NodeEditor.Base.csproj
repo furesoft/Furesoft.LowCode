@@ -54,4 +54,8 @@
     <UpToDateCheckInput Remove="Views\Nodes\SignalView.axaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0" />
+  </ItemGroup>
+
 </Project>

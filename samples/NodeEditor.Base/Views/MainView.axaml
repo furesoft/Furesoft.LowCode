@@ -87,6 +87,7 @@
         <ColumnDefinition Width="{Binding IsToolboxVisible, Converter={x:Static converters:ColumnWidthConverter.Instance}, ConverterParameter={StaticResource ToolboxWidth}}" />
         <ColumnDefinition Width="8" />
         <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="75" />
       </Grid.ColumnDefinitions>
       <DockPanel Grid.Column="0"
                  IsVisible="{Binding IsToolboxVisible}">
@@ -106,6 +107,10 @@
         </editor:Editor>
       </ThemeVariantScope>
       <GridSplitter Grid.Column="1" Background="Transparent" />
+      
+      <Grid Grid.Column="3">
+        <!-- TODO: Add DataGrid As PropertyGrid -->
+      </Grid>
     </Grid>
   </DockPanel>
 </UserControl>
