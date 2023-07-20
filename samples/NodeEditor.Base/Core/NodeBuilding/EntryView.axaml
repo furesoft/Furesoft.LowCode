@@ -2,16 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NodeEditorDemo.Core.NodeBuilding.EntryView">
-  <StackPanel Orientation="Vertical" Spacing="10">
-    <Grid>
-      <Ellipse Classes="node" />
-      <Viewbox Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Path Data="M95 50 5 95 5 5z" Fill="Blue" />
-      </Viewbox>
-    </Grid>
-    
-    <Label Content="Start" HorizontalAlignment="Center" />
-  </StackPanel>
+  <Grid>
+    <Ellipse Classes="node" />
+    <Viewbox Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Path Data="M95 50 5 95 5 5z" Fill="#1a76d3" />
+    </Viewbox>
+  </Grid>
 </UserControl>
