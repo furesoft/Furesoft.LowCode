@@ -93,39 +93,33 @@ public class NodeFactory : INodeFactory
         return node;
     }
 
-    public CustomNodeViewModel CreateNode(VisualNode visualNode, double x, double y, double width = 120,
+    public CustomNodeViewModel CreateNode(VisualNode visualNode, double x, double y, double width = 60,
         double height = 60,
         double pinSize = 15)
     {
-        var viewModel = CreateViewModel(visualNode, x, y, width, height);
         var pins = visualNode.GetType().GetProperties()
             .Where(_ => _.GetCustomAttribute<PinAttribute>() != null)
-            .Select(prop => (prop.GetCustomAttribute<PinAttribute>(), prop));
+            .Select(prop => (prop.GetCustomAttribute<PinAttribute>(), prop)).ToArray();
 
-        var inputPins = pins.Where(_ => _.prop.PropertyType == typeof(IInputPin)).ToArray();
-        var outputPins = pins.Where(_ => _.prop.PropertyType == typeof(IOutputPin)).ToArray();
+        var leftPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Left).ToArray();
+        var rightPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Right).ToArray();
+        var topPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Top).ToArray();
+        var bottomPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Bottom).ToArray();
 
-        var maxPins = Math.Max(inputPins.Length, outputPins.Length);
+        var maxPinTopBottom = Math.Max(topPins.Length, bottomPins.Length);
+        var maxPinLeftRight = Math.Max(leftPins.Length, rightPins.Length);
 
-        height = maxPins > 3 ? height + (height * 1.0 / 3) * (maxPins - 3) : height;
+        // recalculate bounds with margins to fit for pins
+        width = Math.Max(width, maxPinTopBottom * (2 + pinSize) * 1.6);
+        height = Math.Max(height, maxPinLeftRight * (2 + pinSize) * 1.6);
 
-        for (int i = 0; i < inputPins.Length; i++)
-        {
-            var pin = inputPins[i];
+        var viewModel = CreateViewModel(visualNode, x, y, width, height);
 
-            viewModel.AddPin(0, height * 1.0 / (inputPins.Length + 1) * (i + 1), pinSize, pinSize,
-                pin.Item1.Alignment != PinAlignment.None ? pin.Item1.Alignment : PinAlignment.Left,
-                pin.Item1.Name ?? pin.prop.Name);
-        }
+        AddPins(pinSize, topPins, viewModel, (i) => (CalculateSinglePin(width, topPins, i), 0));
+        AddPins(pinSize, bottomPins, viewModel, (i) => (CalculateSinglePin(width, bottomPins, i), height));
 
-        for (int i = 0; i < outputPins.Length; i++)
-        {
-            var pin = outputPins[i];
-
-            viewModel.AddPin(width, height * 1.0 / (outputPins.Length + 1) * (i + 1), pinSize, pinSize,
-                pin.Item1.Alignment != PinAlignment.None ? pin.Item1.Alignment : PinAlignment.Right,
-                pin.Item1.Name ?? pin.prop.Name);
-        }
+        AddPins(pinSize, leftPins, viewModel, (i) => (0, CalculateSinglePin(height, leftPins, i)));
+        AddPins(pinSize, rightPins, viewModel, (i) => (width, CalculateSinglePin(height, rightPins, i)));
 
         Control nodeView = new DefaultNodeView();
 
@@ -141,6 +135,24 @@ public class NodeFactory : INodeFactory
         viewModel.Name = visualNode.Label;
 
         return viewModel;
+    }
+
+    private static double CalculateSinglePin(double width, (PinAttribute, PropertyInfo prop)[] topPins, int i)
+    {
+        return width / (topPins.Length + 1) * (i + 1);
+    }
+
+    private static void AddPins(double pinSize, (PinAttribute, PropertyInfo prop)[] pins,
+        CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
+    {
+        for (int i = 0; i < pins.Length; i++)
+        {
+            var pin = pins[i];
+
+            (double baseX, double baseY) = positionMapper(i);
+
+            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Item1.Alignment, pin.Item1.Name ?? pin.prop.Name);
+        }
     }
 
     class NodeTemplate : INodeTemplate

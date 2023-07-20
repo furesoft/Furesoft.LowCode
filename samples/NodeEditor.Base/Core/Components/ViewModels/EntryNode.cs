@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using NodeEditor.Model;
 using NodeEditorDemo.Core.NodeBuilding;
 
 namespace NodeEditorDemo.Core.Components.ViewModels;
@@ -12,6 +13,6 @@ public class EntryNode : VisualNode
     {
     }
 
-    [Pin("Flow Output")]
+    [Pin("Flow Output", PinAlignment.Right)]
     public IOutputPin FlowPin { get; set; }
 }
