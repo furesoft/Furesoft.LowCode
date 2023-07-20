@@ -13,32 +13,17 @@ using INodeFactory = NodeEditor.Model.INodeFactory;
 
 namespace NodeEditorDemo.Core;
 
-public class CustomNodeViewModel : NodeViewModel
-{
-    public bool IsRemovable { get; set; } = true;
-    public bool IsMovable { get; set; } = true;
-
-    public override bool CanRemove()
-    {
-        return IsRemovable;
-    }
-
-    public override bool CanMove()
-    {
-        return IsMovable;
-    }
-}
-
 public class NodeFactory : INodeFactory
 {
-    public static CustomNodeViewModel CreateViewModel(VisualNode vm, double x, double y, double width, double height)
+    private static CustomNodeViewModel CreateViewModel(VisualNode vm, (double x, double y) position,
+        (double width, double height) size)
     {
         var node = new CustomNodeViewModel
         {
-            X = x,
-            Y = y,
-            Width = width,
-            Height = height,
+            X = position.x,
+            Y = position.y,
+            Width = size.width,
+            Height = size.height,
             Pins = new ObservableCollection<IPin>(),
             Content = vm
         };
@@ -46,14 +31,15 @@ public class NodeFactory : INodeFactory
         return node;
     }
 
-    public IDrawingNode CreateDrawing(string name)
+    public IDrawingNode CreateDrawing(string name = null)
     {
         var drawing = new DrawingNodeViewModel
         {
             X = 0,
             Y = 0,
-            Width = 900,
-            Height = 600,
+            Name = name,
+            Width = 90000,
+            Height = 60000,
             Nodes = new ObservableCollection<INode>(),
             Connectors = new ObservableCollection<IConnector>(),
             EnableMultiplePinConnections = true,
@@ -65,35 +51,23 @@ public class NodeFactory : INodeFactory
             GridCellHeight = 15.0,
         };
 
-        var entry = CreateEntry(drawing.Width / 5, drawing.Height / 3);
-        var exit = CreateExit(drawing.Width / 5 * 4, drawing.Height / 3);
-
+        var entry = CreateEntry(drawing.Width / 2, drawing.Height / 2 - 275);
         entry.Parent = drawing;
-        exit.Parent = drawing;
 
         drawing.Nodes.Add(entry);
-        drawing.Nodes.Add(exit);
 
         return drawing;
     }
 
     public INode CreateEntry(double x, double y, double width = 60, double height = 60, double pinSize = 15)
     {
-        var node = CreateNode(new EntryNode(), x, y, width, height, pinSize);
+        var node = CreateNode(new EntryNode(), (x, y), width, height, pinSize);
         node.IsRemovable = false;
 
         return node;
     }
 
-    public INode CreateExit(double x, double y, double width = 60, double height = 60, double pinSize = 15)
-    {
-        var node = CreateNode(new ExitNode(), x, y, width, height, pinSize);
-        node.IsRemovable = false;
-
-        return node;
-    }
-
-    public CustomNodeViewModel CreateNode(VisualNode visualNode, double x, double y, double width = 60,
+    private CustomNodeViewModel CreateNode(VisualNode visualNode, (double x, double y) position, double width = 60,
         double height = 60,
         double pinSize = 15)
     {
@@ -109,11 +83,9 @@ public class NodeFactory : INodeFactory
         var maxPinTopBottom = Math.Max(topPins.Length, bottomPins.Length);
         var maxPinLeftRight = Math.Max(leftPins.Length, rightPins.Length);
 
-        // recalculate bounds with margins to fit for pins
-        width = Math.Max(width, maxPinTopBottom * (2 + pinSize) * 1.6);
-        height = Math.Max(height, maxPinLeftRight * (2 + pinSize) * 1.6);
+        (width, height) = RecalculateBoundsWithMargin((width, height), pinSize, maxPinTopBottom, maxPinLeftRight);
 
-        var viewModel = CreateViewModel(visualNode, x, y, width, height);
+        var viewModel = CreateViewModel(visualNode, position, (width, height));
 
         AddPins(pinSize, topPins, viewModel, (i) => (CalculateSinglePin(width, topPins, i), 0));
         AddPins(pinSize, bottomPins, viewModel, (i) => (CalculateSinglePin(width, bottomPins, i), height));
@@ -129,7 +101,7 @@ public class NodeFactory : INodeFactory
             nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
         }
 
-        nodeView.DataContext = viewModel.Content;
+        nodeView!.DataContext = viewModel.Content;
 
         viewModel.Content = nodeView;
         viewModel.Name = visualNode.Label;
@@ -137,15 +109,26 @@ public class NodeFactory : INodeFactory
         return viewModel;
     }
 
-    private static double CalculateSinglePin(double width, (PinAttribute, PropertyInfo prop)[] topPins, int i)
+    private static (double, double) RecalculateBoundsWithMargin((double width, double height) size, double pinSize,
+        int maxPinTopBottom,
+        int maxPinLeftRight)
     {
-        return width / (topPins.Length + 1) * (i + 1);
+        size.width = Math.Max(size.width, maxPinTopBottom * (2 + pinSize) * 1.6);
+        size.height = Math.Max(size.height, maxPinLeftRight * (2 + pinSize) * 1.6);
+
+        return (size.width, size.height);
     }
 
-    private static void AddPins(double pinSize, (PinAttribute, PropertyInfo prop)[] pins,
+    private static double CalculateSinglePin(double width,
+        IReadOnlyCollection<(PinAttribute, PropertyInfo prop)> topPins, int i)
+    {
+        return width / (topPins.Count + 1) * (i + 1);
+    }
+
+    private static void AddPins(double pinSize, IReadOnlyList<(PinAttribute, PropertyInfo prop)> pins,
         CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
-        for (int i = 0; i < pins.Length; i++)
+        for (int i = 0; i < pins.Count; i++)
         {
             var pin = pins[i];
 
@@ -153,20 +136,6 @@ public class NodeFactory : INodeFactory
 
             viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Item1.Alignment, pin.Item1.Name ?? pin.prop.Name);
         }
-    }
-
-    class NodeTemplate : INodeTemplate
-    {
-        public NodeTemplate(string title, INode template, INode preview)
-        {
-            Title = title;
-            Template = template;
-            Preview = preview;
-        }
-
-        public string Title { get; set; }
-        public INode Template { get; set; }
-        public INode Preview { get; set; }
     }
 
     //ToDo: Refactor
@@ -203,12 +172,12 @@ public class NodeFactory : INodeFactory
             if (!categories.ContainsKey(category))
             {
                 categories.Add(category,
-                    new NodeCategory {Name = category, Templates = new ObservableCollection<INodeTemplate>()});
+                    new() {Name = category, Templates = new ObservableCollection<INodeTemplate>()});
             }
 
             templates.Add(new NodeTemplateViewModel
             {
-                Title = node.Label, Template = CreateNode(node, 0, 0), Preview = CreateNode(node, 0, 0)
+                Title = node.Label, Template = CreateNode(node, (0, 0)), Preview = CreateNode(node, (0, 0))
             });
         }
 

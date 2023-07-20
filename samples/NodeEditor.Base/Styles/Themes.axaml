@@ -4,7 +4,7 @@
 
     <ResourceDictionary x:Key='Default'>
       <SolidColorBrush x:Key='NodeBackgroundBrush'>White</SolidColorBrush>
-      <SolidColorBrush x:Key='NodeForegroundBrush'>Black</SolidColorBrush>
+      <SolidColorBrush x:Key='NodeForegroundBrush'>LightGray</SolidColorBrush>
       <SolidColorBrush x:Key="EditorBackground" Color="#FFF5F5F5"/>
       <SolidColorBrush x:Key="DrawingBackground" Color="White"/>
       <SolidColorBrush x:Key="SeparatorBackground" Color="#2c2c2c" />

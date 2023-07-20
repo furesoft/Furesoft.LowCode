@@ -6,13 +6,13 @@ namespace NodeEditorDemo.Core.Components.ViewModels;
 
 [DataContract(IsReference = true)]
 [IgnoreTemplate]
-[NodeView(typeof(DefaultNodeView))]
+[NodeView(typeof(EntryView))]
 public class EntryNode : VisualNode
 {
     public EntryNode() : base("Entry")
     {
     }
 
-    [Pin("Flow Output", PinAlignment.Right)]
+    [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowPin { get; set; }
 }
