@@ -44,11 +44,8 @@ public class NodeFactory : INodeFactory
             Connectors = new ObservableCollection<IConnector>(),
             EnableMultiplePinConnections = true,
             EnableSnap = true,
-            SnapX = 15.0,
-            SnapY = 15.0,
-            EnableGrid = true,
-            GridCellWidth = 15.0,
-            GridCellHeight = 15.0,
+            SnapX = 10.0,
+            SnapY = 10.0,
         };
 
         var entry = CreateEntry(drawing.Width / 2, drawing.Height / 2 - 275);
