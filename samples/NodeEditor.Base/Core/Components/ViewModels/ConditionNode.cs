@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using NodeEditor.Model;
+using NodeEditorDemo.Core.Components.Views;
 using NodeEditorDemo.Core.NodeBuilding;
 
 namespace NodeEditorDemo.Core.Components.ViewModels;

@@ -25,7 +25,8 @@
     <StyleInclude Source="avares://NodeEditor.Base/Styles/Nodes.axaml" />
     <StyleInclude Source="avares://NodeEditor.Base/Styles/Icons.axaml" />
     
-    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
     
     <Style Selector="MenuItem /template/ ContentPresenter#PART_IconPresenter">
       <Setter Property="Width" Value="20" />
