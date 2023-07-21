@@ -81,22 +81,30 @@ public class NodeFactory : INodeFactory
         var maxPinLeftRight = Math.Max(leftPins.Length, rightPins.Length);
 
         (width, height) = RecalculateBoundsWithMargin((width, height), pinSize, maxPinTopBottom, maxPinLeftRight);
-
-        var viewModel = CreateViewModel(visualNode, position, (width, height));
-
-        AddPins(pinSize, topPins, viewModel, (i) => (CalculateSinglePin(width, topPins, i), 0));
-        AddPins(pinSize, bottomPins, viewModel, (i) => (CalculateSinglePin(width, bottomPins, i), height));
-
-        AddPins(pinSize, leftPins, viewModel, (i) => (0, CalculateSinglePin(height, leftPins, i)));
-        AddPins(pinSize, rightPins, viewModel, (i) => (width, CalculateSinglePin(height, rightPins, i)));
-
         Control nodeView = new DefaultNodeView();
 
         var nodeViewAttribute = visualNode.GetType().GetCustomAttribute<NodeViewAttribute>();
         if (nodeViewAttribute != null)
         {
             nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
+
+            if (nodeView.MinHeight > height)
+            {
+                height = nodeView.MinHeight;
+            }
+
+            if (nodeView.MinWidth > width)
+            {
+                width = nodeView.MinWidth;
+            }
         }
+        var viewModel = CreateViewModel(visualNode, position, (width, height));
+
+        AddPins(pinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins, i), 0));
+        AddPins(pinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins, i), height));
+
+        AddPins(pinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins, i)));
+        AddPins(pinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins, i)));
 
         nodeView!.DataContext = viewModel.Content;
 
