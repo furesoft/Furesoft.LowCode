@@ -15,6 +15,7 @@
   <Design.DataContext>
     <vm:MainViewViewModel />
   </Design.DataContext>
+  
   <UserControl.KeyBindings>
     <KeyBinding Command="{Binding NewCommand}" 
                 Gesture="{OnPlatform macOS=CMD+N, iOS=CMD+N, Default=Ctrl+N}" />

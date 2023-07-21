@@ -40,10 +40,6 @@
       <DependentUpon>ConditionView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Core\Components\Views\TextNodeView.axaml.cs">
-      <DependentUpon>TextNodeView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
