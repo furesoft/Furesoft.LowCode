@@ -1,13 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using NodeEditor.Model;
 using NodeEditor.Mvvm;
 using NodeEditorDemo.Core.Components.ViewModels;
 
 namespace NodeEditorDemo.Core;
 
-internal static class BaseNodeFactory
+public partial class NodeFactory
 {
-    public static IDrawingNode CreateDrawing(string name = null)
+    public IDrawingNode CreateDrawing(string name = null)
     {
         var drawing = new DrawingNodeViewModel
         {
@@ -31,8 +34,8 @@ internal static class BaseNodeFactory
 
         return drawing;
     }
-    
-    public static CustomNodeViewModel CreateViewModel(VisualNode vm, (double x, double y) position,
+
+    private static CustomNodeViewModel CreateViewModel(VisualNode vm, (double x, double y) position,
         (double width, double height) size)
     {
         var node = new CustomNodeViewModel
@@ -54,5 +57,23 @@ internal static class BaseNodeFactory
         node.IsRemovable = false;
 
         return node;
+    }
+
+    private static double CalculateSinglePin(double width, int pinCount, int i)
+    {
+        return width / (pinCount + 1) * (i + 1);
+    }
+
+    private static void AddPins(double pinSize, IEnumerable<KeyValuePair<string, PinAlignment>> pins,
+        CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
+    {
+        for (int i = 0; i < pins.Count(); i++)
+        {
+            var pin = pins.Skip(i).First();
+
+            (double baseX, double baseY) = positionMapper(i);
+
+            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Value, pin.Key);
+        }
     }
 }
