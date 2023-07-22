@@ -44,7 +44,7 @@ public partial class NodeFactory : INodeFactory
         AddPins(PinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins.Length, i)));
         AddPins(PinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins.Length, i)));
 
-        nodeView!.DataContext = viewModel.Content;
+        nodeView!.DataContext = node;
 
         viewModel.Content = nodeView;
         viewModel.Name = node.Label;

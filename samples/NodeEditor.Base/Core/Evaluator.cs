@@ -18,14 +18,15 @@ public class Evaluator
         _context = new();
     }
     
-    public void Execute()
+    public async void Execute()
     {
         var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
             .First(node => node.DefiningNode.GetType() == typeof(EntryNode));
 
         entryNode.DefiningNode.Drawing = _drawing;
         entryNode.DefiningNode.Evaluator = this;
-        entryNode.DefiningNode.Execute();
+        
+        await entryNode.DefiningNode.Execute();
     }
 
     public object Evaluate(string src)

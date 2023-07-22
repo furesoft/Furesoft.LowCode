@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using NiL.JS.Core;
+using NiL.JS.Extensions;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.Components.Views;
 using NodeEditorDemo.Core.NodeBuilding;
@@ -35,9 +37,9 @@ public class ConditionNode : VisualNode
 
     public override Task Execute()
     {
-      //  bool result = (bool)Evaluator.Evaluate(Condition);
+        var value = (JSValue)Evaluator.Evaluate(Condition);
       
-        if (true)
+        if (value.As<bool>())
         {
             return ContinueWith(TruePin);
         }
