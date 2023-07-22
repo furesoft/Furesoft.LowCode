@@ -6,6 +6,11 @@
     <Setter Property="Stroke" Value="{DynamicResource NodeForegroundBrush}" />
     <Setter Property="StrokeThickness" Value="2" />
   </Style>
+  
+  <Style Selector="Path.node">
+    <Setter Property="Fill" Value="{DynamicResource NodeForegroundBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+  </Style>
 
   <Style Selector="Ellipse.node">
     <Setter Property="Fill" Value="{DynamicResource NodeBackgroundBrush}" />
