@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.NodeBuilding;
 
@@ -16,8 +17,8 @@ public class EntryNode : VisualNode
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowPin { get; set; }
 
-    public override void Evaluate()
+    public override void Execute()
     {
-        EvaluatePin(FlowPin);
+        ExecutePin(FlowPin);
     }
 }

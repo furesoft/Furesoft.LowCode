@@ -52,6 +52,8 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.0.0" />
+    <PackageReference Include="NiL.JS" Version="2.5.1661" />
   </ItemGroup>
 
 </Project>

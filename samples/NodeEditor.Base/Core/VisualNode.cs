@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using NodeEditorDemo.Core.NodeBuilding;
 using NodeEditorDemo.ViewModels;
 
@@ -25,13 +26,10 @@ public abstract class VisualNode : ViewModelBase
         set => SetProperty(ref _label, value);
     }
 
-    public abstract void Evaluate();
+    public abstract void Execute();
 
-    protected void EvaluatePin(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+    protected void ExecutePin(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        //ToDo: get connected nodes with pin
-        //ToDo: evaluate nodes
-
         var pinName = GetPinName(pinMembername);
 
         var connections =
@@ -48,7 +46,7 @@ public abstract class VisualNode : ViewModelBase
             parent.DefiningNode.Evaluator = Evaluator;
             parent.DefiningNode.Drawing = Drawing;
             
-            parent.DefiningNode.Evaluate();
+            parent.DefiningNode.Execute();
         }
     }
 

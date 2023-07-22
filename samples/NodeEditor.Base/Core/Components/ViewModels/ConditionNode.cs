@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.Components.Views;
 using NodeEditorDemo.Core.NodeBuilding;
@@ -32,15 +33,15 @@ public class ConditionNode : VisualNode
     [Pin("False", PinAlignment.Right)]
     public IOutputPin FalsePin { get; set; }
 
-    public override void Evaluate()
+    public override void Execute()
     {
         if (true)
         {
-            EvaluatePin(TruePin);
+           ExecutePin(TruePin);
         }
         else
         {
-            EvaluatePin(FalsePin);
+           ExecutePin(FalsePin);
         }
     }
 }

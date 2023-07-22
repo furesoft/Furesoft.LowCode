@@ -32,7 +32,7 @@ public partial class MainViewViewModel : ViewModelBase
     public void Evaluate()
     {
         Evaluator = new(_editor.Drawing);
-        Evaluator.Evaluate();
+        Evaluator.Execute();
     }
 
     [RelayCommand]

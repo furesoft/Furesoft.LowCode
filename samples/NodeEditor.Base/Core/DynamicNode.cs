@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using NodeEditor.Model;
 
@@ -19,7 +20,7 @@ public class DynamicNode : VisualNode
         Pins.Add(name, alignment);
     }
 
-    public override void Evaluate()
+    public override void Execute()
     {
         throw new System.NotImplementedException();
     }

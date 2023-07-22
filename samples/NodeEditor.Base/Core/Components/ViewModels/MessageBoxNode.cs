@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
-using Avalonia.Controls;
-using Avalonia.Styling;
+using System.Threading.Tasks;
+using MsBox.Avalonia;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.Components.Views;
 using NodeEditorDemo.Core.NodeBuilding;
@@ -16,7 +16,7 @@ public class MessageBoxNode : VisualNode
 
     public MessageBoxNode() : base("MessageBox")
     {
-        _message = "Hello Nodes :D";
+        _message = "42 + 3";
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -26,22 +26,18 @@ public class MessageBoxNode : VisualNode
         set => SetProperty(ref _message, value);
     }
 
-    [Pin("Flow Input", PinAlignment.Top)] 
-    public IInputPin FlowInput { get; } = null;
+    [Pin("Flow Input", PinAlignment.Top)] public IInputPin FlowInput { get; } = null;
 
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 
-    public override void Evaluate()
+    public override async void Execute()
     {
-        new Window()
-        {
-            Content = new TextBlock {Text = _message},
-            RequestedThemeVariant = ThemeVariant.Light,
-            Width = 150,
-            Height = 150
-        }.Show();
+        var box = MessageBoxManager
+            .GetMessageBoxStandard("Info", Evaluator.Evaluate(_message).ToString());
+        
+        await box.ShowWindowAsync();
 
-        EvaluatePin(FlowOutput);
+        ExecutePin(FlowOutput);
     }
 }
