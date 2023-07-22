@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using NiL.JS.Core;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.NodeBuilding;
 using NodeEditorDemo.ViewModels;
@@ -15,6 +16,7 @@ public abstract class VisualNode : ViewModelBase
 {
     private string _label;
     internal Evaluator _evaluator;
+    protected Context Context => _evaluator.Context;
 
     public VisualNode(string label)
     {
@@ -33,9 +35,7 @@ public abstract class VisualNode : ViewModelBase
     protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         var pinName = GetPinName(pinMembername);
-
         var connections = GetConnections();
-
         var pinViewModel = GetPinViewModel(pinName);
 
         var pinConnections = GetPinConnections(connections, pinViewModel);

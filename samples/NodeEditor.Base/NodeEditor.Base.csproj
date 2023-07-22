@@ -4,7 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>True</IsPackable>
     <Nullable>disable</Nullable>
-    <RootNamespace>NodeEditorDemo</RootNamespace>
+    <RootNamespace>Furesoft.LowCode</RootNamespace>
+    <AssemblyName>Furesoft.LowCode</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -32,12 +33,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Core\NodeBuilding\DefaultNodeView.axaml.cs">
+    <Compile Update="Core\Components\Views\ConditionView.axaml.cs">
+      <DependentUpon>ConditionView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Core\Components\Views\DefaultNodeView.axaml.cs">
       <DependentUpon>DefaultNodeView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Core\Components\Views\ConditionView.axaml.cs">
-      <DependentUpon>ConditionView.axaml</DependentUpon>
+    <Compile Update="Core\Components\Views\EntryView.axaml.cs">
+      <DependentUpon>EntryView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

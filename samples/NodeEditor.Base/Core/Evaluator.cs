@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NiL.JS;
+﻿using System.Linq;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 using NodeEditor.Model;
@@ -11,12 +9,12 @@ namespace NodeEditorDemo.Core;
 public class Evaluator
 {
     private readonly IDrawingNode _drawing;
-    private Context _context;
+    public Context Context;
 
     public Evaluator(IDrawingNode drawing)
     {
         _drawing = drawing;
-        _context = new();
+        Context = new();
     }
     
     public async void Execute()
@@ -32,6 +30,6 @@ public class Evaluator
 
     public T Evaluate<T>(string src)
     {
-        return _context.Eval(src).As<T>();
+        return Context.Eval(src).As<T>();
     }
 }
