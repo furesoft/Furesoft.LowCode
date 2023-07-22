@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using MsBox.Avalonia;
+using MsBox.Avalonia.Dto;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.Components.Views;
 using NodeEditorDemo.Core.NodeBuilding;
@@ -16,7 +17,7 @@ public class MessageBoxNode : VisualNode
 
     public MessageBoxNode() : base("MessageBox")
     {
-        _message = "42 + 3";
+        _message = string.Empty;
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -35,7 +36,7 @@ public class MessageBoxNode : VisualNode
     public override async Task Execute()
     {
         var box = MessageBoxManager
-            .GetMessageBoxStandard("Info", Evaluator.Evaluate(_message).ToString());
+            .GetMessageBoxStandard("Info", Evaluate<string>(_message));
         
         await box.ShowWindowAsync();
 

@@ -14,7 +14,7 @@ namespace NodeEditorDemo.Core;
 public abstract class VisualNode : ViewModelBase
 {
     private string _label;
-    public Evaluator Evaluator;
+    internal Evaluator _evaluator;
 
     public VisualNode(string label)
     {
@@ -57,7 +57,7 @@ public abstract class VisualNode : ViewModelBase
                 continue;
             }
 
-            parent.DefiningNode.Evaluator = Evaluator;
+            parent.DefiningNode._evaluator = _evaluator;
             parent.DefiningNode.Drawing = Drawing;
 
             await parent.DefiningNode.Execute();
@@ -100,5 +100,10 @@ public abstract class VisualNode : ViewModelBase
         }
 
         return attr.Name;
+    }
+
+    protected T Evaluate<T>(string src)
+    {
+        return _evaluator.Evaluate<T>(src);
     }
 }

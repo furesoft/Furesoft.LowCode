@@ -25,7 +25,7 @@ public class Evaluator
             .First(node => node.DefiningNode.GetType() == typeof(EntryNode));
 
         entryNode.DefiningNode.Drawing = _drawing;
-        entryNode.DefiningNode.Evaluator = this;
+        entryNode.DefiningNode._evaluator = this;
         
         await entryNode.DefiningNode.Execute();
     }
