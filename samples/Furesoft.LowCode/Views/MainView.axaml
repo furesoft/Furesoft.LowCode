@@ -120,9 +120,13 @@
       <GridSplitter Grid.Column="1" Background="Transparent" />
 
       <Grid Grid.Column="3">
-        <pg:PropertyGrid AllowFilter="False" AllowQuickFilter="False" AllowToggleView="False" Margin="4"
-                         ShowStyle="Alphabetic" ShowTitle="False"
-                         SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+        <StackPanel Margin="4">
+          <Label Content="{Binding SelectedNode.Description, Mode=TwoWay}" />
+
+          <pg:PropertyGrid AllowFilter="False" AllowQuickFilter="False" AllowToggleView="False"
+                           ShowStyle="Alphabetic" ShowTitle="False"
+                           SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+        </StackPanel>
       </Grid>
     </Grid>
   </DockPanel>

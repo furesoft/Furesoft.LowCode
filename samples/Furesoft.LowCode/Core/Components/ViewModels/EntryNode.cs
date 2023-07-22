@@ -10,6 +10,7 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 [DataContract(IsReference = true)]
 [IgnoreTemplate]
 [NodeView(typeof(EntryView))]
+[Description("The starting node of the graph")]
 public class EntryNode : VisualNode
 {
     public EntryNode() : base("Entry")

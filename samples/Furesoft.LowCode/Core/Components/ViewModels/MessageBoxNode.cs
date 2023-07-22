@@ -11,6 +11,7 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 [DataContract(IsReference = true)]
 [NodeCategory("Value")]
 [NodeView(typeof(MessageBoxView))]
+[Description("Shows a message in a new window")]
 public class MessageBoxNode : VisualNode
 {
     private string _message;
@@ -21,6 +22,7 @@ public class MessageBoxNode : VisualNode
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Description("The message to display")]
     public string Message
     {
         get => _message;

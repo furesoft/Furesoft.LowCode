@@ -10,6 +10,7 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 [DataContract(IsReference = true)]
 [NodeCategory("Value")]
 [NodeView(typeof(ConditionView))]
+[Description("Change control flow based on condition")]
 public class ConditionNode : VisualNode
 {
     private string _condition;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -50,6 +51,13 @@ public partial class NodeFactory : INodeFactory
         viewModel.Content = nodeView;
         viewModel.Name = node.Label;
         viewModel.DefiningNode = node;
+
+        var descriptionAttribute = node.GetType().GetCustomAttribute<DescriptionAttribute>();
+
+        if (descriptionAttribute != null)
+        {
+            node.Description = descriptionAttribute.Description;
+        }
 
         return viewModel;
     }

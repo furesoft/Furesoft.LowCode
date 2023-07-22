@@ -9,9 +9,10 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 
 [DataContract(IsReference = true)]
 [NodeView(typeof(WaitView))]
+[Description("Wait for the specified time")]
 public class WaitNode : VisualNode
 {
-    private int _milliseconds;
+    private int _waitTime;
 
     public WaitNode() : base("Wait")
     {
@@ -25,15 +26,16 @@ public class WaitNode : VisualNode
     [Pin("Flow Input", PinAlignment.Top)]
     public IOutputPin FlowInputPin { get; set; }
 
-    public int Milliseconds
+    [Description("The time to wait in milliseconds")]
+    public int WaitTime
     {
-        get => _milliseconds;
-        set => SetProperty(ref _milliseconds, value);
+        get => _waitTime;
+        set => SetProperty(ref _waitTime, value);
     }
 
     public override async Task Execute()
     {
-        await Task.Delay(_milliseconds);
+        await Task.Delay(_waitTime);
         
         await ContinueWith(FlowOutputPin);
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,7 @@ namespace Furesoft.LowCode.Core;
 public abstract class VisualNode : ViewModelBase
 {
     private string _label;
+    private string _description;
     internal Evaluator _evaluator;
     protected Context Context => _evaluator.Context;
 
@@ -24,10 +26,19 @@ public abstract class VisualNode : ViewModelBase
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Browsable(false)]
     public string Label
     {
         get => _label;
         set => SetProperty(ref _label, value);
+    }
+    
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Browsable(false)]
+    public string Description
+    {
+        get => _description;
+        set => SetProperty(ref _description, value);
     }
 
     public abstract Task Execute();
