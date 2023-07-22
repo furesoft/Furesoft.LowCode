@@ -35,8 +35,13 @@ public class ConditionNode : VisualNode
 
     public override Task Execute()
     {
-        bool result = (bool)Evaluator.Evaluate(Condition);
+      //  bool result = (bool)Evaluator.Evaluate(Condition);
+      
+        if (true)
+        {
+            return ExecutePin(TruePin);
+        }
 
-        return ExecutePin(result ? TruePin : FalsePin);
+        return ExecutePin(FalsePin);
     }
 }
