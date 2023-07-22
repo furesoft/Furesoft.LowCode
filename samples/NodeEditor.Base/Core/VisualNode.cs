@@ -10,7 +10,7 @@ namespace NodeEditorDemo.Core;
 [DataContract(IsReference = true)]
 public abstract class VisualNode : ViewModelBase
 {
-    private string? _label;
+    private string _label;
     public Evaluator Evaluator;
 
     public VisualNode(string label)
@@ -19,7 +19,7 @@ public abstract class VisualNode : ViewModelBase
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string? Label
+    public string Label
     {
         get => _label;
         set => SetProperty(ref _label, value);

@@ -4,5 +4,5 @@ namespace NodeEditorDemo.ViewModels.Nodes;
 
 public partial class RectangleViewModel : ViewModelBase
 {
-    [ObservableProperty] private object? _label;
+    [ObservableProperty] private object _label;
 }

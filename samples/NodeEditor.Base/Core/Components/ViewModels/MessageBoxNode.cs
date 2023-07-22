@@ -12,7 +12,7 @@ namespace NodeEditorDemo.Core.Components.ViewModels;
 [NodeView(typeof(MessageBoxView))]
 public class MessageBoxNode : VisualNode
 {
-    private string? _message;
+    private string _message;
 
     public MessageBoxNode() : base("MessageBox")
     {
@@ -20,16 +20,17 @@ public class MessageBoxNode : VisualNode
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string? Message
+    public string Message
     {
         get => _message;
         set => SetProperty(ref _message, value);
     }
 
-    [Pin("Flow Input", PinAlignment.Top)] public IInputPin FlowInput { get; set; }
+    [Pin("Flow Input", PinAlignment.Top)] 
+    public IInputPin FlowInput { get; } = null;
 
     [Pin("Flow Output", PinAlignment.Bottom)]
-    public IOutputPin FlowOutput { get; set; }
+    public IOutputPin FlowOutput { get; } = null;
 
     public override void Evaluate()
     {

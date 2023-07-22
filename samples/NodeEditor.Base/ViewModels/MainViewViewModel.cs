@@ -18,7 +18,7 @@ namespace NodeEditorDemo.ViewModels;
 
 public partial class MainViewViewModel : ViewModelBase
 {
-    [ObservableProperty] private EditorViewModel? _editor;
+    [ObservableProperty] private EditorViewModel _editor;
     [ObservableProperty] private bool _isToolboxVisible;
 
     public Evaluator Evaluator { get; set; }
@@ -128,7 +128,7 @@ public partial class MainViewViewModel : ViewModelBase
                 await using var stream = await file.OpenReadAsync();
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
-                var drawing = Editor.Serializer.Deserialize<DrawingNodeViewModel?>(json);
+                var drawing = Editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
                 if (drawing is { })
                 {
                     Editor.Drawing = drawing;

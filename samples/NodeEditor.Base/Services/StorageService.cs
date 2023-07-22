@@ -56,7 +56,7 @@ internal static class StorageService
         MimeTypes = new[] { "application/oxps", "application/vnd.ms-xpsdocument" }
     };
 
-    public static IStorageProvider? GetStorageProvider()
+    public static IStorageProvider GetStorageProvider()
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
         {

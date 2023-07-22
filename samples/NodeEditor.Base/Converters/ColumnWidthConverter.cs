@@ -10,7 +10,7 @@ public class ColumnWidthConverter : IValueConverter
 {
     public static ColumnWidthConverter Instance = new ();
     
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool flag && parameter is double width)
         {
@@ -27,7 +27,7 @@ public class ColumnWidthConverter : IValueConverter
         return AvaloniaProperty.UnsetValue;
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

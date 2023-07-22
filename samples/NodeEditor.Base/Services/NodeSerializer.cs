@@ -55,12 +55,12 @@ internal class NodeSerializer : INodeSerializer
         return JsonConvert.SerializeObject(value, _settings);
     }
 
-    public T? Deserialize<T>(string text)
+    public T Deserialize<T>(string text)
     {
         return JsonConvert.DeserializeObject<T>(text, _settings);
     }
 
-    public T? Load<T>(string path)
+    public T Load<T>(string path)
     {
         using var stream = System.IO.File.OpenRead(path);
         using var streamReader = new System.IO.StreamReader(stream, Encoding.UTF8);

@@ -10,14 +10,14 @@ namespace NodeEditorDemo.Core.Components.ViewModels;
 [NodeView(typeof(ConditionView))]
 public class ConditionNode : VisualNode
 {
-    private string? _condition;
+    private string _condition;
 
     public ConditionNode() : base("Condition")
     {
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string? Condition
+    public string Condition
     {
         get => _condition;
         set => SetProperty(ref _condition, value);

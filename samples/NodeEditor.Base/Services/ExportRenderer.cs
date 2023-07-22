@@ -18,11 +18,11 @@ internal static class ExportRenderer
         var platformDrawingContextType = typeof(DrawingContext).Assembly.GetType("Avalonia.Media.PlatformDrawingContext");
         if (platformDrawingContextType is { })
         {
-            var drawingContext = (DrawingContext?)Activator.CreateInstance(
+            var drawingContext = (DrawingContext)Activator.CreateInstance(
                 platformDrawingContextType,
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, 
                 null,
-                new object?[] { drawingContextImpl, true }, 
+                new object[] { drawingContextImpl, true }, 
                 null);
             if (drawingContext is { })
             {

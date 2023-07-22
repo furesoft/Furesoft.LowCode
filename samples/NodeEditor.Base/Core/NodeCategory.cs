@@ -6,10 +6,10 @@ namespace NodeEditorDemo.Core;
 
 public class NodeCategory : ViewModelBase
 {
-    private IList<INodeTemplate>? _templates;
+    private IList<INodeTemplate> _templates;
     public string Name { get; set; }
 
-    public IList<INodeTemplate>? Templates
+    public IList<INodeTemplate> Templates
     {
         get => _templates;
         set => SetProperty(ref _templates, value);

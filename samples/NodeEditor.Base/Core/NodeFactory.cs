@@ -185,7 +185,7 @@ public partial class NodeFactory : INodeFactory
         }
     }
 
-    public void PrintNetList(IDrawingNode? drawing)
+    public void PrintNetList(IDrawingNode drawing)
     {
         if (drawing?.Connectors is null || drawing?.Nodes is null)
         {
