@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <IsPackable>True</IsPackable>
+    <Nullable>disable</Nullable>
+    <RootNamespace>Furesoft.LowCode</RootNamespace>
+    <AssemblyName>Furesoft.LowCode</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Furesoft.LowCode</PackageId>
+    <Description>A node editor control for Avalonia.</Description>
+    <PackageTags>node;editor;nodeeditor;graph;control;xaml;axaml;avalonia;avaloniaui</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <Import Project="..\..\build\Base.props" />
+  <Import Project="..\..\build\ReferenceAssemblies.props" />
+  <Import Project="..\..\build\Avalonia.props" />
+  <Import Project="..\..\build\Avalonia.Diagnostics.props" Condition="'$(Configuration)' == 'Debug'" />
+  <Import Project="..\..\build\Avalonia.Themes.Fluent.props" />
+  <Import Project="..\..\build\Avalonia.Xaml.Behaviors.props" />
+  <Import Project="..\..\build\Avalonia.Skia.props" />
+  <Import Project="..\..\build\Newtonsoft.Json.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Core\Components\Views\ConditionView.axaml.cs">
+      <DependentUpon>ConditionView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Core\Components\Views\DefaultNodeView.axaml.cs">
+      <DependentUpon>DefaultNodeView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Core\Components\Views\EntryView.axaml.cs">
+      <DependentUpon>EntryView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Nodes\AndGateView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\EllipseView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\OrGateView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\RectangleView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\SignalView.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.0.0" />
+    <PackageReference Include="NiL.JS" Version="2.5.1661" />
+  </ItemGroup>
+
+</Project>

@@ -4,7 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>False</IsPackable>
     <Nullable>enable</Nullable>
-    <ApplicationIcon>..\NodeEditor.Base\Assets\Icon.ico</ApplicationIcon>
     <RootNamespace>NodeEditorDemo</RootNamespace>
   </PropertyGroup>
 
@@ -17,7 +16,7 @@
   <Import Project="..\..\build\Avalonia.Desktop.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\NodeEditor.Base\NodeEditor.Base.csproj" />
+    <ProjectReference Include="..\Furesoft.LowCode\Furesoft.LowCode.csproj" />
   </ItemGroup>
 
 </Project>

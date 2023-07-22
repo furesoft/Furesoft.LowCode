@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:m="clr-namespace:NodeEditor.Model;assembly=NodeEditorAvalonia.Model"
+                    xmlns:model="clr-namespace:NodeEditor.Model"
+                    x:CompileBindings="True">
+
+  <ControlTheme x:Key="{x:Type Connector}" TargetType="Connector">
+
+    <Setter Property="Stroke" Value="{DynamicResource ConnectorBackgroundBrush}" />
+    <Setter Property="StrokeThickness" Value="2" />
+    <Setter Property="ClipToBounds" Value="False" />
+
+    <Setter Property="ContextFlyout">
+      <Setter.Value>
+        <Flyout x:DataType="model:IConnector">
+          <DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+              <Label Content="Orientation:" DockPanel.Dock="Top" />
+              <RadioButton Content="Auto"
+                           GroupName="Orientation"
+                           IsChecked="{Binding Orientation, Converter={x:Static EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:ConnectorOrientation.Auto}}"
+                           DockPanel.Dock="Top" />
+              <RadioButton Content="Horizontal"
+                           GroupName="Orientation"
+                           IsChecked="{Binding Orientation, Converter={x:Static EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:ConnectorOrientation.Horizontal}}"
+                           DockPanel.Dock="Top" />
+              <RadioButton Content="Vertical"
+                           GroupName="Orientation"
+                           IsChecked="{Binding Orientation, Converter={x:Static EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:ConnectorOrientation.Vertical}}"
+                           DockPanel.Dock="Top" />
+            </DockPanel>
+            <Label Content="Offset:" DockPanel.Dock="Top" />
+            <TextBox Text="{Binding Offset}" DockPanel.Dock="Top" />
+          </DockPanel>
+        </Flyout>
+      </Setter.Value>
+    </Setter>
+
+    <!--
+    <Style Selector="^:selected">
+      <Setter Property="Stroke" Value="Blue" />
+    </Style>
+    -->
+
+  </ControlTheme>
+
+</ResourceDictionary>
