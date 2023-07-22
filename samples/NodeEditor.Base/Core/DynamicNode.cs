@@ -18,4 +18,9 @@ public class DynamicNode : VisualNode
     {
         Pins.Add(name, alignment);
     }
+
+    public override void Evaluate()
+    {
+        throw new System.NotImplementedException();
+    }
 }

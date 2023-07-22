@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Serialization;
+using Avalonia.Controls;
+using Avalonia.Styling;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.Components.Views;
 using NodeEditorDemo.Core.NodeBuilding;
@@ -14,6 +16,7 @@ public class MessageBoxNode : VisualNode
 
     public MessageBoxNode() : base("MessageBox")
     {
+        _message = "Hello Nodes :D";
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -23,9 +26,21 @@ public class MessageBoxNode : VisualNode
         set => SetProperty(ref _message, value);
     }
 
-    [Pin("Flow Input", PinAlignment.Top)]
-    public IInputPin FlowInput { get; set; }
-    
+    [Pin("Flow Input", PinAlignment.Top)] public IInputPin FlowInput { get; set; }
+
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; set; }
+
+    public override void Evaluate()
+    {
+        new Window()
+        {
+            Content = new TextBlock {Text = _message},
+            RequestedThemeVariant = ThemeVariant.Light,
+            Width = 150,
+            Height = 150
+        }.Show();
+
+        EvaluatePin(FlowOutput);
+    }
 }

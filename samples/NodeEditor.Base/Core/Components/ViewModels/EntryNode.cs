@@ -15,4 +15,9 @@ public class EntryNode : VisualNode
 
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowPin { get; set; }
+
+    public override void Evaluate()
+    {
+        EvaluatePin(FlowPin);
+    }
 }

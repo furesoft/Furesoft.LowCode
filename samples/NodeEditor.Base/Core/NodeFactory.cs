@@ -14,7 +14,7 @@ namespace NodeEditorDemo.Core;
 public partial class NodeFactory : INodeFactory
 {
     private const int PinSize = 15;
-    
+
     private readonly List<DynamicNode> _dynamicNodes = new();
 
     public void AddDynamicNode(DynamicNode node)
@@ -22,7 +22,7 @@ public partial class NodeFactory : INodeFactory
         _dynamicNodes.Add(node);
     }
 
-    private static CustomNodeViewModel CreateNode(string name,IEnumerable<KeyValuePair<string, PinAlignment>> pins,
+    private static CustomNodeViewModel CreateNode(VisualNode node, IEnumerable<KeyValuePair<string, PinAlignment>> pins,
         (double x, double y) position, double width = 60, double height = 60, Control nodeView = null)
     {
         var leftPins = pins.Where(_ => _.Value == PinAlignment.Left).ToArray();
@@ -38,16 +38,17 @@ public partial class NodeFactory : INodeFactory
 
         var viewModel = CreateViewModel(null, position, (width, height));
 
-       AddPins(PinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins.Length, i), 0));
-       AddPins(PinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins.Length, i), height));
+        AddPins(PinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins.Length, i), 0));
+        AddPins(PinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins.Length, i), height));
 
-       AddPins(PinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins.Length, i)));
-       AddPins(PinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins.Length, i)));
+        AddPins(PinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins.Length, i)));
+        AddPins(PinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins.Length, i)));
 
         nodeView!.DataContext = viewModel.Content;
 
         viewModel.Content = nodeView;
-        viewModel.Name = name;
+        viewModel.Name = node.Label;
+        viewModel.DefiningNode = node;
 
         return viewModel;
     }
@@ -55,14 +56,14 @@ public partial class NodeFactory : INodeFactory
     private static CustomNodeViewModel CreateNode(VisualNode visualNode, (double x, double y) position,
         double width = 60, double height = 60)
     {
-        var pinData = 
+        var pinData =
             from prop in visualNode.GetType().GetProperties()
             where prop.GetCustomAttribute<PinAttribute>() != null
             select (prop.GetCustomAttribute<PinAttribute>(), prop);
 
         var pins =
             from pin in pinData
-            select new KeyValuePair<string,PinAlignment>(pin.Item1.Name ?? pin.prop.Name, pin.Item1.Alignment);
+            select new KeyValuePair<string, PinAlignment>(pin.Item1.Name ?? pin.prop.Name, pin.Item1.Alignment);
 
         Control nodeView = null;
 
@@ -82,7 +83,7 @@ public partial class NodeFactory : INodeFactory
             }
         }
 
-        return CreateNode(visualNode.Label, pins, position, width, height, nodeView);
+        return CreateNode(visualNode, pins, position, width, height, nodeView);
     }
 
     private static (double, double) RecalculateBoundsWithMargin((double width, double height) size,
@@ -105,15 +106,15 @@ public partial class NodeFactory : INodeFactory
         {
             return typeof(VisualNode).IsAssignableFrom(type) && type.IsClass && type.Name != nameof(VisualNode);
         }
-        
+
         var templates = new List<INodeTemplate>();
 
-        var nodeTypes = 
+        var nodeTypes =
             from assembly in AppDomain.CurrentDomain.GetAssemblies()
             from type in assembly.GetTypes()
             where IsVisualNode(type)
             select type;
-        
+
         CreateNormalNodeTemplates(nodeTypes, templates);
 
         CreateFactoryNodeTemplates(nodeTypes, templates);
@@ -132,8 +133,8 @@ public partial class NodeFactory : INodeFactory
             templates.Add(new NodeTemplateViewModel
             {
                 Title = dynamicNode.Label,
-                Template = CreateNode(dynamicNode.Label, pins, (0, 0), nodeView: dynamicNode.View),
-                Preview = CreateNode(dynamicNode.Label, pins, (0, 0), nodeView: dynamicNode.View)
+                Template = CreateNode(dynamicNode, pins, (0, 0), nodeView: dynamicNode.View),
+                Preview = CreateNode(dynamicNode, pins, (0, 0), nodeView: dynamicNode.View)
             });
         }
     }
@@ -144,11 +145,11 @@ public partial class NodeFactory : INodeFactory
         {
             return typeof(INodeFactory).IsAssignableFrom(node);
         }
-        
+
         var factoryNodes = from node in nodes
             where IsFactoryNode(node)
             select (VisualNode)Activator.CreateInstance(node);
-        
+
         foreach (var factoryNode in factoryNodes)
         {
             var factory = factoryNode as INodeFactory;
@@ -163,7 +164,7 @@ public partial class NodeFactory : INodeFactory
         {
             return !typeof(INodeFactory).IsAssignableFrom(node) && node != typeof(DynamicNode);
         }
-        
+
         var normalNodes =
             from node in nodes
             where IsNormalNode(node)
@@ -179,9 +180,7 @@ public partial class NodeFactory : INodeFactory
 
             templates.Add(new NodeTemplateViewModel
             {
-                Title = node.Label, 
-                Template = CreateNode(node, (0, 0)), 
-                Preview = CreateNode(node, (0, 0))
+                Title = node.Label, Template = CreateNode(node, (0, 0)), Preview = CreateNode(node, (0, 0))
             });
         }
     }

@@ -31,4 +31,16 @@ public class ConditionNode : VisualNode
     
     [Pin("False", PinAlignment.Right)]
     public IOutputPin FalsePin { get; set; }
+
+    public override void Evaluate()
+    {
+        if (true)
+        {
+            EvaluatePin(TruePin);
+        }
+        else
+        {
+            EvaluatePin(FalsePin);
+        }
+    }
 }

@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NodeEditor.Controls;
 using NodeEditor.Mvvm;
+using NodeEditorDemo.Core;
 using NodeEditorDemo.Services;
 
 namespace NodeEditorDemo.ViewModels;
@@ -20,9 +21,18 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private EditorViewModel? _editor;
     [ObservableProperty] private bool _isToolboxVisible;
 
+    public Evaluator Evaluator { get; set; }
+
     public MainViewViewModel()
     {
         _isToolboxVisible = true;
+    }
+
+    [RelayCommand]
+    public void Evaluate()
+    {
+        Evaluator = new(_editor.Drawing);
+        Evaluator.Evaluate();
     }
 
     [RelayCommand]
@@ -53,12 +63,13 @@ public partial class MainViewViewModel : ViewModelBase
         {
             Editor.Drawing = Editor.Factory.CreateDrawing();
             Editor.Drawing.SetSerializer(Editor.Serializer);
+            Evaluator = new(_editor.Drawing);
         }
     }
 
     private List<FilePickerFileType> GetOpenFileTypes()
     {
-        return new List<FilePickerFileType>
+        return new()
         {
             StorageService.Json,
             StorageService.All
@@ -67,7 +78,7 @@ public partial class MainViewViewModel : ViewModelBase
 
     private static List<FilePickerFileType> GetSaveFileTypes()
     {
-        return new List<FilePickerFileType>
+        return new()
         {
             StorageService.Json,
             StorageService.All
@@ -76,7 +87,7 @@ public partial class MainViewViewModel : ViewModelBase
 
     private static List<FilePickerFileType> GetExportFileTypes()
     {
-        return new List<FilePickerFileType>
+        return new()
         {
             StorageService.ImagePng,
             StorageService.ImageSvg,
@@ -101,7 +112,7 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        var result = await storageProvider.OpenFilePickerAsync(new()
         {
             Title = "Open drawing",
             FileTypeFilter = GetOpenFileTypes(),
@@ -146,7 +157,7 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        var file = await storageProvider.SaveFilePickerAsync(new()
         {
             Title = "Save drawing",
             FileTypeChoices = GetSaveFileTypes(),
@@ -186,7 +197,7 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        var file = await storageProvider.SaveFilePickerAsync(new()
         {
             Title = "Export drawing",
             FileTypeChoices = GetExportFileTypes(),

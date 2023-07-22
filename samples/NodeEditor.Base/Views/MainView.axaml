@@ -17,6 +17,7 @@
   </Design.DataContext>
   
   <UserControl.KeyBindings>
+    <KeyBinding Gesture="F5" Command="{Binding EvaluateCommand}" />
     <KeyBinding Command="{Binding NewCommand}" 
                 Gesture="{OnPlatform macOS=CMD+N, iOS=CMD+N, Default=Ctrl+N}" />
     <KeyBinding Command="{Binding OpenCommand}" 
