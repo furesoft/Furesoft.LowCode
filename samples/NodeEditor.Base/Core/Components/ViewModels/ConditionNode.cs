@@ -33,15 +33,10 @@ public class ConditionNode : VisualNode
     [Pin("False", PinAlignment.Right)]
     public IOutputPin FalsePin { get; set; }
 
-    public override void Execute()
+    public override Task Execute()
     {
-        if (true)
-        {
-           ExecutePin(TruePin);
-        }
-        else
-        {
-           ExecutePin(FalsePin);
-        }
+        bool result = (bool)Evaluator.Evaluate(Condition);
+
+        return ExecutePin(result ? TruePin : FalsePin);
     }
 }

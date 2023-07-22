@@ -26,27 +26,37 @@ public abstract class VisualNode : ViewModelBase
         set => SetProperty(ref _label, value);
     }
 
-    public abstract void Execute();
+    public abstract Task Execute();
 
-    protected void ExecutePin(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+    protected async Task ExecutePin(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         var pinName = GetPinName(pinMembername);
 
         var connections =
             from connection in Drawing.Connectors
             where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == this
+                  || ((CustomNodeViewModel)connection.End.Parent).DefiningNode == this
             select connection;
 
-        var pinConnections = connections.Where(_ => _.Start.Name == pinName);
+        var pinConnections = connections.Where(_ => _.Start.Name == pinName || _.End.Name == pinName);
 
         foreach (var pinConnection in pinConnections)
         {
-            var parent = (CustomNodeViewModel)pinConnection.End.Parent;
+            CustomNodeViewModel parent = null;
 
+            if (pinConnection.Start.Parent is CustomNodeViewModel vm)
+            {
+                parent = vm;
+            }
+            else if (pinConnection.End.Parent is CustomNodeViewModel evm)
+            {
+                parent = evm;
+            }
+            
             parent.DefiningNode.Evaluator = Evaluator;
             parent.DefiningNode.Drawing = Drawing;
-            
-            parent.DefiningNode.Execute();
+
+            await parent.DefiningNode.Execute();
         }
     }
 

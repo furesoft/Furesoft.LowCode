@@ -31,7 +31,7 @@ public class MessageBoxNode : VisualNode
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 
-    public override async void Execute()
+    public override async Task Execute()
     {
         var box = MessageBoxManager
             .GetMessageBoxStandard("Info", Evaluator.Evaluate(_message).ToString());

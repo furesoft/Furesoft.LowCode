@@ -20,7 +20,7 @@ public class DynamicNode : VisualNode
         Pins.Add(name, alignment);
     }
 
-    public override void Execute()
+    public override Task Execute()
     {
         throw new System.NotImplementedException();
     }

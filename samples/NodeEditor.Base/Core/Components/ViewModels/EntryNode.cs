@@ -17,8 +17,8 @@ public class EntryNode : VisualNode
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowPin { get; set; }
 
-    public override void Execute()
+    public override Task Execute()
     {
-        ExecutePin(FlowPin);
+       return ExecutePin(FlowPin);
     }
 }
