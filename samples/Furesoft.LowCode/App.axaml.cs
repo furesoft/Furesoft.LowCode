@@ -26,23 +26,6 @@ public class App : Application
     {
         var vm = new MainViewViewModel {IsToolboxVisible = true};
 
-        var dn = new DynamicNode("Dynamic");
-        dn.AddPin("Flow Input", PinAlignment.Top);
-
-        var nodeFactory = new NodeFactory();
-        nodeFactory.AddDynamicNode(dn);
-
-        var editor = new EditorViewModel
-        {
-            Serializer = new NodeSerializer(typeof(ObservableCollection<>)), Factory = nodeFactory
-        };
-
-        editor.Templates = editor.Factory.CreateTemplates();
-        editor.Drawing = editor.Factory.CreateDrawing();
-        editor.Drawing.SetSerializer(editor.Serializer);
-
-        vm.Editor = editor;
-
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow {DataContext = vm};

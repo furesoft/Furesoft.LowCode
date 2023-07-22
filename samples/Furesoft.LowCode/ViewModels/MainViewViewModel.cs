@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,6 +14,7 @@ using CommunityToolkit.Mvvm.Input;
 using Furesoft.LowCode.Core;
 using Furesoft.LowCode.Services;
 using NodeEditor.Controls;
+using NodeEditor.Model;
 using NodeEditor.Mvvm;
 
 namespace Furesoft.LowCode.ViewModels;
@@ -20,12 +23,40 @@ public partial class MainViewViewModel : ViewModelBase
 {
     [ObservableProperty] private EditorViewModel _editor;
     [ObservableProperty] private bool _isToolboxVisible;
+    [ObservableProperty] private VisualNode _selectedNode;
 
     public Evaluator Evaluator { get; set; }
 
     public MainViewViewModel()
     {
         _isToolboxVisible = true;
+        _editor = new();
+        var dn = new DynamicNode("Dynamic");
+        dn.AddPin("Flow Input", PinAlignment.Top);
+
+        var nodeFactory = new NodeFactory();
+        nodeFactory.AddDynamicNode(dn);
+
+        _editor.Serializer = new NodeSerializer(typeof(ObservableCollection<>));
+        _editor.Factory = nodeFactory;
+        _editor.Templates = _editor.Factory.CreateTemplates();
+        _editor.Drawing = _editor.Factory.CreateDrawing();
+        _editor.Drawing.SetSerializer(_editor.Serializer);
+        _editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+    }
+
+    private void DrawingOnSelectionChanged(object sender, EventArgs e)
+    {
+        var selectedNodes = _editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
+
+        if (selectedNodes != null)
+        {
+            SelectedNode = selectedNodes.FirstOrDefault().DefiningNode;
+        }
+        else
+        {
+            SelectedNode = null;
+        }
     }
 
     [RelayCommand]
@@ -69,20 +100,12 @@ public partial class MainViewViewModel : ViewModelBase
 
     private List<FilePickerFileType> GetOpenFileTypes()
     {
-        return new()
-        {
-            StorageService.Json,
-            StorageService.All
-        };
+        return new() {StorageService.Json, StorageService.All};
     }
 
     private static List<FilePickerFileType> GetSaveFileTypes()
     {
-        return new()
-        {
-            StorageService.Json,
-            StorageService.All
-        };
+        return new() {StorageService.Json, StorageService.All};
     }
 
     private static List<FilePickerFileType> GetExportFileTypes()
@@ -114,9 +137,7 @@ public partial class MainViewViewModel : ViewModelBase
 
         var result = await storageProvider.OpenFilePickerAsync(new()
         {
-            Title = "Open drawing",
-            FileTypeFilter = GetOpenFileTypes(),
-            AllowMultiple = false
+            Title = "Open drawing", FileTypeFilter = GetOpenFileTypes(), AllowMultiple = false
         });
 
         var file = result.FirstOrDefault();
@@ -173,7 +194,7 @@ public partial class MainViewViewModel : ViewModelBase
                 var json = Editor.Serializer.Serialize(Editor.Drawing);
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream);
-                await writer.WriteAsync((string) json);
+                await writer.WriteAsync((string)json);
             }
             catch (Exception ex)
             {
@@ -210,16 +231,11 @@ public partial class MainViewViewModel : ViewModelBase
         {
             try
             {
-                var control = new DrawingNode
-                {
-                    DataContext = Editor.Drawing
-                };
+                var control = new DrawingNode {DataContext = Editor.Drawing};
 
                 var root = new ExportRoot()
                 {
-                    Width = Editor.Drawing.Width,
-                    Height = Editor.Drawing.Height,
-                    Child = control
+                    Width = Editor.Drawing.Width, Height = Editor.Drawing.Height, Child = control
                 };
 
                 root.ApplyTemplate();
