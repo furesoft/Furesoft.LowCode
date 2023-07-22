@@ -1,7 +1,10 @@
 using System.Collections.ObjectModel;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
+using NodeEditor.Model;
 using NodeEditor.Mvvm;
 using NodeEditorDemo.Core;
 using NodeEditorDemo.Services;
@@ -23,15 +26,17 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var vm = new MainViewViewModel
-        {
-            IsToolboxVisible = true
-        };
-        
+        var vm = new MainViewViewModel {IsToolboxVisible = true};
+
+        var dn = new DynamicNode("Dynamic", new TextBlock() {Text = "dynamic node", Foreground = Brushes.Black});
+        dn.AddPin("Flow Input", PinAlignment.Top);
+
+        var nodeFactory = new NodeFactory();
+        nodeFactory.AddDynamicNode(dn);
+
         var editor = new EditorViewModel
         {
-            Serializer = new NodeSerializer(typeof(ObservableCollection<>)),
-            Factory = new NodeFactory()
+            Serializer = new NodeSerializer(typeof(ObservableCollection<>)), Factory = nodeFactory
         };
 
         editor.Templates = editor.Factory.CreateTemplates();
@@ -42,19 +47,13 @@ public class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = vm
-            };
+            desktop.MainWindow = new MainWindow {DataContext = vm};
 
             DataContext = vm;
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewLifetime)
         {
-            singleViewLifetime.MainView = new MainView
-            {
-                DataContext = vm
-            };
+            singleViewLifetime.MainView = new MainView {DataContext = vm};
 
             DataContext = vm;
         }

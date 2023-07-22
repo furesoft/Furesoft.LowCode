@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using Avalonia.Controls;
 using NodeEditor.Model;
 using NodeEditor.Mvvm;
-using NodeEditorDemo.Core.Components.ViewModels;
 using NodeEditorDemo.Core.NodeBuilding;
 using INodeFactory = NodeEditor.Model.INodeFactory;
 
@@ -15,73 +15,59 @@ namespace NodeEditorDemo.Core;
 
 public class NodeFactory : INodeFactory
 {
-    private static CustomNodeViewModel CreateViewModel(VisualNode vm, (double x, double y) position,
-        (double width, double height) size)
-    {
-        var node = new CustomNodeViewModel
-        {
-            X = position.x,
-            Y = position.y,
-            Width = size.width,
-            Height = size.height,
-            Pins = new ObservableCollection<IPin>(),
-            Content = vm
-        };
+    private readonly List<DynamicNode> _dynamicNodes = new();
 
-        return node;
+    public void AddDynamicNode(DynamicNode node)
+    {
+        _dynamicNodes.Add(node);
     }
 
-    public IDrawingNode CreateDrawing(string name = null)
-    {
-        var drawing = new DrawingNodeViewModel
-        {
-            X = 0,
-            Y = 0,
-            Name = name,
-            Width = 90000,
-            Height = 60000,
-            Nodes = new ObservableCollection<INode>(),
-            Connectors = new ObservableCollection<IConnector>(),
-            EnableMultiplePinConnections = true,
-            EnableSnap = true,
-            SnapX = 10.0,
-            SnapY = 10.0,
-        };
-
-        var entry = CreateEntry(drawing.Width / 2, drawing.Height / 2 - 275);
-        entry.Parent = drawing;
-
-        drawing.Nodes.Add(entry);
-
-        return drawing;
-    }
-
-    public INode CreateEntry(double x, double y, double width = 60, double height = 60, double pinSize = 15)
-    {
-        var node = CreateNode(new EntryNode(), (x, y), width, height, pinSize);
-        node.IsRemovable = false;
-
-        return node;
-    }
-
-    private CustomNodeViewModel CreateNode(VisualNode visualNode, (double x, double y) position, double width = 60,
-        double height = 60,
+    public static CustomNodeViewModel CreateNode(string name, IEnumerable<(string name, PinAlignment alignment)> pins,
+        (double x, double y) position, double width = 60,
+        double height = 60, Control nodeView = null,
         double pinSize = 15)
     {
-        var pins = visualNode.GetType().GetProperties()
-            .Where(_ => _.GetCustomAttribute<PinAttribute>() != null)
-            .Select(prop => (prop.GetCustomAttribute<PinAttribute>(), prop)).ToArray();
-
-        var leftPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Left).ToArray();
-        var rightPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Right).ToArray();
-        var topPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Top).ToArray();
-        var bottomPins = pins.Where(_ => _.Item1.Alignment == PinAlignment.Bottom).ToArray();
+        var leftPins = pins.Where(_ => _.alignment == PinAlignment.Left).ToArray();
+        var rightPins = pins.Where(_ => _.alignment == PinAlignment.Right).ToArray();
+        var topPins = pins.Where(_ => _.alignment == PinAlignment.Top).ToArray();
+        var bottomPins = pins.Where(_ => _.alignment == PinAlignment.Bottom).ToArray();
 
         var maxPinTopBottom = Math.Max(topPins.Length, bottomPins.Length);
         var maxPinLeftRight = Math.Max(leftPins.Length, rightPins.Length);
 
         (width, height) = RecalculateBoundsWithMargin((width, height), pinSize, maxPinTopBottom, maxPinLeftRight);
-        Control nodeView = new DefaultNodeView();
+        nodeView ??= new DefaultNodeView();
+
+        var viewModel = BaseNodeFactory.CreateViewModel(null, position, (width, height));
+
+        AddPins(pinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins.Length, i), 0));
+        AddPins(pinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins.Length, i), height));
+
+        AddPins(pinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins.Length, i)));
+        AddPins(pinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins.Length, i)));
+
+        nodeView!.DataContext = viewModel.Content;
+
+        viewModel.Content = nodeView;
+        viewModel.Name = name;
+
+        return viewModel;
+    }
+
+    public static CustomNodeViewModel CreateNode(VisualNode visualNode, (double x, double y) position,
+        double width = 60,
+        double height = 60,
+        double pinSize = 15)
+    {
+        var pinData = visualNode.GetType().GetProperties()
+            .Where(_ => _.GetCustomAttribute<PinAttribute>() != null)
+            .Select(prop => (prop.GetCustomAttribute<PinAttribute>(), prop));
+
+        var pins =
+            from pin in pinData
+            select (pin.Item1.Name ?? pin.prop.Name, pin.Item1.Alignment);
+
+        Control nodeView = null;
 
         var nodeViewAttribute = visualNode.GetType().GetCustomAttribute<NodeViewAttribute>();
         if (nodeViewAttribute != null)
@@ -98,20 +84,8 @@ public class NodeFactory : INodeFactory
                 width = nodeView.MinWidth;
             }
         }
-        var viewModel = CreateViewModel(visualNode, position, (width, height));
 
-        AddPins(pinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins, i), 0));
-        AddPins(pinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins, i), height));
-
-        AddPins(pinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins, i)));
-        AddPins(pinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins, i)));
-
-        nodeView!.DataContext = viewModel.Content;
-
-        viewModel.Content = nodeView;
-        viewModel.Name = visualNode.Label;
-
-        return viewModel;
+        return CreateNode(visualNode.Label, pins, position, width, height, nodeView, pinSize);
     }
 
     private static (double, double) RecalculateBoundsWithMargin((double width, double height) size, double pinSize,
@@ -124,13 +98,12 @@ public class NodeFactory : INodeFactory
         return (size.width, size.height);
     }
 
-    private static double CalculateSinglePin(double width,
-        IReadOnlyCollection<(PinAttribute, PropertyInfo prop)> topPins, int i)
+    private static double CalculateSinglePin(double width, int pinCount, int i)
     {
-        return width / (topPins.Count + 1) * (i + 1);
+        return width / (pinCount + 1) * (i + 1);
     }
 
-    private static void AddPins(double pinSize, IReadOnlyList<(PinAttribute, PropertyInfo prop)> pins,
+    private static void AddPins(double pinSize, IReadOnlyList<(string name, PinAlignment alignment)> pins,
         CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         for (int i = 0; i < pins.Count; i++)
@@ -139,7 +112,7 @@ public class NodeFactory : INodeFactory
 
             (double baseX, double baseY) = positionMapper(i);
 
-            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Item1.Alignment, pin.Item1.Name ?? pin.prop.Name);
+            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.alignment, pin.name);
         }
     }
 
@@ -154,7 +127,7 @@ public class NodeFactory : INodeFactory
             .Where(x => typeof(VisualNode).IsAssignableFrom(x) && x.IsClass)
             .Where(x => x.Name != nameof(VisualNode));
 
-        var normalNodes = nodes.Where(_ => !typeof(INodeFactory).IsAssignableFrom(_))
+        var normalNodes = nodes.Where(_ => !typeof(INodeFactory).IsAssignableFrom(_) && _ != typeof(DynamicNode))
             .Select(type => (VisualNode)Activator.CreateInstance(type));
         var factoryNodes = nodes.Where(_ => typeof(INodeFactory).IsAssignableFrom(_))
             .Select(type => (VisualNode)Activator.CreateInstance(type));
@@ -209,7 +182,24 @@ public class NodeFactory : INodeFactory
             }
         }
 
+        foreach (var dynamicNode in _dynamicNodes)
+        {
+            var pins = dynamicNode.Pins.Select(_ => (_.Key, _.Value));
+
+            templates.Add(new NodeTemplateViewModel
+            {
+                Title = dynamicNode.Label,
+                Template = CreateNode(dynamicNode.Label, pins, (0, 0), nodeView: dynamicNode.View),
+                Preview = CreateNode(dynamicNode.Label, pins, (0, 0), nodeView: dynamicNode.View)
+            });
+        }
+
         return templates;
+    }
+
+    public IDrawingNode CreateDrawing(string name = null)
+    {
+        return BaseNodeFactory.CreateDrawing(name);
     }
 
     public void PrintNetList(IDrawingNode? drawing)

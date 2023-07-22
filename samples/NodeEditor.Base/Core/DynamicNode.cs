@@ -1,0 +1,21 @@
+﻿using System.Collections.Generic;
+using Avalonia.Controls;
+using NodeEditor.Model;
+
+namespace NodeEditorDemo.Core;
+
+public class DynamicNode : VisualNode
+{
+    public readonly Dictionary<string, PinAlignment> Pins = new();
+    public Control View { get; set; }
+
+    public DynamicNode(string label, Control view = null) : base(label)
+    {
+        View = view;
+    }
+
+    public void AddPin(string name, PinAlignment alignment)
+    {
+        Pins.Add(name, alignment);
+    }
+}
