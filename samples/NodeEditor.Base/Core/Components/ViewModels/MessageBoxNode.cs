@@ -38,6 +38,6 @@ public class MessageBoxNode : VisualNode
         
         await box.ShowWindowAsync();
 
-        ExecutePin(FlowOutput);
+        await ExecutePin(FlowOutput);
     }
 }
