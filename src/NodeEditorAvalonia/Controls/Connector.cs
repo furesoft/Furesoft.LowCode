@@ -65,8 +65,11 @@ public class Connector : Shape
                 ref p1X, ref p1Y, 
                 ref p2X, ref p2Y);
             
+            var midX = (p1X + p2X) / 2;
+            var midY = (p1Y + p2Y) / 2;
+
             context.LineTo(new(p1X, p1Y));
-            context.LineTo(new(p2X, p2Y));
+            context.LineTo(new(EndPoint.X, midY)); 
             context.LineTo(EndPoint);
         }
         else
