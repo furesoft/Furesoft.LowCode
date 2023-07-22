@@ -28,7 +28,7 @@ public class App : Application
     {
         var vm = new MainViewViewModel {IsToolboxVisible = true};
 
-        var dn = new DynamicNode("Dynamic", new TextBlock() {Text = "dynamic node", Foreground = Brushes.Black});
+        var dn = new DynamicNode("Dynamic");
         dn.AddPin("Flow Input", PinAlignment.Top);
 
         var nodeFactory = new NodeFactory();

@@ -22,12 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2D76C533
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeEditorAvalonia.UnitTests", "tests\NodeEditorAvalonia.UnitTests\NodeEditorAvalonia.UnitTests.csproj", "{7BD43F56-1050-4051-801F-EA5C532E05FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E85732E3-2435-4AAE-A650-A4F7B40E6331}"
-ProjectSection(SolutionItems) = preProject
-	LICENSE.TXT = LICENSE.TXT
-	README.md = README.md
-EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{75D70D48-0039-4249-9F9D-5BD2AAF5234D}"
 ProjectSection(SolutionItems) = preProject
 	.gitattributes = .gitattributes

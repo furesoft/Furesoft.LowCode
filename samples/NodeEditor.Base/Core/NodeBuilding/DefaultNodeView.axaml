@@ -7,6 +7,6 @@
              ClipToBounds="False">
     <Grid>
         <Rectangle Classes="node" />
-        <TextBlock Text="{Binding Label, Mode=TwoWay}" TextAlignment="Center" VerticalAlignment="Center" />
+        <Label Classes="node" Content="{Binding Label, Mode=TwoWay}" Foreground="Black" />
     </Grid>
 </UserControl>

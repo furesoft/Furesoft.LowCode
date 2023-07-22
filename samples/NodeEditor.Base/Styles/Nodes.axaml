@@ -16,6 +16,7 @@
   <Style Selector="Label.node">
     <Setter Property="HorizontalAlignment" Value="Center" />
     <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="Black" />
     <Setter Property="(TextElement.FontFamily)" Value="avares://Avalonia.Fonts.Inter/Assets#Inter" />
   </Style>
 
