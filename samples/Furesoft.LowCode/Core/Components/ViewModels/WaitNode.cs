@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Core.Components.Views;
 using Furesoft.LowCode.Core.NodeBuilding;
@@ -16,9 +17,11 @@ public class WaitNode : VisualNode
     {
     }
 
+    [Browsable(false)]
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutputPin { get; set; }
     
+    [Browsable(false)]
     [Pin("Flow Input", PinAlignment.Top)]
     public IOutputPin FlowInputPin { get; set; }
 

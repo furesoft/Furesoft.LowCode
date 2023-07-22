@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Core.Components.Views;
 using Furesoft.LowCode.Core.NodeBuilding;
@@ -26,9 +27,11 @@ public class MessageBoxNode : VisualNode
         set => SetProperty(ref _message, value);
     }
 
+    [Browsable(false)]
     [Pin("Flow Input", PinAlignment.Top)] 
     public IInputPin FlowInput { get; } = null;
 
+    [Browsable(false)]
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 

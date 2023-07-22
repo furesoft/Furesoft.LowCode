@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Core.Components.Views;
 using Furesoft.LowCode.Core.NodeBuilding;
@@ -24,12 +25,15 @@ public class ConditionNode : VisualNode
         set => SetProperty(ref _condition, value);
     }
 
+    [Browsable(false)]
     [Pin("Flow", PinAlignment.Top)]
     public IOutputPin FlowPin { get; set; }
     
+    [Browsable(false)]
     [Pin("True", PinAlignment.Bottom)]
     public IOutputPin TruePin { get; set; }
     
+    [Browsable(false)]
     [Pin("False", PinAlignment.Right)]
     public IOutputPin FalsePin { get; set; }
 
