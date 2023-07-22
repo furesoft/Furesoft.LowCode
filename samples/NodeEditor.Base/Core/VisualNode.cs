@@ -30,7 +30,7 @@ public abstract class VisualNode : ViewModelBase
 
     public abstract Task Execute();
 
-    protected async Task ExecutePin(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+    protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         var pinName = GetPinName(pinMembername);
 

@@ -26,7 +26,8 @@ public class MessageBoxNode : VisualNode
         set => SetProperty(ref _message, value);
     }
 
-    [Pin("Flow Input", PinAlignment.Top)] public IInputPin FlowInput { get; } = null;
+    [Pin("Flow Input", PinAlignment.Top)] 
+    public IInputPin FlowInput { get; } = null;
 
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
@@ -38,6 +39,6 @@ public class MessageBoxNode : VisualNode
         
         await box.ShowWindowAsync();
 
-        await ExecutePin(FlowOutput);
+        await ContinueWith(FlowOutput);
     }
 }

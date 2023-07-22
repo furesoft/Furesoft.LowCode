@@ -39,9 +39,9 @@ public class ConditionNode : VisualNode
       
         if (true)
         {
-            return ExecutePin(TruePin);
+            return ContinueWith(TruePin);
         }
 
-        return ExecutePin(FalsePin);
+        return ContinueWith(FalsePin);
     }
 }

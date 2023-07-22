@@ -19,6 +19,6 @@ public class EntryNode : VisualNode
 
     public override Task Execute()
     {
-       return ExecutePin(FlowPin);
+       return ContinueWith(FlowPin);
     }
 }
