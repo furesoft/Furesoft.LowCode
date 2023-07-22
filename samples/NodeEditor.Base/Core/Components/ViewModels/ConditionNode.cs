@@ -37,9 +37,9 @@ public class ConditionNode : VisualNode
 
     public override Task Execute()
     {
-        var value = (JSValue)Evaluator.Evaluate(Condition);
+        var value = Evaluator.Evaluate<bool>(Condition);
       
-        if (value.As<bool>())
+        if (value)
         {
             return ContinueWith(TruePin);
         }

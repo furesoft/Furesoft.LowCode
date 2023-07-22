@@ -2,6 +2,7 @@
 using System.Linq;
 using NiL.JS;
 using NiL.JS.Core;
+using NiL.JS.Extensions;
 using NodeEditor.Model;
 using NodeEditorDemo.Core.Components.ViewModels;
 
@@ -29,8 +30,8 @@ public class Evaluator
         await entryNode.DefiningNode.Execute();
     }
 
-    public object Evaluate(string src)
+    public T Evaluate<T>(string src)
     {
-        return _context.Eval(src);
+        return _context.Eval(src).As<T>();
     }
 }
