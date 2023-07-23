@@ -15,18 +15,29 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 public class MessageBoxNode : VisualNode
 {
     private string _message;
+    private string _title;
 
     public MessageBoxNode() : base("MessageBox")
     {
         _message = string.Empty;
+        _title = "Info";
     }
 
+    
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     public string Message
     {
         get => _message;
         set => SetProperty(ref _message, value);
+    }
+    
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Description("The message to display")]
+    public string Title
+    {
+        get => _title;
+        set => SetProperty(ref _title, value);
     }
 
     [Browsable(false)]
@@ -40,7 +51,7 @@ public class MessageBoxNode : VisualNode
     public override async Task Execute()
     {
         var box = MessageBoxManager
-            .GetMessageBoxStandard("Info", Evaluate<string>(_message));
+            .GetMessageBoxStandard(_title, Evaluate<string>(_message));
         
         await box.ShowWindowAsync();
 
