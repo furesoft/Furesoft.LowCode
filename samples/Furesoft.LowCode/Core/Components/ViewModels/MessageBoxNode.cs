@@ -23,7 +23,7 @@ public class MessageBoxNode : VisualNode
         _title = "Info";
     }
 
-    
+
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     public string Message
@@ -31,7 +31,7 @@ public class MessageBoxNode : VisualNode
         get => _message;
         set => SetProperty(ref _message, value);
     }
-    
+
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     public string Title
@@ -41,7 +41,7 @@ public class MessageBoxNode : VisualNode
     }
 
     [Browsable(false)]
-    [Pin("Flow Input", PinAlignment.Top)] 
+    [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin FlowInput { get; } = null;
 
     [Browsable(false)]
@@ -52,7 +52,7 @@ public class MessageBoxNode : VisualNode
     {
         var box = MessageBoxManager
             .GetMessageBoxStandard(_title, Evaluate<string>(_message));
-        
+
         await box.ShowWindowAsync();
 
         await ContinueWith(FlowOutput);
