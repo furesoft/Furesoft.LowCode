@@ -24,6 +24,7 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
         Properties.Add("Customproperty1", 5);
         Properties.Add("Customproperty2", "Hello");
         Properties.Add("Customproperty3", DateTime.Now);
+        Properties.Add("out", string.Empty);
     }
 
     public void AddPin(string name, PinAlignment alignment)
@@ -33,7 +34,9 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
 
     public override Task Execute()
     {
-        throw new System.NotImplementedException();
+        SetOutVariable(Properties["out"].ToString(), true);
+
+        return Task.CompletedTask;
     }
 
     #region Custom Type Descriptor Interfaces

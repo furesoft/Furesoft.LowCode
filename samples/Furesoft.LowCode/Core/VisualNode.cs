@@ -117,4 +117,9 @@ public abstract class VisualNode : ViewModelBase
     {
         return _evaluator.Evaluate<T>(src);
     }
+
+    protected void SetOutVariable(string name, object value)
+    {
+        Context.GetVariable(name).Assign(JSValue.Wrap(value));
+    }
 }
