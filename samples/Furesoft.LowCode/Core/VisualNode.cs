@@ -18,7 +18,7 @@ public abstract class VisualNode : ViewModelBase
     private string _label;
     private string _description;
     internal Evaluator _evaluator;
-    protected Context Context => _evaluator.Context;
+    protected Context Context => _evaluator?.Context;
 
     public VisualNode(string label)
     {
