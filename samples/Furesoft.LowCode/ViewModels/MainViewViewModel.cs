@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -27,9 +28,36 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private EditorViewModel _editor;
     [ObservableProperty] private bool _isToolboxVisible;
     [ObservableProperty] private VisualNode _selectedNode;
+    [ObservableProperty] private string _searchTerm = string.Empty;
+    
+    public Evaluator Evaluator { get; set; }
 
     private Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
     public ObservableCollection<object> Templates { get; set; } = new();
+
+    public MainViewViewModel()
+    {
+        _isToolboxVisible = true;
+        _editor = new();
+
+        var dn = new DynamicNode("Dynamic");
+        dn.AddPin("Flow Input", PinAlignment.Top);
+
+        var nodeFactory = new NodeFactory();
+        nodeFactory.AddDynamicNode(dn);
+
+        _editor.Serializer = new NodeSerializer(typeof(ObservableCollection<>));
+        _editor.Factory = nodeFactory;
+        _editor.Templates = _editor.Factory.CreateTemplates();
+        _editor.Drawing = _editor.Factory.CreateDrawing();
+        _editor.Drawing.SetSerializer(_editor.Serializer);
+        _editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+
+        CategorizeTemplates(_editor.Templates);
+        TransformToTree();
+
+        Search("ass");
+    }
 
     private void CategorizeTemplates(IList<INodeTemplate> templates)
     {
@@ -44,6 +72,28 @@ public partial class MainViewViewModel : ViewModelBase
             }
 
             _categorizedNodeTemplates[category].Add(nodeTemplate);
+        }
+    }
+
+    [RelayCommand]
+    public void Search(string term)
+    {
+        Search(Templates);
+    }
+
+    private void Search(IEnumerable<object> children)
+    {
+        foreach (var template in children)
+        {
+            if (template is NodeTemplateViewModel vm)
+            {
+                vm.IsVisible = vm.Title.ToLower().Contains(_searchTerm.ToLower());
+            }
+
+            if (template is TreeViewItem tvi)
+            {
+                Search(tvi.Items);
+            }
         }
     }
 
@@ -87,30 +137,6 @@ public partial class MainViewViewModel : ViewModelBase
                 parentItem.Items.Add(node);
             }
         }
-    }
-
-    public Evaluator Evaluator { get; set; }
-
-    public MainViewViewModel()
-    {
-        _isToolboxVisible = true;
-        _editor = new();
-
-        var dn = new DynamicNode("Dynamic");
-        dn.AddPin("Flow Input", PinAlignment.Top);
-
-        var nodeFactory = new NodeFactory();
-        nodeFactory.AddDynamicNode(dn);
-
-        _editor.Serializer = new NodeSerializer(typeof(ObservableCollection<>));
-        _editor.Factory = nodeFactory;
-        _editor.Templates = _editor.Factory.CreateTemplates();
-        _editor.Drawing = _editor.Factory.CreateDrawing();
-        _editor.Drawing.SetSerializer(_editor.Serializer);
-        _editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
-
-        CategorizeTemplates(_editor.Templates);
-        TransformToTree();
     }
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)

@@ -104,7 +104,11 @@
       <DockPanel Grid.Column="0"
                  IsVisible="{Binding IsToolboxVisible}">
         <Separator Classes="vertical" DockPanel.Dock="Right" />
-        <editor:Toolbox Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
+        
+        <StackPanel Spacing="5">
+          <TextBox Text="{ReflectionBinding SearchTerm}" Margin="5" />
+          <editor:Toolbox Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
+        </StackPanel>
       </DockPanel>
       
       <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2">
