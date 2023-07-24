@@ -6,7 +6,7 @@ using NodeEditor.Model;
 
 namespace NodeEditor.Behaviors;
 
-public class InsertTemplateOnDoubleTappedBehavior : Behavior<ListBoxItem>
+public class InsertTemplateOnDoubleTappedBehavior : Behavior<TreeViewItem>
 {
     public static readonly StyledProperty<IDrawingNode?> DrawingProperty = 
         AvaloniaProperty.Register<InsertTemplateOnDoubleTappedBehavior, IDrawingNode?>(nameof(Drawing));

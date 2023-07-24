@@ -15,16 +15,16 @@
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IEditor">
 
-        <ListBox ItemsSource="{Binding Templates}"
+        <TreeView ItemsSource="{Binding Templates}"
                  Background="Transparent">
-          <ListBox.Resources>
-            <TemplatesListBoxDropHandler x:Key="TemplatesListBoxDropHandler" />
-          </ListBox.Resources>
+          <TreeView.Resources>
+            <TemplatesTreeViewDropHandler x:Key="TemplatesListBoxDropHandler" />
+          </TreeView.Resources>
           <i:Interaction.Behaviors>
             <idd:ContextDropBehavior Handler="{StaticResource TemplatesListBoxDropHandler}" />
           </i:Interaction.Behaviors>
-          <ListBox.Styles>
-            <Style Selector="ListBox > ListBoxItem">
+          <TreeView.Styles>
+            <Style Selector="TreeView > TreeViewItem">
               <Setter Property="(i:Interaction.Behaviors)">
                 <i:BehaviorCollectionTemplate>
                   <i:BehaviorCollection>
@@ -34,10 +34,10 @@
                 </i:BehaviorCollectionTemplate>
               </Setter>
             </Style>
-          </ListBox.Styles>
-          <ListBox.ItemTemplate>
+          </TreeView.Styles>
+          <TreeView.ItemTemplate>
             <DataTemplate DataType="model:INodeTemplate">
-              <DockPanel>
+              <DockPanel Margin="5">
                 <Viewbox DockPanel.Dock="Left" Width="32" Height="32" DataContext="{Binding Preview}">
                   <controls:Node IsHitTestVisible="False">
                     <controls:Node.Styles>
@@ -53,8 +53,8 @@
                 </Panel>
               </DockPanel>
             </DataTemplate>
-          </ListBox.ItemTemplate>
-        </ListBox>
+          </TreeView.ItemTemplate>
+        </TreeView>
 
       </ControlTemplate>
     </Setter>

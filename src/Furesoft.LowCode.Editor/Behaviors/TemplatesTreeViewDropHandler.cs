@@ -6,14 +6,14 @@ using NodeEditor.Model;
 
 namespace NodeEditor.Behaviors;
 
-public class TemplatesListBoxDropHandler : DropHandlerBase
+public class TemplatesTreeViewDropHandler : DropHandlerBase
 {
-    private bool Validate<T>(ListBox listBox, DragEventArgs e, object? sourceContext, object? targetContext, bool bExecute) where T : INodeTemplate
+    private bool Validate<T>(TreeView treeView, DragEventArgs e, object? sourceContext, object? targetContext, bool bExecute) where T : INodeTemplate
     {
         if (sourceContext is not T sourceItem
             || targetContext is not INodeTemplatesHost nodeTemplatesHost
             || nodeTemplatesHost.Templates is null
-            || listBox.GetVisualAt(e.GetPosition(listBox)) is not Control targetControl
+            || treeView.GetVisualAt(e.GetPosition(treeView)) is not Control targetControl
             || targetControl.DataContext is not T targetItem)
         {
             return false;
@@ -55,7 +55,7 @@ public class TemplatesListBoxDropHandler : DropHandlerBase
         
     public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext, object? state)
     {
-        if (e.Source is Control && sender is ListBox listBox)
+        if (e.Source is Control && sender is TreeView listBox)
         {
             return Validate<INodeTemplate>(listBox, e, sourceContext, targetContext, false);
         }
@@ -64,7 +64,7 @@ public class TemplatesListBoxDropHandler : DropHandlerBase
 
     public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext, object? state)
     {
-        if (e.Source is Control && sender is ListBox listBox)
+        if (e.Source is Control && sender is TreeView listBox)
         {
             return Validate<INodeTemplate>(listBox, e, sourceContext, targetContext, true);
         }
