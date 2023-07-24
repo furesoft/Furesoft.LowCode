@@ -53,10 +53,15 @@ public partial class NodeFactory : INodeFactory
         viewModel.DefiningNode = node;
 
         var descriptionAttribute = node.GetType().GetCustomAttribute<DescriptionAttribute>();
-
         if (descriptionAttribute != null)
         {
             node.Description = descriptionAttribute.Description;
+        }
+        
+        var categoryAttribute = node.GetType().GetCustomAttribute<CategoryAttribute>();
+        if (categoryAttribute != null)
+        {
+            viewModel.Category = categoryAttribute.Category;
         }
 
         return viewModel;

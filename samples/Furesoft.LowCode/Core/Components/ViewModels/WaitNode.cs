@@ -9,6 +9,7 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 
 [DataContract(IsReference = true)]
 [NodeView(typeof(WaitView))]
+[Category("Base")]
 [Description("Wait for the specified time")]
 public class WaitNode : VisualNode
 {

@@ -8,7 +8,7 @@ using NodeEditor.Model;
 namespace Furesoft.LowCode.Core.Components.ViewModels;
 
 [DataContract(IsReference = true)]
-[NodeCategory("Value")]
+[NodeCategory("Base/Data")]
 [Description("Save a value for later usage")]
 public class AssignNode : VisualNode
 {

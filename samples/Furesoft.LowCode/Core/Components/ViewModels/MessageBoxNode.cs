@@ -9,7 +9,7 @@ using NodeEditor.Model;
 namespace Furesoft.LowCode.Core.Components.ViewModels;
 
 [DataContract(IsReference = true)]
-[NodeCategory("Value")]
+[NodeCategory("Base")]
 [NodeView(typeof(MessageBoxView))]
 [Description("Shows a message in a new window")]
 public class MessageBoxNode : VisualNode
