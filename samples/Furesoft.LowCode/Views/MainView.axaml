@@ -104,17 +104,19 @@
       <DockPanel Grid.Column="0"
                  IsVisible="{Binding IsToolboxVisible}">
         <Separator Classes="vertical" DockPanel.Dock="Right" />
-        <editor:Toolbox DataContext="{Binding Editor}" Name="ToolboxView" />
+        <editor:Toolbox Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
       </DockPanel>
-        <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2">
-          <editor:Editor.Background>
-            <VisualBrush TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
-              <VisualBrush.Visual>
-                <Path Data="M 0,0 L 0,10 L 10,10 L 10,0 Z M 10,10 L 10,20 L 20,20 L 20,10 Z" Fill="#FFF0F0F0" />
-              </VisualBrush.Visual>
-            </VisualBrush>
-          </editor:Editor.Background>
-        </editor:Editor>
+      
+      <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2">
+        <editor:Editor.Background>
+          <VisualBrush TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
+            <VisualBrush.Visual>
+              <Path Data="M 0,0 L 0,10 L 10,10 L 10,0 Z M 10,10 L 10,20 L 20,20 L 20,10 Z" Fill="#FFF0F0F0" />
+            </VisualBrush.Visual>
+          </VisualBrush>
+        </editor:Editor.Background>
+      </editor:Editor>
+      
       <GridSplitter Grid.Column="1" Background="Transparent" />
       <GridSplitter Grid.Column="3" Background="Transparent" />
 

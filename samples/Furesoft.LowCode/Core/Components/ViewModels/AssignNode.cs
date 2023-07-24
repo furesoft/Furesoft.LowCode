@@ -15,7 +15,7 @@ public class AssignNode : VisualNode
     private string _name;
     private string _value;
 
-    public AssignNode() : base("Set Variable")
+    public AssignNode() : base("Assign Variable")
     {
         _name = string.Empty;
         _value = string.Empty;

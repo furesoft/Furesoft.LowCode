@@ -1,64 +1,66 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:m="clr-namespace:NodeEditor.Model;assembly=NodeEditorAvalonia.Model"
                     xmlns:controls="clr-namespace:NodeEditor.Controls"
                     xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
                     xmlns:idd="clr-namespace:Avalonia.Xaml.Interactions.DragAndDrop;assembly=Avalonia.Xaml.Interactions.DragAndDrop"
-                    xmlns:behaviors="clr-namespace:NodeEditor.Behaviors;assembly=NodeEditorAvalonia"
                     xmlns:model="clr-namespace:NodeEditor.Model"
                     x:CompileBindings="True">
 
   <ControlTheme x:Key="{x:Type controls:Toolbox}" TargetType="controls:Toolbox">
-
-    <Setter Property="ClipToBounds" Value="False" />
-
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IEditor">
-
-        <TreeView ItemsSource="{Binding Templates}"
-                 Background="Transparent">
+        <TreeView ItemsSource="{TemplateBinding Templates}" Name="tree"
+                  Background="Transparent">
           <TreeView.Resources>
-            <TemplatesTreeViewDropHandler x:Key="TemplatesListBoxDropHandler" />
+            <TemplatesTreeViewDropHandler x:Key="TemplatesTreeViewDropHandler" />
           </TreeView.Resources>
+          
           <i:Interaction.Behaviors>
-            <idd:ContextDropBehavior Handler="{StaticResource TemplatesListBoxDropHandler}" />
+            <idd:ContextDropBehavior Handler="{StaticResource TemplatesTreeViewDropHandler}" />
           </i:Interaction.Behaviors>
+          
           <TreeView.Styles>
             <Style Selector="TreeView > TreeViewItem">
               <Setter Property="(i:Interaction.Behaviors)">
                 <i:BehaviorCollectionTemplate>
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />
-                    <InsertTemplateOnDoubleTappedBehavior Drawing="{Binding Drawing}" />
+                    <InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
                   </i:BehaviorCollection>
                 </i:BehaviorCollectionTemplate>
               </Setter>
             </Style>
           </TreeView.Styles>
-          <TreeView.ItemTemplate>
-            <DataTemplate DataType="model:INodeTemplate">
-              <DockPanel Margin="5">
-                <Viewbox DockPanel.Dock="Left" Width="32" Height="32" DataContext="{Binding Preview}">
-                  <controls:Node IsHitTestVisible="False">
-                    <controls:Node.Styles>
-                      <Style Selector="controls|Pins /template/ ItemsControl#PART_PinsItemsControl">
-                        <Setter Property="IsVisible" Value="False" />
-                      </Style>
-                    </controls:Node.Styles>
-                  </controls:Node>
-                </Viewbox>
-                <Panel Margin="12,6,12,6">
-                  <TextBlock Text="{Binding Title}" 
-                             VerticalAlignment="Center" />
-                </Panel>
-              </DockPanel>
-            </DataTemplate>
-          </TreeView.ItemTemplate>
-        </TreeView>
 
+          <TreeView.DataTemplates>
+            <DataTemplate DataType="model:INodeTemplate">
+              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrush}">
+                <i:Interaction.Behaviors>
+                  <i:BehaviorCollection>
+                    <idd:ContextDragBehavior />
+                    <InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
+                  </i:BehaviorCollection>
+                </i:Interaction.Behaviors>
+                
+                <Viewbox DockPanel.Dock="Left" Width="32" Height="32" DataContext="{Binding Preview}">
+                    <controls:Node IsHitTestVisible="False">
+                      <controls:Node.Styles>
+                        <Style Selector="controls|Pins /template/ ItemsControl#PART_PinsItemsControl">
+                          <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                      </controls:Node.Styles>
+                    </controls:Node>
+                  </Viewbox>
+                  <Panel Margin="12,6,12,6">
+                    <TextBlock Text="{Binding Title}"
+                               VerticalAlignment="Center" />
+                  </Panel>
+                </DockPanel>
+            </DataTemplate>
+          </TreeView.DataTemplates>
+        </TreeView>
       </ControlTemplate>
     </Setter>
-
   </ControlTheme>
 
 </ResourceDictionary>

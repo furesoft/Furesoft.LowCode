@@ -7,11 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Furesoft.LowCode.Core;
+using Furesoft.LowCode.Core.Components.ViewModels;
+using Furesoft.LowCode.Core.NodeBuilding;
 using Furesoft.LowCode.Services;
 using NodeEditor.Controls;
 using NodeEditor.Model;
@@ -25,12 +28,74 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private bool _isToolboxVisible;
     [ObservableProperty] private VisualNode _selectedNode;
 
+    private Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
+    public ObservableCollection<object> Templates { get; set; } = new();
+
+    private void CategorizeTemplates(IList<INodeTemplate> templates)
+    {
+        foreach (var nodeTemplate in templates)
+        {
+            var category = TypeDescriptor.GetAttributes(((CustomNodeViewModel)nodeTemplate.Template).DefiningNode)
+                .OfType<NodeCategoryAttribute>().FirstOrDefault()?.Category ?? "General";
+
+            if (!_categorizedNodeTemplates.ContainsKey(category))
+            {
+                _categorizedNodeTemplates.Add(category, new());
+            }
+
+            _categorizedNodeTemplates[category].Add(nodeTemplate);
+        }
+    }
+
+    private void TransformToTree()
+    {
+        var treeCache = new Dictionary<string, TreeViewItem>();
+
+        foreach (var nodeTemplate in _categorizedNodeTemplates)
+        {
+            var spl = nodeTemplate.Key.Split("/");
+            TreeViewItem parentItem = null;
+
+            for (var index = 0; index < spl.Length; index++)
+            {
+                var s = spl[index];
+                var currentPath = string.Join('/', spl.Take(index + 1));
+
+                if (!treeCache.ContainsKey(currentPath))
+                {
+                    var treeViewItem = new TreeViewItem() {Header = s};
+
+                    if (index == 0)
+                    {
+                        Templates.Add(treeViewItem);
+                    }
+                    else
+                    {
+                        parentItem.Items.Add(treeViewItem);
+                    }
+
+                    treeCache.Add(currentPath, treeViewItem);
+                }
+
+                parentItem = treeCache[currentPath];
+            }
+
+            parentItem.Header = spl[^1];
+
+            foreach (var node in nodeTemplate.Value)
+            {
+                parentItem.Items.Add(node);
+            }
+        }
+    }
+
     public Evaluator Evaluator { get; set; }
 
     public MainViewViewModel()
     {
         _isToolboxVisible = true;
         _editor = new();
+
         var dn = new DynamicNode("Dynamic");
         dn.AddPin("Flow Input", PinAlignment.Top);
 
@@ -43,6 +108,9 @@ public partial class MainViewViewModel : ViewModelBase
         _editor.Drawing = _editor.Factory.CreateDrawing();
         _editor.Drawing.SetSerializer(_editor.Serializer);
         _editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+
+        CategorizeTemplates(_editor.Templates);
+        TransformToTree();
     }
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
@@ -55,6 +123,7 @@ public partial class MainViewViewModel : ViewModelBase
         }
         else
         {
+            SelectedNode = new EntryNode();
             SelectedNode = null;
         }
     }

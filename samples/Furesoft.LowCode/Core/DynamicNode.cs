@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Furesoft.LowCode.Core.NodeBuilding;
 using NodeEditor.Model;
 
 namespace Furesoft.LowCode.Core;
@@ -20,6 +21,7 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
         View = view;
 
         TypeDescriptor.AddAttributes(this, new DescriptionAttribute("A simple dynamic node"));
+        TypeDescriptor.AddAttributes(this, new NodeCategoryAttribute("Base"));
 
         Properties.Add("Customproperty1", 5);
         Properties.Add("Customproperty2", "Hello");

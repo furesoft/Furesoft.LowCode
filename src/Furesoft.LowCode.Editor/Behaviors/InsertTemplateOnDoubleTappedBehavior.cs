@@ -6,9 +6,9 @@ using NodeEditor.Model;
 
 namespace NodeEditor.Behaviors;
 
-public class InsertTemplateOnDoubleTappedBehavior : Behavior<TreeViewItem>
+public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
 {
-    public static readonly StyledProperty<IDrawingNode?> DrawingProperty = 
+    public static readonly StyledProperty<IDrawingNode?> DrawingProperty =
         AvaloniaProperty.Register<InsertTemplateOnDoubleTappedBehavior, IDrawingNode?>(nameof(Drawing));
 
     public IDrawingNode? Drawing
@@ -22,7 +22,7 @@ public class InsertTemplateOnDoubleTappedBehavior : Behavior<TreeViewItem>
         base.OnAttached();
         if (AssociatedObject is { })
         {
-            AssociatedObject.DoubleTapped += DoubleTapped; 
+            AssociatedObject.DoubleTapped += DoubleTapped;
         }
     }
 
@@ -31,19 +31,19 @@ public class InsertTemplateOnDoubleTappedBehavior : Behavior<TreeViewItem>
         base.OnDetaching();
         if (AssociatedObject is { })
         {
-            AssociatedObject.DoubleTapped -= DoubleTapped; 
+            AssociatedObject.DoubleTapped -= DoubleTapped;
         }
     }
 
     private void DoubleTapped(object? sender, RoutedEventArgs args)
     {
-        if (AssociatedObject is { DataContext: INodeTemplate template } && Drawing is { } drawing)
+        if (AssociatedObject is {DataContext: INodeTemplate template} && Drawing is { } drawing)
         {
             var node = drawing.Clone(template.Template);
             if (node is { })
             {
                 node.Parent = drawing;
-                node.Move(0.0, 0.0);
+                node.Move(drawing.Width / 2, drawing.Height / 2);
                 drawing.Nodes?.Add(node);
                 node.OnCreated();
             }
