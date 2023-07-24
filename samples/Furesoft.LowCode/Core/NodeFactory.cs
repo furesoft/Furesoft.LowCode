@@ -52,13 +52,14 @@ public partial class NodeFactory : INodeFactory
         viewModel.Name = node.Label;
         viewModel.DefiningNode = node;
 
-        var descriptionAttribute = node.GetType().GetCustomAttribute<DescriptionAttribute>();
+        var attributes = TypeDescriptor.GetAttributes(node);
+        var descriptionAttribute = attributes.OfType<DescriptionAttribute>().FirstOrDefault();
         if (descriptionAttribute != null)
         {
             node.Description = descriptionAttribute.Description;
         }
         
-        var categoryAttribute = node.GetType().GetCustomAttribute<CategoryAttribute>();
+        var categoryAttribute = attributes.OfType<CategoryAttribute>().FirstOrDefault();
         if (categoryAttribute != null)
         {
             viewModel.Category = categoryAttribute.Category;
