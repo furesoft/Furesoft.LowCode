@@ -98,6 +98,7 @@
           Width="{Binding IsToolboxVisible, Converter={x:Static converters:ColumnWidthConverter.Instance}, ConverterParameter={StaticResource ToolboxWidth}}" />
         <ColumnDefinition Width="8" />
         <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="8" />
         <ColumnDefinition Width="300" />
       </Grid.ColumnDefinitions>
       <DockPanel Grid.Column="0"
@@ -105,9 +106,7 @@
         <Separator Classes="vertical" DockPanel.Dock="Right" />
         <editor:Toolbox DataContext="{Binding Editor}" Name="ToolboxView" />
       </DockPanel>
-      <ThemeVariantScope RequestedThemeVariant="Light"
-                         Grid.Column="1" Grid.ColumnSpan="2">
-        <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}">
+        <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2">
           <editor:Editor.Background>
             <VisualBrush TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
               <VisualBrush.Visual>
@@ -116,12 +115,12 @@
             </VisualBrush>
           </editor:Editor.Background>
         </editor:Editor>
-      </ThemeVariantScope>
       <GridSplitter Grid.Column="1" Background="Transparent" />
+      <GridSplitter Grid.Column="3" Background="Transparent" />
 
-      <Grid Grid.Column="3">
+      <Grid Grid.Column="4">
         <StackPanel Margin="4">
-          <Label Content="{Binding SelectedNode.Description, Mode=TwoWay}" />
+          <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
 
           <pg:PropertyGrid AllowFilter="False" AllowQuickFilter="False" AllowToggleView="False"
                            ShowStyle="Alphabetic" ShowTitle="False"

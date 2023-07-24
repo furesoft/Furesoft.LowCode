@@ -21,6 +21,6 @@
       </Rectangle.RenderTransform>
     </Rectangle>
     
-    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource NodeBackgroundBrush}">?</Label>
+    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource NodeForegroundBrush}">?</Label>
   </Grid>
 </UserControl>
