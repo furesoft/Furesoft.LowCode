@@ -10,6 +10,8 @@ public class Debugger
     private readonly Context _context;
     public VisualNode CurrentNode;
 
+    public List<VisualNode> BreakPointNodes { get; set; } = new();
+
     public bool IsAttached { get; set; }
     public Task WaitTask => _waitTaskSource?.Task;
     private TaskCompletionSource _waitTaskSource;

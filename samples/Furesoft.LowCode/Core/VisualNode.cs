@@ -63,33 +63,41 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
         foreach (var pinConnection in pinConnections)
         {
-            CustomNodeViewModel parent;
-
-            if (pinConnection.Start.Name == pinName)
-            {
-                parent = pinConnection.End.Parent as CustomNodeViewModel;
-            }
-            else if (pinConnection.End.Name == pinName)
-            {
-                parent = pinConnection.Start.Parent as CustomNodeViewModel;
-            }
-            else
-            {
-                continue;
-            }
-
-            parent.DefiningNode._evaluator = _evaluator;
-            parent.DefiningNode.Drawing = Drawing;
-            parent.DefiningNode.PreviousNode = this;
-            parent.DefiningNode._evaluator.Debugger.CurrentNode = parent.DefiningNode;
+            InitNextNode(pinConnection, pinName, out var parent);
 
             if (_evaluator.Debugger.IsAttached)
             {
                 await _evaluator.Debugger.WaitTask;
             }
             
-            await parent.DefiningNode.Execute();
+            await parent?.Execute();
         }
+    }
+
+    private void InitNextNode(IConnector pinConnection, string pinName, out VisualNode parentNode)
+    {
+        CustomNodeViewModel parent;
+
+        if (pinConnection.Start.Name == pinName)
+        {
+            parent = pinConnection.End.Parent as CustomNodeViewModel;
+        }
+        else if (pinConnection.End.Name == pinName)
+        {
+            parent = pinConnection.Start.Parent as CustomNodeViewModel;
+        }
+        else
+        {
+            parentNode = null;
+            return;
+        }
+
+        parent.DefiningNode._evaluator = _evaluator;
+        parent.DefiningNode.Drawing = Drawing;
+        parent.DefiningNode.PreviousNode = this;
+        parent.DefiningNode._evaluator.Debugger.CurrentNode = parent.DefiningNode;
+
+        parentNode = parent.DefiningNode;
     }
 
     private static IEnumerable<IConnector> GetPinConnections(IEnumerable<IConnector> connections, IPin pinViewModel)
