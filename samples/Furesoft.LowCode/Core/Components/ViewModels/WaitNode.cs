@@ -18,12 +18,10 @@ public class WaitNode : VisualNode
     public WaitNode() : base("Wait")
     {
     }
-
-    [Browsable(false)]
+    
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutputPin { get; set; }
     
-    [Browsable(false)]
     [Pin("Flow Input", PinAlignment.Top)]
     public IOutputPin FlowInputPin { get; set; }
 

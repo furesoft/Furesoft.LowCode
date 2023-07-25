@@ -39,12 +39,10 @@ public class MessageBoxNode : VisualNode
         get => _title;
         set => SetProperty(ref _title, value);
     }
-
-    [Browsable(false)]
+    
     [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin FlowInput { get; } = null;
-
-    [Browsable(false)]
+    
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 

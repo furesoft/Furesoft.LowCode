@@ -16,8 +16,7 @@ public class EntryNode : VisualNode
     public EntryNode() : base("Entry")
     {
     }
-
-    [Browsable(false)]
+    
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowPin { get; set; }
 

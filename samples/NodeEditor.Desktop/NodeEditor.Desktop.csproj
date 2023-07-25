@@ -16,6 +16,7 @@
   <Import Project="..\..\build\Avalonia.Desktop.props" />
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj" />
     <ProjectReference Include="..\Furesoft.LowCode\Furesoft.LowCode.csproj" />
   </ItemGroup>
 

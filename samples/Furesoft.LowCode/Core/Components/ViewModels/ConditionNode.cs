@@ -25,16 +25,13 @@ public class ConditionNode : VisualNode
         get => _condition;
         set => SetProperty(ref _condition, value);
     }
-
-    [Browsable(false)]
+    
     [Pin("Flow", PinAlignment.Top)]
     public IOutputPin FlowPin { get; set; }
     
-    [Browsable(false)]
     [Pin("True", PinAlignment.Bottom)]
     public IOutputPin TruePin { get; set; }
     
-    [Browsable(false)]
     [Pin("False", PinAlignment.Right)]
     public IOutputPin FalsePin { get; set; }
 

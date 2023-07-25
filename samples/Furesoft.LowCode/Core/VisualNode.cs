@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -9,11 +10,12 @@ using Furesoft.LowCode.Core.NodeBuilding;
 using Furesoft.LowCode.ViewModels;
 using NiL.JS.Core;
 using NodeEditor.Model;
+using TypeExtensions = Avalonia.PropertyGrid.Model.Extensions.TypeExtensions;
 
 namespace Furesoft.LowCode.Core;
 
 [DataContract(IsReference = true)]
-public abstract class VisualNode : ViewModelBase
+public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
 {
     private string _label;
     private string _description;
@@ -32,7 +34,7 @@ public abstract class VisualNode : ViewModelBase
         get => _label;
         set => SetProperty(ref _label, value);
     }
-    
+
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Browsable(false)]
     public string Description
@@ -122,4 +124,73 @@ public abstract class VisualNode : ViewModelBase
     {
         Context.GetVariable(name).Assign(JSValue.Wrap(value));
     }
+
+    #region Custom Type Descriptor Interfaces
+
+    public AttributeCollection GetAttributes()
+    {
+        return TypeDescriptor.GetAttributes(this, true);
+    }
+
+    public string GetClassName()
+    {
+        return TypeDescriptor.GetClassName(this, true);
+    }
+
+    public string GetComponentName()
+    {
+        return TypeDescriptor.GetComponentName(this, true);
+    }
+
+    public TypeConverter GetConverter()
+    {
+        return TypeDescriptor.GetConverter(this, true);
+    }
+
+    public EventDescriptor GetDefaultEvent()
+    {
+        return TypeDescriptor.GetDefaultEvent(this, true);
+    }
+
+    public PropertyDescriptor GetDefaultProperty()
+    {
+        return TypeDescriptor.GetDefaultProperty(this, true);
+    }
+
+    public object GetEditor(Type editorBaseType)
+    {
+        return TypeDescriptor.GetEditor(this, editorBaseType, true);
+    }
+
+    public EventDescriptorCollection GetEvents()
+    {
+        return TypeDescriptor.GetEvents(this, true);
+    }
+
+    public EventDescriptorCollection GetEvents(Attribute[] attributes)
+    {
+        return TypeDescriptor.GetEvents(this, attributes, true);
+    }
+
+    public PropertyDescriptorCollection GetProperties()
+    {
+        return GetProperties(null);
+    }
+
+    public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
+    {
+        return new(
+            (from PropertyDescriptor property in TypeDescriptor.GetProperties(this, true)
+                where property.PropertyType != typeof(IInputPin) && property.PropertyType != typeof(IOutputPin)
+                let attribute = property.Attributes.OfType<BrowsableAttribute>().FirstOrDefault()
+                where attribute == null || attribute.Browsable
+                select TypeDescriptor.CreateProperty(GetType(), property.Name, property.PropertyType)).ToArray());
+    }
+
+    public object GetPropertyOwner(PropertyDescriptor pd)
+    {
+        return this;
+    }
+
+    #endregion
 }
