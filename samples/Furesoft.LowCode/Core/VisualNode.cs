@@ -5,7 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Threading.Tasks;
+using Avalonia.PropertyGrid.Model.Extensions;
 using Furesoft.LowCode.Core.NodeBuilding;
 using Furesoft.LowCode.ViewModels;
 using NiL.JS.Core;
@@ -42,7 +44,12 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         set => SetProperty(ref _description, value);
     }
 
+    /// <summary>
+    /// Gets the previously executed node
+    /// </summary>
+    [Browsable(false)]
     public VisualNode PreviousNode { get; set; }
+    
     public abstract Task Execute();
 
     protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
@@ -124,6 +131,21 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     protected void SetOutVariable(string name, object value)
     {
         Context.GetVariable(name).Assign(JSValue.Wrap(value));
+    }
+
+    public string GetCallStack()
+    {
+        var sb = new StringBuilder();
+        
+        sb.AppendLine($"{Label}:");
+        foreach (PropertyDescriptor value in GetProperties())
+        {
+            sb.AppendLine($"\t{value.Name}: {value.GetValue(this)}");
+        }
+
+        sb.AppendLine(PreviousNode?.GetCallStack());
+        
+        return sb.ToString();
     }
 
     #region Custom Type Descriptor Interfaces
