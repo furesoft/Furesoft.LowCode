@@ -80,6 +80,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
             parent.DefiningNode._evaluator = _evaluator;
             parent.DefiningNode.Drawing = Drawing;
             parent.DefiningNode.PreviousNode = this;
+            parent.DefiningNode._evaluator._debugger.CurrentNode = parent.DefiningNode;
 
             await parent.DefiningNode.Execute();
         }
