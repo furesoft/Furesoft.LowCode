@@ -20,7 +20,7 @@ public class ConsoleInNode : VisualNode
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin OutputPin { get; set; }
     
-    public ConsoleInNode() : base("Console In")
+    public ConsoleInNode() : base("Console Input")
     {
     }
 
