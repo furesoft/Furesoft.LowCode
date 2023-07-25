@@ -5,6 +5,7 @@ using Furesoft.LowCode.Core.Components.ViewModels;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 using NodeEditor.Model;
+using Debugger = Furesoft.LowCode.Core.Debugging.Debugger;
 
 namespace Furesoft.LowCode.Core;
 
@@ -12,13 +13,13 @@ public class Evaluator
 {
     private readonly IDrawingNode _drawing;
     public Context Context;
-    internal readonly Debugger _debugger;
+    internal Debugger Debugger { get; }
 
     public Evaluator(IDrawingNode drawing)
     {
         _drawing = drawing;
         Context = new();
-        _debugger = new(Context);
+        Debugger = new(Context);
     }
     
     public async Task Execute()
@@ -28,7 +29,7 @@ public class Evaluator
 
         entryNode.DefiningNode.Drawing = _drawing;
         entryNode.DefiningNode._evaluator = this;
-        entryNode.DefiningNode._evaluator._debugger.CurrentNode = entryNode.DefiningNode;
+        entryNode.DefiningNode._evaluator.Debugger.CurrentNode = entryNode.DefiningNode;
         
         await entryNode.DefiningNode.Execute();
     }

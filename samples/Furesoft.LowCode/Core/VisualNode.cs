@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using Avalonia.PropertyGrid.Model.Extensions;
 using Furesoft.LowCode.Core.NodeBuilding;
 using Furesoft.LowCode.ViewModels;
 using NiL.JS.Core;
@@ -54,6 +53,8 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
     protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
+        _evaluator.Debugger.ResetWait();
+
         var pinName = GetPinName(pinMembername);
         var connections = GetConnections();
         var pinViewModel = GetPinViewModel(pinName);
@@ -80,8 +81,13 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
             parent.DefiningNode._evaluator = _evaluator;
             parent.DefiningNode.Drawing = Drawing;
             parent.DefiningNode.PreviousNode = this;
-            parent.DefiningNode._evaluator._debugger.CurrentNode = parent.DefiningNode;
+            parent.DefiningNode._evaluator.Debugger.CurrentNode = parent.DefiningNode;
 
+            if (_evaluator.Debugger.IsAttached)
+            {
+                await _evaluator.Debugger.WaitTask;
+            }
+            
             await parent.DefiningNode.Execute();
         }
     }
