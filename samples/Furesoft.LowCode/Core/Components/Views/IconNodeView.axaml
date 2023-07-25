@@ -6,7 +6,7 @@
              x:Class="Furesoft.LowCode.Core.Components.Views.IconNodeView">
   <Grid>
     <Ellipse Classes="node" />
-    <Viewbox Margin="12,15,15,15" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Viewbox Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
       <Path Classes="node" Data="{Binding $parent[UserControl].Tag}" />
     </Viewbox>
   </Grid>
