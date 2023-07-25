@@ -10,7 +10,6 @@ using Furesoft.LowCode.Core.NodeBuilding;
 using Furesoft.LowCode.ViewModels;
 using NiL.JS.Core;
 using NodeEditor.Model;
-using TypeExtensions = Avalonia.PropertyGrid.Model.Extensions.TypeExtensions;
 
 namespace Furesoft.LowCode.Core;
 
@@ -43,6 +42,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         set => SetProperty(ref _description, value);
     }
 
+    public VisualNode PreviousNode { get; set; }
     public abstract Task Execute();
 
     protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
@@ -72,6 +72,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
             parent.DefiningNode._evaluator = _evaluator;
             parent.DefiningNode.Drawing = Drawing;
+            parent.DefiningNode.PreviousNode = this;
 
             await parent.DefiningNode.Execute();
         }
