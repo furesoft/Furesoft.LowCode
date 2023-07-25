@@ -157,11 +157,11 @@ public partial class MainViewViewModel : ViewModelBase
 
                     if (index == 0)
                     {
-                        Templates.Add(treeViewItem);
+                        Templates.Insert(0, treeViewItem);
                     }
                     else
                     {
-                        parentItem.Items.Add(treeViewItem);
+                        parentItem.Items.Insert(0, treeViewItem);
                     }
 
                     treeCache.Add(currentPath, treeViewItem);
