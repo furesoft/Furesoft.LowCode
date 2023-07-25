@@ -55,8 +55,16 @@ public partial class MainViewViewModel : ViewModelBase
 
         CategorizeTemplates(_editor.Templates);
         TransformToTree();
+        
+        PropertyChanged += OnPropertyChanged;
+    }
 
-        Search("ass");
+    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SearchTerm))
+        {
+            Search(SearchTerm);
+        }
     }
 
     private void CategorizeTemplates(IList<INodeTemplate> templates)
@@ -78,7 +86,30 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public void Search(string term)
     {
+        if (string.IsNullOrEmpty(term))
+        {
+            CollapseAll();
+            return;
+        }
+        
         Search(Templates);
+    }
+
+    private void CollapseAll()
+    {
+        foreach (var template in Templates)
+        {
+            if (template is TreeViewItem tvi)
+            {
+                tvi.IsExpanded = false;
+                tvi.IsVisible = true;
+            }
+
+            if (template is NodeTemplateViewModel vm)
+            {
+                vm.IsVisible = true;
+            }
+        }
     }
 
     private void Search(IEnumerable<object> children)
@@ -90,9 +121,19 @@ public partial class MainViewViewModel : ViewModelBase
                 vm.IsVisible = vm.Title.ToLower().Contains(_searchTerm.ToLower());
             }
 
-            if (template is TreeViewItem tvi)
+            if (template is not TreeViewItem tvi) continue;
+            
+            Search(tvi.Items);
+
+            if (!tvi.Items.OfType<NodeTemplateViewModel>().Any(_ => _.IsVisible))
             {
-                Search(tvi.Items);
+                tvi.IsVisible = false;
+                tvi.IsExpanded = false;
+            }
+            else
+            {
+                tvi.IsVisible = true;
+                tvi.IsExpanded = true;
             }
         }
     }

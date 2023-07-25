@@ -101,16 +101,13 @@
         <ColumnDefinition Width="8" />
         <ColumnDefinition Width="300" />
       </Grid.ColumnDefinitions>
-      <DockPanel Grid.Column="0"
-                 IsVisible="{Binding IsToolboxVisible}">
-        <Separator Classes="vertical" DockPanel.Dock="Right" />
-        
-        <StackPanel Spacing="5">
-          <TextBox Text="{ReflectionBinding SearchTerm}" Margin="5" />
-          <editor:Toolbox Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
-        </StackPanel>
-      </DockPanel>
-      
+
+      <Grid RowDefinitions="35,*" Grid.Column="0"
+                  IsVisible="{Binding IsToolboxVisible}">
+        <TextBox Text="{ReflectionBinding SearchTerm, Mode=TwoWay}" Margin="5" />
+        <editor:Toolbox Grid.Row="1" Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
+      </Grid>
+
       <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2">
         <editor:Editor.Background>
           <VisualBrush TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
@@ -120,7 +117,7 @@
           </VisualBrush>
         </editor:Editor.Background>
       </editor:Editor>
-      
+
       <GridSplitter Grid.Column="1" Background="Transparent" />
       <GridSplitter Grid.Column="3" Background="Transparent" />
 

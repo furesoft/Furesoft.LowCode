@@ -35,7 +35,7 @@
 
           <TreeView.DataTemplates>
             <DataTemplate DataType="mvvm:NodeTemplateViewModel">
-              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrush}">
+              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrush}" IsVisible="{ReflectionBinding IsVisible, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />
@@ -43,7 +43,7 @@
                   </i:BehaviorCollection>
                 </i:Interaction.Behaviors>
                 
-                <Viewbox IsVisible="{ReflectionBinding IsVisible, Mode=TwoWay}" DockPanel.Dock="Left" Width="32" Height="32" DataContext="{Binding Preview}">
+                <Viewbox DockPanel.Dock="Left" Width="32" Height="32" DataContext="{Binding Preview}">
                     <controls:Node IsHitTestVisible="False">
                       <controls:Node.Styles>
                         <Style Selector="controls|Pins /template/ ItemsControl#PART_PinsItemsControl">

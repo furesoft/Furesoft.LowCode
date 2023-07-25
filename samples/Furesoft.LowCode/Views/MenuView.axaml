@@ -52,7 +52,7 @@
     <!-- Menu -->
  
     <Menu IsVisible="{x:Static lowCode:App.EnableMainMenu}">
-      <!-- File -->
+      <MenuItem Header="Run" Command="{Binding EvaluateCommand}" />
       <MenuItem Header="_File">
         <MenuItem Header="_New" 
                   Command="{Binding NewCommand}" 
@@ -174,4 +174,3 @@
   </DockPanel>
 
 </UserControl>
-
