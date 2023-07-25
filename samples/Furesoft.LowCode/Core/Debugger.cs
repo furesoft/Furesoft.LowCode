@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Furesoft.LowCode.Core;
 using NiL.JS.Core;
 
-namespace Furesoft.LowCode;
+namespace Furesoft.LowCode.Core;
 
 public class Debugger
 {
-    private Context Context;
+    private readonly Context _context;
     public VisualNode CurrentNode;
 
     public Debugger(Context context)
     {
-        Context = context;
+        _context = context;
     }
 
     public Task Step()
@@ -33,14 +32,13 @@ public class Debugger
         return data;
     }
 
+    public object Evaluate(string src)
+    {
+       return _context.Eval(src).Value;
+    }
+
     private Dictionary<string, object> GetLocalsFromContext()
     {
-        return Context.ToDictionary(local => local, local => Context.GetVariable(local).Value);
+        return _context.ToDictionary(local => local, local => _context.GetVariable(local).Value);
     }
-}
-
-public class DebuggerData
-{
-    public string CallStack { get; set; }
-    public Dictionary<string, object> Locals { get; set; } = new();
 }

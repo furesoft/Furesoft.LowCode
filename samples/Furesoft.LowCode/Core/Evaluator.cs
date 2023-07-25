@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Furesoft.LowCode.Core.Components.ViewModels;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
@@ -20,7 +21,7 @@ public class Evaluator
         _debugger = new(Context);
     }
     
-    public async void Execute()
+    public async Task Execute()
     {
         var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
             .First(node => node.DefiningNode.GetType() == typeof(EntryNode));

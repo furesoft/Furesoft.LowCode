@@ -195,10 +195,10 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void Evaluate()
+    public async Task Evaluate()
     {
         Evaluator = new(_editor.Drawing);
-        Evaluator.Execute();
+        await Evaluator.Execute();
     }
 
     [RelayCommand]
