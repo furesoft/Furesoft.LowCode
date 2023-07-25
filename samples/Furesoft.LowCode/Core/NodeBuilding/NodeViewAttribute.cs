@@ -5,10 +5,17 @@ namespace Furesoft.LowCode.Core.NodeBuilding;
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeViewAttribute : Attribute
 {
+    public Type Type { get; set; }
+    public object Parameter { get; set; }
+    
     public NodeViewAttribute(Type type)
     {
         Type = type;
     }
 
-    public Type Type { get; set; }
+    public NodeViewAttribute(Type type, object parameter) : this(type)
+    {
+        Parameter = parameter;
+    }
+
 }

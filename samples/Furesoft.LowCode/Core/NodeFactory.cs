@@ -99,6 +99,8 @@ public partial class NodeFactory : INodeFactory
             {
                 width = nodeView.MinWidth;
             }
+
+            nodeView.Tag = nodeViewAttribute.Parameter;
         }
 
         return CreateNode(visualNode, pins, position, width, height, nodeView);

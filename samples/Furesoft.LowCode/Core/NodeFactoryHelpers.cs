@@ -53,7 +53,7 @@ public partial class NodeFactory
     
     private static INode CreateEntry((double x, double y) position)
     {
-        var node = NodeFactory.CreateNode(new EntryNode(), position);
+        var node = CreateNode(new EntryNode(), position);
         node.IsRemovable = false;
 
         return node;
