@@ -9,6 +9,7 @@
   
   <Style Selector="Path.node">
     <Setter Property="Fill" Value="{DynamicResource NodeForegroundBrush}" />
+    <Setter Property="Stroke" Value="{DynamicResource NodeForegroundBrush}" />
     <Setter Property="StrokeThickness" Value="1" />
   </Style>
 

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Furesoft.LowCode.Core.Components.Views;
 using Furesoft.LowCode.Core.NodeBuilding;
 using NiL.JS.Core;
 using NodeEditor.Model;
@@ -9,6 +10,7 @@ namespace Furesoft.LowCode.Core.Components.ViewModels;
 
 [DataContract(IsReference = true)]
 [NodeCategory("Data")]
+[NodeView(typeof(AssignNodeView))]
 [Description("Save a value for later usage")]
 public class AssignNode : VisualNode
 {
