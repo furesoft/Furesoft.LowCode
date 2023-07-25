@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia.Controls;
@@ -18,6 +19,8 @@ public partial class NodeFactory : INodeFactory
     private const int PinSize = 15;
 
     private readonly List<DynamicNode> _dynamicNodes = new();
+
+    public List<string> SearchPaths = new() {"."};
 
     public void AddDynamicNode(DynamicNode node)
     {
@@ -125,7 +128,9 @@ public partial class NodeFactory : INodeFactory
         var templates = new List<INodeTemplate>();
 
         var nodeTypes =
-            from assembly in AppDomain.CurrentDomain.GetAssemblies()
+            from folder in SearchPaths
+            from assemblyFile in Directory.GetFiles(folder, "*.dll")
+            let assembly = Assembly.LoadFrom(assemblyFile)
             from type in assembly.GetTypes()
             where IsVisualNode(type)
             select type;
