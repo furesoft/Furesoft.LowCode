@@ -168,6 +168,11 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     {
         Context.GetVariable(name).Assign(JSValue.Wrap(value));
     }
+    
+    protected void DefineConstant(string name, object value)
+    {
+        Context.DefineVariable(name).Assign(JSValue.Wrap(value));
+    }
 
     public string GetCallStack()
     {

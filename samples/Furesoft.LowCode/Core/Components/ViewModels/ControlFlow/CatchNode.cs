@@ -21,6 +21,9 @@ public class CatchNode : VisualNode
 
     [Pin("Do", PinAlignment.Bottom)]
     public IOutputPin DoPin { get; set; }
+
+    [Description("Give the error a name. If its not set the name will be 'error'")]
+    public string ErrorName { get; set; }
     
     public CatchNode() : base("Catch Error")
     {
@@ -34,8 +37,8 @@ public class CatchNode : VisualNode
         }
         catch (Exception ex)
         {
-            Context.DefineVariable("error").Assign(JSValue.Wrap(ex));
-            
+            DefineConstant(ErrorName ?? "error", ex);
+
             await ContinueWith(OnErrorPin);
         }
     }
