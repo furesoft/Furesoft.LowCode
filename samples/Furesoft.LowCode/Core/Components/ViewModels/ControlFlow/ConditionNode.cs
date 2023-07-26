@@ -5,7 +5,7 @@ using Furesoft.LowCode.Core.Components.Views;
 using Furesoft.LowCode.Core.NodeBuilding;
 using NodeEditor.Model;
 
-namespace Furesoft.LowCode.Core.Components.ViewModels;
+namespace Furesoft.LowCode.Core.Components.ViewModels.ControlFlow;
 
 [DataContract(IsReference = true)]
 [NodeCategory("ControlFlow")]
