@@ -100,6 +100,15 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         parentNode = parent.DefiningNode;
     }
 
+    [Browsable(false)]
+    public bool HasBreakPoint
+    {
+        get
+        {
+            return _evaluator?.Debugger.BreakPointNodes.Contains(this) ?? false;
+        }
+    }
+
     public void AddBreakPoint()
     {
         _evaluator.Debugger.BreakPointNodes.Add(this);

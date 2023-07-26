@@ -55,6 +55,7 @@
       <MenuItem Header="Run" Command="{Binding EvaluateCommand}" />
       <MenuItem Header="Debug" Command="{Binding DebugCommand}" />
       <MenuItem Header="Step" Command="{Binding StepCommand}" />
+      <MenuItem Header="Continue" Command="{Binding ContinueCommand}" />
       <MenuItem Header="_File">
         <MenuItem Header="_New" 
                   Command="{Binding NewCommand}" 

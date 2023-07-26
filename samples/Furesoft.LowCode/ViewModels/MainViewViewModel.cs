@@ -217,6 +217,12 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    public async Task Continue()
+    {
+        await Evaluator.Debugger.Continue();
+    }
+
+    [RelayCommand]
     private void ToggleToolboxVisible()
     {
         IsToolboxVisible = !IsToolboxVisible;
