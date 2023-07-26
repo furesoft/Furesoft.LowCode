@@ -34,10 +34,9 @@ public class CatchNode : VisualNode
         }
         catch (Exception ex)
         {
-            var errorContext = new Context(Context);
-            errorContext.DefineConstant("error", JSValue.Wrap(ex));
-
-            await ContinueWith(OnErrorPin, errorContext);
+            Context.DefineVariable("error").Assign(JSValue.Wrap(ex));
+            
+            await ContinueWith(OnErrorPin);
         }
     }
 }

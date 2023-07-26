@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Furesoft.LowCode.Core.NodeBuilding;
 using Furesoft.LowCode.ViewModels;
 using NiL.JS.Core;
+using NiL.JS.Extensions;
 using NodeEditor.Model;
 
 namespace Furesoft.LowCode.Core;
@@ -20,7 +21,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     private string _label;
     private string _description;
     internal Evaluator _evaluator;
-    protected Context Context => _evaluator?.Context;
+    protected Context Context { get; private set; }
 
     public VisualNode(string label)
     {
@@ -51,7 +52,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     
     public abstract Task Execute();
 
-    protected async Task ContinueWith(IOutputPin pin, Context context = null, [CallerArgumentExpression("pin")] string pinMembername = null)
+    protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         _evaluator.Debugger.ResetWait();
 
@@ -70,11 +71,6 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
                 await _evaluator.Debugger.WaitTask;
             }
 
-            if (context != null)
-            {
-                parent._evaluator.Context = context;
-            }
-            
             await parent?.Execute();
         }
     }
@@ -98,6 +94,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         }
 
         parent.DefiningNode._evaluator = _evaluator;
+        parent.DefiningNode.Context = new(Context ?? _evaluator.Context);
         parent.DefiningNode.Drawing = Drawing;
         parent.DefiningNode.PreviousNode = this;
         parent.DefiningNode._evaluator.Debugger.CurrentNode = parent.DefiningNode;
@@ -164,7 +161,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
     protected T Evaluate<T>(string src)
     {
-        return _evaluator.Evaluate<T>(src);
+        return Context.Eval(src).As<T>();
     }
 
     protected void SetOutVariable(string name, object value)
