@@ -100,6 +100,16 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         parentNode = parent.DefiningNode;
     }
 
+    public void AddBreakPoint()
+    {
+        _evaluator.Debugger.BreakPointNodes.Add(this);
+    }
+
+    public void RemoveBreakPoint()
+    {
+        _evaluator.Debugger.BreakPointNodes.Remove(this);
+    }
+
     private static IEnumerable<IConnector> GetPinConnections(IEnumerable<IConnector> connections, IPin pinViewModel)
     {
         return from conn in connections
