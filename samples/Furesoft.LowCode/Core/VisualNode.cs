@@ -51,7 +51,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     
     public abstract Task Execute();
 
-    protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+    protected async Task ContinueWith(IOutputPin pin, Context context = null, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         _evaluator.Debugger.ResetWait();
 
@@ -68,6 +68,11 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
             if (_evaluator.Debugger.IsAttached)
             {
                 await _evaluator.Debugger.WaitTask;
+            }
+
+            if (context != null)
+            {
+                parent._evaluator.Context = context;
             }
             
             await parent?.Execute();

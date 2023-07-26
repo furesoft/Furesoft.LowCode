@@ -8,7 +8,7 @@ using NodeEditor.Model;
 namespace Furesoft.LowCode.Core.Components.ViewModels.ControlFlow;
 
 [DataContract(IsReference = true)]
-[NodeCategory("ControlFlow")]
+[NodeCategory("Control Flow")]
 [NodeView(typeof(ConditionView))]
 [Description("Change control flow based on condition")]
 public class ConditionNode : VisualNode
