@@ -200,6 +200,21 @@ public partial class MainViewViewModel : ViewModelBase
         Evaluator = new(_editor.Drawing);
         await Evaluator.Execute();
     }
+    
+    [RelayCommand]
+    public async Task Debug()
+    {
+        Evaluator = new(_editor.Drawing);
+        Evaluator.Debugger.IsAttached = true;
+        
+        await Evaluator.Execute();
+    }
+
+    [RelayCommand]
+    public async Task Step()
+    {
+        await Evaluator.Debugger.Step();
+    }
 
     [RelayCommand]
     private void ToggleToolboxVisible()
@@ -293,8 +308,8 @@ public partial class MainViewViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
+                //Debug.WriteLine(ex.Message);
+                //Debug.WriteLine(ex.StackTrace);
             }
         }
     }
@@ -333,8 +348,8 @@ public partial class MainViewViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
+                //Debug.WriteLine(ex.Message);
+                //Debug.WriteLine(ex.StackTrace);
             }
         }
     }
