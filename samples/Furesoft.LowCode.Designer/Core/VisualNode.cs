@@ -57,10 +57,26 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         _evaluator.Debugger.ResetWait();
+        
+        var nodes = GetConnectedNodes(pinMembername, PinMode.Output, context);
 
+        foreach (var node in nodes)
+        {
+            if (_evaluator.Debugger.IsAttached)
+            {
+                await _evaluator.Debugger.WaitTask;
+            }
+
+            await node?.Execute();
+        }
+
+    }
+
+    private IEnumerable<VisualNode> GetConnectedNodes(string pinMembername, PinMode mode, Context context = null)
+    {
         var pinName = GetPinName(pinMembername);
         var connections = GetConnections();
-        var pinViewModel = GetPinViewModel(pinName);
+        var pinViewModel = GetPinViewModel(pinName, mode);
 
         var pinConnections = GetPinConnections(connections, pinViewModel);
 
@@ -68,12 +84,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
         {
             InitNextNode(pinConnection, pinName, out var parent, context);
 
-            if (_evaluator.Debugger.IsAttached)
-            {
-                await _evaluator.Debugger.WaitTask;
-            }
-
-            await parent?.Execute();
+            yield return parent;
         }
     }
 
@@ -131,13 +142,13 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
             select conn;
     }
 
-    private IPin GetPinViewModel(string pinName)
+    private IPin GetPinViewModel(string pinName, PinMode mode)
     {
         return (from node in Drawing.Nodes
             where ((CustomNodeViewModel)node).DefiningNode == this
             from pinn in node.Pins
             where pinn.Name == pinName
-            select pinn).OfType<PinViewModel>().FirstOrDefault(_=> _.Mode == PinMode.Output);
+            select pinn).OfType<PinViewModel>().FirstOrDefault(_=> _.Mode == mode);
     }
 
     private IEnumerable<IConnector> GetConnections()
