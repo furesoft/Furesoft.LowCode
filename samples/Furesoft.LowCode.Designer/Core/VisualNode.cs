@@ -66,6 +66,12 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
             {
                 await _evaluator.Debugger.WaitTask;
             }
+            
+            node._evaluator = _evaluator;
+            node.Context = context ?? _evaluator.Context;
+            node.Drawing = Drawing;
+            node.PreviousNode = this;
+            node._evaluator.Debugger.CurrentNode = node;
 
             await node?.Execute();
         }
@@ -86,14 +92,13 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
         foreach (var pinConnection in pinConnections)
         {
-            InitNextNode(pinConnection, pinName, out var parent, context);
+            InitNextNode(pinConnection, pinName, out var parent);
 
             yield return parent;
         }
     }
 
-    private void InitNextNode(IConnector pinConnection, string pinName, out VisualNode parentNode,
-        Context context = null)
+    private void InitNextNode(IConnector pinConnection, string pinName, out VisualNode parentNode)
     {
         CustomNodeViewModel parent;
 
@@ -110,12 +115,6 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
             parentNode = null;
             return;
         }
-
-        parent.DefiningNode._evaluator = _evaluator;
-        parent.DefiningNode.Context = context ?? _evaluator.Context;
-        parent.DefiningNode.Drawing = Drawing;
-        parent.DefiningNode.PreviousNode = this;
-        parent.DefiningNode._evaluator.Debugger.CurrentNode = parent.DefiningNode;
 
         parentNode = parent.DefiningNode;
     }
