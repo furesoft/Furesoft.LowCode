@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Editor", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{EA2546EB-E043-4411-92D2-96AF60E6EC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode", "samples\Furesoft.LowCode\Furesoft.LowCode.csproj", "{1AC073FC-6F01-4F5B-AE78-17EE10F74D37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Designer", "samples\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj", "{1AC073FC-6F01-4F5B-AE78-17EE10F74D37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.IO", "src\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj", "{B70813DA-E939-4626-BE32-D2A9DDC2604F}"
 EndProject

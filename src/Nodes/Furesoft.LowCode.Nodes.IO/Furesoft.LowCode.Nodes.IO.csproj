@@ -8,7 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\samples\Furesoft.LowCode\Furesoft.LowCode.csproj" />
+      <ProjectReference Include="..\..\..\samples\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
     </ItemGroup>
 
+  <Import Project="..\..\..\build\Base.props" />
 </Project>

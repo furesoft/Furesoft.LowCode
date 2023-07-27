@@ -2,9 +2,9 @@
 using Avalonia.Input;
 using Avalonia.VisualTree;
 using Avalonia.Xaml.Interactions.DragAndDrop;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Behaviors;
+namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class TemplatesTreeViewDropHandler : DropHandlerBase
 {

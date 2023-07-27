@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Core;
-using Furesoft.LowCode.Core.Components.Views;
-using Furesoft.LowCode.Core.NodeBuilding;
-using NodeEditor.Model;
+using Furesoft.LowCode.Designer.Core;
+using Furesoft.LowCode.Designer.Core.Components.Views;
+using Furesoft.LowCode.Designer.Core.NodeBuilding;
+using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Nodes.IO;
 

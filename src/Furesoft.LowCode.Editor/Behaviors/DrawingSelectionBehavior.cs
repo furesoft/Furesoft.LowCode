@@ -5,10 +5,11 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Reactive;
 using Avalonia.Xaml.Interactivity;
+using Furesoft.LowCode.Editor.Model;
+using NodeEditor;
 using NodeEditor.Controls;
-using NodeEditor.Model;
 
-namespace NodeEditor.Behaviors;
+namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class DrawingSelectionBehavior : Behavior<ItemsControl>
 {

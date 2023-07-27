@@ -3,7 +3,7 @@
                     xmlns:m="clr-namespace:NodeEditor.Model;assembly=NodeEditorAvalonia.Model"
                     xmlns:converters="clr-namespace:NodeEditor.Converters"
                     xmlns:controls="clr-namespace:NodeEditor.Controls"
-                    xmlns:model="clr-namespace:NodeEditor.Model"
+                    xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
                     x:CompileBindings="True">
 
   <ControlTheme x:Key="{x:Type controls:Connectors}" TargetType="controls:Connectors">

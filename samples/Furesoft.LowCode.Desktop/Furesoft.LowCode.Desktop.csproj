@@ -11,12 +11,14 @@
   </ItemGroup>
 
   <Import Project="..\..\build\Base.props" />
-  <Import Project="..\..\build\ReferenceAssemblies.props" />
-  <Import Project="..\..\build\Avalonia.Desktop.props" />
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj" />
-    <ProjectReference Include="..\Furesoft.LowCode\Furesoft.LowCode.csproj" />
+    <ProjectReference Include="..\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.1" />
   </ItemGroup>
 
 </Project>

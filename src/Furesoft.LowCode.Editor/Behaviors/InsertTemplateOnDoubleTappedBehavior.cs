@@ -2,9 +2,9 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Behaviors;
+namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
 {

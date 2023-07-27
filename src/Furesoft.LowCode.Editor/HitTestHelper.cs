@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.VisualTree;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
 namespace NodeEditor;
 

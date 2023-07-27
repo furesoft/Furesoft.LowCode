@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Mvvm;
+namespace Furesoft.LowCode.Editor.MVVM;
 
 public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 {

@@ -1,10 +1,10 @@
 using System;
 using System.Reactive.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 using ReactiveMarbles.PropertyChanged;
 
-namespace NodeEditor.Mvvm;
+namespace Furesoft.LowCode.Editor.MVVM;
 
 [ObservableObject]
 public partial class ConnectorViewModel : IConnector

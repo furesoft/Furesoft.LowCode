@@ -3,8 +3,9 @@
                     xmlns:controls="clr-namespace:NodeEditor.Controls"
                     xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
                     xmlns:idd="clr-namespace:Avalonia.Xaml.Interactions.DragAndDrop;assembly=Avalonia.Xaml.Interactions.DragAndDrop"
-                    xmlns:model="clr-namespace:NodeEditor.Model"
-                    xmlns:mvvm="clr-namespace:NodeEditor.Mvvm"
+                    xmlns:mvvm="clr-namespace:Furesoft.LowCode.Editor.MVVM"
+                    xmlns:behaviors="clr-namespace:Furesoft.LowCode.Editor.Behaviors"
+                    xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
                     x:CompileBindings="True">
 
   <ControlTheme x:Key="{x:Type controls:Toolbox}" TargetType="controls:Toolbox">
@@ -13,7 +14,7 @@
         <TreeView ItemsSource="{TemplateBinding Templates}" Name="tree"
                   Background="Transparent">
           <TreeView.Resources>
-            <TemplatesTreeViewDropHandler x:Key="TemplatesTreeViewDropHandler" />
+            <behaviors:TemplatesTreeViewDropHandler x:Key="TemplatesTreeViewDropHandler" />
           </TreeView.Resources>
           
           <i:Interaction.Behaviors>
@@ -26,7 +27,7 @@
                 <i:BehaviorCollectionTemplate>
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />
-                    <InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
+                    <behaviors:InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
                   </i:BehaviorCollection>
                 </i:BehaviorCollectionTemplate>
               </Setter>
@@ -39,7 +40,7 @@
                 <i:Interaction.Behaviors>
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />
-                    <InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
+                    <behaviors:InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
                   </i:BehaviorCollection>
                 </i:Interaction.Behaviors>
                 

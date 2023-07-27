@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NodeEditor.Model;
+namespace Furesoft.LowCode.Editor.Model;
 
 public interface IEditor
 {

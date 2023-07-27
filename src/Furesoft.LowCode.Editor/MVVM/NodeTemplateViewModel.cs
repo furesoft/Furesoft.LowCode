@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Mvvm;
+namespace Furesoft.LowCode.Editor.MVVM;
 
 [ObservableObject]
 public partial class NodeTemplateViewModel : INodeTemplate

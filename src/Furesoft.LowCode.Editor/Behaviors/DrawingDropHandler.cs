@@ -2,10 +2,11 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Furesoft.LowCode.Editor.Model;
+using NodeEditor;
 using NodeEditor.Controls;
-using NodeEditor.Model;
 
-namespace NodeEditor.Behaviors;
+namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class DrawingDropHandler : DefaultDropHandler
 {

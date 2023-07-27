@@ -2,10 +2,9 @@
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
-using NodeEditor.Controls;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Behaviors;
+namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class PinPressedBehavior : Behavior<ContentPresenter>
 {

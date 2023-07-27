@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NodeEditor.Model;
+namespace Furesoft.LowCode.Editor.Model;
 
 public sealed class DrawingNodeEditor
 {

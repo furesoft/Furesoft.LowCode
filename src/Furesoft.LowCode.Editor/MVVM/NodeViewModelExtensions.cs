@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Mvvm;
+namespace Furesoft.LowCode.Editor.MVVM;
 
 public static class NodeViewModelExtensions
 {

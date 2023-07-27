@@ -2,7 +2,7 @@
 using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
 namespace NodeEditor.Converters;
 

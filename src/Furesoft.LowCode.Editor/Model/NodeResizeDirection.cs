@@ -1,4 +1,4 @@
-﻿namespace NodeEditor.Model;
+﻿namespace Furesoft.LowCode.Editor.Model;
 
 public enum NodeResizeDirection
 {

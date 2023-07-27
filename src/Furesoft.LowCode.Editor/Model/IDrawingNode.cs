@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace NodeEditor.Model;
+namespace Furesoft.LowCode.Editor.Model;
 
 public delegate void SelectionChangedEventHandler(object? sender, EventArgs e);
 

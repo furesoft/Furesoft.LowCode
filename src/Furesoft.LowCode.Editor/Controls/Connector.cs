@@ -2,7 +2,7 @@
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
 namespace NodeEditor.Controls;
 

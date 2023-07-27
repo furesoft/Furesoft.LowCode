@@ -2,12 +2,10 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
-using Avalonia.Reactive;
 using Avalonia.Xaml.Interactivity;
-using NodeEditor.Controls;
-using NodeEditor.Model;
+using Furesoft.LowCode.Editor.Model;
 
-namespace NodeEditor.Behaviors;
+namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class NodesSelectedBehavior : Behavior<ItemsControl>
 {
