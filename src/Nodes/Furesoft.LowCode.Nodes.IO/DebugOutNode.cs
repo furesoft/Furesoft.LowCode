@@ -35,7 +35,7 @@ public class DebugOutNode : VisualNode
 
     public override Task Execute()
     {
-        var msg= Evaluate<string>(Message);
+        var msg = Evaluate<string>(Message);
        
         Debug.WriteLine(msg);
 

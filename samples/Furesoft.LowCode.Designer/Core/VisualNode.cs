@@ -69,7 +69,11 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
             await node?.Execute();
         }
-
+    }
+    
+    protected IEnumerable<object> GetInputs(IInputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+    {
+        return GetConnectedNodes(pinMembername, PinMode.Input);
     }
 
     private IEnumerable<VisualNode> GetConnectedNodes(string pinMembername, PinMode mode, Context context = null)
