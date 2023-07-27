@@ -50,7 +50,7 @@ public partial class NodeFactory
 
         return node;
     }
-    
+
     private static INode CreateEntry((double x, double y) position)
     {
         var node = CreateNode(new EntryNode(), position);
@@ -64,7 +64,7 @@ public partial class NodeFactory
         return width / (pinCount + 1) * (i + 1);
     }
 
-    private static void AddPins(double pinSize, IEnumerable<KeyValuePair<string, PinAlignment>> pins,
+    private static void AddPins(double pinSize, IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode)> pins,
         CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         for (int i = 0; i < pins.Count(); i++)
@@ -73,7 +73,7 @@ public partial class NodeFactory
 
             (double baseX, double baseY) = positionMapper(i);
 
-            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Value, pin.Key);
+            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Mode, pin.Alignment, pin.Name);
         }
     }
 }

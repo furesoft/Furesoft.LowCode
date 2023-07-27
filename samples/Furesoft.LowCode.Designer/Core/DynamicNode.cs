@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 
 public class DynamicNode : VisualNode, ICustomTypeDescriptor
 {
-    public readonly Dictionary<string, PinAlignment> Pins = new();
+    public readonly Dictionary<string, (PinAlignment, PinMode)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
         
 
@@ -29,9 +30,9 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
         Properties.Add("out", string.Empty);
     }
 
-    public void AddPin(string name, PinAlignment alignment)
+    public void AddPin(string name, PinAlignment alignment, PinMode mode)
     {
-        Pins.Add(name, alignment);
+        Pins.Add(name, (alignment, mode));
     }
 
     public override Task Execute()

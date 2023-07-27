@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Editor.Model;
+using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels.ControlFlow;
 
@@ -33,7 +34,10 @@ public class RepeatNode : VisualNode
         for (int i = 0; i < times; i++)
         {
             //ToDo: give node index
-            await ContinueWith(DoPin);
+            var context = new Context(Context);
+            context.DefineConstant("i", i);
+            
+            await ContinueWith(DoPin, context);
         }
 
         await ContinueWith(FlowOutput);

@@ -14,6 +14,7 @@ public partial class PinViewModel : IPin
     [ObservableProperty] private double _width;
     [ObservableProperty] private double _height;
     [ObservableProperty] private PinAlignment _alignment;
+    [ObservableProperty] private PinMode _mode;
 
     public event EventHandler<PinCreatedEventArgs>? Created;
 

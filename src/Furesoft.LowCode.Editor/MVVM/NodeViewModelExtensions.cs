@@ -5,7 +5,7 @@ namespace Furesoft.LowCode.Editor.MVVM;
 
 public static class NodeViewModelExtensions
 {
-    public static IPin AddPin(this NodeViewModel node, double x, double y, double width, double height, PinAlignment alignment = PinAlignment.None, string? name = null)
+    public static IPin AddPin(this NodeViewModel node, double x, double y, double width, double height,PinMode mode, PinAlignment alignment = PinAlignment.None, string? name = null)
     {
         var pin = new PinViewModel
         {
@@ -15,7 +15,8 @@ public static class NodeViewModelExtensions
             Y = y,
             Width = width,
             Height = height,
-            Alignment = alignment
+            Alignment = alignment,
+            Mode = mode
         };
 
         node.Pins ??= new ObservableCollection<IPin>();

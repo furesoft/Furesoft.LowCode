@@ -39,7 +39,7 @@ public partial class MainViewViewModel : ViewModelBase
         _editor = new();
 
         var dn = new DynamicNode("Dynamic");
-        dn.AddPin("Flow Input", PinAlignment.Top);
+        dn.AddPin("Flow Input", PinAlignment.Top, PinMode.Input);
 
         var nodeFactory = new NodeFactory();
         nodeFactory.AddDynamicNode(dn);

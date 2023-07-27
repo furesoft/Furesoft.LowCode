@@ -27,13 +27,18 @@ public partial class NodeFactory : INodeFactory
         _dynamicNodes.Add(node);
     }
 
-    private static CustomNodeViewModel CreateNode(VisualNode node, IEnumerable<KeyValuePair<string, PinAlignment>> pins,
+    private static CustomNodeViewModel CreateNode(VisualNode node,
+        IEnumerable<(string Key, PinAlignment Value, PinMode mode)> pins,
         (double x, double y) position, double width = 60, double height = 60, Control nodeView = null)
     {
-        var leftPins = pins.Where(_ => _.Value == PinAlignment.Left).ToArray();
-        var rightPins = pins.Where(_ => _.Value == PinAlignment.Right).ToArray();
-        var topPins = pins.Where(_ => _.Value == PinAlignment.Top).ToArray();
-        var bottomPins = pins.Where(_ => _.Value == PinAlignment.Bottom).ToArray();
+        (string Name, PinAlignment Alignment, PinMode Mode)[] leftPins =
+            pins.Where(_ => _.Value == PinAlignment.Left).ToArray();
+        (string Name, PinAlignment Alignment, PinMode Mode)[] rightPins =
+            pins.Where(_ => _.Value == PinAlignment.Right).ToArray();
+        (string Name, PinAlignment Alignment, PinMode Mode)[] topPins =
+            pins.Where(_ => _.Value == PinAlignment.Top).ToArray();
+        (string Name, PinAlignment Alignment, PinMode Mode)[] bottomPins =
+            pins.Where(_ => _.Value == PinAlignment.Bottom).ToArray();
 
         var maxPinTopBottom = Math.Max(topPins.Length, bottomPins.Length);
         var maxPinLeftRight = Math.Max(leftPins.Length, rightPins.Length);
@@ -61,7 +66,7 @@ public partial class NodeFactory : INodeFactory
         {
             node.Description = descriptionAttribute.Description;
         }
-        
+
         var categoryAttribute = attributes.OfType<CategoryAttribute>().FirstOrDefault();
         if (categoryAttribute != null)
         {
@@ -81,7 +86,9 @@ public partial class NodeFactory : INodeFactory
 
         var pins =
             from pin in pinData
-            select new KeyValuePair<string, PinAlignment>(pin.Item1.Name ?? pin.prop.Name, pin.Item1.Alignment);
+            select (pin.Item1.Name ?? pin.prop.Name,
+                pin.Item1.Alignment,
+                pin.prop.PropertyType == typeof(IOutputPin) ? PinMode.Output : PinMode.Input);
 
         Control nodeView = null;
 
@@ -150,7 +157,7 @@ public partial class NodeFactory : INodeFactory
     {
         foreach (var dynamicNode in _dynamicNodes)
         {
-            var pins = dynamicNode.Pins;
+            var pins = dynamicNode.Pins.Select(_ => (_.Key, _.Value.Item1, _.Value.Item2));
 
             templates.Add(new NodeTemplateViewModel
             {

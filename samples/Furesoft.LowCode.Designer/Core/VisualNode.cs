@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Editor.MVVM;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 
@@ -136,7 +137,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
             where ((CustomNodeViewModel)node).DefiningNode == this
             from pinn in node.Pins
             where pinn.Name == pinName
-            select pinn).FirstOrDefault();
+            select pinn).OfType<PinViewModel>().FirstOrDefault(_=> _.Mode == PinMode.Output);
     }
 
     private IEnumerable<IConnector> GetConnections()
