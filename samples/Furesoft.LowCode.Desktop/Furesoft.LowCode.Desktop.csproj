@@ -4,7 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>False</IsPackable>
     <Nullable>enable</Nullable>
-    <RootNamespace>NodeEditorDemo</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

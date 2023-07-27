@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Avalonia;
-using Furesoft.LowCode;
 
-namespace NodeEditorDemo;
+namespace Furesoft.LowCode.Desktop;
 
 class Program
 {
