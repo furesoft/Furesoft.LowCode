@@ -2,8 +2,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:Furesoft.LowCode.ViewModels"
-        xmlns:views1="clr-namespace:Furesoft.LowCode.Views"
         xmlns:viewModels1="clr-namespace:Furesoft.LowCode.Designer.ViewModels"
         xmlns:views="clr-namespace:Furesoft.LowCode.Designer.Views"
         mc:Ignorable="d" d:DesignWidth="1230" d:DesignHeight="740"
