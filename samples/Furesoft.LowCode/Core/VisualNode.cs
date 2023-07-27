@@ -49,10 +49,11 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     /// </summary>
     [Browsable(false)]
     public VisualNode PreviousNode { get; set; }
-    
+
     public abstract Task Execute();
 
-    protected async Task ContinueWith(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+    protected async Task ContinueWith(IOutputPin pin, Context context = null,
+        [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         _evaluator.Debugger.ResetWait();
 
@@ -64,7 +65,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
         foreach (var pinConnection in pinConnections)
         {
-            InitNextNode(pinConnection, pinName, out var parent);
+            InitNextNode(pinConnection, pinName, out var parent, context);
 
             if (_evaluator.Debugger.IsAttached)
             {
@@ -75,7 +76,8 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         }
     }
 
-    private void InitNextNode(IConnector pinConnection, string pinName, out VisualNode parentNode)
+    private void InitNextNode(IConnector pinConnection, string pinName, out VisualNode parentNode,
+        Context context = null)
     {
         CustomNodeViewModel parent;
 
@@ -94,7 +96,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         }
 
         parent.DefiningNode._evaluator = _evaluator;
-        parent.DefiningNode.Context = new(Context ?? _evaluator.Context);
+        parent.DefiningNode.Context = context ?? _evaluator.Context;
         parent.DefiningNode.Drawing = Drawing;
         parent.DefiningNode.PreviousNode = this;
         parent.DefiningNode._evaluator.Debugger.CurrentNode = parent.DefiningNode;
@@ -168,16 +170,16 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     {
         Context.GetVariable(name).Assign(JSValue.Wrap(value));
     }
-    
-    protected void DefineConstant(string name, object value)
+
+    protected void DefineConstant(string name, object value, Context context = null)
     {
-        Context.DefineVariable(name).Assign(JSValue.Wrap(value));
+       (context ?? Context).DefineVariable(name).Assign(JSValue.Wrap(value));
     }
 
     public string GetCallStack()
     {
         var sb = new StringBuilder();
-        
+
         sb.AppendLine($"{Label}:");
         foreach (PropertyDescriptor value in GetProperties())
         {
@@ -185,7 +187,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
         }
 
         sb.AppendLine(PreviousNode?.GetCallStack());
-        
+
         return sb.ToString();
     }
 
