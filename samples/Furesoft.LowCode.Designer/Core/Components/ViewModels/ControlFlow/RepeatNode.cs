@@ -19,7 +19,7 @@ public class RepeatNode : VisualNode
     [Pin("Do", PinAlignment.Right)]
     public IOutputPin DoPin { get; set; }
     
-    [Pin("Flow", PinAlignment.Right)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; set; }
 
     public RepeatNode() : base("Repeat")
