@@ -170,7 +170,7 @@ public abstract class VisualNode : ViewModelBase, ICustomTypeDescriptor
     {
         Context.GetVariable(name).Assign(JSValue.Wrap(value));
     }
-
+    
     protected void DefineConstant(string name, object value, Context context = null)
     {
        (context ?? Context).DefineVariable(name).Assign(JSValue.Wrap(value));
