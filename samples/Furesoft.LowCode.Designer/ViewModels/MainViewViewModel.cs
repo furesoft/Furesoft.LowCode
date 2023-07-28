@@ -34,7 +34,7 @@ public partial class MainViewViewModel : ViewModelBase
     private Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
     public ObservableCollection<object> Templates { get; set; } = new();
 
-    private readonly CancellationTokenSource _cancellationTokenSource = new();
+    private CancellationTokenSource _cancellationTokenSource = new();
 
     public MainViewViewModel()
     {
@@ -82,6 +82,13 @@ public partial class MainViewViewModel : ViewModelBase
 
             _categorizedNodeTemplates[category].Add(nodeTemplate);
         }
+    }
+
+    [RelayCommand]
+    public void Cancel()
+    {
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource = new();
     }
 
     [RelayCommand]
