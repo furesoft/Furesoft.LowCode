@@ -3,6 +3,7 @@
                     xmlns:converters="clr-namespace:NodeEditor.Converters"
                     xmlns:controls="clr-namespace:NodeEditor.Controls"
                     xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
+                    xmlns:editor="clr-namespace:Furesoft.LowCode.Editor"
                     x:CompileBindings="True">
 
   <ControlTheme x:Key="{x:Type controls:Pin}" TargetType="controls:Pin">

@@ -4,14 +4,14 @@ using Avalonia.Markup.Xaml;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Designer.Views;
 
-namespace Furesoft.LowCode.Designer;
+namespace Furesoft.LowCode.Desktop;
 
 public class App : Application
 {
     public static bool EnableInputOutput { get; set; } = true;
 
     public static bool EnableMainMenu { get; set; } = true;
-
+    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);

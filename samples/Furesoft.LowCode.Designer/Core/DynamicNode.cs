@@ -13,8 +13,7 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
 {
     public readonly Dictionary<string, (PinAlignment, PinMode)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
-        
-
+    
     [Browsable(false)] public Control View { get; set; }
 
     public DynamicNode(string label, Control view = null) : base(label)

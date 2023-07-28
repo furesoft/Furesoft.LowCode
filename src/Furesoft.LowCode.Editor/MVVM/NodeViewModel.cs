@@ -9,6 +9,7 @@ namespace Furesoft.LowCode.Editor.MVVM;
 public partial class NodeViewModel : INode
 {
     [ObservableProperty] private string? _name;
+    [ObservableProperty] private string? _description;
     [ObservableProperty] private INode? _parent;
     [ObservableProperty] private double _x;
     [ObservableProperty] private double _y;
@@ -16,7 +17,7 @@ public partial class NodeViewModel : INode
     [ObservableProperty] private double _height;
     [ObservableProperty] private object? _content;
     [ObservableProperty] private IList<IPin>? _pins;
-
+    
     public event EventHandler<NodeCreatedEventArgs>? Created;
 
     public event EventHandler<NodeRemovedEventArgs>? Removed;

@@ -12,8 +12,8 @@
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IDrawingNode">
         <ItemsControl Name="PART_ConnectorsItemsControl"
-                      ItemsSource="{Binding Connectors}" 
-                      Width="{Binding Width}" 
+                      ItemsSource="{Binding Connectors}"
+                      Width="{Binding Width}"
                       Height="{Binding Height}"
                       Background="Transparent"
                       IsHitTestVisible="False"
@@ -26,9 +26,9 @@
           <ItemsControl.ItemTemplate>
             <DataTemplate DataType="model:IConnector">
               <controls:Connector Name="PART_Connector"
-                                  StartPoint="{Binding Start, Converter={x:Static converters:PinToPointConverter.Instance}}" 
+                                  StartPoint="{Binding Start, Converter={x:Static converters:PinToPointConverter.Instance}}"
                                   EndPoint="{Binding End, Converter={x:Static converters:PinToPointConverter.Instance}}"
-                                  Offset="{Binding Offset}"/>
+                                  Offset="{Binding Offset}" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
