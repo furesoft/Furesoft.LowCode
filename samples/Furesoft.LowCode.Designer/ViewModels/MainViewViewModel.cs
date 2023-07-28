@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -32,6 +33,8 @@ public partial class MainViewViewModel : ViewModelBase
 
     private Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
     public ObservableCollection<object> Templates { get; set; } = new();
+
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     public MainViewViewModel()
     {
@@ -119,19 +122,20 @@ public partial class MainViewViewModel : ViewModelBase
                 vm.IsVisible = vm.Title.ToLower().Contains(_searchTerm.ToLower());
             }
 
-            if (template is not TreeViewItem tvi) continue;
-            
-            Search(tvi.Items);
+            if (template is TreeViewItem tvi)
+            {
+                Search(tvi.Items);
 
-            if (!tvi.Items.OfType<NodeTemplateViewModel>().Any(_ => _.IsVisible))
-            {
-                tvi.IsVisible = false;
-                tvi.IsExpanded = false;
-            }
-            else
-            {
-                tvi.IsVisible = true;
-                tvi.IsExpanded = true;
+                if (!tvi.Items.OfType<NodeTemplateViewModel>().Any(_ => _.IsVisible))
+                {
+                    tvi.IsVisible = false;
+                    tvi.IsExpanded = false;
+                }
+                else
+                {
+                    tvi.IsVisible = true;
+                    tvi.IsExpanded = true;
+                }
             }
         }
     }
@@ -197,7 +201,7 @@ public partial class MainViewViewModel : ViewModelBase
     public async Task Evaluate()
     {
         Evaluator = new(_editor.Drawing);
-        await Evaluator.Execute();
+        await Evaluator.Execute(_cancellationTokenSource.Token);
     }
     
     [RelayCommand]
@@ -206,7 +210,7 @@ public partial class MainViewViewModel : ViewModelBase
         Evaluator = new(_editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
         
-        await Evaluator.Execute();
+        await Evaluator.Execute(_cancellationTokenSource.Token);
     }
 
     [RelayCommand]

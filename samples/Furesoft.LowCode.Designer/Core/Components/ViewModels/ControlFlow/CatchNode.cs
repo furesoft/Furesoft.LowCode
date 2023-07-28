@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -35,7 +36,7 @@ public class CatchNode : VisualNode
     {
     }
 
-    public override async Task Execute()
+    public override async Task Execute(CancellationToken cancellationToken)
     {
         try
         {
@@ -46,7 +47,7 @@ public class CatchNode : VisualNode
             var subContext = new Context(Context);
             DefineConstant(ErrorName, ex, subContext);
 
-            await ContinueWith(OnErrorPin, subContext);
+            await ContinueWith(OnErrorPin, subContext, cancellationToken: cancellationToken);
         }
     }
 }

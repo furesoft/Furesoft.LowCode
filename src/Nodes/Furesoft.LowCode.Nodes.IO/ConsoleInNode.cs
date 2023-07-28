@@ -26,11 +26,11 @@ public class ConsoleInNode : VisualNode
     {
     }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         var input = Console.ReadLine();
         SetOutVariable(Output, input);
 
-        return ContinueWith(OutputPin);
+        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

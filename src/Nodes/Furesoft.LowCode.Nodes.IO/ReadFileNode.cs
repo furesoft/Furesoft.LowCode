@@ -30,12 +30,12 @@ public class ReadFileNode : VisualNode
     {
     }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         var filename = Evaluate<string>(Filename);
        
         SetOutVariable(Output, File.ReadAllText(filename));
 
-        return ContinueWith(OutputPin);
+        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

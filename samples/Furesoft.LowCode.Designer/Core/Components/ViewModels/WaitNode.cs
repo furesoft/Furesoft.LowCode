@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -32,10 +33,10 @@ public class WaitNode : VisualNode
         set => SetProperty(ref _waitTime, value);
     }
 
-    public override async Task Execute()
+    public override async Task Execute(CancellationToken cancellationToken)
     {
-        await Task.Delay(_waitTime);
+        await Task.Delay(_waitTime, cancellationToken);
         
-        await ContinueWith(FlowOutputPin);
+        await ContinueWith(FlowOutputPin, cancellationToken: cancellationToken);
     }
 }

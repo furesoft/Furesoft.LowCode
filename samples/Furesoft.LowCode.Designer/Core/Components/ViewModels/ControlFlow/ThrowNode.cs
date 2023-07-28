@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -21,7 +22,7 @@ public class ThrowNode : VisualNode
     {
     }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         var msg = Evaluate<string>(Message);
         

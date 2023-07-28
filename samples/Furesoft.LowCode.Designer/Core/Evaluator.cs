@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.ViewModels;
 using Furesoft.LowCode.Editor.Model;
@@ -21,7 +22,7 @@ public class Evaluator
         Debugger = new(Context);
     }
     
-    public async Task Execute()
+    public async Task Execute(CancellationToken cancellationToken)
     {
         var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
             .First(node => node.DefiningNode.GetType() == typeof(EntryNode));
@@ -29,8 +30,12 @@ public class Evaluator
         entryNode.DefiningNode.Drawing = _drawing;
         entryNode.DefiningNode._evaluator = this;
         entryNode.DefiningNode._evaluator.Debugger.CurrentNode = entryNode.DefiningNode;
-        
-        await entryNode.DefiningNode.Execute();
+
+        try
+        {
+            await entryNode.DefiningNode.Execute(cancellationToken: cancellationToken);
+        }
+        catch (TaskCanceledException ex){}
     }
 
     public T Evaluate<T>(string src)

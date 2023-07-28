@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Designer.ViewModels;
@@ -51,13 +52,14 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
     [Browsable(false)]
     public VisualNode PreviousNode { get; set; }
 
-    public abstract Task Execute();
+    public abstract Task Execute(CancellationToken cancellationToken);
 
     protected async Task ContinueWith(IOutputPin pin, Context context = null,
+        CancellationToken cancellationToken = default,
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         _evaluator.Debugger.ResetWait();
-        
+
         var nodes = GetConnectedNodes(pinMembername, PinMode.Output, context);
 
         foreach (var node in nodes)
@@ -66,18 +68,21 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
             {
                 await _evaluator.Debugger.WaitTask;
             }
-            
+
             node._evaluator = _evaluator;
             node.Context = context ?? _evaluator.Context;
             node.Drawing = Drawing;
             node.PreviousNode = this;
             node._evaluator.Debugger.CurrentNode = node;
 
-            await node?.Execute();
+            await node?.Execute(cancellationToken);
+            
+            cancellationToken.ThrowIfCancellationRequested();
         }
     }
-    
-    protected IEnumerable<object> GetInputs(IInputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
+
+    protected IEnumerable<object> GetInputs(IInputPin pin,
+        [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input);
     }
@@ -151,7 +156,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
             where ((CustomNodeViewModel)node).DefiningNode == this
             from pinn in node.Pins
             where pinn.Name == pinName
-            select pinn).OfType<PinViewModel>().FirstOrDefault(_=> _.Mode == mode);
+            select pinn).OfType<PinViewModel>().FirstOrDefault(_ => _.Mode == mode);
     }
 
     private IEnumerable<IConnector> GetConnections()
@@ -185,10 +190,10 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
     {
         Context.GetVariable(name).Assign(JSValue.Wrap(value));
     }
-    
+
     protected void DefineConstant(string name, object value, Context context = null)
     {
-       (context ?? Context).DefineVariable(name).Assign(JSValue.Wrap(value));
+        (context ?? Context).DefineVariable(name).Assign(JSValue.Wrap(value));
     }
 
     public string GetCallStack()

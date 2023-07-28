@@ -22,10 +22,10 @@ public class MakeDirNode : VisualNode
     [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         Directory.CreateDirectory(Evaluate<string>(Path));
 
-        return ContinueWith(OutputPin);
+        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

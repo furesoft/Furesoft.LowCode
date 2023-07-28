@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -27,7 +28,7 @@ public class RepeatNode : VisualNode
     {
     }
 
-    public override async Task Execute()
+    public override async Task Execute(CancellationToken cancellationToken)
     {
         var times = Evaluate<int>(Times);
 
@@ -37,9 +38,9 @@ public class RepeatNode : VisualNode
             var context = new Context(Context);
             context.DefineConstant("i", i);
             
-            await ContinueWith(DoPin, context);
+            await ContinueWith(DoPin, context, cancellationToken: cancellationToken);
         }
 
-        await ContinueWith(FlowOutput);
+        await ContinueWith(FlowOutput, cancellationToken: cancellationToken);
     }
 }

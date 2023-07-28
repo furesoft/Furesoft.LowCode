@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -34,7 +35,7 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
         Pins.Add(name, (alignment, mode));
     }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         SetOutVariable(Properties["out"].ToString(), true);
 

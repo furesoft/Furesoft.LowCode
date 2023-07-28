@@ -26,12 +26,12 @@ public class ConsoleOutNode : VisualNode
     {
     }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         var msg= Evaluate<string>(Message);
        
         Console.WriteLine(msg);
 
-        return ContinueWith(OutputPin);
+        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

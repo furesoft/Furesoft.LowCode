@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -46,13 +47,13 @@ public class MessageBoxNode : VisualNode
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 
-    public override async Task Execute()
+    public override async Task Execute(CancellationToken cancellationToken)
     {
         var box = MessageBoxManager
             .GetMessageBoxStandard(_title, Evaluate<string>(_message));
 
         await box.ShowWindowAsync();
 
-        await ContinueWith(FlowOutput);
+        await ContinueWith(FlowOutput, cancellationToken: cancellationToken);
     }
 }

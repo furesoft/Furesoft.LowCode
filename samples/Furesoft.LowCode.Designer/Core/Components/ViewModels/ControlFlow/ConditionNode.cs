@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -35,15 +36,15 @@ public class ConditionNode : VisualNode
     [Pin("False", PinAlignment.Right)]
     public IOutputPin FalsePin { get; set; }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         var value = Evaluate<bool>(Condition);
       
         if (value)
         {
-            return ContinueWith(TruePin);
+            return ContinueWith(TruePin, cancellationToken: cancellationToken);
         }
 
-        return ContinueWith(FalsePin);
+        return ContinueWith(FalsePin, cancellationToken: cancellationToken);
     }
 }

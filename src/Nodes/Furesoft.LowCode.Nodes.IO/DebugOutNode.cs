@@ -33,12 +33,12 @@ public class DebugOutNode : VisualNode
     {
     }
 
-    public override Task Execute()
+    public override Task Execute(CancellationToken cancellationToken)
     {
         var msg = Evaluate<string>(Message);
        
         Debug.WriteLine(msg);
 
-        return ContinueWith(OutputPin);
+        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

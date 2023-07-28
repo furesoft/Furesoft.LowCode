@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.Core.NodeBuilding;
@@ -46,7 +47,7 @@ public class AssignNode : VisualNode
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 
-    public override async Task Execute()
+    public override async Task Execute(CancellationToken cancellationToken)
     {
         var jsVar = Context.GetVariable(Name);
         var value = Context.Eval(Value);
@@ -60,6 +61,6 @@ public class AssignNode : VisualNode
             jsVar.Assign(value);
         }
 
-        await ContinueWith(FlowOutput);
+        await ContinueWith(FlowOutput, cancellationToken: cancellationToken);
     }
 }
