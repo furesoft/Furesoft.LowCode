@@ -2,7 +2,7 @@ using Avalonia;
 
 namespace NodeEditor;
 
-internal static class SnapHelper
+public static class SnapHelper
 {
     public static double Snap(double value, double snap)
     {

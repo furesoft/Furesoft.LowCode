@@ -5,6 +5,7 @@ using System.Linq;
 using Furesoft.LowCode.Designer.Core.Components.ViewModels;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
+using NodeEditor;
 
 namespace Furesoft.LowCode.Designer.Core;
 
@@ -21,16 +22,18 @@ public partial class NodeFactory
             Height = 60000,
             Nodes = new ObservableCollection<INode>(),
             Connectors = new ObservableCollection<IConnector>(),
-            EnableMultiplePinConnections = true,
             EnableSnap = true,
-            SnapX = 10.0,
-            SnapY = 10.0,
+            SnapX = 30.0,
+            SnapY = 30.0,
+            GridCellHeight = 30,
+            GridCellWidth = 30,
+            EnableGrid = true
         };
 
-        var entry = CreateEntry((drawing.Width / 2, drawing.Height / 2 - 275));
-        entry.Parent = drawing;
+        var entryX = SnapHelper.Snap(drawing.Width / 2 - 175, drawing.SnapX);
+        var entryY = SnapHelper.Snap(drawing.Height / 2 - 200, drawing.SnapY);
 
-        drawing.Nodes.Add(entry);
+        CreateEntry((entryX , entryY), drawing);
 
         return drawing;
     }
@@ -51,12 +54,13 @@ public partial class NodeFactory
         return node;
     }
 
-    private static INode CreateEntry((double x, double y) position)
+    private static void CreateEntry((double x, double y) position, IDrawingNode drawing)
     {
         var node = CreateNode(new EntryNode(), position);
         node.IsRemovable = false;
+        node.Parent = drawing;
 
-        return node;
+        drawing.Nodes.Add(node);
     }
 
     private static double CalculateSinglePin(double width, int pinCount, int i)
@@ -64,7 +68,8 @@ public partial class NodeFactory
         return width / (pinCount + 1) * (i + 1);
     }
 
-    private static void AddPins(double pinSize, IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
+    private static void AddPins(double pinSize,
+        IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
         CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         for (int i = 0; i < pins.Count(); i++)
@@ -73,7 +78,8 @@ public partial class NodeFactory
 
             (double baseX, double baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name, pin.Alignment, pin.MultipleConnections);
+            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name, pin.Alignment,
+                pin.MultipleConnections);
         }
     }
 }

@@ -214,21 +214,4 @@ public partial class NodeFactory : INodeFactory
             });
         }
     }
-
-    public void PrintNetList(IDrawingNode drawing)
-    {
-        if (drawing?.Connectors is null || drawing?.Nodes is null)
-        {
-            return;
-        }
-
-        foreach (var connector in drawing.Connectors)
-        {
-            if (connector.Start is { } start && connector.End is { } end)
-            {
-                Debug.WriteLine(
-                    $"{start.Parent?.Content.GetType().Name}:{start.GetType().Name} -> {end.Parent?.Content.GetType().Name}:{end.GetType().Name}");
-            }
-        }
-    }
 }

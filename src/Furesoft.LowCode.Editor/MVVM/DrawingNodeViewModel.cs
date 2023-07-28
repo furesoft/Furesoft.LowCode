@@ -15,7 +15,6 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
     private INodeSerializer? _serializer;
     [ObservableProperty] private IList<INode>? _nodes;
     [ObservableProperty] private IList<IConnector>? _connectors;
-    [ObservableProperty] private bool _enableMultiplePinConnections;
     [ObservableProperty] private bool _enableSnap;
     [ObservableProperty] private double _snapX;
     [ObservableProperty] private double _snapY;

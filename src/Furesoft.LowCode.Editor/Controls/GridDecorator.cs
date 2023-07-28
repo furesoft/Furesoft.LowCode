@@ -65,7 +65,7 @@ public class GridDecorator : Decorator
         var rect = Bounds;
         var thickness = 1.0;
 
-        var brush = new ImmutableSolidColorBrush(Color.FromArgb(255, 222, 222, 222));
+        var brush = new ImmutableSolidColorBrush(Color.FromArgb(80, 222, 222, 222));
         var pen = new ImmutablePen(brush, thickness);
 
         using var _ = context.PushTransform(Matrix.CreateTranslation(-0.5d, -0.5d));

@@ -12,7 +12,6 @@ public interface IDrawingNode : INode
     IList<INode>? Nodes { get; set; }
     IList<IConnector>? Connectors { get; set; }
     ISet<INode>? GetSelectedNodes();
-    bool EnableMultiplePinConnections { get; set; }
     bool EnableSnap { get; set; }
     double SnapX { get; set; }
     double SnapY { get; set; }

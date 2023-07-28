@@ -1,4 +1,7 @@
-﻿namespace Furesoft.LowCode.Editor.Model;
+﻿using System;
+using NodeEditor;
+
+namespace Furesoft.LowCode.Editor.Model;
 
 public static class ConnectorExtensions
 {
@@ -147,5 +150,12 @@ public static class ConnectorExtensions
                 p2Y -= offset;
                 break;
         }
+
+        p1X = SnapHelper.Snap(p1X, connector.Parent.SnapX);
+        p1Y = SnapHelper.Snap(p1Y, connector.Parent.SnapY);
+        
+        p2X = SnapHelper.Snap(p2X, connector.Parent.SnapX);
+        p2Y = SnapHelper.Snap(p2Y, connector.Parent.SnapY);
+        
     }
 }

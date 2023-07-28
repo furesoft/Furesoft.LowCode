@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
@@ -58,18 +59,17 @@ public class Connector : Shape
             var p2Y = EndPoint.Y;
 
             connector.GetControlPoints(
-                connector.Orientation, 
-                Offset, 
+                connector.Orientation,
+                Offset,
                 connector.Start?.Alignment ?? PinAlignment.None,
                 connector.End?.Alignment ?? PinAlignment.None,
-                ref p1X, ref p1Y, 
+                ref p1X, ref p1Y,
                 ref p2X, ref p2Y);
             
-            var midX = (p1X + p2X) / 2;
-            var midY = (p1Y + p2Y) / 2;
+            var midY = SnapHelper.Snap((p1Y + p2Y) / 2, connector.Parent.SnapY);
 
             context.LineTo(new(p1X, p1Y));
-            context.LineTo(new(EndPoint.X, midY)); 
+            context.LineTo(new(EndPoint.X, midY));
             context.LineTo(EndPoint);
         }
         else

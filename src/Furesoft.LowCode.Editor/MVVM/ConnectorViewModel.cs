@@ -14,7 +14,7 @@ public partial class ConnectorViewModel : IConnector
     [ObservableProperty] private ConnectorOrientation _orientation;
     [ObservableProperty] private IPin? _start;
     [ObservableProperty] private IPin? _end;
-    [ObservableProperty] private double _offset = 50;
+    [ObservableProperty] private double _offset = 30;
 
     public event EventHandler<ConnectorCreatedEventArgs>? Created;
 
@@ -28,7 +28,10 @@ public partial class ConnectorViewModel : IConnector
 
     public event EventHandler<ConnectorEndChangedEventArgs>? EndChanged;
 
-    public ConnectorViewModel() => ObservePins();
+    public ConnectorViewModel()
+    {
+        ObservePins();
+    }
 
     private void ObservePins()
     {
@@ -38,21 +41,26 @@ public partial class ConnectorViewModel : IConnector
             {
                 if (start?.Parent is { })
                 {
-                    (start.Parent as NodeViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(Start)));
-                    (start.Parent as NodeViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(Start)));
+                    (start.Parent as NodeViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
+                        .Subscribe(_ => OnPropertyChanged(nameof(Start)));
+                    (start.Parent as NodeViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged()
+                        .Subscribe(_ => OnPropertyChanged(nameof(Start)));
                 }
                 else
                 {
                     if (start is { })
                     {
-                        (start as PinViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(Start)));
-                        (start as PinViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(Start)));
+                        (start as PinViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
+                            .Subscribe(_ => OnPropertyChanged(nameof(Start)));
+                        (start as PinViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged()
+                            .Subscribe(_ => OnPropertyChanged(nameof(Start)));
                     }
                 }
 
                 if (start is { })
                 {
-                    (start as PinViewModel)?.WhenChanged(x => x.Alignment).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(Start)));
+                    (start as PinViewModel)?.WhenChanged(x => x.Alignment).DistinctUntilChanged()
+                        .Subscribe(_ => OnPropertyChanged(nameof(Start)));
                 }
             });
 
@@ -62,15 +70,19 @@ public partial class ConnectorViewModel : IConnector
             {
                 if (end?.Parent is { })
                 {
-                    (end.Parent as NodeViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(End)));
-                    (end.Parent as NodeViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(End)));
+                    (end.Parent as NodeViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
+                        .Subscribe(_ => OnPropertyChanged(nameof(End)));
+                    (end.Parent as NodeViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged()
+                        .Subscribe(_ => OnPropertyChanged(nameof(End)));
                 }
                 else
                 {
                     if (end is { })
                     {
-                        (end as PinViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(End)));
-                        (end as PinViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged().Subscribe(_ => OnPropertyChanged(nameof(End)));
+                        (end as PinViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
+                            .Subscribe(_ => OnPropertyChanged(nameof(End)));
+                        (end as PinViewModel)?.WhenChanged(x => x.Y).DistinctUntilChanged()
+                            .Subscribe(_ => OnPropertyChanged(nameof(End)));
                     }
                 }
 
