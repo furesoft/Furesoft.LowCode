@@ -64,7 +64,7 @@ public partial class NodeFactory
         return width / (pinCount + 1) * (i + 1);
     }
 
-    private static void AddPins(double pinSize, IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode)> pins,
+    private static void AddPins(double pinSize, IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
         CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         for (int i = 0; i < pins.Count(); i++)
@@ -73,7 +73,7 @@ public partial class NodeFactory
 
             (double baseX, double baseY) = positionMapper(i);
 
-            viewModel.AddPin(baseX, baseY, pinSize, pinSize, pin.Mode, pin.Alignment, pin.Name);
+            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name, pin.Alignment, pin.MultipleConnections);
         }
     }
 }

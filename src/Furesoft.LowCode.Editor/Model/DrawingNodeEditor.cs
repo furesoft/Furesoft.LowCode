@@ -98,15 +98,7 @@ public sealed class DrawingNodeEditor
 
     public bool CanConnectPin(IPin pin)
     {
-        if (!_node.EnableMultiplePinConnections)
-        {
-            if (IsPinConnected(pin))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return !IsPinConnected(pin) || pin.CanConnectToMultiplePins;
     }
 
     private void NotifyPinsRemoved(INode node)
@@ -198,7 +190,7 @@ public sealed class DrawingNodeEditor
                 if (!showWhenMoving)
                 {
                     _node.Connectors ??= _factory.CreateList<IConnector>();
-                    _node.Connectors.Add(_connector);            
+                    _node.Connectors.Add(_connector);
                 }
 
                 _connector = null;
@@ -208,7 +200,7 @@ public sealed class DrawingNodeEditor
 
     public void ConnectorMove(double x, double y)
     {
-        if (_connector is { End: { } })
+        if (_connector is {End: { }})
         {
             _connector.End.X = x;
             _connector.End.Y = y;
@@ -227,16 +219,12 @@ public sealed class DrawingNodeEditor
         var selectedNodes = _node.GetSelectedNodes();
         var selectedConnectors = _node.GetSelectedConnectors();
 
-        if (selectedNodes is not { Count: > 0 } && selectedConnectors is not { Count: > 0 })
+        if (selectedNodes is not {Count: > 0} && selectedConnectors is not {Count: > 0})
         {
             return;
         }
 
-        var clipboard = new Clipboard
-        {
-            SelectedNodes = selectedNodes,
-            SelectedConnectors = selectedConnectors
-        };
+        var clipboard = new Clipboard {SelectedNodes = selectedNodes, SelectedConnectors = selectedConnectors};
 
         _clipboard = serializer.Serialize(clipboard);
 
@@ -284,16 +272,12 @@ public sealed class DrawingNodeEditor
         var selectedNodes = _node.GetSelectedNodes();
         var selectedConnectors = _node.GetSelectedConnectors();
 
-        if (selectedNodes is not { Count: > 0 } && selectedConnectors is not { Count: > 0 })
+        if (selectedNodes is not {Count: > 0} && selectedConnectors is not {Count: > 0})
         {
             return;
         }
 
-        var clipboard = new Clipboard
-        {
-            SelectedNodes = selectedNodes,
-            SelectedConnectors = selectedConnectors
-        };
+        var clipboard = new Clipboard {SelectedNodes = selectedNodes, SelectedConnectors = selectedConnectors};
 
         _clipboard = serializer.Serialize(clipboard);
     }
@@ -329,7 +313,7 @@ public sealed class DrawingNodeEditor
         var selectedNodes = new HashSet<INode>();
         var selectedConnectors = new HashSet<IConnector>();
 
-        if (clipboard.SelectedNodes is { Count: > 0 })
+        if (clipboard.SelectedNodes is {Count: > 0})
         {
             var minX = 0.0;
             var minY = 0.0;
@@ -365,7 +349,7 @@ public sealed class DrawingNodeEditor
             }
         }
 
-        if (clipboard.SelectedConnectors is { Count: > 0 })
+        if (clipboard.SelectedConnectors is {Count: > 0})
         {
             foreach (var connector in clipboard.SelectedConnectors)
             {
@@ -425,7 +409,7 @@ public sealed class DrawingNodeEditor
         var selectedConnectors = _node.GetSelectedConnectors();
         var notify = false;
 
-        if (selectedNodes is { Count: > 0 })
+        if (selectedNodes is {Count: > 0})
         {
             foreach (var node in selectedNodes)
             {
@@ -443,7 +427,7 @@ public sealed class DrawingNodeEditor
             notify = true;
         }
 
-        if (selectedConnectors is { Count: > 0 })
+        if (selectedConnectors is {Count: > 0})
         {
             foreach (var connector in selectedConnectors)
             {

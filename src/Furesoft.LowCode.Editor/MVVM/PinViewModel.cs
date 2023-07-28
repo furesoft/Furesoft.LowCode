@@ -15,6 +15,7 @@ public partial class PinViewModel : IPin
     [ObservableProperty] private double _height;
     [ObservableProperty] private PinAlignment _alignment;
     [ObservableProperty] private PinMode _mode;
+    [ObservableProperty] private bool _canConnectToMultiplePins;
 
     public event EventHandler<PinCreatedEventArgs>? Created;
 

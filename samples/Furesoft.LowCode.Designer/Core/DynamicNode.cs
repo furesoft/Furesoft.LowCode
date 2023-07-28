@@ -12,7 +12,7 @@ namespace Furesoft.LowCode.Designer.Core;
 
 public class DynamicNode : VisualNode, ICustomTypeDescriptor
 {
-    public readonly Dictionary<string, (PinAlignment, PinMode)> Pins = new();
+    public readonly Dictionary<string, (PinAlignment, PinMode, bool)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
     
     [Browsable(false)] public Control View { get; set; }
@@ -30,9 +30,9 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
         Properties.Add("out", string.Empty);
     }
 
-    public void AddPin(string name, PinAlignment alignment, PinMode mode)
+    public void AddPin(string name, PinAlignment alignment, PinMode mode, bool multipleConnections = false)
     {
-        Pins.Add(name, (alignment, mode));
+        Pins.Add(name, (alignment, mode, multipleConnections));
     }
 
     public override Task Execute(CancellationToken cancellationToken)

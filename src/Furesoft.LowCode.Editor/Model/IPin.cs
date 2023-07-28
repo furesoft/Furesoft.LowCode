@@ -109,6 +109,7 @@ public interface IPin
     double Width { get; set; }
     double Height { get; set; }
     PinAlignment Alignment { get; set; }
+    bool CanConnectToMultiplePins { get; set; }
     bool CanConnect();
     bool CanDisconnect();
     event EventHandler<PinCreatedEventArgs>? Created;

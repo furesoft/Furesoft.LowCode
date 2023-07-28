@@ -28,16 +28,16 @@ public partial class NodeFactory : INodeFactory
     }
 
     private static CustomNodeViewModel CreateNode(VisualNode node,
-        IEnumerable<(string Key, PinAlignment Value, PinMode mode)> pins,
+        IEnumerable<(string Key, PinAlignment Value, PinMode mode, bool)> pins,
         (double x, double y) position, double width = 60, double height = 60, Control nodeView = null)
     {
-        (string Name, PinAlignment Alignment, PinMode Mode)[] leftPins =
+        var leftPins =
             pins.Where(_ => _.Value == PinAlignment.Left).ToArray();
-        (string Name, PinAlignment Alignment, PinMode Mode)[] rightPins =
+        var rightPins =
             pins.Where(_ => _.Value == PinAlignment.Right).ToArray();
-        (string Name, PinAlignment Alignment, PinMode Mode)[] topPins =
+        var topPins =
             pins.Where(_ => _.Value == PinAlignment.Top).ToArray();
-        (string Name, PinAlignment Alignment, PinMode Mode)[] bottomPins =
+        var bottomPins =
             pins.Where(_ => _.Value == PinAlignment.Bottom).ToArray();
 
         var maxPinTopBottom = Math.Max(topPins.Length, bottomPins.Length);
@@ -88,7 +88,8 @@ public partial class NodeFactory : INodeFactory
             from pin in pinData
             select (pin.Item1.Name ?? pin.prop.Name,
                 pin.Item1.Alignment,
-                pin.prop.PropertyType == typeof(IOutputPin) ? PinMode.Output : PinMode.Input);
+                pin.prop.PropertyType == typeof(IOutputPin) ? PinMode.Output : PinMode.Input,
+                pin.Item1.AllowMultipleConnections);
 
         Control nodeView = null;
 
@@ -157,7 +158,7 @@ public partial class NodeFactory : INodeFactory
     {
         foreach (var dynamicNode in _dynamicNodes)
         {
-            var pins = dynamicNode.Pins.Select(_ => (_.Key, _.Value.Item1, _.Value.Item2));
+            var pins = dynamicNode.Pins.Select(_ => (_.Key, _.Value.Item1, _.Value.Item2, _.Value.Item3));
 
             templates.Add(new NodeTemplateViewModel
             {
