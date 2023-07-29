@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj" />
+    <ProjectReference Include="..\..\src\Furesoft.LowCode\Furesoft.LowCode.csproj" />
   </ItemGroup>
 
   <ItemGroup>

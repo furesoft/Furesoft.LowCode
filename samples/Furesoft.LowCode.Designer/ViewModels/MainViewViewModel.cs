@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -14,7 +15,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Furesoft.LowCode.Designer.Core;
 using Furesoft.LowCode.Designer.Core.Components.ViewModels;
-using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Designer.Services;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
@@ -27,10 +27,10 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private EditorViewModel _editor;
     [ObservableProperty] private VisualNode _selectedNode;
     [ObservableProperty] private string _searchTerm = string.Empty;
-    
+
     public Evaluator Evaluator { get; set; }
 
-    private Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
+    private readonly Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
     public ObservableCollection<object> Templates { get; set; } = new();
 
     private CancellationTokenSource _cancellationTokenSource = new();
@@ -54,7 +54,7 @@ public partial class MainViewViewModel : ViewModelBase
 
         CategorizeTemplates(_editor.Templates);
         TransformToTree();
-        
+
         PropertyChanged += OnPropertyChanged;
     }
 
@@ -62,23 +62,22 @@ public partial class MainViewViewModel : ViewModelBase
     {
         if (e.PropertyName == nameof(MainViewViewModel.SearchTerm))
         {
-            Search((string) SearchTerm);
+            Search(SearchTerm);
         }
     }
 
     private void CategorizeTemplates(IList<INodeTemplate> templates)
     {
-        foreach (var nodeTemplate in templates)
+        foreach (var nodeTemplate in templates.Select(_ => (_, (CustomNodeViewModel)_.Template)))
         {
-            var category = TypeDescriptor.GetAttributes(((CustomNodeViewModel)nodeTemplate.Template).DefiningNode)
-                .OfType<NodeCategoryAttribute>().FirstOrDefault()?.Category ?? "General";
+            var category = nodeTemplate.Item2.DefiningNode.GetAttribute<NodeCategoryAttribute>()?.Category ?? "General";
 
             if (!_categorizedNodeTemplates.ContainsKey(category))
             {
                 _categorizedNodeTemplates.Add(category, new());
             }
 
-            _categorizedNodeTemplates[category].Add(nodeTemplate);
+            _categorizedNodeTemplates[category].Add(nodeTemplate._);
         }
     }
 
@@ -97,7 +96,7 @@ public partial class MainViewViewModel : ViewModelBase
             CollapseAll();
             return;
         }
-        
+
         Search(Templates);
     }
 
@@ -105,42 +104,36 @@ public partial class MainViewViewModel : ViewModelBase
     {
         foreach (var template in Templates)
         {
-            if (template is TreeViewItem tvi)
+            switch (template)
             {
-                tvi.IsExpanded = false;
-                tvi.IsVisible = true;
-            }
+                case TreeViewItem tvi:
+                    tvi.IsExpanded = false;
+                    tvi.IsVisible = true;
+                    break;
 
-            if (template is NodeTemplateViewModel vm)
-            {
-                vm.IsVisible = true;
+                case NodeTemplateViewModel vm:
+                    vm.IsVisible = true;
+                    break;
             }
         }
     }
 
     private void Search(IEnumerable<object> children)
     {
-        foreach (var template in children)
+        foreach (var item in children)
         {
-            if (template is NodeTemplateViewModel vm)
+            switch (item)
             {
-                vm.IsVisible = vm.Title.ToLower().Contains(_searchTerm.ToLower());
-            }
+                case NodeTemplateViewModel vm:
+                    vm.IsVisible = string.IsNullOrEmpty(SearchTerm) ||
+                                   vm.Title.IndexOf(SearchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
+                    break;
+                case TreeViewItem tvi:
+                    Search(tvi.Items);
 
-            if (template is TreeViewItem tvi)
-            {
-                Search(tvi.Items);
-
-                if (!tvi.Items.OfType<NodeTemplateViewModel>().Any(_ => _.IsVisible))
-                {
-                    tvi.IsVisible = false;
-                    tvi.IsExpanded = false;
-                }
-                else
-                {
-                    tvi.IsVisible = true;
-                    tvi.IsExpanded = true;
-                }
+                    tvi.IsVisible = tvi.Items.OfType<NodeTemplateViewModel>().Any(child => child.IsVisible);
+                    tvi.IsExpanded = tvi.IsVisible;
+                    break;
             }
         }
     }
@@ -148,34 +141,39 @@ public partial class MainViewViewModel : ViewModelBase
     private void TransformToTree()
     {
         var treeCache = new Dictionary<string, TreeViewItem>();
+        var currentPathBuilder = new StringBuilder();
 
         foreach (var nodeTemplate in _categorizedNodeTemplates)
         {
             var spl = nodeTemplate.Key.Split("/");
             TreeViewItem parentItem = null;
+            currentPathBuilder.Clear();
 
             for (var index = 0; index < spl.Length; index++)
             {
                 var s = spl[index];
-                var currentPath = string.Join('/', spl.Take(index + 1));
+                currentPathBuilder.Append((index == 0 ? "" : "/")).Append(s);
+                var currentPath = currentPathBuilder.ToString();
 
-                if (!treeCache.ContainsKey(currentPath))
+                if (!treeCache.TryGetValue(currentPath, out var treeViewItem))
                 {
-                    var treeViewItem = new TreeViewItem() {Header = s};
-
+                    treeViewItem = new() {Header = s};
                     if (index == 0)
                     {
                         Templates.Insert(0, treeViewItem);
                     }
                     else
                     {
-                        parentItem.Items.Insert(0, treeViewItem);
+                        treeCache[
+                                currentPathBuilder.Remove(currentPath.LastIndexOf('/'),
+                                    currentPath.Length - currentPath.LastIndexOf('/')).ToString()].Items
+                            .Insert(0, treeViewItem);
                     }
 
                     treeCache.Add(currentPath, treeViewItem);
                 }
 
-                parentItem = treeCache[currentPath];
+                parentItem = treeViewItem;
             }
 
             parentItem.Header = spl[^1];
@@ -208,13 +206,13 @@ public partial class MainViewViewModel : ViewModelBase
         Evaluator = new(_editor.Drawing);
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
-    
+
     [RelayCommand]
     public async Task Debug()
     {
         Evaluator = new(_editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
-        
+
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
 

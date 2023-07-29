@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <IsPackable>True</IsPackable>
+    <Nullable>disable</Nullable>
+    <RootNamespace>Furesoft.LowCode</RootNamespace>
+    <Version>1.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Furesoft.LowCode</PackageId>
+    <PackageTags>lowcode;avalonia;avaloniaui</PackageTags>
+  </PropertyGroup>
+
+</Project>

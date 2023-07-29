@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.Components.Views;
-using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
 using INodeFactory = Furesoft.LowCode.Editor.Model.INodeFactory;
@@ -93,7 +91,7 @@ public partial class NodeFactory : INodeFactory
 
         Control nodeView = null;
 
-        var nodeViewAttribute = visualNode.GetType().GetCustomAttribute<NodeViewAttribute>();
+        var nodeViewAttribute = visualNode.GetAttribute<NodeViewAttribute>();
         if (nodeViewAttribute != null)
         {
             nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
@@ -178,7 +176,7 @@ public partial class NodeFactory : INodeFactory
 
         var factoryNodes = from node in nodes
             where IsFactoryNode(node)
-            select (VisualNode)Activator.CreateInstance(node);
+            select Activator.CreateInstance(node);
 
         foreach (var factoryNode in factoryNodes)
         {
@@ -200,18 +198,12 @@ public partial class NodeFactory : INodeFactory
             where IsNormalNode(node)
             select (VisualNode)Activator.CreateInstance(node);
 
-        foreach (var node in normalNodes)
-        {
-            var ignoreAttribute = node.GetType().GetCustomAttribute<IgnoreTemplateAttribute>();
-            if (ignoreAttribute != null)
-            {
-                continue;
-            }
-
-            templates.Add(new NodeTemplateViewModel
+        templates.AddRange(from node in normalNodes
+            let ignoreAttribute = node.GetAttribute<IgnoreTemplateAttribute>()
+            where ignoreAttribute == null
+            select new NodeTemplateViewModel
             {
                 Title = node.Label, Template = CreateNode(node, (0, 0)), Preview = CreateNode(node, (0, 0))
             });
-        }
     }
 }

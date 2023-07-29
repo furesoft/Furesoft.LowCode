@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Furesoft.LowCode.Designer.Core.NodeBuilding;
+namespace Furesoft.LowCode;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeCategoryAttribute : Attribute

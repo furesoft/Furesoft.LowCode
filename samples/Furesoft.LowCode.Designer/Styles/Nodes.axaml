@@ -33,4 +33,25 @@
     <Setter Property="(TextElement.FontFamily)" Value="avares://Avalonia.Fonts.Inter/Assets#Inter" />
   </Style>
 
+  <Style Selector="HeaderedContentControl">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Border Background="{DynamicResource NodeBackgroundBrush}">
+            <StackPanel>
+              <ContentPresenter FontWeight="Bold" Content="{TemplateBinding Header}" />
+              
+              <Border
+                BorderBrush="{TemplateBinding Background}"
+                BorderThickness="2"
+                CornerRadius="5">
+                
+                <ContentPresenter Content="{TemplateBinding Content}" />
+              </Border>
+            </StackPanel>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 </Styles>

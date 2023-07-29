@@ -70,7 +70,7 @@ public partial class NodeFactory
 
     private static void AddPins(double pinSize,
         IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
-        CustomNodeViewModel viewModel, Func<int, (double, double)> positionMapper)
+        NodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         for (int i = 0; i < pins.Count(); i++)
         {
@@ -78,7 +78,7 @@ public partial class NodeFactory
 
             (double baseX, double baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name, pin.Alignment,
+            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name, (Editor.Model.PinAlignment)pin.Alignment,
                 pin.MultipleConnections);
         }
     }

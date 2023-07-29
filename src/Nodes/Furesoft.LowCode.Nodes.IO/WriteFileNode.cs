@@ -2,11 +2,10 @@
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core;
 using Furesoft.LowCode.Designer.Core.Components.Views;
-using Furesoft.LowCode.Designer.Core.NodeBuilding;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Nodes.IO;
 
+[DataContract(IsReference = true)]
 [Description("Read a file")]
 [NodeCategory("IO/Files")]
 [NodeView(typeof(IconNodeView),

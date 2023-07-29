@@ -1,7 +1,6 @@
 ﻿using System;
-using Furesoft.LowCode.Editor.Model;
 
-namespace Furesoft.LowCode.Designer.Core.NodeBuilding;
+namespace Furesoft.LowCode;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class PinAttribute : Attribute

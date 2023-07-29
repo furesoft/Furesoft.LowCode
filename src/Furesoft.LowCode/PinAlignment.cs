@@ -1,4 +1,4 @@
-﻿namespace Furesoft.LowCode.Editor.Model;
+﻿namespace Furesoft.LowCode;
 
 public enum PinAlignment
 {

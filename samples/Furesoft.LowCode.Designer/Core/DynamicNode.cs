@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Furesoft.LowCode.Designer.Core.NodeBuilding;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
 
