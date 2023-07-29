@@ -36,10 +36,10 @@ public partial class NodeFactory : INodeFactory
         var maxPinTopBottom = Math.Max(topPins.Length, bottomPins.Length);
         var maxPinLeftRight = Math.Max(leftPins.Length, rightPins.Length);
 
-        (width, height) = RecalculateBoundsWithMargin((width, height), maxPinTopBottom, maxPinLeftRight);
+        (width, height) = RecalculateBoundsWithMargin(node, (width, height), maxPinTopBottom, maxPinLeftRight);
         nodeView ??= new DefaultNodeView();
 
-        var viewModel = CreateViewModel(null, position, (width, height));
+        var viewModel = CreateViewModel(node, position, (width, height));
 
         AddPins(PinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins.Length, i), 0));
         AddPins(PinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins.Length, i), height));
@@ -107,7 +107,7 @@ public partial class NodeFactory : INodeFactory
         return CreateNode(visualNode, pins, position, width, height, nodeView);
     }
 
-    private static (double, double) RecalculateBoundsWithMargin((double width, double height) size,
+    private static (double, double) RecalculateBoundsWithMargin(VisualNode node, (double width, double height) size,
         int maxPinTopBottom, int maxPinLeftRight)
     {
         double Calculate(int max)
@@ -115,10 +115,15 @@ public partial class NodeFactory : INodeFactory
             return max * (2 + PinSize) * 1.6;
         }
 
-        size.width = Math.Max(size.width, Calculate(maxPinTopBottom));
-        size.height = Math.Max(size.height, Calculate(maxPinLeftRight));
-
+        size.width = Max(size.width, Calculate(maxPinTopBottom), node.GetAttribute<NodeViewAttribute>()?.MinWidth);
+        size.height = Max(size.height, Calculate(maxPinLeftRight), node.GetAttribute<NodeViewAttribute>()?.MinHeight);
+        
         return (size.width, size.height);
+    }
+
+    private static double Max(params double?[] values)
+    {
+        return values.Max().GetValueOrDefault();
     }
 
     public IList<INodeTemplate> CreateTemplates()

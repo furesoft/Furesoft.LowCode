@@ -5,6 +5,9 @@ public class NodeViewAttribute : Attribute
 {
     public Type Type { get; set; }
     public object Parameter { get; set; }
+
+    public int MinWidth { get; set; }
+    public int MinHeight { get; set; }
     
     public NodeViewAttribute(Type type)
     {
