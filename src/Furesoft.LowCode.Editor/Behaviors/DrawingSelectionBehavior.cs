@@ -1,11 +1,9 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Reactive;
 using Avalonia.Xaml.Interactivity;
-using Furesoft.LowCode.Editor.Model;
 using NodeEditor;
 using NodeEditor.Controls;
 

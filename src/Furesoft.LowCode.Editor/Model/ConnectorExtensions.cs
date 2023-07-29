@@ -1,5 +1,4 @@
-﻿using System;
-using NodeEditor;
+﻿using NodeEditor;
 
 namespace Furesoft.LowCode.Editor.Model;
 

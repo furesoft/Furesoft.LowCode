@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Furesoft.LowCode.Designer.Core.Components.Views;
-using Furesoft.LowCode.Editor.Model;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels.ControlFlow;

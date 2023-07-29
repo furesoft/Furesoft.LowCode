@@ -1,9 +1,7 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Xaml.Interactivity;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Editor.Behaviors;
 

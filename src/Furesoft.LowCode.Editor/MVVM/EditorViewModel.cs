@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Furesoft.LowCode.Editor.Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Furesoft.LowCode.Editor.MVVM;
 

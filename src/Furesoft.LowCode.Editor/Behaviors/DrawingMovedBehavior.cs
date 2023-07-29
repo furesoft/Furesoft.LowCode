@@ -2,7 +2,6 @@
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Editor.Behaviors;
 

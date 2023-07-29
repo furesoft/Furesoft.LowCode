@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Furesoft.LowCode.Editor.Model;
 using NodeEditor;
 using NodeEditor.Controls;
 

@@ -1,8 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.Serialization;
-using Furesoft.LowCode.Designer.Core;
-
-namespace Furesoft.LowCode.Nodes.IO;
+﻿namespace Furesoft.LowCode.Nodes.IO;
 
 [DataContract(IsReference = true)]
 [Description("Create a directory")]
@@ -11,6 +7,7 @@ public class MakeDirNode : VisualNode
 {
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string Path { get; set; }
+
     public MakeDirNode() : base("Make Directory")
     {
     }

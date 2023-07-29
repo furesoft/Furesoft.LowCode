@@ -1,5 +1,3 @@
-using System;
-
 namespace Furesoft.LowCode.Editor.Model;
 
 public sealed class PinCreatedEventArgs : EventArgs

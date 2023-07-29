@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Furesoft.LowCode.Designer.Core;
-using Microsoft.CodeAnalysis;
-using Newtonsoft.Json;
-using System.IO.Enumeration;
-using System.Linq;
-
-namespace Furesoft.LowCode.Nodes.IO;
+﻿namespace Furesoft.LowCode.Nodes.IO;
 [Description("Get Items in a Folder")]
 [NodeCategory("IO/Directories")]
 internal class ChildItemNode : VisualNode

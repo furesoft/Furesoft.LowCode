@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Editor.MVVM;
 

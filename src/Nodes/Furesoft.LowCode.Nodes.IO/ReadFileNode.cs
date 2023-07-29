@@ -1,9 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.Serialization;
-using Furesoft.LowCode.Designer.Core;
-using Furesoft.LowCode.Designer.Core.Components.Views;
-
-namespace Furesoft.LowCode.Nodes.IO;
+﻿namespace Furesoft.LowCode.Nodes.IO;
 
 [DataContract(IsReference = true)]
 [Description("Read a file")]

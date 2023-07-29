@@ -14,31 +14,21 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 [Description("Save a value for later usage")]
 public class AssignNode : VisualNode
 {
-    private string _name;
-    private string _value;
+
 
     public AssignNode() : base("Assign Variable")
     {
-        _name = string.Empty;
-        _value = string.Empty;
+      
     }
 
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The name of the variable")]
-    public string Name
-    {
-        get => _name;
-        set => SetProperty(ref _name, value);
-    }
+    public string Name { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The value of the variable")]
-    public string Value
-    {
-        get => _value;
-        set => SetProperty(ref _value, value);
-    }
+    public string Value { get; set; }
     
     [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin FlowInput { get; } = null;

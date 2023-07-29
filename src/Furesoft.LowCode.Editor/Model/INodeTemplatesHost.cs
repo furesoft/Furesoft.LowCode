@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Furesoft.LowCode.Editor.Model;
 
 public interface INodeTemplatesHost

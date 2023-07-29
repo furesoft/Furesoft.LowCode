@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Furesoft.LowCode;
+﻿namespace Furesoft.LowCode;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class PinAttribute : Attribute

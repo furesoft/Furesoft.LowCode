@@ -2,7 +2,6 @@
 using Avalonia.Input;
 using Avalonia.VisualTree;
 using Avalonia.Xaml.Interactions.DragAndDrop;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Editor.Behaviors;
 

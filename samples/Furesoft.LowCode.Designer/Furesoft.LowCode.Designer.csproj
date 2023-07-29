@@ -6,6 +6,7 @@
     <Nullable>disable</Nullable>
     <RootNamespace>Furesoft.LowCode.Designer</RootNamespace>
     <Version>1.0</Version>
+    <ImplicitUsings>true</ImplicitUsings>
   </PropertyGroup>
 
   <PropertyGroup>

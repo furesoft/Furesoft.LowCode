@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Furesoft.LowCode.Editor.Model;
+﻿namespace Furesoft.LowCode.Editor.Model;
 
 public interface IDrawingNodeFactory
 {
