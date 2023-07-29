@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <IsPackable>False</IsPackable>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj" />
+    <ProjectReference Include="..\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="App.axaml.cs">
+      <DependentUpon>App.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
