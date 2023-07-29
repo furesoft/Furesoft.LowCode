@@ -86,10 +86,10 @@
                     DrawingNode="{Binding #EditorControl.DrawingNode}"
                     x:CompileBindings="False"
                     DockPanel.Dock="Top" />
-     <Grid ColumnDefinitions="200,8,*,8,300">
+    <Grid ColumnDefinitions="200,8,*,8,300">
       <Grid RowDefinitions="35,*" Grid.Column="0">
         <TextBox Text="{ReflectionBinding SearchTerm, Mode=TwoWay}" Margin="5" />
-        
+
         <editor:Toolbox Grid.Row="1" Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
       </Grid>
 
@@ -103,10 +103,12 @@
           <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
 
           <Separator />
-          
-          <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
-                           ShowStyle="Alphabetic" ShowTitle="False"
-                           SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+
+          <ScrollViewer>
+            <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
+                             ShowStyle="Alphabetic" ShowTitle="False"
+                             SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+          </ScrollViewer>
         </StackPanel>
       </Grid>
     </Grid>
