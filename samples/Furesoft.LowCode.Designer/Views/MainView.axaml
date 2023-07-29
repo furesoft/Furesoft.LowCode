@@ -83,38 +83,17 @@
   </UserControl.KeyBindings>
   <DockPanel>
     <views:MenuView ZoomControl="{Binding #EditorControl.ZoomControl}"
-                     DrawingNode="{Binding #EditorControl.DrawingNode}"
-                     x:CompileBindings="False"
-                     DockPanel.Dock="Top" />
-    <Separator IsVisible="False" Classes="horizontal" DockPanel.Dock="Top" />
-    <Grid>
-      <Grid.Resources>
-        <x:Double x:Key="ToolboxWidth">200</x:Double>
-      </Grid.Resources>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition
-          Width="{Binding IsToolboxVisible, Converter={x:Static converters:ColumnWidthConverter.Instance}, ConverterParameter={StaticResource ToolboxWidth}}" />
-        <ColumnDefinition Width="8" />
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="8" />
-        <ColumnDefinition Width="300" />
-      </Grid.ColumnDefinitions>
-
-      <Grid RowDefinitions="35,*" Grid.Column="0"
-                  IsVisible="{Binding IsToolboxVisible}">
+                    DrawingNode="{Binding #EditorControl.DrawingNode}"
+                    x:CompileBindings="False"
+                    DockPanel.Dock="Top" />
+     <Grid ColumnDefinitions="200,8,*,8,300">
+      <Grid RowDefinitions="35,*" Grid.Column="0">
         <TextBox Text="{ReflectionBinding SearchTerm, Mode=TwoWay}" Margin="5" />
+        
         <editor:Toolbox Grid.Row="1" Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
       </Grid>
 
-      <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2">
-        <editor:Editor.Background>
-          <VisualBrush TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
-            <VisualBrush.Visual>
-              <Path Data="M 0,0 L 0,10 L 10,10 L 10,0 Z M 10,10 L 10,20 L 20,20 L 20,10 Z" Fill="#FFF0F0F0" />
-            </VisualBrush.Visual>
-          </VisualBrush>
-        </editor:Editor.Background>
-      </editor:Editor>
+      <editor:Editor Name="EditorControl" DataContext="{Binding Editor.Drawing}" Grid.Column="1" Grid.ColumnSpan="2" />
 
       <GridSplitter Grid.Column="1" Background="Transparent" />
       <GridSplitter Grid.Column="3" Background="Transparent" />
@@ -123,7 +102,9 @@
         <StackPanel Margin="4">
           <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
 
-          <pg:PropertyGrid AllowFilter="False" AllowQuickFilter="False" AllowToggleView="False"
+          <Separator />
+          
+          <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
                            ShowStyle="Alphabetic" ShowTitle="False"
                            SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
         </StackPanel>

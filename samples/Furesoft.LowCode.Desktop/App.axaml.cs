@@ -11,7 +11,7 @@ public class App : Application
     public static bool EnableInputOutput { get; set; } = true;
 
     public static bool EnableMainMenu { get; set; } = true;
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -19,7 +19,7 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var vm = new MainViewViewModel {IsToolboxVisible = true};
+        var vm = new MainViewViewModel();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

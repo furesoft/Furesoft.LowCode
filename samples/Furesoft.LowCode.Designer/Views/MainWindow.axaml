@@ -10,10 +10,10 @@
         WindowState="Normal" WindowStartupLocation="CenterScreen"
         Width="1230" Height="740"
         Icon="/Assets/Icon.ico"
-        Title="NodeEditor"
+        Title="LowCode Designer"
         Background="{x:Null}"
         TransparencyLevelHint="AcrylicBlur"
-        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaToDecorationsHint="False"
         ExtendClientAreaChromeHints="PreferSystemChrome"
         x:CompileBindings="True" x:DataType="viewModels1:MainViewViewModel">
 

@@ -25,7 +25,6 @@ namespace Furesoft.LowCode.Designer.ViewModels;
 public partial class MainViewViewModel : ViewModelBase
 {
     [ObservableProperty] private EditorViewModel _editor;
-    [ObservableProperty] private bool _isToolboxVisible;
     [ObservableProperty] private VisualNode _selectedNode;
     [ObservableProperty] private string _searchTerm = string.Empty;
     
@@ -38,7 +37,6 @@ public partial class MainViewViewModel : ViewModelBase
 
     public MainViewViewModel()
     {
-        _isToolboxVisible = true;
         _editor = new();
 
         var dn = new DynamicNode("Dynamic");
@@ -230,12 +228,6 @@ public partial class MainViewViewModel : ViewModelBase
     public async Task Continue()
     {
         await Evaluator.Debugger.Continue();
-    }
-
-    [RelayCommand]
-    private void ToggleToolboxVisible()
-    {
-        IsToolboxVisible = !IsToolboxVisible;
     }
 
     [RelayCommand]
