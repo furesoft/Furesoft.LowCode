@@ -47,10 +47,6 @@ internal class ChildItemNode : VisualNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public FileAttributes ExcludedFlags { get; set; } = new();
 
-    [Description("Filters all Entries and includes all Entries with that flag")]
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public FileAttributes RequiredFlags { get; set; } = new();
-
     [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
 
@@ -90,7 +86,7 @@ internal class ChildItemNode : VisualNode
             ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
             ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption)
         };
-        fileInfos = fileInfos.Where(x => x.Attributes.HasFlag(RequiredFlags) && !x.Attributes.HasFlag(ExcludedFlags)).ToArray();
+        fileInfos = fileInfos.Where(x => !x.Attributes.HasFlag(ExcludedFlags)).ToArray();
 
         if (OnlyName)
         {
