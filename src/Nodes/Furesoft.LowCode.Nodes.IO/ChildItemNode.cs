@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Furesoft.LowCode.Nodes.IO;
 [Description("Get Items in a Folder")]
-[NodeCategory("IO/Files")]
+[NodeCategory("IO/Directories")]
 internal class ChildItemNode : VisualNode
 {
     [Description("The Path to the Folder to get the Items")]
@@ -23,7 +23,7 @@ internal class ChildItemNode : VisualNode
     [Description("Should the search be recursive")]
     [DataMember(IsRequired = false, EmitDefaultValue = true)]
     public bool IsRecurse { get; set; }
-    
+
     [Description("How to filter the Entries")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string SearchPattern { get; set; }
@@ -39,15 +39,17 @@ internal class ChildItemNode : VisualNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public bool OnlyName { get; set; }
 
-    [Description("Filters all Entries if they have that flag")]
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public BindingList<FileAttributes> RequiredFlags { get; set; } = new();
-
     [Description("Where to store the folder content")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
+    [Description("Filters all Entries and excludes all Entries with that flag")]
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    public FileAttributes ExcludedFlags { get; set; } = new();
 
+    [Description("Filters all Entries and includes all Entries with that flag")]
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    public FileAttributes RequiredFlags { get; set; } = new();
 
     [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
@@ -58,10 +60,9 @@ internal class ChildItemNode : VisualNode
     public ChildItemNode() : base("Get Directory Items")
     {
     }
-    
+
     public override Task Execute(CancellationToken cancellationToken)
     {
-
         var folderPath = Evaluate<string>(FolderPath);
         var searchOption = IsRecurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
@@ -89,10 +90,8 @@ internal class ChildItemNode : VisualNode
             ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
             ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption)
         };
-       // if (!IncludeHidden)
-        {
-          //  fileInfos = file
-        }
+        fileInfos = fileInfos.Where(x => x.Attributes.HasFlag(RequiredFlags) && !x.Attributes.HasFlag(ExcludedFlags)).ToArray();
+
         if (OnlyName)
         {
             SetOutVariable(OutVariable, fileInfos.Select(x => x.Name));
