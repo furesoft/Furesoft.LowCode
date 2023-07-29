@@ -86,7 +86,7 @@
                     DrawingNode="{Binding #EditorControl.DrawingNode}"
                     x:CompileBindings="False"
                     DockPanel.Dock="Top" />
-    <Grid ColumnDefinitions="200,8,*,8,300">
+    <Grid ColumnDefinitions="200,8,*,8,300" RowDefinitions="*">
       <Grid RowDefinitions="35,*" Grid.Column="0">
         <TextBox Text="{ReflectionBinding SearchTerm, Mode=TwoWay}" Margin="5" />
 
@@ -99,17 +99,16 @@
       <GridSplitter Grid.Column="3" Background="Transparent" />
 
       <Grid Grid.Column="4">
-        <StackPanel Margin="4">
-          <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
+        <ScrollViewer>
+          <StackPanel Margin="4">
+            <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
+            <Separator />
 
-          <Separator />
-
-          <ScrollViewer>
             <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
                              ShowStyle="Alphabetic" ShowTitle="False"
                              SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
-          </ScrollViewer>
-        </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
       </Grid>
     </Grid>
   </DockPanel>
