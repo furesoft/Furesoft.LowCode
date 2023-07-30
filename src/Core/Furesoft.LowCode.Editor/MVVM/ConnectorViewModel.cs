@@ -37,7 +37,7 @@ public partial class ConnectorViewModel : IConnector
             .DistinctUntilChanged()
             .Subscribe(start =>
             {
-                if (start?.Parent is { })
+                if (start?.Parent is not null)
                 {
                     (start.Parent as NodeViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
                         .Subscribe(_ => OnPropertyChanged(nameof(Start)));
@@ -46,7 +46,7 @@ public partial class ConnectorViewModel : IConnector
                 }
                 else
                 {
-                    if (start is { })
+                    if (start is not null)
                     {
                         (start as PinViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
                             .Subscribe(_ => OnPropertyChanged(nameof(Start)));
@@ -55,18 +55,15 @@ public partial class ConnectorViewModel : IConnector
                     }
                 }
 
-                if (start is { })
-                {
-                    (start as PinViewModel)?.WhenChanged(x => x.Alignment).DistinctUntilChanged()
-                        .Subscribe(_ => OnPropertyChanged(nameof(Start)));
-                }
+                (start as PinViewModel)?.WhenChanged(x => x.Alignment).DistinctUntilChanged()
+                    .Subscribe(_ => OnPropertyChanged(nameof(Start)));
             });
 
         this.WhenChanged(x => x.End)
             .DistinctUntilChanged()
             .Subscribe(end =>
             {
-                if (end?.Parent is { })
+                if (end?.Parent is not null)
                 {
                     (end.Parent as NodeViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
                         .Subscribe(_ => OnPropertyChanged(nameof(End)));
@@ -75,7 +72,7 @@ public partial class ConnectorViewModel : IConnector
                 }
                 else
                 {
-                    if (end is { })
+                    if (end is not null)
                     {
                         (end as PinViewModel)?.WhenChanged(x => x.X).DistinctUntilChanged()
                             .Subscribe(_ => OnPropertyChanged(nameof(End)));
@@ -84,7 +81,7 @@ public partial class ConnectorViewModel : IConnector
                     }
                 }
 
-                if (end is { })
+                if (end is not null)
                 {
                     (end as PinViewModel)?.WhenChanged(x => x.Alignment).Subscribe(_ => OnPropertyChanged(nameof(End)));
                 }

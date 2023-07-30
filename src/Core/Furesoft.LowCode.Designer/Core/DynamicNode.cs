@@ -38,57 +38,57 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
 
     #region Custom Type Descriptor Interfaces
 
-    public AttributeCollection GetAttributes()
+    public new AttributeCollection GetAttributes()
     {
         return TypeDescriptor.GetAttributes(this, true);
     }
 
-    public string GetClassName()
+    public new string GetClassName()
     {
         return TypeDescriptor.GetClassName(this, true);
     }
 
-    public string GetComponentName()
+    public new string GetComponentName()
     {
         return TypeDescriptor.GetComponentName(this, true);
     }
 
-    public TypeConverter GetConverter()
+    public new TypeConverter GetConverter()
     {
         return TypeDescriptor.GetConverter(this, true);
     }
 
-    public EventDescriptor GetDefaultEvent()
+    public new EventDescriptor GetDefaultEvent()
     {
         return TypeDescriptor.GetDefaultEvent(this, true);
     }
 
-    public PropertyDescriptor GetDefaultProperty()
+    public new PropertyDescriptor GetDefaultProperty()
     {
         return TypeDescriptor.GetDefaultProperty(this, true);
     }
 
-    public object GetEditor(Type editorBaseType)
+    public new object GetEditor(Type editorBaseType)
     {
         return TypeDescriptor.GetEditor(this, editorBaseType, true);
     }
 
-    public EventDescriptorCollection GetEvents()
+    public new EventDescriptorCollection GetEvents()
     {
         return TypeDescriptor.GetEvents(this, true);
     }
 
-    public EventDescriptorCollection GetEvents(Attribute[] attributes)
+    public new EventDescriptorCollection GetEvents(Attribute[] attributes)
     {
         return TypeDescriptor.GetEvents(this, attributes, true);
     }
 
-    public PropertyDescriptorCollection GetProperties()
+    public new PropertyDescriptorCollection GetProperties()
     {
         return GetProperties(null);
     }
 
-    public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
+    public new PropertyDescriptorCollection GetProperties(Attribute[] attributes)
     {
         var result = new List<PropertyDescriptor>();
 
@@ -102,7 +102,7 @@ public class DynamicNode : VisualNode, ICustomTypeDescriptor
         return new(result.ToArray());
     }
 
-    public object GetPropertyOwner(PropertyDescriptor pd)
+    public new object GetPropertyOwner(PropertyDescriptor pd)
     {
         return this;
     }

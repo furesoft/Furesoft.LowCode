@@ -15,7 +15,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
     {
         base.OnAttached();
 
-        if (AssociatedObject is { })
+        if (AssociatedObject is not null)
         {
             _dataContextDisposable = AssociatedObject
                 .GetObservable(StyledElement.DataContextProperty)
@@ -47,9 +47,9 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
     {
         base.OnDetaching();
 
-        if (AssociatedObject is { })
+        if (AssociatedObject is not null)
         {
-            if (_drawingNode is { })
+            if (_drawingNode is not null)
             {
                 _drawingNode.SelectionChanged -= DrawingNode_SelectionChanged;
             }
@@ -65,7 +65,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
             return;
         }
 
-        if (_drawingNode is { })
+        if (_drawingNode is not null)
         {
             var selectedNodes = _drawingNode.GetSelectedNodes();
             var selectedConnectors = _drawingNode.GetSelectedConnectors();
@@ -92,24 +92,18 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
 
             var selectedConnectors = _drawingNode?.GetSelectedConnectors();
 
-            if (_drawingNode is { } && selectedConnectors is { } && selectedConnectors.Contains(connector))
+            if (_drawingNode is not null && selectedConnectors is not null && selectedConnectors.Contains(connector))
             {
-                if (containerControl is ContentPresenter { Child: { } child })
+                if (containerControl is ContentPresenter { Child.Classes: IPseudoClasses pseudoClasses})
                 {
-                    if (child.Classes is IPseudoClasses pseudoClasses)
-                    {
-                        pseudoClasses.Add(":selected");
-                    }
+                    pseudoClasses.Add(":selected");
                 }
             }
             else
             {
-                if (containerControl is ContentPresenter { Child: { } child })
+                if (containerControl is ContentPresenter { Child.Classes: IPseudoClasses pseudoClasses})
                 {
-                    if (child.Classes is IPseudoClasses pseudoClasses)
-                    {
-                        pseudoClasses.Remove(":selected");
-                    }
+                    pseudoClasses.Remove(":selected");
                 }
             }
         }
@@ -124,12 +118,9 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
                 continue;
             }
 
-            if (containerControl is ContentPresenter { Child: { } child })
+            if (containerControl is ContentPresenter { Child: {Classes: IPseudoClasses pseudoClasses}})
             {
-                if (child.Classes is IPseudoClasses pseudoClasses)
-                {
-                    pseudoClasses.Remove(":selected");
-                }
+                pseudoClasses.Remove(":selected");
             }
         }
     }

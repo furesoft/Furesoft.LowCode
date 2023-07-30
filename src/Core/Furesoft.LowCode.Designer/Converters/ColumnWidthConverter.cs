@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.Designer.Converters;
 
 public class ColumnWidthConverter : IValueConverter
 {
-    public static ColumnWidthConverter Instance = new ();
+    public static readonly ColumnWidthConverter Instance = new ();
     
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

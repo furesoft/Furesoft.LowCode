@@ -19,7 +19,7 @@ public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
     protected override void OnAttached()
     {
         base.OnAttached();
-        if (AssociatedObject is { })
+        if (AssociatedObject is not null)
         {
             AssociatedObject.DoubleTapped += DoubleTapped;
         }
@@ -28,7 +28,7 @@ public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
     protected override void OnDetaching()
     {
         base.OnDetaching();
-        if (AssociatedObject is { })
+        if (AssociatedObject is not null)
         {
             AssociatedObject.DoubleTapped -= DoubleTapped;
         }
@@ -39,7 +39,7 @@ public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
         if (AssociatedObject is {DataContext: INodeTemplate template} && Drawing is { } drawing)
         {
             var node = drawing.Clone(template.Template);
-            if (node is { })
+            if (node is not null)
             {
                 node.Parent = drawing;
                 node.Move(drawing.Width / 2, drawing.Height / 2);

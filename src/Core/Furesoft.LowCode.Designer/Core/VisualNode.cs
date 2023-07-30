@@ -17,9 +17,12 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
     private string _label;
     private string _description;
     internal Evaluator _evaluator;
-    protected Context Context { get; private set; }
+    
+    [Browsable(false)]
+    public Context Context { get; private set; }
 
-    public VisualNode(string label)
+
+    protected VisualNode(string label)
     {
         Label = label;
     }
@@ -182,7 +185,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
 
     protected void SetOutVariable(string name, object value)
     {
-        Context.GetVariable(name).Assign(JSValue.Wrap(value));
+        Context.GetVariable(name).Assign(value);
     }
 
     protected void DefineConstant(string name, object value, Context context = null)

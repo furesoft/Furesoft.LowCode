@@ -23,6 +23,6 @@ public class ThrowNode : VisualNode
     {
         var msg = Evaluate<string>(Message);
         
-        throw new Exception(msg);
+        throw new ApplicationException(msg);
     }
 }

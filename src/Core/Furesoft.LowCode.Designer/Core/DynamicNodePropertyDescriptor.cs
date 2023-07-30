@@ -25,12 +25,9 @@ internal class DynamicNodePropertyDescriptor : PropertyDescriptor
 
     public override object GetValue(object component)
     {
-        if (component is DynamicNode dn)
+        if (component is DynamicNode dn && dn.Properties.TryGetValue(Name, out var value))
         {
-            if (dn.Properties.TryGetValue(Name, out var value))
-            {
-                return value;
-            }
+            return value;
         }
 
         return null;

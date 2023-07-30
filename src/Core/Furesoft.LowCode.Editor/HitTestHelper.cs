@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 
-namespace NodeEditor;
+namespace Furesoft.LowCode.Editor;
 
 internal static class HitTestHelper
 {
@@ -43,7 +43,7 @@ internal static class HitTestHelper
 
         var p0X = start.X;
         var p0Y = start.Y;
-        if (start.Parent is { })
+        if (start.Parent is not null)
         {
             p0X += start.Parent.X;
             p0Y += start.Parent.Y; 
@@ -51,7 +51,7 @@ internal static class HitTestHelper
 
         var p3X = end.X;
         var p3Y = end.Y;
-        if (end.Parent is { })
+        if (end.Parent is not null)
         {
             p3X += end.Parent.X;
             p3Y += end.Parent.Y; 
@@ -100,7 +100,7 @@ internal static class HitTestHelper
 
         var p0X = start.X;
         var p0Y = start.Y;
-        if (start.Parent is { })
+        if (start.Parent is not null)
         {
             p0X += start.Parent.X;
             p0Y += start.Parent.Y; 
@@ -108,7 +108,7 @@ internal static class HitTestHelper
 
         var p3X = end.X;
         var p3Y = end.Y;
-        if (end.Parent is { })
+        if (end.Parent is not null)
         {
             p3X += end.Parent.X;
             p3Y += end.Parent.Y; 
@@ -202,21 +202,18 @@ internal static class HitTestHelper
             }
         }
 
-        if (drawingNode.CanSelectConnectors())
+        if (drawingNode.CanSelectConnectors() && drawingNode.Connectors is { Count: > 0 })
         {
-            if (drawingNode.Connectors is { Count: > 0 })
+            foreach (var connector in drawingNode.Connectors)
             {
-                foreach (var connector in drawingNode.Connectors)
+                if (!HitTestConnector(connector, rect))
                 {
-                    if (!HitTestConnector(connector, rect))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (connector.CanSelect())
-                    {
-                        selectedConnectors.Add(connector);
-                    }
+                if (connector.CanSelect())
+                {
+                    selectedConnectors.Add(connector);
                 }
             }
         }

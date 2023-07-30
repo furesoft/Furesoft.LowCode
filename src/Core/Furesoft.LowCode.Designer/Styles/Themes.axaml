@@ -11,6 +11,7 @@
       <SolidColorBrush x:Key="ConnectorBackgroundBrush">#dde0e4</SolidColorBrush>
       <SolidColorBrush x:Key="PinPointerOverForegroundBrush">#dde0e4</SolidColorBrush>
       <SolidColorBrush x:Key="PinForegroundBrush">Gray</SolidColorBrush>
+      <SolidColorBrush x:Key="ThemeBackgroundBrushLight">#161615</SolidColorBrush>
       
       <VisualBrush x:Key="EditorCheckerBoard" TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
         <VisualBrush.Visual>
@@ -28,6 +29,7 @@
       <SolidColorBrush x:Key="ConnectorBackgroundBrush">#dde0e4</SolidColorBrush>
       <SolidColorBrush x:Key="PinPointerOverForegroundBrush">#dde0e4</SolidColorBrush>
       <SolidColorBrush x:Key="PinForegroundBrush">Gray</SolidColorBrush>
+      <SolidColorBrush x:Key="ThemeBackgroundBrushLight">#161615</SolidColorBrush>
       
       <VisualBrush x:Key="EditorCheckerBoard" TileMode="Tile" SourceRect="0,0,20,20" DestinationRect="0,0,20,20">
         <VisualBrush.Visual>

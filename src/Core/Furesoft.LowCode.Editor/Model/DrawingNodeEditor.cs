@@ -45,7 +45,7 @@ public sealed class DrawingNodeEditor
 
     public bool IsPinConnected(IPin pin)
     {
-        if (_node.Connectors is { })
+        if (_node.Connectors is not null)
         {
             foreach (var connector in _node.Connectors)
             {
@@ -61,7 +61,7 @@ public sealed class DrawingNodeEditor
 
     public bool IsConnectorMoving()
     {
-        if (_connector is { })
+        if (_connector is not null)
         {
             return true;
         }
@@ -71,9 +71,9 @@ public sealed class DrawingNodeEditor
 
     public void CancelConnector()
     {
-        if (_connector is { })
+        if (_connector is not null)
         {
-            if (_node.Connectors is { })
+            if (_node.Connectors is not null)
             {
                 _node.Connectors.Remove(_connector);
             }
@@ -84,7 +84,7 @@ public sealed class DrawingNodeEditor
 
     public bool CanSelectNodes()
     {
-        if (_connector is { })
+        if (_connector is not null)
         {
             return false;
         }
@@ -94,7 +94,7 @@ public sealed class DrawingNodeEditor
 
     public bool CanSelectConnectors()
     {
-        if (_connector is { })
+        if (_connector is not null)
         {
             return false;
         }
@@ -109,7 +109,7 @@ public sealed class DrawingNodeEditor
 
     private void NotifyPinsRemoved(INode node)
     {
-        if (node.Pins is { })
+        if (node.Pins is not null)
         {
             foreach (var pin in node.Pins)
             {
@@ -154,7 +154,7 @@ public sealed class DrawingNodeEditor
             var x = pin.X;
             var y = pin.Y;
 
-            if (pin.Parent is { })
+            if (pin.Parent is not null)
             {
                 x += pin.Parent.X;
                 y += pin.Parent.Y;
@@ -206,7 +206,7 @@ public sealed class DrawingNodeEditor
 
     public void ConnectorMove(double x, double y)
     {
-        if (_connector is {End: { }})
+        if (_connector is {End: not null})
         {
             _connector.End.X = x;
             _connector.End.Y = y;
@@ -234,7 +234,7 @@ public sealed class DrawingNodeEditor
 
         _clipboard = serializer.Serialize(clipboard);
 
-        if (clipboard.SelectedNodes is { })
+        if (clipboard.SelectedNodes is not null)
         {
             foreach (var node in clipboard.SelectedNodes)
             {
@@ -247,7 +247,7 @@ public sealed class DrawingNodeEditor
             }
         }
 
-        if (clipboard.SelectedConnectors is { })
+        if (clipboard.SelectedConnectors is not null)
         {
             foreach (var connector in clipboard.SelectedConnectors)
             {

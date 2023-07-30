@@ -13,7 +13,7 @@ public partial class NodeFactory : INodeFactory
 
     private readonly List<DynamicNode> _dynamicNodes = new();
 
-    public List<string> SearchPaths = new() {"."};
+    public readonly List<string> SearchPaths = new() {"."};
 
     public void AddDynamicNode(DynamicNode node)
     {

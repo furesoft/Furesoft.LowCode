@@ -1,25 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-    <IsPackable>True</IsPackable>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
+    <RootNamespace>Furesoft.LowCode.Editor</RootNamespace>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <ImplicitUsings>true</ImplicitUsings>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageId>Furesoft.LowCode.Editor</PackageId>
-    <Description>A node editor control for Avalonia.</Description>
-    <PackageTags>node;editor;nodeeditor;graph;control;xaml;axaml;avalonia;avaloniaui</PackageTags>
+    <Authors>furesoft</Authors>
+    <RepositoryUrl>https://github.com/furesoft/Furesoft.LowCode</RepositoryUrl>
+    <PackageTags>lowcode, visual, scripting, nodes, graph</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.1" />
     <PackageReference Include="Avalonia.Controls.PanAndZoom" Version="11.0.0" />
-    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0.1" />
-    <PackageReference Include="Avalonia.Xaml.Interactions.DragAndDrop" Version="11.0.0.1" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Xaml.Interactions.DragAndDrop" Version="11.0.1" />
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="ReactiveMarbles.PropertyChanged" Version="2.0.27" />
   </ItemGroup>
 

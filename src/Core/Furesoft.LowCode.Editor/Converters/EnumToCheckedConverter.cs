@@ -2,11 +2,11 @@
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 
-namespace NodeEditor.Converters;
+namespace Furesoft.LowCode.Editor.Converters;
 
 internal class EnumToCheckedConverter : IValueConverter
 {
-    public static EnumToCheckedConverter Instance = new();
+    public static readonly EnumToCheckedConverter Instance = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

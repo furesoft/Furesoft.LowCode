@@ -32,9 +32,8 @@ public class RepeatNode : VisualNode
 
         for (int i = 0; i < times; i++)
         {
-            //ToDo: give node index
             var context = new Context(Context);
-            context.DefineConstant("i", i);
+            context.DefineConstant("index", i);
             
             await ContinueWith(DoPin, context, cancellationToken: cancellationToken);
         }

@@ -56,7 +56,7 @@ internal class ChildItemNode : VisualNode
             SearchPattern = "*";
         }
 
-        DirectoryInfo dirInfo = new DirectoryInfo(folderPath);
+        var dirInfo = new DirectoryInfo(folderPath);
         if (FollowSymlink)
         {
             if (dirInfo.ResolveLinkTarget(true) is DirectoryInfo resolvedDir)
@@ -65,7 +65,7 @@ internal class ChildItemNode : VisualNode
             }
             else
             {
-                throw new Exception("Resolved Symlink doesn't link to a Directory");
+                throw new IOException("Resolved Symlink doesn't link to a Directory");
             }
         }
 

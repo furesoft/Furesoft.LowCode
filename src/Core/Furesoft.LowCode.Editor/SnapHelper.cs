@@ -1,6 +1,6 @@
 using Avalonia;
 
-namespace NodeEditor;
+namespace Furesoft.LowCode.Editor;
 
 public static class SnapHelper
 {

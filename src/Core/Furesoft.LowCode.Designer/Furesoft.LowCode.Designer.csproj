@@ -1,18 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <IsPackable>True</IsPackable>
-    <Nullable>disable</Nullable>
     <RootNamespace>Furesoft.LowCode.Designer</RootNamespace>
-    <Version>1.0</Version>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <ImplicitUsings>true</ImplicitUsings>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageId>Furesoft.LowCode.Designer</PackageId>
-    <Description>An Designer for the Furesoft.LowCode Framework</Description>
-    <PackageTags>lowcode;avalonia;avaloniaui</PackageTags>
+    <Authors>furesoft</Authors>
+    <RepositoryUrl>https://github.com/furesoft/Furesoft.LowCode</RepositoryUrl>
+    <PackageTags>lowcode, visual, scripting, nodes, graph</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,7 +43,11 @@
     <PackageReference Include="Avalonia.Skia" Version="11.0.1" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.1" />
     <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.1.3" />
-    <PackageReference Include="MessageBox.Avalonia" Version="3.0.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.2" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NiL.JS" Version="2.5.1661" />
   </ItemGroup>
 

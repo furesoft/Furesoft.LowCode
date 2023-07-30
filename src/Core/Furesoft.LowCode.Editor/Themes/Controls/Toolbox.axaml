@@ -36,7 +36,7 @@
 
           <TreeView.DataTemplates>
             <DataTemplate DataType="mvvm:NodeTemplateViewModel">
-              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrush}" IsVisible="{ReflectionBinding IsVisible, Mode=TwoWay}">
+              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrushLight}" IsVisible="{ReflectionBinding IsVisible, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />

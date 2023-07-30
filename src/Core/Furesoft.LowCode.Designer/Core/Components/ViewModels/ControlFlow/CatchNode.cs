@@ -25,7 +25,7 @@ public class CatchNode : VisualNode
     [Description("Give the error a name. If its not set the name will be 'error'")]
     public string ErrorName
     {
-        get => _errorName = "error";
+        get => _errorName;
         set => SetProperty(ref _errorName, value);
     }
 

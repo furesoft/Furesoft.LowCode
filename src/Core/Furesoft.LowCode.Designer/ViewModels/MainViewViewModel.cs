@@ -306,7 +306,7 @@ public partial class MainViewViewModel : ViewModelBase
                     Editor.Drawing.SetSerializer(Editor.Serializer);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Debug.WriteLine(ex.Message);
                 //Debug.WriteLine(ex.StackTrace);
@@ -346,7 +346,7 @@ public partial class MainViewViewModel : ViewModelBase
                 await using var writer = new StreamWriter(stream);
                 await writer.WriteAsync((string)json);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Debug.WriteLine(ex.Message);
                 //Debug.WriteLine(ex.StackTrace);

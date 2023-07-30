@@ -5,7 +5,7 @@ namespace Furesoft.LowCode.Designer.Core.Debugging;
 public class Debugger
 {
     private readonly Context _context;
-    public VisualNode CurrentNode;
+    public VisualNode CurrentNode { get; set; }
 
     public List<VisualNode> BreakPointNodes { get; set; } = new();
 

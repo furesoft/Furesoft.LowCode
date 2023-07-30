@@ -11,6 +11,8 @@ public class Evaluator
     private readonly IDrawingNode _drawing;
     public Context Context;
     internal Debugger Debugger { get; }
+    
+    public static SignalStorage Signals { get; set; } = new();
 
     public Evaluator(IDrawingNode drawing)
     {
@@ -32,7 +34,7 @@ public class Evaluator
         {
             await entryNode.DefiningNode.Execute(cancellationToken: cancellationToken);
         }
-        catch (TaskCanceledException ex){}
+        catch (TaskCanceledException){}
     }
 
     public T Evaluate<T>(string src)

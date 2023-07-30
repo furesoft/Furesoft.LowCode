@@ -12,11 +12,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj" />
+    <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Network\Furesoft.LowCode.Nodes.Network.csproj" />
     <ProjectReference Include="..\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="11.0.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

@@ -11,7 +11,6 @@
         Width="1230" Height="740"
         Icon="/Assets/Icon.ico"
         Title="LowCode Designer"
-        Background="{x:Null}"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="False"
         ExtendClientAreaChromeHints="PreferSystemChrome"

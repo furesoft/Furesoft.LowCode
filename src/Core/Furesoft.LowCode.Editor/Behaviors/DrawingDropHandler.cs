@@ -35,12 +35,9 @@ public class DrawingDropHandler : DefaultDropHandler
         {
             var text = e.Data.GetText();
 
-            if (bExecute)
+            if (bExecute && text is not null)
             {
-                if (text is { })
-                {
-                    // TODO: text
-                }
+                // TODO: text
             }
 
             return true;
@@ -57,7 +54,7 @@ public class DrawingDropHandler : DefaultDropHandler
                     if (bExecute)
                     {
                         var node = drawing.Clone(template.Template);
-                        if (node is { })
+                        if (node is not null)
                         {
                             node.Parent = drawing;
                             node.Move(point.X, point.Y);
