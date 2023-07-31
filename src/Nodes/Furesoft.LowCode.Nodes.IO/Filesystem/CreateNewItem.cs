@@ -1,34 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.CodeAnalysis;
+﻿namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
-namespace Furesoft.LowCode.Nodes.IO;
 [Description("Create Items in a Folder")]
 [NodeCategory("IO/FileSystem")]
 [NodeView(typeof(IconNodeView), "M67 216v-43h64v-64h42v64h64v43h-64v64h-42v-64h-64zM45 45c-24 0-42 19-42 43v213c0 24 18 43 42 43h342c24-0 42-19 42-43v-256c-0-24-18-43-42-43h-128l-43 43h-171z")]
 public class CreateNewItem : VisualNode
 {
-    public CreateNewItem() : base(nameof(CreateNewItem))
+    public CreateNewItem() : base("Create New Item")
     {
     }
+    
     [Description("Where should the items be created")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public BindingList<string> TargetPaths { get; set; } = new();
+    
     [Description("What should the name of the item be")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string ItemName { get; set; }
+    
     [Description("Which item should be created")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public ItemTypes ItemType { get; set; }
+    
     [Pin("Flow Input", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
 
     [Pin("Flow Output", PinAlignment.Bottom)]
     public IOutputPin OutputPin { get; set; }
+    
     public override Task Execute(CancellationToken cancellationToken)
     {
         foreach(var item in TargetPaths)

@@ -1,4 +1,4 @@
-﻿namespace Furesoft.LowCode.Nodes.IO;
+﻿namespace Furesoft.LowCode.Nodes.IO.Console;
 
 [DataContract(IsReference = true)]
 [Description("Read a value from the console")]
@@ -22,7 +22,7 @@ public class ConsoleInNode : VisualNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var input = Console.ReadLine();
+        var input = System.Console.ReadLine();
         SetOutVariable(Output, input);
 
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);

@@ -1,4 +1,4 @@
-﻿namespace Furesoft.LowCode.Nodes.IO;
+﻿namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [Description("Get Items in a Folder")]
 [NodeCategory("IO/FileSystem")]

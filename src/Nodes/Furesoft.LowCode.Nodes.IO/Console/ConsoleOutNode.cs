@@ -1,4 +1,4 @@
-﻿namespace Furesoft.LowCode.Nodes.IO;
+﻿namespace Furesoft.LowCode.Nodes.IO.Console;
 
 [DataContract(IsReference = true)]
 [Description("Write a text to the console")]
@@ -24,7 +24,7 @@ public class ConsoleOutNode : VisualNode
     {
         var msg= Evaluate<string>(Message);
        
-        Console.WriteLine(msg);
+        System.Console.WriteLine(msg);
 
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
