@@ -24,26 +24,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Nodes\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AvaloniaXaml Include="Nodes\Views\AssignNodeView.axaml" />
-    <AvaloniaXaml Include="Nodes\Views\CommentView.axaml" />
-    <AvaloniaXaml Include="Nodes\Views\ConditionView.axaml" />
-    <AvaloniaXaml Include="Nodes\Views\DefaultNodeView.axaml" />
-    <AvaloniaXaml Include="Nodes\Views\EntryView.axaml" />
-    <AvaloniaXaml Include="Nodes\Views\IconNodeView.axaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="Nodes\Views\AssignNodeView.axaml" />
-    <AdditionalFiles Include="Nodes\Views\CommentView.axaml" />
-    <AdditionalFiles Include="Nodes\Views\ConditionView.axaml" />
-    <AdditionalFiles Include="Nodes\Views\DefaultNodeView.axaml" />
-    <AdditionalFiles Include="Nodes\Views\EntryView.axaml" />
-    <AdditionalFiles Include="Nodes\Views\IconNodeView.axaml" />
-  </ItemGroup>
-
 </Project>

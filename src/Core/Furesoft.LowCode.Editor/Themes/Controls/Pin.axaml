@@ -14,49 +14,17 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IPin">
-          <Ellipse Name="PART_Pin" Stroke="{Binding Mode, Converter={converters:PinModeConverter}}"
-                   Width="{Binding Width}"
-                   Height="{Binding Height}" />
+        <Ellipse Name="PART_Pin" Stroke="{Binding Mode, Converter={converters:PinModeConverter}}"
+                 Width="{Binding Width}"
+                 Height="{Binding Height}" />
       </ControlTemplate>
     </Setter>
 
     <Setter Property="(ToolTip.Tip)">
       <Template>
-        <TextBlock Text="{Binding Converter={converters:PinNameConverter}}" 
+        <TextBlock Text="{Binding Converter={converters:PinNameConverter}}"
                    x:DataType="model:IPin" />
       </Template>
-    </Setter>
-
-    <Setter Property="ContextFlyout">
-      <Setter.Value>
-        <Flyout x:DataType="model:IPin">
-          <DockPanel>
-            <Label Content="Name:" DockPanel.Dock="Top" />
-            <TextBox Text="{Binding Name}" DockPanel.Dock="Top" />
-            <Label Content="Alignment:" DockPanel.Dock="Top" />
-            <RadioButton Content="None"
-                         GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:PinAlignment.None}}"
-                         DockPanel.Dock="Top" />
-            <RadioButton Content="Left"
-                         GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:PinAlignment.Left}}"
-                         DockPanel.Dock="Top" />
-            <RadioButton Content="Right"
-                         GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:PinAlignment.Right}}"
-                         DockPanel.Dock="Top" />
-            <RadioButton Content="Top"
-                         GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:PinAlignment.Top}}"
-                         DockPanel.Dock="Top" />
-            <RadioButton Content="Bottom"
-                         GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:PinAlignment.Bottom}}"
-                         DockPanel.Dock="Top" />
-          </DockPanel>
-        </Flyout>
-      </Setter.Value>
     </Setter>
 
     <Style Selector="^/template/ Ellipse#PART_Pin">

@@ -20,7 +20,6 @@
       <ControlTemplate x:DataType="model:IDrawingNode">
         <Panel>
           <Panel Background="{DynamicResource EditorBackground}" />
-          <!--<Panel Background="{DynamicResource EditorCheckerBoard}" />-->
           <ScrollViewer VerticalScrollBarVisibility="Auto"
                         HorizontalScrollBarVisibility="Auto">
             <controls:NodeZoomBorder Name="PART_ZoomBorder"

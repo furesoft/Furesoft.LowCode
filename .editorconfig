@@ -22,6 +22,10 @@ indent_size = 2
 [*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
 indent_size = 2
 
+# AXAML files
+[*.axaml]
+indent_size = 2
+
 # JSON files
 [*.json]
 indent_size = 2
@@ -274,3 +278,13 @@ csharp_style_var_elsewhere = true:warning
 # Not enforced as a build 'warning' for 'VisualStudio' layer due to large number of false positives from https://github.com/dotnet/roslyn-analyzers/issues/3857 and https://github.com/dotnet/roslyn-analyzers/issues/3858
 # Additionally, there is a risk of accidentally breaking an internal API that partners rely on though IVT.
 dotnet_diagnostic.CA1822.severity = suggestion
+
+# Verify settings
+[*.{received,verified}.{txt,xml,json}]
+charset = "utf-8-bom"
+end_of_line = lf
+indent_size = unset
+indent_style = unset
+insert_final_newline = false
+tab_width = unset
+trim_trailing_whitespace = false
