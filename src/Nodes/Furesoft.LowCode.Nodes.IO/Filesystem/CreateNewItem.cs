@@ -48,8 +48,3 @@ public class CreateNewItem : VisualNode
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }
-public enum ItemTypes
-{
-    Directory,
-    File
-}
