@@ -185,7 +185,9 @@ public sealed class DrawingNodeEditor
         }
         else
         {
-            if (_connector.Start != pin && _connector.Start.Mode != pin.Mode)
+            if (_connector.Start != pin && _connector.Start.Mode != pin.Mode 
+                                        && !_node.Connectors.Any(_ => _.Start == _connector.Start && _.End == pin) 
+                                        && !_node.Connectors.Any(_ => _.Start == pin && _.End == _connector.Start))
             {
                 var end = _connector.End;
                 _connector.End = pin;
