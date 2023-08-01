@@ -21,10 +21,10 @@ public class CreateNewItem : VisualNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public ItemTypes ItemType { get; set; }
     
-    [Pin("Flow Input", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
 
-    [Pin("Flow Output", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin OutputPin { get; set; }
     
     public override Task Execute(CancellationToken cancellationToken)

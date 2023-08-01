@@ -16,10 +16,10 @@ public class WaitNode : VisualNode
     {
     }
     
-    [Pin("Flow Output", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin FlowOutputPin { get; set; }
     
-    [Pin("Flow Input", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IOutputPin FlowInputPin { get; set; }
 
     [Description("The time to wait in milliseconds")]

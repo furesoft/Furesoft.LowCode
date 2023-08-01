@@ -14,10 +14,10 @@ public class ReadFileNode : VisualNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string Output { get; set; }
 
-    [Pin("Flow Input", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
 
-    [Pin("Flow Output", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin OutputPin { get; set; }
     
     public ReadFileNode() : base("Read File")

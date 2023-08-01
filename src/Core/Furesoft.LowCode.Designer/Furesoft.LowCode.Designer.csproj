@@ -16,21 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Core\Components\Views\ConditionView.axaml.cs">
-      <DependentUpon>ConditionView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Core\Components\Views\DefaultNodeView.axaml.cs">
-      <DependentUpon>DefaultNodeView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Core\Components\Views\EntryView.axaml.cs">
-      <DependentUpon>EntryView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="Views\Nodes\AndGateView.axaml" />
     <UpToDateCheckInput Remove="Views\Nodes\EllipseView.axaml" />
     <UpToDateCheckInput Remove="Views\Nodes\OrGateView.axaml" />

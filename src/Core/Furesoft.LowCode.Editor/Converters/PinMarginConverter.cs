@@ -2,7 +2,7 @@
 using Avalonia;
 using Avalonia.Data.Converters;
 
-namespace NodeEditor.Converters;
+namespace Furesoft.LowCode.Editor.Converters;
 
 public class PinMarginConverter : IValueConverter
 {

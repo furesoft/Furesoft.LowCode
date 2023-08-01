@@ -16,13 +16,13 @@ public class WaitForNode : VisualNode
       
     }
 
-    [Pin("Flow Input", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IInputPin FlowInput { get; } = null;
     
-    [Pin("Flow Output", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
     
-    [Pin("Do Output", PinAlignment.Right)]
+    [Pin("Do", PinAlignment.Right)]
     public IOutputPin DoNode { get; } = null;
 
     [Description("The time to wait in milliseconds")]

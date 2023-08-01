@@ -11,10 +11,10 @@ public class GetSiteContentNode : VisualNode
     private string _url;
     private string _outputVariable;
 
-    [Pin("Input Flow", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
     
-    [Pin("Output Flow", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin OutPin { get; set; }
 
     public string URL

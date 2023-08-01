@@ -18,10 +18,10 @@ public class DebugOutNode : VisualNode
         set => SetProperty(ref _message, value);
     }
 
-    [Pin("Flow Input", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IInputPin InputPin { get; set; }
 
-    [Pin("Flow Output", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin OutputPin { get; set; }
     
     public DebugOutNode() : base("Debug Out")

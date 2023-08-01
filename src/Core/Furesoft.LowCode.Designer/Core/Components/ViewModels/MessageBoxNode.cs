@@ -37,10 +37,10 @@ public class MessageBoxNode : VisualNode
         set => SetProperty(ref _title, value);
     }
     
-    [Pin("Flow Input", PinAlignment.Top)]
+    [Pin("Flow", PinAlignment.Top)]
     public IInputPin FlowInput { get; } = null;
     
-    [Pin("Flow Output", PinAlignment.Bottom)]
+    [Pin("Flow", PinAlignment.Bottom)]
     public IOutputPin FlowOutput { get; } = null;
 
     public override async Task Execute(CancellationToken cancellationToken)

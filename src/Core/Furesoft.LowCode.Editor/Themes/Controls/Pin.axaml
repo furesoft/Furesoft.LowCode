@@ -1,11 +1,9 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:NodeEditor.Converters"
                     xmlns:controls="clr-namespace:NodeEditor.Controls"
                     xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
-                    xmlns:editor="clr-namespace:Furesoft.LowCode.Editor"
-                    xmlns:converters1="clr-namespace:Furesoft.LowCode.Editor.Converters"
-                    x:CompileBindings="True">
+                    xmlns:converters="clr-namespace:Furesoft.LowCode.Editor.Converters"
+                    x:CompileBindings="False">
 
   <ControlTheme x:Key="{x:Type controls:Pin}" TargetType="controls:Pin">
 
@@ -16,7 +14,7 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IPin">
-        <Ellipse Name="PART_Pin"
+        <Ellipse Name="PART_Pin" Stroke="{Binding Mode, Converter={converters:PinModeConverter}}"
                  Width="{Binding Width}"
                  Height="{Binding Height}" />
       </ControlTemplate>
@@ -24,7 +22,7 @@
 
     <Setter Property="(ToolTip.Tip)">
       <Template>
-        <TextBlock Text="{Binding Name}" 
+        <TextBlock Text="{Binding Converter={converters:PinNameConverter}}" 
                    x:DataType="model:IPin" />
       </Template>
     </Setter>
@@ -38,23 +36,23 @@
             <Label Content="Alignment:" DockPanel.Dock="Top" />
             <RadioButton Content="None"
                          GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={x:Static converters1:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.None}}"
+                         IsChecked="{Binding Alignment, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.None}}"
                          DockPanel.Dock="Top" />
             <RadioButton Content="Left"
                          GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={x:Static converters1:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Left}}"
+                         IsChecked="{Binding Alignment, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Left}}"
                          DockPanel.Dock="Top" />
             <RadioButton Content="Right"
                          GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={x:Static converters1:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Right}}"
+                         IsChecked="{Binding Alignment, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Right}}"
                          DockPanel.Dock="Top" />
             <RadioButton Content="Top"
                          GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={x:Static converters1:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Top}}"
+                         IsChecked="{Binding Alignment, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Top}}"
                          DockPanel.Dock="Top" />
             <RadioButton Content="Bottom"
                          GroupName="Alignment"
-                         IsChecked="{Binding Alignment, Converter={x:Static converters1:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Bottom}}"
+                         IsChecked="{Binding Alignment, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:PinAlignment.Bottom}}"
                          DockPanel.Dock="Top" />
           </DockPanel>
         </Flyout>

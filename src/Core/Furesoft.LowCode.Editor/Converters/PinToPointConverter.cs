@@ -2,7 +2,7 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 
-namespace NodeEditor.Converters;
+namespace Furesoft.LowCode.Editor.Converters;
 
 public class PinToPointConverter : IValueConverter
 {
