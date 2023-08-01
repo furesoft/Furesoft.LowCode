@@ -12,33 +12,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaResource Include="Assets\**"/>
+    <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Nodes\AndGateView.axaml"/>
-    <UpToDateCheckInput Remove="Views\Nodes\EllipseView.axaml"/>
-    <UpToDateCheckInput Remove="Views\Nodes\OrGateView.axaml"/>
-    <UpToDateCheckInput Remove="Views\Nodes\RectangleView.axaml"/>
-    <UpToDateCheckInput Remove="Views\Nodes\SignalView.axaml"/>
+    <UpToDateCheckInput Remove="Views\Nodes\AndGateView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\EllipseView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\OrGateView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\RectangleView.axaml" />
+    <UpToDateCheckInput Remove="Views\Nodes\SignalView.axaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.1"/>
-    <PackageReference Include="Avalonia.Skia" Version="11.0.1"/>
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.1"/>
-    <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.1.3"/>
-    <PackageReference Include="MessageBox.Avalonia" Version="3.1.2"/>
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Skia" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.1" />
+    <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.1.3" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NiL.JS" Version="2.5.1661"/>
+    <PackageReference Include="NiL.JS" Version="2.5.1661" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj"/>
-    <ProjectReference Include="..\Furesoft.LowCode\Furesoft.LowCode.csproj"/>
+    <ProjectReference Include="..\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj" />
+    <ProjectReference Include="..\Furesoft.LowCode\Furesoft.LowCode.csproj" />
   </ItemGroup>
 
 </Project>
