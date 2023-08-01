@@ -15,4 +15,3 @@ public partial class ConditionView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

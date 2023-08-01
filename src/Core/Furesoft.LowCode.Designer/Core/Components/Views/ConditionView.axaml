@@ -6,15 +6,16 @@
              x:Class="Furesoft.LowCode.Designer.Core.Components.Views.ConditionView">
   <Grid>
     <Rectangle Classes="node" />
-    
-    <Rectangle Classes="node" Width="35" Height="35" Fill="#646566" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <Rectangle Classes="node" Width="35" Height="35" Fill="#646566" HorizontalAlignment="Center"
+               VerticalAlignment="Center">
       <Rectangle.RenderTransform>
         <TransformGroup>
           <RotateTransform Angle="45" />
         </TransformGroup>
       </Rectangle.RenderTransform>
     </Rectangle>
-    
+
     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource NodeForegroundBrush}">?</Label>
   </Grid>
 </UserControl>

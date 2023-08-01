@@ -15,4 +15,3 @@ public partial class AssignNodeView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

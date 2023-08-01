@@ -3,7 +3,6 @@ using Furesoft.LowCode.Designer.Core.Components.ViewModels;
 using Furesoft.LowCode.Editor;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
-using NodeEditor;
 
 namespace Furesoft.LowCode.Designer.Core;
 
@@ -31,7 +30,7 @@ public partial class NodeFactory
         var entryX = SnapHelper.Snap(drawing.Width / 2 - 175, drawing.SnapX);
         var entryY = SnapHelper.Snap(drawing.Height / 2 - 200, drawing.SnapY);
 
-        CreateEntry((entryX , entryY), drawing);
+        CreateEntry((entryX, entryY), drawing);
 
         return drawing;
     }
@@ -70,13 +69,14 @@ public partial class NodeFactory
         IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
         NodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
-        for (int i = 0; i < pins.Count(); i++)
+        for (var i = 0; i < pins.Count(); i++)
         {
             var pin = pins.Skip(i).First();
 
-            (double baseX, double baseY) = positionMapper(i);
+            (var baseX, var baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name, (Editor.Model.PinAlignment)pin.Alignment,
+            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name,
+                (Editor.Model.PinAlignment)pin.Alignment,
                 pin.MultipleConnections);
         }
     }

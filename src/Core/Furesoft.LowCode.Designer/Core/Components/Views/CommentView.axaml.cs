@@ -15,4 +15,3 @@ public partial class CommentView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

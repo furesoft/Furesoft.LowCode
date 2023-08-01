@@ -1,13 +1,12 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:export="clr-namespace:Furesoft.LowCode.Designer.Services"
              x:CompileBindings="True"
              x:Class="Furesoft.LowCode.Desktop.App"
              Name="NodeEditor"
              RequestedThemeVariant="Dark">
   <Application.Styles>
     <FluentTheme />
-    
+
     <StyleInclude Source="avares://Furesoft.LowCode.Designer/Default.axaml" />
   </Application.Styles>
 </Application>

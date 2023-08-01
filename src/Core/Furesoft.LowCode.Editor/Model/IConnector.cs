@@ -1,65 +1,63 @@
-using Furesoft.LowCode.Editor.MVVM;
-
 namespace Furesoft.LowCode.Editor.Model;
 
 public sealed class ConnectorCreatedEventArgs : EventArgs
 {
-    public IConnector? Connector { get; }
-
     public ConnectorCreatedEventArgs(IConnector? connector)
     {
         Connector = connector;
     }
+
+    public IConnector? Connector { get; }
 }
 
 public sealed class ConnectorRemovedEventArgs : EventArgs
 {
-    public IConnector? Connector { get; }
-
     public ConnectorRemovedEventArgs(IConnector? connector)
     {
         Connector = connector;
     }
+
+    public IConnector? Connector { get; }
 }
 
 public sealed class ConnectorSelectedEventArgs : EventArgs
 {
-    public IConnector? Connector { get; }
-
     public ConnectorSelectedEventArgs(IConnector? connector)
     {
         Connector = connector;
     }
+
+    public IConnector? Connector { get; }
 }
 
 public sealed class ConnectorDeselectedEventArgs : EventArgs
 {
-    public IConnector? Connector { get; }
-
     public ConnectorDeselectedEventArgs(IConnector? connector)
     {
         Connector = connector;
     }
+
+    public IConnector? Connector { get; }
 }
 
 public sealed class ConnectorStartChangedEventArgs : EventArgs
 {
-    public IConnector? Connector { get; }
-
     public ConnectorStartChangedEventArgs(IConnector? connector)
     {
         Connector = connector;
     }
+
+    public IConnector? Connector { get; }
 }
 
 public sealed class ConnectorEndChangedEventArgs : EventArgs
 {
-    public IConnector? Connector { get; }
-
     public ConnectorEndChangedEventArgs(IConnector? connector)
     {
         Connector = connector;
     }
+
+    public IConnector? Connector { get; }
 }
 
 public interface IConnector

@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Avalonia;
-using Furesoft.LowCode.Designer;
 
 namespace Furesoft.LowCode.Desktop;
 
 internal static class Program
 {
-    [STAThread]
-    public static void Main(string[] args) => BuildAvaloniaApp()
-        .StartWithClassicDesktopLifetime(args);
-
     static Program()
     {
         App.EnableInputOutput = true;
@@ -37,9 +32,18 @@ internal static class Program
         }
     }
 
+    [STAThread]
+    public static void Main(string[] args)
+    {
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+    }
+
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
+    {
+        return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .LogToTrace()
             .UseSkia();
+    }
 }

@@ -11,7 +11,7 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IDrawingNode">
-        <Panel Name="PART_Panel" 
+        <Panel Name="PART_Panel"
                Background="{TemplateBinding Background}">
           <controls:GridDecorator EnableGrid="{TemplateBinding EnableGrid}"
                                   GridCellWidth="{TemplateBinding GridCellWidth}"

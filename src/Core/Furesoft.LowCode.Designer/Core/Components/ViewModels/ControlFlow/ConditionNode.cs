@@ -23,16 +23,14 @@ public class ConditionNode : InputNode
         set => SetProperty(ref _condition, value);
     }
 
-    [Pin("True", PinAlignment.Bottom)]
-    public IOutputPin TruePin { get; set; }
-    
-    [Pin("False", PinAlignment.Right)]
-    public IOutputPin FalsePin { get; set; }
+    [Pin("True", PinAlignment.Bottom)] public IOutputPin TruePin { get; set; }
+
+    [Pin("False", PinAlignment.Right)] public IOutputPin FalsePin { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
         var value = Evaluate<bool>(Condition);
-      
+
         if (value)
         {
             return ContinueWith(TruePin, cancellationToken: cancellationToken);

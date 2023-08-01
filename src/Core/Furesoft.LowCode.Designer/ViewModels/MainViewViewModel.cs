@@ -18,16 +18,12 @@ namespace Furesoft.LowCode.Designer.ViewModels;
 
 public partial class MainViewViewModel : ViewModelBase
 {
-    [ObservableProperty] private EditorViewModel _editor;
-    [ObservableProperty] private EmptyNode _selectedNode;
-    [ObservableProperty] private string _searchTerm = string.Empty;
-
-    public Evaluator Evaluator { get; set; }
-
     private readonly Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
-    public ObservableCollection<object> Templates { get; set; } = new();
 
     private CancellationTokenSource _cancellationTokenSource = new();
+    [ObservableProperty] private EditorViewModel _editor;
+    [ObservableProperty] private string _searchTerm = string.Empty;
+    [ObservableProperty] private EmptyNode _selectedNode;
 
     public MainViewViewModel()
     {
@@ -52,9 +48,12 @@ public partial class MainViewViewModel : ViewModelBase
         PropertyChanged += OnPropertyChanged;
     }
 
+    public Evaluator Evaluator { get; set; }
+    public ObservableCollection<object> Templates { get; set; } = new();
+
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(MainViewViewModel.SearchTerm))
+        if (e.PropertyName == nameof(SearchTerm))
         {
             Search(SearchTerm);
         }
@@ -146,7 +145,7 @@ public partial class MainViewViewModel : ViewModelBase
             for (var index = 0; index < spl.Length; index++)
             {
                 var s = spl[index];
-                currentPathBuilder.Append((index == 0 ? "" : "/")).Append(s);
+                currentPathBuilder.Append(index == 0 ? "" : "/").Append(s);
                 var currentPath = currentPathBuilder.ToString();
 
                 if (!treeCache.TryGetValue(currentPath, out var treeViewItem))
@@ -240,7 +239,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private void New()
     {
-        if (Editor?.Factory is { })
+        if (Editor?.Factory is not null)
         {
             Editor.Drawing = Editor.Factory.CreateDrawing();
             Editor.Drawing.SetSerializer(Editor.Serializer);
@@ -300,7 +299,7 @@ public partial class MainViewViewModel : ViewModelBase
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
                 var drawing = Editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
-                if (drawing is { })
+                if (drawing is not null)
                 {
                     Editor.Drawing = drawing;
                     Editor.Drawing.SetSerializer(Editor.Serializer);
@@ -344,7 +343,7 @@ public partial class MainViewViewModel : ViewModelBase
                 var json = Editor.Serializer.Serialize(Editor.Drawing);
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream);
-                await writer.WriteAsync((string)json);
+                await writer.WriteAsync(json);
             }
             catch (Exception)
             {
@@ -383,7 +382,7 @@ public partial class MainViewViewModel : ViewModelBase
             {
                 var control = new DrawingNode {DataContext = Editor.Drawing};
 
-                var root = new ExportRoot()
+                var root = new ExportRoot
                 {
                     Width = Editor.Drawing.Width, Height = Editor.Drawing.Height, Child = control
                 };

@@ -10,7 +10,6 @@ public class NodeCategoryAttribute : Attribute
 
     public NodeCategoryAttribute()
     {
-        
     }
 
     public string Category { get; set; }

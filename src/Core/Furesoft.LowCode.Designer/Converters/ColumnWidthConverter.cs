@@ -7,8 +7,8 @@ namespace Furesoft.LowCode.Designer.Converters;
 
 public class ColumnWidthConverter : IValueConverter
 {
-    public static readonly ColumnWidthConverter Instance = new ();
-    
+    public static readonly ColumnWidthConverter Instance = new();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool flag && parameter is double width)
@@ -17,10 +17,8 @@ public class ColumnWidthConverter : IValueConverter
             {
                 return new GridLength(width);
             }
-            else
-            {
-                return new GridLength(0);
-            }
+
+            return new GridLength(0);
         }
 
         return AvaloniaProperty.UnsetValue;

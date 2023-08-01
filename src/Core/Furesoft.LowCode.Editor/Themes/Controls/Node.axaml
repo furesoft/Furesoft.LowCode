@@ -12,10 +12,10 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:INode">
-        <Panel Width="{Binding Width}" 
+        <Panel Width="{Binding Width}"
                Height="{Binding Height}">
           <ContentPresenter Name="PART_ContentPresenter" ToolTip.Tip="{Binding Content.Description}"
-                            Content="{Binding Content}"/>
+                            Content="{Binding Content}" />
           <controls:Pins Name="PART_Pins" />
         </Panel>
       </ControlTemplate>

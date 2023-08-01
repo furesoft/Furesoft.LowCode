@@ -6,7 +6,7 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 
 [Description("Triggers the selected signal with the specified argument")]
 [DataContract(IsReference = true)]
-[NodeCategory()]
+[NodeCategory]
 public class SignalTriggerNode : InputOutputNode
 {
     public SignalTriggerNode() : base("Trigger")

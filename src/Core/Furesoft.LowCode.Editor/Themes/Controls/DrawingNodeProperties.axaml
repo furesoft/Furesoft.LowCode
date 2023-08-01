@@ -19,25 +19,25 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
                           Margin="4,4,4,0"
-                          DockPanel.Dock="Top"/>
+                          DockPanel.Dock="Top" />
             <Grid ColumnDefinitions="Auto,50*,Auto,50*">
-              <Label Grid.Column="0" 
+              <Label Grid.Column="0"
                      Content="SX"
                      Margin="6,0,6,0"
                      VerticalAlignment="Center"
-                     Opacity="0.6"/>
-              <TextBox Grid.Column="1" 
+                     Opacity="0.6" />
+              <TextBox Grid.Column="1"
                        BorderBrush="Transparent"
                        Margin="4,4,2,4"
                        Padding="6"
                        TextAlignment="Left"
                        Text="{Binding SnapX, FallbackValue='1.0'}" />
-              <Label Grid.Column="2" 
+              <Label Grid.Column="2"
                      Content="SY"
                      Margin="6,0,6,0"
                      VerticalAlignment="Center"
-                     Opacity="0.6"/>
-              <TextBox Grid.Column="3" 
+                     Opacity="0.6" />
+              <TextBox Grid.Column="3"
                        BorderBrush="Transparent"
                        Margin="2,4,4,4"
                        Padding="6"
@@ -53,25 +53,25 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
                           Margin="4,4,4,0"
-                          DockPanel.Dock="Top"/>
+                          DockPanel.Dock="Top" />
             <Grid ColumnDefinitions="Auto,50*,Auto,50*">
-              <Label Grid.Column="0" 
+              <Label Grid.Column="0"
                      Content="CW"
                      Margin="6,0,6,0"
                      VerticalAlignment="Center"
-                     Opacity="0.6"/>
-              <TextBox Grid.Column="1" 
+                     Opacity="0.6" />
+              <TextBox Grid.Column="1"
                        BorderBrush="Transparent"
                        Margin="4,4,2,4"
                        Padding="6"
                        TextAlignment="Left"
                        Text="{Binding GridCellWidth, FallbackValue='1.0'}" />
-              <Label Grid.Column="2" 
+              <Label Grid.Column="2"
                      Content="CH"
                      Margin="6,0,6,0"
                      VerticalAlignment="Center"
-                     Opacity="0.6"/>
-              <TextBox Grid.Column="3" 
+                     Opacity="0.6" />
+              <TextBox Grid.Column="3"
                        BorderBrush="Transparent"
                        Margin="2,4,4,4"
                        Padding="6"
@@ -81,23 +81,23 @@
           </DockPanel>
           <!-- Width/Height -->
           <Grid ColumnDefinitions="Auto,50*,Auto,50*" DockPanel.Dock="Bottom">
-            <Label Grid.Column="0" 
+            <Label Grid.Column="0"
                    Content="W"
                    Margin="6,0,6,0"
                    VerticalAlignment="Center"
-                   Opacity="0.6"/>
-            <TextBox Grid.Column="1" 
+                   Opacity="0.6" />
+            <TextBox Grid.Column="1"
                      BorderBrush="Transparent"
                      Margin="4,4,2,4"
                      Padding="6"
                      TextAlignment="Left"
                      Text="{Binding Width, FallbackValue=''}" />
-            <Label Grid.Column="2" 
+            <Label Grid.Column="2"
                    Content="H"
                    Margin="6,0,6,0"
                    VerticalAlignment="Center"
-                   Opacity="0.6"/>
-            <TextBox Grid.Column="3" 
+                   Opacity="0.6" />
+            <TextBox Grid.Column="3"
                      BorderBrush="Transparent"
                      Margin="2,4,4,4"
                      Padding="6"

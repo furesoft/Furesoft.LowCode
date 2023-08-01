@@ -5,15 +5,15 @@ namespace Furesoft.LowCode.Editor.MVVM;
 [ObservableObject]
 public partial class PinViewModel : IPin
 {
+    [ObservableProperty] private PinAlignment _alignment;
+    [ObservableProperty] private bool _canConnectToMultiplePins;
+    [ObservableProperty] private double _height;
+    [ObservableProperty] private PinMode _mode;
     [ObservableProperty] private string? _name;
     [ObservableProperty] private INode? _parent;
+    [ObservableProperty] private double _width;
     [ObservableProperty] private double _x;
     [ObservableProperty] private double _y;
-    [ObservableProperty] private double _width;
-    [ObservableProperty] private double _height;
-    [ObservableProperty] private PinAlignment _alignment;
-    [ObservableProperty] private PinMode _mode;
-    [ObservableProperty] private bool _canConnectToMultiplePins;
 
     public event EventHandler<PinCreatedEventArgs>? Created;
 
@@ -43,41 +43,41 @@ public partial class PinViewModel : IPin
 
     public void OnCreated()
     {
-        Created?.Invoke(this, new PinCreatedEventArgs(this));
+        Created?.Invoke(this, new(this));
     }
 
     public void OnRemoved()
     {
-        Removed?.Invoke(this, new PinRemovedEventArgs(this));
+        Removed?.Invoke(this, new(this));
     }
 
     public void OnMoved()
     {
-        Moved?.Invoke(this, new PinMovedEventArgs(this, _x, _y));
+        Moved?.Invoke(this, new(this, _x, _y));
     }
 
     public void OnSelected()
     {
-        Selected?.Invoke(this, new PinSelectedEventArgs(this));
+        Selected?.Invoke(this, new(this));
     }
 
     public void OnDeselected()
     {
-        Deselected?.Invoke(this, new PinDeselectedEventArgs(this));
+        Deselected?.Invoke(this, new(this));
     }
 
     public void OnResized()
     {
-        Resized?.Invoke(this, new PinResizedEventArgs(this, _x, _y, _width, _height));
+        Resized?.Invoke(this, new(this, _x, _y, _width, _height));
     }
 
     public void OnConnected()
     {
-        Connected?.Invoke(this, new PinConnectedEventArgs(this));
+        Connected?.Invoke(this, new(this));
     }
 
     public void OnDisconnected()
     {
-        Disconnected?.Invoke(this, new PinDisconnectedEventArgs(this));
+        Disconnected?.Invoke(this, new(this));
     }
 }

@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:editor="clr-namespace:NodeEditor.Controls;assembly=Furesoft.LowCode.Editor"
              xmlns:viewModels1="clr-namespace:Furesoft.LowCode.Designer.ViewModels"
-             xmlns:designer="clr-namespace:Furesoft.LowCode.Designer"
              xmlns:views="clr-namespace:Furesoft.LowCode.Designer.Views"
              Name="MenuUserControl"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"

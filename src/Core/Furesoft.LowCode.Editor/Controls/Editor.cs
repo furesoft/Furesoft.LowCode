@@ -9,13 +9,13 @@ namespace NodeEditor.Controls;
 [TemplatePart("PART_AdornerCanvas", typeof(Canvas))]
 public class Editor : TemplatedControl
 {
-    public static readonly StyledProperty<NodeZoomBorder?> ZoomControlProperty = 
+    public static readonly StyledProperty<NodeZoomBorder?> ZoomControlProperty =
         AvaloniaProperty.Register<Editor, NodeZoomBorder?>(nameof(ZoomControl));
 
-    public static readonly StyledProperty<DrawingNode?> DrawingNodeProperty = 
+    public static readonly StyledProperty<DrawingNode?> DrawingNodeProperty =
         AvaloniaProperty.Register<Editor, DrawingNode?>(nameof(DrawingNode));
 
-    public static readonly StyledProperty<Canvas?> AdornerCanvasProperty = 
+    public static readonly StyledProperty<Canvas?> AdornerCanvasProperty =
         AvaloniaProperty.Register<Editor, Canvas?>(nameof(AdornerCanvas));
 
     public NodeZoomBorder? ZoomControl

@@ -13,7 +13,8 @@ public class DrawingPressedBehavior : Behavior<ItemsControl>
 
         if (AssociatedObject is not null)
         {
-            AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Pressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Pressed,
+                RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
     }
 
@@ -39,7 +40,7 @@ public class DrawingPressedBehavior : Behavior<ItemsControl>
             return;
         }
 
-        if (e.Source is Control { DataContext: IPin })
+        if (e.Source is Control {DataContext: IPin})
         {
             return;
         }

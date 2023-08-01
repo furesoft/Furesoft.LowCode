@@ -11,53 +11,19 @@ using NiL.JS.Extensions;
 
 namespace Furesoft.LowCode.Designer.Core;
 
-public abstract class InputOutputNode : EmptyNode
-{
-    [Pin("Flow", PinAlignment.Top)]
-    public IInputPin InputPin { get; set; }
-    
-    [Pin("Flow", PinAlignment.Bottom)]
-    public IOutputPin OutputPin { get; set; }
-
-    protected InputOutputNode(string label) : base(label)
-    {
-    }
-}
-
-public abstract class InputNode : EmptyNode
-{
-    [Pin("Flow", PinAlignment.Top)]
-    public IInputPin InputPin { get; set; }
-
-    protected InputNode(string label) : base(label)
-    {
-    }
-}
-
-public abstract class OutputNode : EmptyNode
-{
-    [Pin("Flow", PinAlignment.Bottom)]
-    public IOutputPin OutputPin { get; set; }
-
-    protected OutputNode(string label) : base(label)
-    {
-    }
-}
-
 [DataContract(IsReference = true)]
 public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 {
-    private string _label;
     private string _description;
     internal Evaluator _evaluator;
-    
-    [Browsable(false)]
-    public Context Context { get; private set; }
+    private string _label;
 
     protected EmptyNode(string label)
     {
         Label = label;
     }
+
+    [Browsable(false)] public Context Context { get; private set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Browsable(false)]
@@ -76,10 +42,12 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     }
 
     /// <summary>
-    /// Gets the previously executed node
+    ///     Gets the previously executed node
     /// </summary>
     [Browsable(false)]
     public EmptyNode PreviousNode { get; set; }
+
+    [Browsable(false)] public bool HasBreakPoint => _evaluator?.Debugger.BreakPointNodes.Contains(this) ?? false;
 
     public abstract Task Execute(CancellationToken cancellationToken);
 
@@ -89,7 +57,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         _evaluator.Debugger.ResetWait();
 
-        var nodes = GetConnectedNodes(pinMembername, PinMode.Output, context);
+        var nodes = GetConnectedNodes(pinMembername, PinMode.Output);
 
         foreach (var node in nodes)
         {
@@ -105,18 +73,24 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             node._evaluator.Debugger.CurrentNode = node;
 
             await node?.Execute(cancellationToken);
-            
+
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
 
-    protected IEnumerable<object> GetInputs(IInputPin pin,
+    protected IEnumerable<EmptyNode> GetInputs(IInputPin pin,
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input);
     }
 
-    private IEnumerable<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode, Context context = null)
+    protected EmptyNode GetInput(IInputPin pin,
+        [CallerArgumentExpression("pin")] string pinMembername = null)
+    {
+        return GetConnectedNodes(pinMembername, PinMode.Input).First();
+    }
+
+    private IEnumerable<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode)
     {
         var pinName = GetPinName(pinMembername);
         var connections = GetConnections();
@@ -151,15 +125,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         }
 
         parentNode = parent.DefiningNode;
-    }
-
-    [Browsable(false)]
-    public bool HasBreakPoint
-    {
-        get
-        {
-            return _evaluator?.Debugger.BreakPointNodes.Contains(this) ?? false;
-        }
     }
 
     public void AddBreakPoint()

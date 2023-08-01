@@ -63,7 +63,7 @@ public class Connector : Shape
                 connector.End?.Alignment ?? PinAlignment.None,
                 ref p1X, ref p1Y,
                 ref p2X, ref p2Y);
-            
+
             var midY = SnapHelper.Snap((p1Y + p2Y) / 2, connector.Parent.SnapY);
 
             context.LineTo(new(p1X, p1Y));

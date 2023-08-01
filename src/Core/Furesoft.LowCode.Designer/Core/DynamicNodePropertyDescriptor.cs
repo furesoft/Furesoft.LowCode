@@ -4,7 +4,6 @@ namespace Furesoft.LowCode.Designer.Core;
 
 internal class DynamicNodePropertyDescriptor : PropertyDescriptor
 {
-
     public DynamicNodePropertyDescriptor(MemberDescriptor descr) : base(descr)
     {
     }
@@ -17,6 +16,10 @@ internal class DynamicNodePropertyDescriptor : PropertyDescriptor
     {
         PropertyType = propertyType;
     }
+
+    public override Type ComponentType { get; } = typeof(DynamicNode);
+    public override bool IsReadOnly => false;
+    public override Type PropertyType { get; }
 
     public override bool CanResetValue(object component)
     {
@@ -53,8 +56,4 @@ internal class DynamicNodePropertyDescriptor : PropertyDescriptor
     {
         return true;
     }
-
-    public override Type ComponentType { get; } = typeof(DynamicNode);
-    public override bool IsReadOnly => false;
-    public override Type PropertyType { get; }
 }

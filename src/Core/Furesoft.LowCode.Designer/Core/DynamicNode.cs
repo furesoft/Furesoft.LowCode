@@ -8,8 +8,6 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 {
     public readonly Dictionary<string, (PinAlignment, PinMode, bool)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
-    
-    [Browsable(false)] public Control View { get; set; }
 
     public DynamicNode(string label, Control view = null) : base(label)
     {
@@ -23,6 +21,8 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
         Properties.Add("Customproperty3", DateTime.Now);
         Properties.Add("out", string.Empty);
     }
+
+    [Browsable(false)] public Control View { get; set; }
 
     public void AddPin(string name, PinAlignment alignment, PinMode mode, bool multipleConnections = false)
     {
@@ -95,7 +95,7 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
         foreach (var property in Properties)
         {
             var descriptor = new DynamicNodePropertyDescriptor(property.Key, null, property.Value.GetType());
-            
+
             result.Add(descriptor);
         }
 

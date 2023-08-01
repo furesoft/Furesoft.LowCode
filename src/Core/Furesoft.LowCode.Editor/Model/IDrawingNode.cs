@@ -6,10 +6,8 @@ public delegate void SelectionChangedEventHandler(object? sender, EventArgs e);
 
 public interface IDrawingNode : INode
 {
-    public event SelectionChangedEventHandler? SelectionChanged;
     IList<INode>? Nodes { get; set; }
     IList<IConnector>? Connectors { get; set; }
-    ISet<INode>? GetSelectedNodes();
     bool EnableSnap { get; set; }
     double SnapX { get; set; }
     double SnapY { get; set; }
@@ -23,12 +21,14 @@ public interface IDrawingNode : INode
     ICommand SelectAllNodesCommand { get; }
     ICommand DeselectAllNodesCommand { get; }
     ICommand DeleteNodesCommand { get; }
+    public event SelectionChangedEventHandler? SelectionChanged;
+    ISet<INode>? GetSelectedNodes();
     void NotifySelectionChanged();
     void NotifyDeselectedNodes();
     void NotifyDeselectedConnectors();
-    void  SetSelectedNodes(ISet<INode>? nodes);
+    void SetSelectedNodes(ISet<INode>? nodes);
     ISet<IConnector>? GetSelectedConnectors();
-    void  SetSelectedConnectors(ISet<IConnector>? connectors);
+    void SetSelectedConnectors(ISet<IConnector>? connectors);
     INodeSerializer? GetSerializer();
     void SetSerializer(INodeSerializer? serializer);
     public T? Clone<T>(T source);

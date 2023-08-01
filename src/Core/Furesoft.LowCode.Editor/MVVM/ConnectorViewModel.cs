@@ -7,12 +7,17 @@ namespace Furesoft.LowCode.Editor.MVVM;
 [ObservableObject]
 public partial class ConnectorViewModel : IConnector
 {
-    [ObservableProperty] private string? _name;
-    [ObservableProperty] private IDrawingNode? _parent;
-    [ObservableProperty] private ConnectorOrientation _orientation;
-    [ObservableProperty] private IPin? _start;
     [ObservableProperty] private IPin? _end;
+    [ObservableProperty] private string? _name;
     [ObservableProperty] private double _offset = 30;
+    [ObservableProperty] private ConnectorOrientation _orientation;
+    [ObservableProperty] private IDrawingNode? _parent;
+    [ObservableProperty] private IPin? _start;
+
+    public ConnectorViewModel()
+    {
+        ObservePins();
+    }
 
     public event EventHandler<ConnectorCreatedEventArgs>? Created;
 
@@ -26,9 +31,44 @@ public partial class ConnectorViewModel : IConnector
 
     public event EventHandler<ConnectorEndChangedEventArgs>? EndChanged;
 
-    public ConnectorViewModel()
+    public virtual bool CanSelect()
     {
-        ObservePins();
+        return true;
+    }
+
+    public virtual bool CanRemove()
+    {
+        return true;
+    }
+
+    public void OnCreated()
+    {
+        Created?.Invoke(this, new(this));
+    }
+
+    public void OnRemoved()
+    {
+        Removed?.Invoke(this, new(this));
+    }
+
+    public void OnSelected()
+    {
+        Selected?.Invoke(this, new(this));
+    }
+
+    public void OnDeselected()
+    {
+        Deselected?.Invoke(this, new(this));
+    }
+
+    public void OnStartChanged()
+    {
+        StartChanged?.Invoke(this, new(this));
+    }
+
+    public void OnEndChanged()
+    {
+        EndChanged?.Invoke(this, new(this));
     }
 
     private void ObservePins()
@@ -86,45 +126,5 @@ public partial class ConnectorViewModel : IConnector
                     (end as PinViewModel)?.WhenChanged(x => x.Alignment).Subscribe(_ => OnPropertyChanged(nameof(End)));
                 }
             });
-    }
-
-    public virtual bool CanSelect()
-    {
-        return true;
-    }
-
-    public virtual bool CanRemove()
-    {
-        return true;
-    }
-
-    public void OnCreated()
-    {
-        Created?.Invoke(this, new ConnectorCreatedEventArgs(this));
-    }
-
-    public void OnRemoved()
-    {
-        Removed?.Invoke(this, new ConnectorRemovedEventArgs(this));
-    }
-
-    public void OnSelected()
-    {
-        Selected?.Invoke(this, new ConnectorSelectedEventArgs(this));
-    }
-
-    public void OnDeselected()
-    {
-        Deselected?.Invoke(this, new ConnectorDeselectedEventArgs(this));
-    }
-
-    public void OnStartChanged()
-    {
-        StartChanged?.Invoke(this, new ConnectorStartChangedEventArgs(this));
-    }
-
-    public void OnEndChanged()
-    {
-        EndChanged?.Invoke(this, new ConnectorEndChangedEventArgs(this));
     }
 }

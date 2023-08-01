@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
-using NodeEditor;
 using NodeEditor.Controls;
 
 namespace Furesoft.LowCode.Editor.Behaviors;
@@ -23,6 +22,7 @@ public class DrawingDropHandler : DefaultDropHandler
         {
             return false;
         }
+
         var point = GetPosition(relativeTo, e);
 
         if (relativeTo is DrawingNode drawingNode)
@@ -49,20 +49,21 @@ public class DrawingDropHandler : DefaultDropHandler
             switch (data)
             {
                 case INodeTemplate template:
-                {
-                    if (bExecute)
                     {
-                        var node = drawing.Clone(template.Template);
-                        if (node is not null)
+                        if (bExecute)
                         {
-                            node.Parent = drawing;
-                            node.Move(point.X, point.Y);
-                            drawing.Nodes?.Add(node);
-                            node.OnCreated();
+                            var node = drawing.Clone(template.Template);
+                            if (node is not null)
+                            {
+                                node.Parent = drawing;
+                                node.Move(point.X, point.Y);
+                                drawing.Nodes?.Add(node);
+                                node.OnCreated();
+                            }
                         }
+
+                        return true;
                     }
-                    return true;
-                }
             }
         }
 
@@ -81,7 +82,8 @@ public class DrawingDropHandler : DefaultDropHandler
         return false;
     }
 
-    public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext, object? state)
+    public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
+        object? state)
     {
         if (targetContext is IDrawingNode drawing)
         {
@@ -91,7 +93,8 @@ public class DrawingDropHandler : DefaultDropHandler
         return false;
     }
 
-    public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext, object? state)
+    public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
+        object? state)
     {
         if (targetContext is IDrawingNode drawing)
         {

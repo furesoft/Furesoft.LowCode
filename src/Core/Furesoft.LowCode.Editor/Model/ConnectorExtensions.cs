@@ -1,18 +1,16 @@
-﻿using NodeEditor;
-
-namespace Furesoft.LowCode.Editor.Model;
+﻿namespace Furesoft.LowCode.Editor.Model;
 
 public static class ConnectorExtensions
 {
     public static void GetControlPoints(
         this IConnector connector,
-        ConnectorOrientation orientation, 
-        double offset, 
-        PinAlignment p1A, 
-        PinAlignment p2A, 
-        ref double p1X, 
-        ref double p1Y, 
-        ref double p2X, 
+        ConnectorOrientation orientation,
+        double offset,
+        PinAlignment p1A,
+        PinAlignment p2A,
+        ref double p1X,
+        ref double p1Y,
+        ref double p2X,
         ref double p2Y)
     {
         switch (orientation)
@@ -33,13 +31,13 @@ public static class ConnectorExtensions
 
         p1X = SnapHelper.Snap(p1X, connector.Parent.SnapX);
         p1Y = SnapHelper.Snap(p1Y, connector.Parent.SnapY);
-        
+
         p2X = SnapHelper.Snap(p2X, connector.Parent.SnapX);
         p2Y = SnapHelper.Snap(p2Y, connector.Parent.SnapY);
-        
     }
 
-    private static void AutoOrientation(double offset, PinAlignment p1A, PinAlignment p2A, ref double p1X, ref double p1Y,
+    private static void AutoOrientation(double offset, PinAlignment p1A, PinAlignment p2A, ref double p1X,
+        ref double p1Y,
         ref double p2X, ref double p2Y)
     {
         switch (p1A)

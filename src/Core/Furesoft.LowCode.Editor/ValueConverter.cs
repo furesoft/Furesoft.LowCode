@@ -15,16 +15,16 @@ public abstract class ValueConverter<TValueConverter, TValue> : MarkupExtension,
         {
             return default;
         }
-        
+
         return Convert(tValue, targetType, parameter);
     }
-
-    protected abstract object Convert(TValue value, Type targetType, object parameter);
 
     public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
+
+    protected abstract object Convert(TValue value, Type targetType, object parameter);
 
     public sealed override object ProvideValue(IServiceProvider serviceProvider)
     {

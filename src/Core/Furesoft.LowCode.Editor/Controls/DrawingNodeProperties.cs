@@ -4,7 +4,7 @@ namespace NodeEditor.Controls;
 
 public class DrawingNodeProperties : TemplatedControl
 {
-    public static readonly StyledProperty<DrawingNode?> DrawingNodeProperty = 
+    public static readonly StyledProperty<DrawingNode?> DrawingNodeProperty =
         AvaloniaProperty.Register<DrawingNodeProperties, DrawingNode?>(nameof(DrawingNode));
 
     public DrawingNode? DrawingNode

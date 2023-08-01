@@ -46,7 +46,7 @@
         </ItemsControl>
       </ControlTemplate>
     </Setter>
- 
+
     <!--
     <Style Selector="^/template/ ItemsControl#PART_PinsItemsControl > :is(ContentPresenter)">
       <Setter Property="(i:Interaction.Behaviors)">

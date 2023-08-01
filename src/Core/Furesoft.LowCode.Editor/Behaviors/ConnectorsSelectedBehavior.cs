@@ -69,7 +69,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
             var selectedNodes = _drawingNode.GetSelectedNodes();
             var selectedConnectors = _drawingNode.GetSelectedConnectors();
 
-            if (selectedNodes is { Count: > 0 } || selectedConnectors is { Count: > 0 })
+            if (selectedNodes is {Count: > 0} || selectedConnectors is {Count: > 0})
             {
                 AddSelectedPseudoClasses(AssociatedObject);
             }
@@ -84,7 +84,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
     {
         foreach (var control in itemsControl.GetRealizedContainers())
         {
-            if (control is not { DataContext: IConnector connector } containerControl)
+            if (control is not {DataContext: IConnector connector} containerControl)
             {
                 continue;
             }
@@ -93,14 +93,14 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
 
             if (_drawingNode is not null && selectedConnectors is not null && selectedConnectors.Contains(connector))
             {
-                if (containerControl is ContentPresenter { Child.Classes: IPseudoClasses pseudoClasses})
+                if (containerControl is ContentPresenter {Child.Classes: IPseudoClasses pseudoClasses})
                 {
                     pseudoClasses.Add(":selected");
                 }
             }
             else
             {
-                if (containerControl is ContentPresenter { Child.Classes: IPseudoClasses pseudoClasses})
+                if (containerControl is ContentPresenter {Child.Classes: IPseudoClasses pseudoClasses})
                 {
                     pseudoClasses.Remove(":selected");
                 }
@@ -112,12 +112,12 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
     {
         foreach (var control in itemsControl.GetRealizedContainers())
         {
-            if (control is not { DataContext: IConnector } containerControl)
+            if (control is not {DataContext: IConnector} containerControl)
             {
                 continue;
             }
 
-            if (containerControl is ContentPresenter { Child: {Classes: IPseudoClasses pseudoClasses}})
+            if (containerControl is ContentPresenter {Child: {Classes: IPseudoClasses pseudoClasses}})
             {
                 pseudoClasses.Remove(":selected");
             }

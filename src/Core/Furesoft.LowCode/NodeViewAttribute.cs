@@ -3,12 +3,6 @@
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeViewAttribute : Attribute
 {
-    public Type Type { get; set; }
-    public object Parameter { get; set; }
-
-    public int MinWidth { get; set; }
-    public int MinHeight { get; set; }
-    
     public NodeViewAttribute(Type type)
     {
         Type = type;
@@ -19,4 +13,9 @@ public class NodeViewAttribute : Attribute
         Parameter = parameter;
     }
 
+    public Type Type { get; set; }
+    public object Parameter { get; set; }
+
+    public int MinWidth { get; set; }
+    public int MinHeight { get; set; }
 }

@@ -33,7 +33,7 @@ public class SelectedAdorner : Control
 
         var thickness = 2.0;
         var pen = new ImmutablePen(
-            new ImmutableSolidColorBrush(new Color(0xFF, 0x17, 0x9D, 0xE3)), 
+            new ImmutableSolidColorBrush(new Color(0xFF, 0x17, 0x9D, 0xE3)),
             thickness);
         var bounds = Rect;
         var rect = bounds.Deflate(thickness * 0.5);

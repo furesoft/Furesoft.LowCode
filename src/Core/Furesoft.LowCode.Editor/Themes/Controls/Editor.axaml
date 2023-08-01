@@ -26,10 +26,10 @@
                                      Stretch="None"
                                      ZoomSpeed="1.2"
                                      EnableConstrains="False"
-                                     Background="Transparent" 
-                                     ClipToBounds="True" 
+                                     Background="Transparent"
+                                     ClipToBounds="True"
                                      Focusable="True"
-                                     VerticalAlignment="Stretch" 
+                                     VerticalAlignment="Stretch"
                                      HorizontalAlignment="Stretch">
               <i:Interaction.Behaviors>
                 <idd:ContextDropBehavior Context="{Binding FallbackValue={x:Null}}">
@@ -66,44 +66,44 @@
                         <Setter Property="EnableGrid" Value="{Binding EnableGrid}" />
                         <Setter Property="GridCellWidth" Value="{Binding GridCellWidth}" />
                         <Setter Property="GridCellHeight" Value="{Binding GridCellHeight}" />
-                        </Style>
+                      </Style>
                     </controls:DrawingNode.Styles>
                     <controls:DrawingNode.ContextFlyout>
                       <MenuFlyout>
-                        <MenuItem Header="Cu_t" 
-                                  Command="{Binding CutNodesCommand}" 
+                        <MenuItem Header="Cu_t"
+                                  Command="{Binding CutNodesCommand}"
                                   InputGesture="{OnPlatform macOS=CMD+X, iOS=CMD+X, Default=Ctrl+X}">
                           <MenuItem.Icon>
                             <PathIcon Width="16" Height="16" Data="{DynamicResource EditorCutIcon}" />
                           </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Copy" 
-                                  Command="{Binding CopyNodesCommand}" 
+                        <MenuItem Header="_Copy"
+                                  Command="{Binding CopyNodesCommand}"
                                   InputGesture="{OnPlatform macOS=CMD+C, iOS=CMD+C, Default=Ctrl+C}">
                           <MenuItem.Icon>
                             <PathIcon Width="16" Height="16" Data="{DynamicResource EditorCopyIcon}" />
                           </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="_Paste" 
-                                  Command="{Binding PasteNodesCommand}" 
+                        <MenuItem Header="_Paste"
+                                  Command="{Binding PasteNodesCommand}"
                                   InputGesture="{OnPlatform macOS=CMD+V, iOS=CMD+V, Default=Ctrl+V}">
                           <MenuItem.Icon>
                             <PathIcon Width="16" Height="16" Data="{DynamicResource EditorPasteIcon}" />
                           </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="D_uplicate" 
-                                  Command="{Binding DuplicateNodesCommand}" 
+                        <MenuItem Header="D_uplicate"
+                                  Command="{Binding DuplicateNodesCommand}"
                                   InputGesture="{OnPlatform macOS=CMD+D, iOS=CMD+D, Default=Ctrl+D}" />
                         <MenuItem Header="-" />
-                        <MenuItem Header="Select _All" 
-                                  Command="{Binding SelectAllNodesCommand, FallbackValue={x:Null}}" 
+                        <MenuItem Header="Select _All"
+                                  Command="{Binding SelectAllNodesCommand, FallbackValue={x:Null}}"
                                   InputGesture="{OnPlatform macOS=CMD+A, iOS=CMD+A, Default=Ctrl+A}" />
-                        <MenuItem Header="De_select All" 
-                                  Command="{Binding DeselectAllNodesCommand, FallbackValue={x:Null}}" 
+                        <MenuItem Header="De_select All"
+                                  Command="{Binding DeselectAllNodesCommand, FallbackValue={x:Null}}"
                                   InputGesture="Escape" />
                         <MenuItem Header="-" />
-                        <MenuItem Header="_Delete" 
-                                  Command="{Binding DeleteNodesCommand}" 
+                        <MenuItem Header="_Delete"
+                                  Command="{Binding DeleteNodesCommand}"
                                   InputGesture="Delete">
                           <MenuItem.Icon>
                             <PathIcon Width="16" Height="16" Data="{DynamicResource DeleteIcon}" />
@@ -116,7 +116,7 @@
                           Background="Transparent"
                           Width="{Binding Width}"
                           Height="{Binding Height}"
-                          IsHitTestVisible="False"/>
+                          IsHitTestVisible="False" />
                 </Panel>
               </Border>
             </controls:NodeZoomBorder>

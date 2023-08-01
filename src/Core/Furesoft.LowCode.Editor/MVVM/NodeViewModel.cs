@@ -5,16 +5,16 @@ namespace Furesoft.LowCode.Editor.MVVM;
 [ObservableObject]
 public partial class NodeViewModel : INode
 {
-    [ObservableProperty] private string? _name;
+    [ObservableProperty] private object? _content;
     [ObservableProperty] private string? _description;
+    [ObservableProperty] private double _height;
+    [ObservableProperty] private string? _name;
     [ObservableProperty] private INode? _parent;
+    [ObservableProperty] private IList<IPin>? _pins;
+    [ObservableProperty] private double _width;
     [ObservableProperty] private double _x;
     [ObservableProperty] private double _y;
-    [ObservableProperty] private double _width;
-    [ObservableProperty] private double _height;
-    [ObservableProperty] private object? _content;
-    [ObservableProperty] private IList<IPin>? _pins;
-    
+
     public event EventHandler<NodeCreatedEventArgs>? Created;
 
     public event EventHandler<NodeRemovedEventArgs>? Removed;
@@ -60,31 +60,31 @@ public partial class NodeViewModel : INode
 
     public virtual void OnCreated()
     {
-        Created?.Invoke(this, new NodeCreatedEventArgs(this));
+        Created?.Invoke(this, new(this));
     }
 
     public virtual void OnRemoved()
     {
-        Removed?.Invoke(this, new NodeRemovedEventArgs(this));
+        Removed?.Invoke(this, new(this));
     }
 
     public virtual void OnMoved()
     {
-        Moved?.Invoke(this, new NodeMovedEventArgs(this, _x, _y));
+        Moved?.Invoke(this, new(this, _x, _y));
     }
 
     public virtual void OnSelected()
     {
-        Selected?.Invoke(this, new NodeSelectedEventArgs(this));
+        Selected?.Invoke(this, new(this));
     }
 
     public virtual void OnDeselected()
     {
-        Deselected?.Invoke(this, new NodeDeselectedEventArgs(this));
+        Deselected?.Invoke(this, new(this));
     }
 
     public virtual void OnResized()
     {
-        Resized?.Invoke(this, new NodeResizedEventArgs(this, _x, _y, _width, _height));
+        Resized?.Invoke(this, new(this, _x, _y, _width, _height));
     }
 }

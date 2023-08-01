@@ -6,6 +6,7 @@
              x:Class="Furesoft.LowCode.Designer.Core.Components.Views.CommentView">
   <Grid>
     <Rectangle Classes="node" Fill="#008000" Stroke="#00FF00" />
-    <TextBlock Margin="5" Text="{Binding Comment, Mode=TwoWay}" Foreground="{DynamicResource NodeForegroundBrush}" TextWrapping="Wrap" />
+    <TextBlock Margin="5" Text="{Binding Comment, Mode=TwoWay}" Foreground="{DynamicResource NodeForegroundBrush}"
+               TextWrapping="Wrap" />
   </Grid>
 </UserControl>

@@ -8,6 +8,7 @@ public static class SnapHelper
         {
             return value;
         }
+
         var c = value % snap;
         var r = c >= snap / 2.0 ? value + snap - c : value - c;
         return r;
@@ -19,7 +20,7 @@ public static class SnapHelper
         {
             var pointX = Snap(point.X, snapX);
             var pointY = Snap(point.Y, snapY);
-            return new Point(pointX, pointY);
+            return new(pointX, pointY);
         }
 
         return point;

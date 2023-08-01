@@ -1,8 +1,8 @@
 ﻿using Furesoft.LowCode.Designer.Core.Components.ViewModels;
+using Furesoft.LowCode.Designer.Core.Debugging;
 using Furesoft.LowCode.Editor.Model;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
-using Debugger = Furesoft.LowCode.Designer.Core.Debugging.Debugger;
 
 namespace Furesoft.LowCode.Designer.Core;
 
@@ -10,9 +10,6 @@ public class Evaluator
 {
     private readonly IDrawingNode _drawing;
     public Context Context;
-    internal Debugger Debugger { get; }
-    
-    public static SignalStorage Signals { get; set; } = new();
 
     public Evaluator(IDrawingNode drawing)
     {
@@ -20,7 +17,11 @@ public class Evaluator
         Context = new();
         Debugger = new(Context);
     }
-    
+
+    internal Debugger Debugger { get; }
+
+    public static SignalStorage Signals { get; set; } = new();
+
     public async Task Execute(CancellationToken cancellationToken)
     {
         var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
@@ -32,9 +33,9 @@ public class Evaluator
 
         try
         {
-            await entryNode.DefiningNode.Execute(cancellationToken: cancellationToken);
+            await entryNode.DefiningNode.Execute(cancellationToken);
         }
-        catch (TaskCanceledException){}
+        catch (TaskCanceledException) { }
     }
 
     public T Evaluate<T>(string src)

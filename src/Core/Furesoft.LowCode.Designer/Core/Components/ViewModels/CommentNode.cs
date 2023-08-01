@@ -11,15 +11,15 @@ public class CommentNode : EmptyNode
 {
     private string _comment = "This is a comment";
 
+    public CommentNode() : base("Comment")
+    {
+    }
+
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string Comment
     {
         get => _comment;
         set => SetProperty(ref _comment, value);
-    }
-
-    public CommentNode() : base("Comment")
-    {
     }
 
 

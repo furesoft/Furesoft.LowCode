@@ -7,7 +7,8 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class TemplatesTreeViewDropHandler : DropHandlerBase
 {
-    private bool Validate<T>(TreeView treeView, DragEventArgs e, object? sourceContext, object? targetContext, bool bExecute) where T : INodeTemplate
+    private bool Validate<T>(TreeView treeView, DragEventArgs e, object? sourceContext, object? targetContext,
+        bool bExecute) where T : INodeTemplate
     {
         if (sourceContext is not T sourceItem
             || targetContext is not INodeTemplatesHost nodeTemplatesHost
@@ -37,6 +38,7 @@ public class TemplatesTreeViewDropHandler : DropHandlerBase
             {
                 MoveItem(nodeTemplatesHost.Templates, sourceIndex, targetIndex);
             }
+
             return true;
         }
 
@@ -46,27 +48,32 @@ public class TemplatesTreeViewDropHandler : DropHandlerBase
             {
                 SwapItem(nodeTemplatesHost.Templates, sourceIndex, targetIndex);
             }
+
             return true;
         }
 
         return false;
     }
-        
-    public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext, object? state)
+
+    public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
+        object? state)
     {
         if (e.Source is Control && sender is TreeView listBox)
         {
             return Validate<INodeTemplate>(listBox, e, sourceContext, targetContext, false);
         }
+
         return false;
     }
 
-    public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext, object? state)
+    public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
+        object? state)
     {
         if (e.Source is Control && sender is TreeView listBox)
         {
             return Validate<INodeTemplate>(listBox, e, sourceContext, targetContext, true);
         }
+
         return false;
     }
 }

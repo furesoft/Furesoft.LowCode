@@ -8,10 +8,10 @@ internal static class HitTestHelper
     {
         return Math.Sqrt(Math.Pow(pt1.X - pt0.X, 2) + Math.Pow(pt1.Y - pt0.Y, 2));
     }
-        
+
     public static Point[] FlattenCubic(Point pt0, Point pt1, Point pt2, Point pt3)
     {
-        var count = (int) Math.Max(1, Length(pt0, pt1) + Length(pt1, pt2) + Length(pt2, pt3));
+        var count = (int)Math.Max(1, Length(pt0, pt1) + Length(pt1, pt2) + Length(pt2, pt3));
         var points = new Point[count];
 
         for (var i = 0; i < count; i++)
@@ -25,7 +25,7 @@ internal static class HitTestHelper
                     3 * t * (1 - t) * (1 - t) * pt1.Y +
                     3 * t * t * (1 - t) * pt2.Y +
                     t * t * t * pt3.Y;
-            points[i] = new Point(x, y);
+            points[i] = new(x, y);
         }
 
         return points;
@@ -45,7 +45,7 @@ internal static class HitTestHelper
         if (start.Parent is not null)
         {
             p0X += start.Parent.X;
-            p0Y += start.Parent.Y; 
+            p0Y += start.Parent.Y;
         }
 
         var p3X = end.X;
@@ -53,9 +53,9 @@ internal static class HitTestHelper
         if (end.Parent is not null)
         {
             p3X += end.Parent.X;
-            p3Y += end.Parent.Y; 
+            p3Y += end.Parent.Y;
         }
-            
+
         var p1X = p0X;
         var p1Y = p0Y;
 
@@ -63,11 +63,11 @@ internal static class HitTestHelper
         var p2Y = p3Y;
 
         connector.GetControlPoints(
-            connector.Orientation, 
-            connector.Offset, 
+            connector.Orientation,
+            connector.Offset,
             start.Alignment,
             end.Alignment,
-            ref p1X, ref p1Y, 
+            ref p1X, ref p1Y,
             ref p2X, ref p2Y);
 
         var pt0 = new Point(p0X, p0Y);
@@ -102,7 +102,7 @@ internal static class HitTestHelper
         if (start.Parent is not null)
         {
             p0X += start.Parent.X;
-            p0Y += start.Parent.Y; 
+            p0Y += start.Parent.Y;
         }
 
         var p3X = end.X;
@@ -110,7 +110,7 @@ internal static class HitTestHelper
         if (end.Parent is not null)
         {
             p3X += end.Parent.X;
-            p3Y += end.Parent.Y; 
+            p3Y += end.Parent.Y;
         }
 
         var p1X = p0X;
@@ -120,11 +120,11 @@ internal static class HitTestHelper
         var p2Y = p3Y;
 
         connector.GetControlPoints(
-            connector.Orientation, 
-            connector.Offset, 
+            connector.Orientation,
+            connector.Offset,
             start.Alignment,
             end.Alignment,
-            ref p1X, ref p1Y, 
+            ref p1X, ref p1Y,
             ref p2X, ref p2Y);
 
         var pt0 = new Point(p0X, p0Y);
@@ -157,8 +157,8 @@ internal static class HitTestHelper
             }
         }
 
-        return new Rect(
-            new Point(topLeftX, topLeftY), 
+        return new(
+            new(topLeftX, topLeftY),
             new Point(bottomRightX, bottomRightY));
     }
 
@@ -182,7 +182,7 @@ internal static class HitTestHelper
         {
             foreach (var control in itemsControl.GetRealizedContainers())
             {
-                if (control is not { DataContext: INode node } containerControl)
+                if (control is not {DataContext: INode node} containerControl)
                 {
                     continue;
                 }
@@ -201,7 +201,7 @@ internal static class HitTestHelper
             }
         }
 
-        if (drawingNode.CanSelectConnectors() && drawingNode.Connectors is { Count: > 0 })
+        if (drawingNode.CanSelectConnectors() && drawingNode.Connectors is {Count: > 0})
         {
             foreach (var connector in drawingNode.Connectors)
             {
@@ -245,13 +245,13 @@ internal static class HitTestHelper
         }
 
         var selectedRect = new Rect();
-        
+
         itemsControl.UpdateLayout();
 
         var selectedNodes = drawingNode.GetSelectedNodes();
         var selectedConnectors = drawingNode.GetSelectedConnectors();
 
-        if (selectedNodes is { Count: > 0 } && drawingNode.Nodes is { Count: > 0 })
+        if (selectedNodes is {Count: > 0} && drawingNode.Nodes is {Count: > 0})
         {
             foreach (var node in selectedNodes)
             {
@@ -262,7 +262,7 @@ internal static class HitTestHelper
             }
         }
 
-        if (selectedConnectors is { Count: > 0 } && drawingNode.Connectors is { Count: > 0 })
+        if (selectedConnectors is {Count: > 0} && drawingNode.Connectors is {Count: > 0})
         {
             foreach (var connector in selectedConnectors)
             {

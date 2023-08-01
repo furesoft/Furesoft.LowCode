@@ -13,7 +13,8 @@ public class PinPressedBehavior : Behavior<ContentPresenter>
 
         if (AssociatedObject is not null)
         {
-            AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Pressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
+            AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Pressed,
+                RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
     }
 

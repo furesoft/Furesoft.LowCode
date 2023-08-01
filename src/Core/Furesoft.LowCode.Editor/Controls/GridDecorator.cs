@@ -6,13 +6,13 @@ namespace NodeEditor.Controls;
 
 public class GridDecorator : Decorator
 {
-    public static readonly StyledProperty<bool> EnableGridProperty = 
+    public static readonly StyledProperty<bool> EnableGridProperty =
         AvaloniaProperty.Register<GridDecorator, bool>(nameof(EnableGrid));
 
-    public static readonly StyledProperty<double> GridCellWidthProperty = 
+    public static readonly StyledProperty<double> GridCellWidthProperty =
         AvaloniaProperty.Register<GridDecorator, double>(nameof(GridCellWidth));
 
-    public static readonly StyledProperty<double> GridCellHeightProperty = 
+    public static readonly StyledProperty<double> GridCellHeightProperty =
         AvaloniaProperty.Register<GridDecorator, double>(nameof(GridCellHeight));
 
     public bool EnableGrid
@@ -60,7 +60,7 @@ public class GridDecorator : Decorator
         {
             return;
         }
-        
+
         var rect = Bounds;
         var thickness = 1.0;
 

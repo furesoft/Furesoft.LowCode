@@ -15,6 +15,32 @@ public partial class NodeFactory : INodeFactory
 
     public readonly List<string> SearchPaths = new() {"."};
 
+    public IList<INodeTemplate> CreateTemplates()
+    {
+        bool IsVisualNode(Type type)
+        {
+            return typeof(EmptyNode).IsAssignableFrom(type) && type.IsClass && type.Name != nameof(EmptyNode);
+        }
+
+        var templates = new List<INodeTemplate>();
+
+        var nodeTypes =
+            from folder in SearchPaths
+            from assemblyFile in Directory.GetFiles(folder, "*.dll")
+            let assembly = Assembly.LoadFrom(assemblyFile)
+            from type in assembly.GetTypes()
+            where IsVisualNode(type)
+            select type;
+
+        CreateNormalNodeTemplates(nodeTypes, templates);
+
+        CreateFactoryNodeTemplates(nodeTypes, templates);
+
+        CreateDynamicNodeTemplates(templates);
+
+        return templates;
+    }
+
     public void AddDynamicNode(DynamicNode node)
     {
         _dynamicNodes.Add(node);
@@ -117,39 +143,13 @@ public partial class NodeFactory : INodeFactory
 
         size.width = Max(size.width, Calculate(maxPinTopBottom), node.GetAttribute<NodeViewAttribute>()?.MinWidth);
         size.height = Max(size.height, Calculate(maxPinLeftRight), node.GetAttribute<NodeViewAttribute>()?.MinHeight);
-        
+
         return (size.width, size.height);
     }
 
     private static double Max(params double?[] values)
     {
         return values.Max().GetValueOrDefault();
-    }
-
-    public IList<INodeTemplate> CreateTemplates()
-    {
-        bool IsVisualNode(Type type)
-        {
-            return typeof(EmptyNode).IsAssignableFrom(type) && type.IsClass && type.Name != nameof(EmptyNode);
-        }
-
-        var templates = new List<INodeTemplate>();
-
-        var nodeTypes =
-            from folder in SearchPaths
-            from assemblyFile in Directory.GetFiles(folder, "*.dll")
-            let assembly = Assembly.LoadFrom(assemblyFile)
-            from type in assembly.GetTypes()
-            where IsVisualNode(type)
-            select type;
-
-        CreateNormalNodeTemplates(nodeTypes, templates);
-
-        CreateFactoryNodeTemplates(nodeTypes, templates);
-
-        CreateDynamicNodeTemplates(templates);
-
-        return templates;
     }
 
     private void CreateDynamicNodeTemplates(List<INodeTemplate> templates)

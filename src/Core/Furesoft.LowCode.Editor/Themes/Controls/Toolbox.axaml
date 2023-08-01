@@ -16,11 +16,11 @@
           <TreeView.Resources>
             <behaviors:TemplatesTreeViewDropHandler x:Key="TemplatesTreeViewDropHandler" />
           </TreeView.Resources>
-          
+
           <i:Interaction.Behaviors>
             <idd:ContextDropBehavior Handler="{StaticResource TemplatesTreeViewDropHandler}" />
           </i:Interaction.Behaviors>
-          
+
           <TreeView.Styles>
             <Style Selector="TreeView > TreeViewItem">
               <Setter Property="(i:Interaction.Behaviors)">
@@ -36,28 +36,29 @@
 
           <TreeView.DataTemplates>
             <DataTemplate DataType="mvvm:NodeTemplateViewModel">
-              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrushLight}" IsVisible="{ReflectionBinding IsVisible, Mode=TwoWay}">
+              <DockPanel Margin="5" Background="{DynamicResource ThemeBackgroundBrushLight}"
+                         IsVisible="{ReflectionBinding IsVisible, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />
                     <behaviors:InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
                   </i:BehaviorCollection>
                 </i:Interaction.Behaviors>
-                
+
                 <Viewbox DockPanel.Dock="Left" Width="32" Height="32" DataContext="{Binding Preview}">
-                    <controls:Node IsHitTestVisible="False">
-                      <controls:Node.Styles>
-                        <Style Selector="controls|Pins /template/ ItemsControl#PART_PinsItemsControl">
-                          <Setter Property="IsVisible" Value="False" />
-                        </Style>
-                      </controls:Node.Styles>
-                    </controls:Node>
-                  </Viewbox>
-                  <Panel Margin="12,6,12,6">
-                    <TextBlock Text="{Binding Title}"
-                               VerticalAlignment="Center" />
-                  </Panel>
-                </DockPanel>
+                  <controls:Node IsHitTestVisible="False">
+                    <controls:Node.Styles>
+                      <Style Selector="controls|Pins /template/ ItemsControl#PART_PinsItemsControl">
+                        <Setter Property="IsVisible" Value="False" />
+                      </Style>
+                    </controls:Node.Styles>
+                  </controls:Node>
+                </Viewbox>
+                <Panel Margin="12,6,12,6">
+                  <TextBlock Text="{Binding Title}"
+                             VerticalAlignment="Center" />
+                </Panel>
+              </DockPanel>
             </DataTemplate>
           </TreeView.DataTemplates>
         </TreeView>

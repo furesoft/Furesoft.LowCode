@@ -11,18 +11,12 @@ public enum PinAlignment
 
 public sealed class DrawingNodeEditor
 {
-    private readonly IDrawingNode _node;
     private readonly IDrawingNodeFactory _factory;
-    private IConnector? _connector;
+    private readonly IDrawingNode _node;
     private string? _clipboard;
+    private IConnector? _connector;
     private double _pressedX = double.NaN;
     private double _pressedY = double.NaN;
-
-    private class Clipboard
-    {
-        public ISet<INode>? SelectedNodes { get; set; }
-        public ISet<IConnector>? SelectedConnectors { get; set; }
-    }
 
     public DrawingNodeEditor(IDrawingNode node, IDrawingNodeFactory factory)
     {
@@ -185,8 +179,8 @@ public sealed class DrawingNodeEditor
         }
         else
         {
-            if (_connector.Start != pin && _connector.Start.Mode != pin.Mode 
-                                        && !_node.Connectors.Any(_ => _.Start == _connector.Start && _.End == pin) 
+            if (_connector.Start != pin && _connector.Start.Mode != pin.Mode
+                                        && !_node.Connectors.Any(_ => _.Start == _connector.Start && _.End == pin)
                                         && !_node.Connectors.Any(_ => _.Start == pin && _.End == _connector.Start))
             {
                 var end = _connector.End;
@@ -530,5 +524,11 @@ public sealed class DrawingNodeEditor
         {
             CancelConnector();
         }
+    }
+
+    private class Clipboard
+    {
+        public ISet<INode>? SelectedNodes { get; set; }
+        public ISet<IConnector>? SelectedConnectors { get; set; }
     }
 }

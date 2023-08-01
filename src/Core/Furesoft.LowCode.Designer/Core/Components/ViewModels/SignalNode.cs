@@ -27,9 +27,9 @@ public class SignalNode : OutputNode
         Signals.SelectedValue = Signals.First();
     */
     }
-    
+
     public SelectableList<SignalStorage.Signal> Signals { get; set; }
-    
+
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
@@ -37,5 +37,4 @@ public class SignalNode : OutputNode
 
         await ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
-
 }

@@ -67,7 +67,7 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
             var selectedNodes = _drawingNode.GetSelectedNodes();
             var selectedConnectors = _drawingNode.GetSelectedConnectors();
 
-            if (selectedNodes is { Count: > 0 } || selectedConnectors is { Count: > 0 })
+            if (selectedNodes is {Count: > 0} || selectedConnectors is {Count: > 0})
             {
                 AddSelectedPseudoClasses(AssociatedObject);
             }
@@ -82,7 +82,7 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
     {
         foreach (var control in itemsControl.GetRealizedContainers())
         {
-            if (control is not { DataContext: INode node } containerControl)
+            if (control is not {DataContext: INode node} containerControl)
             {
                 continue;
             }
@@ -91,14 +91,14 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
 
             if (_drawingNode is not null && selectedNodes is not null && selectedNodes.Contains(node))
             {
-                if (containerControl is ContentPresenter { Child: {Classes: IPseudoClasses pseudoClasses}})
+                if (containerControl is ContentPresenter {Child: {Classes: IPseudoClasses pseudoClasses}})
                 {
                     pseudoClasses.Add(":selected");
                 }
             }
             else
             {
-                if (containerControl is ContentPresenter { Child: {Classes: IPseudoClasses pseudoClasses}})
+                if (containerControl is ContentPresenter {Child: {Classes: IPseudoClasses pseudoClasses}})
                 {
                     pseudoClasses.Remove(":selected");
                 }
@@ -110,12 +110,12 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
     {
         foreach (var control in itemsControl.GetRealizedContainers())
         {
-            if (control is not { DataContext: INode } containerControl)
+            if (control is not {DataContext: INode} containerControl)
             {
                 continue;
             }
 
-            if (containerControl is ContentPresenter { Child: {Classes: IPseudoClasses pseudoClasses}})
+            if (containerControl is ContentPresenter {Child: {Classes: IPseudoClasses pseudoClasses}})
             {
                 pseudoClasses.Remove(":selected");
             }

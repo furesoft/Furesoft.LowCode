@@ -4,10 +4,10 @@ namespace Furesoft.LowCode.Designer.Core.Debugging;
 
 public class DebuggerLocals : CustomTypeDescriptor
 {
-    private readonly Dictionary<string, object> _properties;
     private readonly Type _nodeType;
+    private readonly Dictionary<string, object> _properties;
 
-    public DebuggerLocals(Dictionary<string,object> properties, Type nodeType)
+    public DebuggerLocals(Dictionary<string, object> properties, Type nodeType)
     {
         _properties = properties;
         _nodeType = nodeType;
@@ -21,7 +21,7 @@ public class DebuggerLocals : CustomTypeDescriptor
         {
             result.Add(new DebuggerLocal(property, _nodeType));
         }
-        
+
         return result;
     }
 }

@@ -5,18 +5,19 @@ namespace Furesoft.LowCode.Designer.Core.Debugging;
 public class Debugger
 {
     private readonly Context _context;
-    public EmptyNode CurrentNode { get; set; }
-
-    public List<EmptyNode> BreakPointNodes { get; set; } = new();
-
-    public bool IsAttached { get; set; }
-    public Task WaitTask => _waitTaskSource?.Task;
     private TaskCompletionSource _waitTaskSource;
 
     public Debugger(Context context)
     {
         _context = context;
     }
+
+    public EmptyNode CurrentNode { get; set; }
+
+    public List<EmptyNode> BreakPointNodes { get; set; } = new();
+
+    public bool IsAttached { get; set; }
+    public Task WaitTask => _waitTaskSource?.Task;
 
     public Task Step()
     {

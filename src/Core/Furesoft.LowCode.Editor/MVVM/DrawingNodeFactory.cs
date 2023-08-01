@@ -4,9 +4,18 @@ public class DrawingNodeFactory : IDrawingNodeFactory
 {
     public static readonly IDrawingNodeFactory Instance = new DrawingNodeFactory();
 
-    public IPin CreatePin() => new PinViewModel();
+    public IPin CreatePin()
+    {
+        return new PinViewModel();
+    }
 
-    public IConnector CreateConnector() => new ConnectorViewModel();
+    public IConnector CreateConnector()
+    {
+        return new ConnectorViewModel();
+    }
 
-    public IList<T> CreateList<T>() => new ObservableCollection<T>();
+    public IList<T> CreateList<T>()
+    {
+        return new ObservableCollection<T>();
+    }
 }

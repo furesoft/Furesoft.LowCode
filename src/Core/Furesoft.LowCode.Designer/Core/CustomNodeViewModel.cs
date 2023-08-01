@@ -8,7 +8,7 @@ public class CustomNodeViewModel : NodeViewModel
     public bool IsMovable { get; set; } = true;
 
     public string Category { get; set; }
-    
+
     public EmptyNode DefiningNode { get; set; }
 
     public override bool CanRemove()

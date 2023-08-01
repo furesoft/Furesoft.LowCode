@@ -30,8 +30,8 @@ public class SelectionAdorner : Control
         var topLeftY = Math.Min(TopLeft.Y, BottomRight.Y);
         var bottomRightX = Math.Max(TopLeft.X, BottomRight.X);
         var bottomRightY = Math.Max(TopLeft.Y, BottomRight.Y);
-        return new Rect(
-            new Point(topLeftX, topLeftY),
+        return new(
+            new(topLeftX, topLeftY),
             new Point(bottomRightX, bottomRightY));
     }
 
@@ -51,7 +51,7 @@ public class SelectionAdorner : Control
     {
         base.Render(context);
 
-        var brush = new ImmutableSolidColorBrush(new Color(0xFF, 0x00, 0x00, 0xFF), 0.3);
+        var brush = new ImmutableSolidColorBrush(new(0xFF, 0x00, 0x00, 0xFF), 0.3);
         var thickness = 2.0;
         var pen = new ImmutablePen(
             new ImmutableSolidColorBrush(new Color(0xFF, 0x00, 0x00, 0xFF)),

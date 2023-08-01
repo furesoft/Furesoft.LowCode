@@ -2,9 +2,14 @@
 
 [Description("Get Items in a Folder")]
 [NodeCategory("IO/FileSystem")]
-[NodeView(typeof(IconNodeView), "M896 209v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v158c0 26.5 21.5 48 48 48h48v96c0 35 29 64 64 64h256v96h-48c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h160c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-48v-96h256c35 0 64-29 64-64v-96h48c26.5 0 48-21.5 48-48z")]
-internal class ChildItemNode : InputOutputNode
+[NodeView(typeof(IconNodeView),
+    "M896 209v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v158c0 26.5 21.5 48 48 48h48v96c0 35 29 64 64 64h256v96h-48c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h160c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-48v-96h256c35 0 64-29 64-64v-96h48c26.5 0 48-21.5 48-48z")]
+internal class ChildItemNode : InputOutputNode, IOutVariableProvider
 {
+    public ChildItemNode() : base("Get Directory Items")
+    {
+    }
+
     [Description("The Path to the Folder to get the Items")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string FolderPath { get; set; }
@@ -20,6 +25,7 @@ internal class ChildItemNode : InputOutputNode
     [Description("Which Items of a Folder should be selected")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public ItemType ItemType { get; set; } = ItemType.All;
+
     [Description("Should the symlink be followed")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public bool FollowSymlink { get; set; }
@@ -28,17 +34,11 @@ internal class ChildItemNode : InputOutputNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public bool OnlyName { get; set; }
 
-    [Description("Where to store the folder content")]
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string OutVariable { get; set; }
-
     [Description("Filters all Entries and excludes all Entries with that flag")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public FileAttributes ExcludedFlags { get; set; } = new();
+    public FileAttributes ExcludedFlags { get; set; }
 
-    public ChildItemNode() : base("Get Directory Items")
-    {
-    }
+    public string OutVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -83,6 +83,7 @@ internal class ChildItemNode : InputOutputNode
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }
+
 public enum ItemType
 {
     File,
