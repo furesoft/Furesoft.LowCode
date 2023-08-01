@@ -1,5 +1,3 @@
-using Avalonia;
-
 namespace Furesoft.LowCode.Editor;
 
 public static class SnapHelper

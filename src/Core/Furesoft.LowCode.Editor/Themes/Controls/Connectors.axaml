@@ -26,8 +26,8 @@
           <ItemsControl.ItemTemplate>
             <DataTemplate DataType="model:IConnector">
               <controls:Connector Name="PART_Connector"
-                                  StartPoint="{Binding Start, Converter={x:Static converters:PinToPointConverter.Instance}}"
-                                  EndPoint="{Binding End, Converter={x:Static converters:PinToPointConverter.Instance}}"
+                                  StartPoint="{Binding Start, Converter={converters:PinToPointConverter}}"
+                                  EndPoint="{Binding End, Converter={converters:PinToPointConverter}}"
                                   Offset="{Binding Offset}" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>

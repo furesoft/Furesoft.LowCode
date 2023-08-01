@@ -1,25 +1,17 @@
 ﻿using System.Globalization;
 using Avalonia.Data;
-using Avalonia.Data.Converters;
 
 namespace Furesoft.LowCode.Editor.Converters;
 
-internal class EnumToCheckedConverter : IValueConverter
+internal class EnumToCheckedConverter : ValueConverter<EnumToCheckedConverter, bool>
 {
-    public static readonly EnumToCheckedConverter Instance = new();
-
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return Equals(value, parameter);
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    protected override object Convert(bool isChecked, Type targetType, object parameter)
     {
-        if (value is bool isChecked && isChecked)
-        {
-            return parameter;
-        }
-
-        return BindingOperations.DoNothing;
+        return isChecked ? parameter : BindingOperations.DoNothing;
     }
 }

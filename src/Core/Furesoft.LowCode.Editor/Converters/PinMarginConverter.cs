@@ -1,25 +1,14 @@
-﻿using System.Globalization;
-using Avalonia;
-using Avalonia.Data.Converters;
+﻿namespace Furesoft.LowCode.Editor.Converters;
 
-namespace Furesoft.LowCode.Editor.Converters;
-
-public class PinMarginConverter : IValueConverter
+public class PinMarginConverter : ValueConverter<PinMarginConverter, IPin>
 {
-    public static readonly PinMarginConverter Instance = new();
-
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    protected override object Convert(IPin pin, Type targetType, object parameter)
     {
-        if (value is IPin pin)
+        if (pin is not null)
         {
             return new Thickness(-pin.Width / 2, -pin.Height / 2, 0, 0);
         }
 
         return new Thickness(0);
-    }
-
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
     }
 }

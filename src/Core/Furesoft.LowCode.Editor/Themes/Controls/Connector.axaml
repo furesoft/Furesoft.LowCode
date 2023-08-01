@@ -18,15 +18,15 @@
               <Label Content="Orientation:" DockPanel.Dock="Top" />
               <RadioButton Content="Auto"
                            GroupName="Orientation"
-                           IsChecked="{Binding Orientation, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:ConnectorOrientation.Auto}}"
+                           IsChecked="{Binding Orientation, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:ConnectorOrientation.Auto}}"
                            DockPanel.Dock="Top" />
               <RadioButton Content="Horizontal"
                            GroupName="Orientation"
-                           IsChecked="{Binding Orientation, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:ConnectorOrientation.Horizontal}}"
+                           IsChecked="{Binding Orientation, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:ConnectorOrientation.Horizontal}}"
                            DockPanel.Dock="Top" />
               <RadioButton Content="Vertical"
                            GroupName="Orientation"
-                           IsChecked="{Binding Orientation, Converter={x:Static converters:EnumToCheckedConverter.Instance}, ConverterParameter={x:Static model:ConnectorOrientation.Vertical}}"
+                           IsChecked="{Binding Orientation, Converter={converters:EnumToCheckedConverter}, ConverterParameter={x:Static model:ConnectorOrientation.Vertical}}"
                            DockPanel.Dock="Top" />
             </DockPanel>
             <Label Content="Offset:" DockPanel.Dock="Top" />

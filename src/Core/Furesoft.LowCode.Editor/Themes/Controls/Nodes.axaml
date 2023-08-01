@@ -26,7 +26,7 @@
                                                 EnableSnap="{Binding $parent[controls:DrawingNode].EnableSnap}" 
                                                 SnapX="{Binding $parent[controls:DrawingNode].SnapX}" 
                                                 SnapY="{Binding $parent[controls:DrawingNode].SnapY}" 
-                                                x:CompileBindings="False" />
+                                                x:CompileBindings="True" />
             <behaviors:DrawingPressedBehavior />
             <behaviors:DrawingMovedBehavior />
           </i:Interaction.Behaviors>
