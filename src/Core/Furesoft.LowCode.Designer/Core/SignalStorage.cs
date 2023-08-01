@@ -15,14 +15,14 @@ public class SignalStorage
         }
 
         public string Name { get; set; }
-        public List<VisualNode> RegisteredNodeHandlers { get; set; }
+        public List<EmptyNode> RegisteredNodeHandlers { get; set; }
 
         public override string ToString() => Name;
     }
 
     public ObservableCollection<Signal> Signals { get; set; } = new();
 
-    public void Register(string name, VisualNode node)
+    public void Register(string name, EmptyNode node)
     {
         if (!Signals.Contains(_ => _.Name == name))
         {

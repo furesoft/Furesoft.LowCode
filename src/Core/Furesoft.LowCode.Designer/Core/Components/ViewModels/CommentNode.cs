@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 [DataContract(IsReference = true)]
 [NodeView(typeof(CommentView))]
 [Description("A comment")]
-public class CommentNode : VisualNode
+public class CommentNode : EmptyNode
 {
     private string _comment = "This is a comment";
 

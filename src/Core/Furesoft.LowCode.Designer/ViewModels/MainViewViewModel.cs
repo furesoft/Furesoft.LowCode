@@ -19,7 +19,7 @@ namespace Furesoft.LowCode.Designer.ViewModels;
 public partial class MainViewViewModel : ViewModelBase
 {
     [ObservableProperty] private EditorViewModel _editor;
-    [ObservableProperty] private VisualNode _selectedNode;
+    [ObservableProperty] private EmptyNode _selectedNode;
     [ObservableProperty] private string _searchTerm = string.Empty;
 
     public Evaluator Evaluator { get; set; }

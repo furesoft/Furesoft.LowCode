@@ -20,7 +20,7 @@ public partial class NodeFactory : INodeFactory
         _dynamicNodes.Add(node);
     }
 
-    private static CustomNodeViewModel CreateNode(VisualNode node,
+    private static CustomNodeViewModel CreateNode(EmptyNode node,
         IEnumerable<(string Key, PinAlignment Value, PinMode mode, bool)> pins,
         (double x, double y) position, double width = 60, double height = 60, Control nodeView = null)
     {
@@ -69,11 +69,11 @@ public partial class NodeFactory : INodeFactory
         return viewModel;
     }
 
-    private static CustomNodeViewModel CreateNode(VisualNode visualNode, (double x, double y) position,
+    private static CustomNodeViewModel CreateNode(EmptyNode emptyNode, (double x, double y) position,
         double width = 60, double height = 60)
     {
         var pinData =
-            from prop in visualNode.GetType().GetProperties()
+            from prop in emptyNode.GetType().GetProperties()
             where prop.GetCustomAttribute<PinAttribute>() != null
             select (prop.GetCustomAttribute<PinAttribute>(), prop);
 
@@ -86,7 +86,7 @@ public partial class NodeFactory : INodeFactory
 
         Control nodeView = null;
 
-        var nodeViewAttribute = visualNode.GetAttribute<NodeViewAttribute>();
+        var nodeViewAttribute = emptyNode.GetAttribute<NodeViewAttribute>();
         if (nodeViewAttribute != null)
         {
             nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
@@ -104,10 +104,10 @@ public partial class NodeFactory : INodeFactory
             nodeView.Tag = nodeViewAttribute.Parameter;
         }
 
-        return CreateNode(visualNode, pins, position, width, height, nodeView);
+        return CreateNode(emptyNode, pins, position, width, height, nodeView);
     }
 
-    private static (double, double) RecalculateBoundsWithMargin(VisualNode node, (double width, double height) size,
+    private static (double, double) RecalculateBoundsWithMargin(EmptyNode node, (double width, double height) size,
         int maxPinTopBottom, int maxPinLeftRight)
     {
         double Calculate(int max)
@@ -130,7 +130,7 @@ public partial class NodeFactory : INodeFactory
     {
         bool IsVisualNode(Type type)
         {
-            return typeof(VisualNode).IsAssignableFrom(type) && type.IsClass && type.Name != nameof(VisualNode);
+            return typeof(EmptyNode).IsAssignableFrom(type) && type.IsClass && type.Name != nameof(EmptyNode);
         }
 
         var templates = new List<INodeTemplate>();
@@ -190,13 +190,13 @@ public partial class NodeFactory : INodeFactory
     {
         bool IsNormalNode(Type node)
         {
-            return !typeof(INodeFactory).IsAssignableFrom(node) && node != typeof(DynamicNode);
+            return !typeof(INodeFactory).IsAssignableFrom(node) && node != typeof(DynamicNode) && !node.IsAbstract;
         }
 
         var normalNodes =
             from node in nodes
             where IsNormalNode(node)
-            select (VisualNode)Activator.CreateInstance(node);
+            select (EmptyNode)Activator.CreateInstance(node);
 
         templates.AddRange(from node in normalNodes
             let ignoreAttribute = node.GetAttribute<IgnoreTemplateAttribute>()

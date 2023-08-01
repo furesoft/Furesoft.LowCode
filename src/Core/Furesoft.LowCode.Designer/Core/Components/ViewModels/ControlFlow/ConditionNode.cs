@@ -8,7 +8,7 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels.ControlFlow;
 [NodeCategory("Control Flow")]
 [NodeView(typeof(ConditionView))]
 [Description("Change control flow based on condition")]
-public class ConditionNode : VisualNode
+public class ConditionNode : InputNode
 {
     private string _condition;
 
@@ -22,10 +22,7 @@ public class ConditionNode : VisualNode
         get => _condition;
         set => SetProperty(ref _condition, value);
     }
-    
-    [Pin("Flow", PinAlignment.Top)]
-    public IInputPin FlowPin { get; set; }
-    
+
     [Pin("True", PinAlignment.Bottom)]
     public IOutputPin TruePin { get; set; }
     

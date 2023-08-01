@@ -9,15 +9,11 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 [NodeCategory("Data")]
 [NodeView(typeof(AssignNodeView))]
 [Description("Save a value for later usage")]
-public class AssignNode : VisualNode
+public class AssignNode : InputOutputNode
 {
-
-
     public AssignNode() : base("Assign Variable")
     {
-      
     }
-
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The name of the variable")]
@@ -26,12 +22,6 @@ public class AssignNode : VisualNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The value of the variable")]
     public string Value { get; set; }
-    
-    [Pin("Flow Input", PinAlignment.Top)]
-    public IInputPin FlowInput { get; } = null;
-    
-    [Pin("Flow Output", PinAlignment.Bottom)]
-    public IOutputPin FlowOutput { get; } = null;
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
@@ -47,6 +37,6 @@ public class AssignNode : VisualNode
             jsVar.Assign(value);
         }
 
-        await ContinueWith(FlowOutput, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

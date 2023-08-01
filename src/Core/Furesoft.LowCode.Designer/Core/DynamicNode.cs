@@ -4,7 +4,7 @@ using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 
-public class DynamicNode : VisualNode, ICustomTypeDescriptor
+public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 {
     public readonly Dictionary<string, (PinAlignment, PinMode, bool)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();

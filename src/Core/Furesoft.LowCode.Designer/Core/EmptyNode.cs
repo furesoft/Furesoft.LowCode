@@ -11,8 +11,41 @@ using NiL.JS.Extensions;
 
 namespace Furesoft.LowCode.Designer.Core;
 
+public abstract class InputOutputNode : EmptyNode
+{
+    [Pin("Flow", PinAlignment.Top)]
+    public IInputPin InputPin { get; set; }
+    
+    [Pin("Flow", PinAlignment.Bottom)]
+    public IOutputPin OutputPin { get; set; }
+
+    protected InputOutputNode(string label) : base(label)
+    {
+    }
+}
+
+public abstract class InputNode : EmptyNode
+{
+    [Pin("Flow", PinAlignment.Top)]
+    public IInputPin InputPin { get; set; }
+
+    protected InputNode(string label) : base(label)
+    {
+    }
+}
+
+public abstract class OutputNode : EmptyNode
+{
+    [Pin("Flow", PinAlignment.Bottom)]
+    public IOutputPin OutputPin { get; set; }
+
+    protected OutputNode(string label) : base(label)
+    {
+    }
+}
+
 [DataContract(IsReference = true)]
-public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
+public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 {
     private string _label;
     private string _description;
@@ -21,8 +54,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
     [Browsable(false)]
     public Context Context { get; private set; }
 
-
-    protected VisualNode(string label)
+    protected EmptyNode(string label)
     {
         Label = label;
     }
@@ -47,7 +79,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
     /// Gets the previously executed node
     /// </summary>
     [Browsable(false)]
-    public VisualNode PreviousNode { get; set; }
+    public EmptyNode PreviousNode { get; set; }
 
     public abstract Task Execute(CancellationToken cancellationToken);
 
@@ -84,7 +116,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
         return GetConnectedNodes(pinMembername, PinMode.Input);
     }
 
-    private IEnumerable<VisualNode> GetConnectedNodes(string pinMembername, PinMode mode, Context context = null)
+    private IEnumerable<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode, Context context = null)
     {
         var pinName = GetPinName(pinMembername);
         var connections = GetConnections();
@@ -100,7 +132,7 @@ public abstract partial class VisualNode : ViewModelBase, ICustomTypeDescriptor
         }
     }
 
-    private void InitNextNode(IConnector pinConnection, string pinName, out VisualNode parentNode)
+    private void InitNextNode(IConnector pinConnection, string pinName, out EmptyNode parentNode)
     {
         CustomNodeViewModel parent;
 

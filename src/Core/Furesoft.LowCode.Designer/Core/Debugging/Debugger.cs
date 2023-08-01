@@ -5,9 +5,9 @@ namespace Furesoft.LowCode.Designer.Core.Debugging;
 public class Debugger
 {
     private readonly Context _context;
-    public VisualNode CurrentNode { get; set; }
+    public EmptyNode CurrentNode { get; set; }
 
-    public List<VisualNode> BreakPointNodes { get; set; } = new();
+    public List<EmptyNode> BreakPointNodes { get; set; } = new();
 
     public bool IsAttached { get; set; }
     public Task WaitTask => _waitTaskSource?.Task;

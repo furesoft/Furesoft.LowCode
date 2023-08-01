@@ -9,7 +9,7 @@ public class CustomNodeViewModel : NodeViewModel
 
     public string Category { get; set; }
     
-    public VisualNode DefiningNode { get; set; }
+    public EmptyNode DefiningNode { get; set; }
 
     public override bool CanRemove()
     {

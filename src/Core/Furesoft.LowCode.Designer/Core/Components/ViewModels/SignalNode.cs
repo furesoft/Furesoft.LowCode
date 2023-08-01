@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 [Description("Executes when a Signal was triggered")]
 [DataContract(IsReference = true)]
 [NodeCategory]
-public class SignalNode : VisualNode
+public class SignalNode : OutputNode
 {
     public SignalNode() : base("Signal")
     {
@@ -30,15 +30,12 @@ public class SignalNode : VisualNode
     
     public SelectableList<SignalStorage.Signal> Signals { get; set; }
     
-    
-    [Pin("Flow", PinAlignment.Bottom)]
-    public IOutputPin OutputFlowNode { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
         // VisualNode.Signals.Register(Signals.SelectedValue.Name, this);
 
-        await ContinueWith(OutputFlowNode, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 
 }

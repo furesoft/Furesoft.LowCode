@@ -36,7 +36,7 @@ public partial class NodeFactory
         return drawing;
     }
 
-    private static CustomNodeViewModel CreateViewModel(VisualNode vm, (double x, double y) position,
+    private static CustomNodeViewModel CreateViewModel(EmptyNode vm, (double x, double y) position,
         (double width, double height) size)
     {
         var node = new CustomNodeViewModel

@@ -8,17 +8,14 @@ namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 [IgnoreTemplate]
 [NodeView(typeof(EntryView))]
 [Description("The starting node of the graph")]
-public class EntryNode : VisualNode
+public class EntryNode : OutputNode
 {
     public EntryNode() : base("Entry")
     {
     }
-    
-    [Pin("Flow Output", PinAlignment.Bottom)]
-    public IOutputPin FlowPin { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        return ContinueWith(FlowPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Furesoft.LowCode.Designer.Core;
 
-public partial class VisualNode
+public partial class EmptyNode
 {
     #region Custom Type Descriptor Interfaces
 
