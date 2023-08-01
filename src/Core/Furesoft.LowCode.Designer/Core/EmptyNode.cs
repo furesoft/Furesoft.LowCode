@@ -72,7 +72,14 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             node.PreviousNode = this;
             node._evaluator.Debugger.CurrentNode = node;
 
-            await node?.Execute(cancellationToken);
+            try
+            {
+                await node?.Execute(cancellationToken);
+            }
+            catch (OutVariableException)
+            {
+                
+            }
 
             cancellationToken.ThrowIfCancellationRequested();
         }
@@ -192,6 +199,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     protected void SetOutVariable(string name, object value)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new OutVariableException();
+        }
+        
         Context.GetVariable(name).Assign(value);
     }
 
