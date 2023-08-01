@@ -178,7 +178,6 @@ public sealed class DrawingNodeEditor
 
             if (showWhenMoving)
             {
-                _node.Connectors ??= _factory.CreateList<IConnector>();
                 _node.Connectors.Add(connector);
             }
 
@@ -186,7 +185,7 @@ public sealed class DrawingNodeEditor
         }
         else
         {
-            if (_connector.Start != pin)
+            if (_connector.Start != pin && _connector.Start.Mode != pin.Mode)
             {
                 var end = _connector.End;
                 _connector.End = pin;

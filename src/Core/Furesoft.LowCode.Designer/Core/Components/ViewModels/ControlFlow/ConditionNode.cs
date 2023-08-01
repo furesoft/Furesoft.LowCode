@@ -24,7 +24,7 @@ public class ConditionNode : VisualNode
     }
     
     [Pin("Flow", PinAlignment.Top)]
-    public IOutputPin FlowPin { get; set; }
+    public IInputPin FlowPin { get; set; }
     
     [Pin("True", PinAlignment.Bottom)]
     public IOutputPin TruePin { get; set; }

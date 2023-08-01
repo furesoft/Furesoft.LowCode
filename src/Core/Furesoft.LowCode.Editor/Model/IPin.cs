@@ -1,3 +1,5 @@
+using Furesoft.LowCode.Editor.MVVM;
+
 namespace Furesoft.LowCode.Editor.Model;
 
 public sealed class PinCreatedEventArgs : EventArgs
@@ -107,6 +109,7 @@ public interface IPin
     double Width { get; set; }
     double Height { get; set; }
     PinAlignment Alignment { get; set; }
+    PinMode Mode { get; set; }
     bool CanConnectToMultiplePins { get; set; }
     bool CanConnect();
     bool CanDisconnect();

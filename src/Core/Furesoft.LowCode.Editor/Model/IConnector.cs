@@ -1,3 +1,5 @@
+using Furesoft.LowCode.Editor.MVVM;
+
 namespace Furesoft.LowCode.Editor.Model;
 
 public sealed class ConnectorCreatedEventArgs : EventArgs
