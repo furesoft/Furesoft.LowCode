@@ -15,6 +15,10 @@
                   Background="Transparent">
           <TreeView.Resources>
             <behaviors:TemplatesTreeViewDropHandler x:Key="TemplatesTreeViewDropHandler" />
+            <SolidColorBrush x:Key="TreeViewItemBackgroundSelected">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="TreeViewItemBackgroundPointerOver">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="TreeViewItemBackgroundPressed">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="TreeViewItemBackgroundSelectedPointerOver">Transparent</SolidColorBrush>
           </TreeView.Resources>
 
           <i:Interaction.Behaviors>

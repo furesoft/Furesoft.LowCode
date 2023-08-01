@@ -19,7 +19,7 @@
         </VisualBrush.Visual>
       </VisualBrush>
     </ResourceDictionary>
-
+    
     <ResourceDictionary x:Key='Dark'>
       <SolidColorBrush x:Key='NodeBackgroundBrush'>#FF404040</SolidColorBrush>
       <SolidColorBrush x:Key='NodeForegroundBrush'>White</SolidColorBrush>
