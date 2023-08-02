@@ -1,9 +1,8 @@
 ﻿using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
-using Furesoft.LowCode.Editor;
 
-namespace NodeEditor.Controls;
+namespace Furesoft.LowCode.Editor.Controls;
 
 [PseudoClasses(":selected")]
 public class Connector : Shape
@@ -59,8 +58,8 @@ public class Connector : Shape
             connector.GetControlPoints(
                 connector.Orientation,
                 Offset,
-                connector.Start?.Alignment ?? PinAlignment.None,
-                connector.End?.Alignment ?? PinAlignment.None,
+                connector.Start?.Alignment ?? PinAlignment.Left,
+                connector.End?.Alignment ?? PinAlignment.Left,
                 ref p1X, ref p1Y,
                 ref p2X, ref p2Y);
 

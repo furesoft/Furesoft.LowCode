@@ -1,14 +1,5 @@
 ﻿namespace Furesoft.LowCode.Editor.Model;
 
-public enum PinAlignment
-{
-    None,
-    Left,
-    Right,
-    Top,
-    Bottom
-}
-
 public sealed class DrawingNodeEditor
 {
     private readonly IDrawingNodeFactory _factory;

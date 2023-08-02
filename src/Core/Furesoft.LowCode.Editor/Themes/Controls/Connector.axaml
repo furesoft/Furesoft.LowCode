@@ -1,8 +1,9 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Furesoft.LowCode.Editor.Controls"
                     x:CompileBindings="True">
 
-  <ControlTheme x:Key="{x:Type Connector}" TargetType="Connector">
+  <ControlTheme x:Key="{x:Type controls:Connector}" TargetType="controls:Connector">
 
     <Setter Property="Stroke" Value="{DynamicResource ConnectorBackgroundBrush}" />
     <Setter Property="StrokeThickness" Value="2" />

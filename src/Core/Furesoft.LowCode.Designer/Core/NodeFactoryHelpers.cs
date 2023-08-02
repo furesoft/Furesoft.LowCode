@@ -65,18 +65,19 @@ public partial class NodeFactory
         return width / (pinCount + 1) * (i + 1);
     }
 
-    private static void AddPins(IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
+    private static void AddPins(
+        IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
         NodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
-        for (var i = 0; i < pins.Count(); i++)
+        var pinArray = pins as (string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)[] ?? pins.ToArray();
+        
+        for (var i = 0; i < pinArray.Length; i++)
         {
-            var pin = pins.Skip(i).First();
-
+            var pin = pinArray[i];
             var (baseX, baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, pin.Name,
-                (Editor.Model.PinAlignment)pin.Alignment,
-                pin.MultipleConnections);
+            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, (Editor.Model.PinAlignment)pin.Alignment,
+                pin.Name, pin.MultipleConnections);
         }
     }
 }

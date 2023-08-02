@@ -3,7 +3,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Reactive;
 using Avalonia.Xaml.Interactivity;
-using NodeEditor.Controls;
+using Furesoft.LowCode.Editor.Controls;
 
 namespace Furesoft.LowCode.Editor.Behaviors;
 

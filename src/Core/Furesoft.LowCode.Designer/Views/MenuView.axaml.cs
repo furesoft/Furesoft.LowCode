@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using NodeEditor.Controls;
+using Furesoft.LowCode.Editor.Controls;
 
 namespace Furesoft.LowCode.Designer.Views;
 

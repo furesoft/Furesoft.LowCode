@@ -2,7 +2,7 @@
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 
-namespace NodeEditor.Controls;
+namespace Furesoft.LowCode.Editor.Controls;
 
 public class SelectionAdorner : Control
 {

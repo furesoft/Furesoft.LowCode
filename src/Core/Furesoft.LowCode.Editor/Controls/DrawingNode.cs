@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
-namespace NodeEditor.Controls;
+namespace Furesoft.LowCode.Editor.Controls;
 
 public class DrawingNode : TemplatedControl
 {

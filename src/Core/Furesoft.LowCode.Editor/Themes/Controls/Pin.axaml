@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:NodeEditor.Controls"
+                    xmlns:controls="clr-namespace:Furesoft.LowCode.Editor.Controls"
                     xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
                     xmlns:converters="clr-namespace:Furesoft.LowCode.Editor.Converters"
                     xmlns:controls1="clr-namespace:Furesoft.LowCode.Editor.Controls"
@@ -15,7 +15,7 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IPin">
-        <controls1:RotatingTriangle Name="PART_Pin" Fill="{Binding Mode, Converter={converters:PinModeConverter}}"
+        <controls1:PinShape Name="PART_Pin" Fill="{Binding Mode, Converter={converters:PinModeConverter}}"
                  Width="{Binding Width}" Mode="{Binding Mode}" PinAlignment="{Binding Alignment}"
                  Height="{Binding Height}" />
       </ControlTemplate>

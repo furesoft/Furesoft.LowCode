@@ -3,8 +3,8 @@
 public static class NodeViewModelExtensions
 {
     public static IPin AddPin(this NodeViewModel node, (double x, double y) position,
-        (double width, double height) size, PinMode mode, string? name = null,
-        PinAlignment alignment = PinAlignment.None, bool allowMultipleConnections = false)
+        (double width, double height) size, PinMode mode,
+        PinAlignment alignment, string? name = null, bool allowMultipleConnections = false)
     {
         var pin = new PinViewModel
         {

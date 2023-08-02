@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:Furesoft.LowCode.Editor.Converters"
-                    xmlns:controls="clr-namespace:NodeEditor.Controls"
+                    xmlns:controls="clr-namespace:Furesoft.LowCode.Editor.Controls"
                     xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
                     x:CompileBindings="True">
 

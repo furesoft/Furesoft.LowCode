@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls.Primitives;
 
-namespace NodeEditor.Controls;
+namespace Furesoft.LowCode.Editor.Controls;
 
 public class Pin : TemplatedControl
 {

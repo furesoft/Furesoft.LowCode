@@ -6,13 +6,13 @@ using Avalonia;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 
-public class RotatingTriangle : Shape
+public class PinShape : Shape
 {
     public static readonly StyledProperty<PinAlignment> PinAlignmentProperty =
-        AvaloniaProperty.Register<RotatingTriangle, PinAlignment>(nameof(PinAlignment));
+        AvaloniaProperty.Register<PinShape, PinAlignment>(nameof(PinAlignment));
 
     public static readonly StyledProperty<PinMode> ModeProperty =
-        AvaloniaProperty.Register<RotatingTriangle, PinMode>(nameof(Mode), PinMode.Output);
+        AvaloniaProperty.Register<PinShape, PinMode>(nameof(Mode), PinMode.Output);
 
     public PinAlignment PinAlignment
     {

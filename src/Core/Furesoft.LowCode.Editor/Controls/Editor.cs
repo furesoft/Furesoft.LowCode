@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 
-namespace NodeEditor.Controls;
+namespace Furesoft.LowCode.Editor.Controls;
 
 [TemplatePart("PART_ZoomBorder", typeof(NodeZoomBorder))]
 [TemplatePart("PART_Drawing", typeof(DrawingNode))]

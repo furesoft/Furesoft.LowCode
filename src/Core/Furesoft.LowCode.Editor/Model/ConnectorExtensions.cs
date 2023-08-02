@@ -42,9 +42,6 @@ public static class ConnectorExtensions
     {
         switch (p1A)
         {
-            case PinAlignment.None:
-                AutoNone(offset, p2A, ref p1X, ref p1Y, ref p2X, ref p2Y);
-                break;
             case PinAlignment.Left:
                 AutoLeft(offset, p2A, ref p1X, ref p2X, ref p2Y);
                 break;
@@ -60,32 +57,6 @@ public static class ConnectorExtensions
         }
     }
 
-    private static void AutoNone(double offset, PinAlignment p2A, ref double p1X, ref double p1Y, ref double p2X,
-        ref double p2Y)
-    {
-        switch (p2A)
-        {
-            case PinAlignment.None:
-                break;
-            case PinAlignment.Left:
-                p2X -= offset;
-                p1X += offset;
-                break;
-            case PinAlignment.Right:
-                p2X += offset;
-                p1X -= offset;
-                break;
-            case PinAlignment.Top:
-                p2Y -= offset;
-                p1Y += offset;
-                break;
-            case PinAlignment.Bottom:
-                p2Y += offset;
-                p1Y -= offset;
-                break;
-        }
-    }
-
     private static void AutoLeft(double offset, PinAlignment p2A, ref double p1X, ref double p2X, ref double p2Y)
     {
         switch (p2A)
@@ -94,7 +65,6 @@ public static class ConnectorExtensions
                 p1X -= offset;
                 p2X -= offset;
                 break;
-            case PinAlignment.None:
             case PinAlignment.Right:
                 p1X -= offset;
                 p2X += offset;
@@ -112,7 +82,6 @@ public static class ConnectorExtensions
     {
         switch (p2A)
         {
-            case PinAlignment.None:
             case PinAlignment.Left:
                 p1X += offset;
                 p2X -= offset;
@@ -134,10 +103,6 @@ public static class ConnectorExtensions
     {
         switch (p2A)
         {
-            case PinAlignment.None:
-                p1Y -= offset;
-                p2Y += offset;
-                break;
             case PinAlignment.Left:
                 p2X -= offset;
                 break;
@@ -165,7 +130,6 @@ public static class ConnectorExtensions
             case PinAlignment.Right:
                 p1Y += offset;
                 break;
-            case PinAlignment.None:
             case PinAlignment.Top:
                 p1Y += offset;
                 p2Y -= offset;

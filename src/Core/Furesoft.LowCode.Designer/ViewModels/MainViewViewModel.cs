@@ -10,9 +10,9 @@ using CommunityToolkit.Mvvm.Input;
 using Furesoft.LowCode.Designer.Core;
 using Furesoft.LowCode.Designer.Core.Components.ViewModels;
 using Furesoft.LowCode.Designer.Services;
+using Furesoft.LowCode.Editor.Controls;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
-using NodeEditor.Controls;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
 

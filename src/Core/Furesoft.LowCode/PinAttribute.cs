@@ -3,7 +3,7 @@
 [AttributeUsage(AttributeTargets.Property)]
 public class PinAttribute : Attribute
 {
-    public PinAttribute(string name = null, PinAlignment alignment = PinAlignment.None,
+    public PinAttribute(string name = null, PinAlignment alignment = PinAlignment.Left,
         bool allowMultipleConnections = true)
     {
         Name = name;
