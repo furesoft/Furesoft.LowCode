@@ -10,10 +10,8 @@ public class PostRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    public override async Task Execute(CancellationToken cancellationToken)
+    public override async Task Invoke(CancellationToken cancellationToken)
     {
-        var client = new HttpClient();
-
         var result = await client.PostAsync(Evaluate<string>(URL), new StringContent(Content), cancellationToken);
         
         SetOutVariable(OutVariable, result);
