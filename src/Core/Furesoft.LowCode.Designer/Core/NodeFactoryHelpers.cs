@@ -57,7 +57,7 @@ public partial class NodeFactory
         node.IsRemovable = false;
         node.Parent = drawing;
 
-        drawing.Nodes.Add(node);
+        drawing.Nodes!.Add(node);
     }
 
     private static double CalculateSinglePin(double width, int pinCount, int i)
@@ -65,17 +65,16 @@ public partial class NodeFactory
         return width / (pinCount + 1) * (i + 1);
     }
 
-    private static void AddPins(double pinSize,
-        IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
+    private static void AddPins(IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
         NodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         for (var i = 0; i < pins.Count(); i++)
         {
             var pin = pins.Skip(i).First();
 
-            (var baseX, var baseY) = positionMapper(i);
+            var (baseX, baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (pinSize, pinSize), pin.Mode, pin.Name,
+            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, pin.Name,
                 (Editor.Model.PinAlignment)pin.Alignment,
                 pin.MultipleConnections);
         }

@@ -83,10 +83,3 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 }
-
-public enum ItemType
-{
-    File,
-    Folder,
-    All
-}

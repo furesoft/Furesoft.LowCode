@@ -67,11 +67,11 @@ public partial class NodeFactory : INodeFactory
 
         var viewModel = CreateViewModel(node, position, (width, height));
 
-        AddPins(PinSize, topPins, viewModel, i => (CalculateSinglePin(width, topPins.Length, i), 0));
-        AddPins(PinSize, bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins.Length, i), height));
+        AddPins(topPins, viewModel, i => (CalculateSinglePin(width, topPins.Length, i), 0));
+        AddPins(bottomPins, viewModel, i => (CalculateSinglePin(width, bottomPins.Length, i), height));
 
-        AddPins(PinSize, leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins.Length, i)));
-        AddPins(PinSize, rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins.Length, i)));
+        AddPins(leftPins, viewModel, i => (0, CalculateSinglePin(height, leftPins.Length, i)));
+        AddPins(rightPins, viewModel, i => (width, CalculateSinglePin(height, rightPins.Length, i)));
 
         nodeView!.DataContext = node;
 
