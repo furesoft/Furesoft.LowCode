@@ -3,6 +3,7 @@
                     xmlns:controls="clr-namespace:NodeEditor.Controls"
                     xmlns:model="clr-namespace:Furesoft.LowCode.Editor.Model"
                     xmlns:converters="clr-namespace:Furesoft.LowCode.Editor.Converters"
+                    xmlns:controls1="clr-namespace:Furesoft.LowCode.Editor.Controls"
                     x:CompileBindings="True">
 
   <ControlTheme x:Key="{x:Type controls:Pin}" TargetType="controls:Pin">
@@ -14,8 +15,8 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IPin">
-        <Ellipse Name="PART_Pin" Stroke="{Binding Mode, Converter={converters:PinModeConverter}}"
-                 Width="{Binding Width}"
+        <controls1:RotatingTriangle Name="PART_Pin" Fill="{Binding Mode, Converter={converters:PinModeConverter}}"
+                 Width="{Binding Width}" Mode="{Binding Mode}" PinAlignment="{Binding Alignment}"
                  Height="{Binding Height}" />
       </ControlTemplate>
     </Setter>
