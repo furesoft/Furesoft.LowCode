@@ -201,7 +201,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         if (string.IsNullOrEmpty(name))
         {
-            throw new OutVariableException();
+            return;
         }
         
         Context.GetVariable(name).Assign(value);
