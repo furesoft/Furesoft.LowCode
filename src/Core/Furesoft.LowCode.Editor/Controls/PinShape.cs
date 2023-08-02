@@ -43,23 +43,23 @@ public class PinShape : Shape
             switch (PinAlignment)
             {
                 case PinAlignment.Left:
-                    context.BeginFigure(new(0, height / 2), true);
+                    context.BeginFigure(new(0, height / 2 - 1), true);
                     context.LineTo(new(width, -width));
                     context.LineTo(new(width, height * 1.2));
                     break;
                 case PinAlignment.Right:
-                    context.BeginFigure(new(width * 1.2, height / 2), true);
+                    context.BeginFigure(new(width * 1.2, height / 2 - 1), true);
                     context.LineTo(new(0, -width / 2));
                     context.LineTo(new(0, height * 1.2));
                     break;
                 case PinAlignment.Top:
-                    context.BeginFigure(new(width / 2, 0), true);
+                    context.BeginFigure(new(width / 2 - 0.75, 0), true);
                     context.LineTo(new(-width / 2, height * 1.2));
                     context.LineTo(new(width * 1.2, height));
                     break;
                 case PinAlignment.Bottom:
-                    context.BeginFigure(new(width / 2, height * 1.2), true);
-                    context.LineTo(new(-width / 2, 0));
+                    context.BeginFigure(new(width / 2 - 0.75, height * 1.2), true);
+                    context.LineTo(new(-(width / 2), 0));
                     context.LineTo(new(width * 1.2, 0));
                     break;
             }
