@@ -7,8 +7,8 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
 {
-    private IDisposable? _dataContextDisposable;
-    private IDrawingNode? _drawingNode;
+    private IDisposable _dataContextDisposable;
+    private IDrawingNode _drawingNode;
 
     protected override void OnAttached()
     {
@@ -18,7 +18,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
         {
             _dataContextDisposable = AssociatedObject
                 .GetObservable(StyledElement.DataContextProperty)
-                .Subscribe(new AnonymousObserver<object?>(
+                .Subscribe(new AnonymousObserver<object>(
                     x =>
                     {
                         if (x is IDrawingNode drawingNode)
@@ -57,7 +57,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
         }
     }
 
-    private void DrawingNode_SelectionChanged(object? sender, EventArgs e)
+    private void DrawingNode_SelectionChanged(object sender, EventArgs e)
     {
         if (AssociatedObject?.DataContext is not IDrawingNode)
         {

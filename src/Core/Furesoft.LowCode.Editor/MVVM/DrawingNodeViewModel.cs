@@ -7,15 +7,15 @@ namespace Furesoft.LowCode.Editor.MVVM;
 public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 {
     private readonly DrawingNodeEditor _editor;
-    [ObservableProperty] private IList<IConnector>? _connectors;
+    [ObservableProperty] private IList<IConnector> _connectors;
     [ObservableProperty] private bool _enableGrid;
     [ObservableProperty] private bool _enableSnap;
     [ObservableProperty] private double _gridCellHeight;
     [ObservableProperty] private double _gridCellWidth;
-    [ObservableProperty] private IList<INode>? _nodes;
-    private ISet<IConnector>? _selectedConnectors;
-    private ISet<INode>? _selectedNodes;
-    private INodeSerializer? _serializer;
+    [ObservableProperty] private IList<INode> _nodes;
+    private ISet<IConnector> _selectedConnectors;
+    private ISet<INode> _selectedNodes;
+    private INodeSerializer _serializer;
     [ObservableProperty] private double _snapX;
     [ObservableProperty] private double _snapY;
 
@@ -38,7 +38,7 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
         DeleteNodesCommand = new RelayCommand(DeleteNodes);
     }
 
-    public event SelectionChangedEventHandler? SelectionChanged;
+    public event SelectionChangedEventHandler SelectionChanged;
 
     public ICommand CutNodesCommand { get; }
 
@@ -83,37 +83,37 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
         }
     }
 
-    public ISet<INode>? GetSelectedNodes()
+    public ISet<INode> GetSelectedNodes()
     {
         return _selectedNodes;
     }
 
-    public void SetSelectedNodes(ISet<INode>? nodes)
+    public void SetSelectedNodes(ISet<INode> nodes)
     {
         _selectedNodes = nodes;
     }
 
-    public ISet<IConnector>? GetSelectedConnectors()
+    public ISet<IConnector> GetSelectedConnectors()
     {
         return _selectedConnectors;
     }
 
-    public void SetSelectedConnectors(ISet<IConnector>? connectors)
+    public void SetSelectedConnectors(ISet<IConnector> connectors)
     {
         _selectedConnectors = connectors;
     }
 
-    public INodeSerializer? GetSerializer()
+    public INodeSerializer GetSerializer()
     {
         return _serializer;
     }
 
-    public void SetSerializer(INodeSerializer? serializer)
+    public void SetSerializer(INodeSerializer serializer)
     {
         _serializer = serializer;
     }
 
-    public T? Clone<T>(T source)
+    public T Clone<T>(T source)
     {
         return _editor.Clone(source);
     }

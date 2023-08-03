@@ -28,7 +28,7 @@ public class DrawingPressedBehavior : Behavior<ItemsControl>
         }
     }
 
-    private void Pressed(object? sender, PointerPressedEventArgs e)
+    private void Pressed(object sender, PointerPressedEventArgs e)
     {
         if (e.Handled)
         {

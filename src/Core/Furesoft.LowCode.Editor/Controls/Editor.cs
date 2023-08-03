@@ -9,28 +9,28 @@ namespace Furesoft.LowCode.Editor.Controls;
 [TemplatePart("PART_AdornerCanvas", typeof(Canvas))]
 public class Editor : TemplatedControl
 {
-    public static readonly StyledProperty<NodeZoomBorder?> ZoomControlProperty =
-        AvaloniaProperty.Register<Editor, NodeZoomBorder?>(nameof(ZoomControl));
+    public static readonly StyledProperty<NodeZoomBorder> ZoomControlProperty =
+        AvaloniaProperty.Register<Editor, NodeZoomBorder>(nameof(ZoomControl));
 
-    public static readonly StyledProperty<DrawingNode?> DrawingNodeProperty =
-        AvaloniaProperty.Register<Editor, DrawingNode?>(nameof(DrawingNode));
+    public static readonly StyledProperty<DrawingNode> DrawingNodeProperty =
+        AvaloniaProperty.Register<Editor, DrawingNode>(nameof(DrawingNode));
 
-    public static readonly StyledProperty<Canvas?> AdornerCanvasProperty =
-        AvaloniaProperty.Register<Editor, Canvas?>(nameof(AdornerCanvas));
+    public static readonly StyledProperty<Canvas> AdornerCanvasProperty =
+        AvaloniaProperty.Register<Editor, Canvas>(nameof(AdornerCanvas));
 
-    public NodeZoomBorder? ZoomControl
+    public NodeZoomBorder ZoomControl
     {
         get => GetValue(ZoomControlProperty);
         set => SetValue(ZoomControlProperty, value);
     }
 
-    public DrawingNode? DrawingNode
+    public DrawingNode DrawingNode
     {
         get => GetValue(DrawingNodeProperty);
         set => SetValue(DrawingNodeProperty, value);
     }
 
-    public Canvas? AdornerCanvas
+    public Canvas AdornerCanvas
     {
         get => GetValue(AdornerCanvasProperty);
         set => SetValue(AdornerCanvasProperty, value);

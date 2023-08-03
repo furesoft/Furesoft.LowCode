@@ -7,29 +7,29 @@ namespace Furesoft.LowCode.Editor.MVVM;
 [ObservableObject]
 public partial class ConnectorViewModel : IConnector
 {
-    [ObservableProperty] private IPin? _end;
-    [ObservableProperty] private string? _name;
+    [ObservableProperty] private IPin _end;
+    [ObservableProperty] private string _name;
     [ObservableProperty] private double _offset = 30;
     [ObservableProperty] private ConnectorOrientation _orientation;
-    [ObservableProperty] private IDrawingNode? _parent;
-    [ObservableProperty] private IPin? _start;
+    [ObservableProperty] private IDrawingNode _parent;
+    [ObservableProperty] private IPin _start;
 
     public ConnectorViewModel()
     {
         ObservePins();
     }
 
-    public event EventHandler<ConnectorCreatedEventArgs>? Created;
+    public event EventHandler<ConnectorCreatedEventArgs> Created;
 
-    public event EventHandler<ConnectorRemovedEventArgs>? Removed;
+    public event EventHandler<ConnectorRemovedEventArgs> Removed;
 
-    public event EventHandler<ConnectorSelectedEventArgs>? Selected;
+    public event EventHandler<ConnectorSelectedEventArgs> Selected;
 
-    public event EventHandler<ConnectorDeselectedEventArgs>? Deselected;
+    public event EventHandler<ConnectorDeselectedEventArgs> Deselected;
 
-    public event EventHandler<ConnectorStartChangedEventArgs>? StartChanged;
+    public event EventHandler<ConnectorStartChangedEventArgs> StartChanged;
 
-    public event EventHandler<ConnectorEndChangedEventArgs>? EndChanged;
+    public event EventHandler<ConnectorEndChangedEventArgs> EndChanged;
 
     public virtual bool CanSelect()
     {

@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class TemplatesTreeViewDropHandler : DropHandlerBase
 {
-    private bool Validate<T>(TreeView treeView, DragEventArgs e, object? sourceContext, object? targetContext,
+    private bool Validate<T>(TreeView treeView, DragEventArgs e, object sourceContext, object targetContext,
         bool bExecute) where T : INodeTemplate
     {
         if (sourceContext is not T sourceItem
@@ -55,8 +55,8 @@ public class TemplatesTreeViewDropHandler : DropHandlerBase
         return false;
     }
 
-    public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
-        object? state)
+    public override bool Validate(object sender, DragEventArgs e, object sourceContext, object targetContext,
+        object state)
     {
         if (e.Source is Control && sender is TreeView listBox)
         {
@@ -66,8 +66,8 @@ public class TemplatesTreeViewDropHandler : DropHandlerBase
         return false;
     }
 
-    public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
-        object? state)
+    public override bool Execute(object sender, DragEventArgs e, object sourceContext, object targetContext,
+        object state)
     {
         if (e.Source is Control && sender is TreeView listBox)
         {

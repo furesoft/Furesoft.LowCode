@@ -162,7 +162,7 @@ internal static class HitTestHelper
             new Point(bottomRightX, bottomRightY));
     }
 
-    public static void FindSelectedNodes(ItemsControl? itemsControl, Rect rect)
+    public static void FindSelectedNodes(ItemsControl itemsControl, Rect rect)
     {
         if (itemsControl?.DataContext is not IDrawingNode drawingNode)
         {
@@ -237,7 +237,7 @@ internal static class HitTestHelper
         }
     }
 
-    public static Rect CalculateSelectedRect(ItemsControl? itemsControl)
+    public static Rect CalculateSelectedRect(ItemsControl itemsControl)
     {
         if (itemsControl?.DataContext is not IDrawingNode drawingNode)
         {

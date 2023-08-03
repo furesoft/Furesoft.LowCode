@@ -9,27 +9,27 @@ public partial class PinViewModel : IPin
     [ObservableProperty] private bool _canConnectToMultiplePins;
     [ObservableProperty] private double _height;
     [ObservableProperty] private PinMode _mode;
-    [ObservableProperty] private string? _name;
-    [ObservableProperty] private INode? _parent;
+    [ObservableProperty] private string _name;
+    [ObservableProperty] private INode _parent;
     [ObservableProperty] private double _width;
     [ObservableProperty] private double _x;
     [ObservableProperty] private double _y;
 
-    public event EventHandler<PinCreatedEventArgs>? Created;
+    public event EventHandler<PinCreatedEventArgs> Created;
 
-    public event EventHandler<PinRemovedEventArgs>? Removed;
+    public event EventHandler<PinRemovedEventArgs> Removed;
 
-    public event EventHandler<PinMovedEventArgs>? Moved;
+    public event EventHandler<PinMovedEventArgs> Moved;
 
-    public event EventHandler<PinSelectedEventArgs>? Selected;
+    public event EventHandler<PinSelectedEventArgs> Selected;
 
-    public event EventHandler<PinDeselectedEventArgs>? Deselected;
+    public event EventHandler<PinDeselectedEventArgs> Deselected;
 
-    public event EventHandler<PinResizedEventArgs>? Resized;
+    public event EventHandler<PinResizedEventArgs> Resized;
 
-    public event EventHandler<PinConnectedEventArgs>? Connected;
+    public event EventHandler<PinConnectedEventArgs> Connected;
 
-    public event EventHandler<PinDisconnectedEventArgs>? Disconnected;
+    public event EventHandler<PinDisconnectedEventArgs> Disconnected;
 
     public virtual bool CanConnect()
     {

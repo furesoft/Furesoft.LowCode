@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
-using System.Net;
 using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
-[Description("Send a POST Request To A Server")]
+[Description("Send a REST Request To A Server")]
 [NodeCategory("Network/REST")]
 public abstract class RestBaseNode : InputNode, IOutVariableProvider
 {

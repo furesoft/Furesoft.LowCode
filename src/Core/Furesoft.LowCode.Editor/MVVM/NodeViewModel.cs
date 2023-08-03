@@ -5,27 +5,27 @@ namespace Furesoft.LowCode.Editor.MVVM;
 [ObservableObject]
 public partial class NodeViewModel : INode
 {
-    [ObservableProperty] private object? _content;
-    [ObservableProperty] private string? _description;
+    [ObservableProperty] private object _content;
+    [ObservableProperty] private string _description;
     [ObservableProperty] private double _height;
-    [ObservableProperty] private string? _name;
-    [ObservableProperty] private INode? _parent;
-    [ObservableProperty] private IList<IPin>? _pins;
+    [ObservableProperty] private string _name;
+    [ObservableProperty] private INode _parent;
+    [ObservableProperty] private IList<IPin> _pins;
     [ObservableProperty] private double _width;
     [ObservableProperty] private double _x;
     [ObservableProperty] private double _y;
 
-    public event EventHandler<NodeCreatedEventArgs>? Created;
+    public event EventHandler<NodeCreatedEventArgs> Created;
 
-    public event EventHandler<NodeRemovedEventArgs>? Removed;
+    public event EventHandler<NodeRemovedEventArgs> Removed;
 
-    public event EventHandler<NodeMovedEventArgs>? Moved;
+    public event EventHandler<NodeMovedEventArgs> Moved;
 
-    public event EventHandler<NodeSelectedEventArgs>? Selected;
+    public event EventHandler<NodeSelectedEventArgs> Selected;
 
-    public event EventHandler<NodeDeselectedEventArgs>? Deselected;
+    public event EventHandler<NodeDeselectedEventArgs> Deselected;
 
-    public event EventHandler<NodeResizedEventArgs>? Resized;
+    public event EventHandler<NodeResizedEventArgs> Resized;
 
     public virtual bool CanSelect()
     {

@@ -27,7 +27,7 @@ public class DrawingMovedBehavior : Behavior<ItemsControl>
         }
     }
 
-    private void Moved(object? sender, PointerEventArgs e)
+    private void Moved(object sender, PointerEventArgs e)
     {
         if (AssociatedObject?.DataContext is not IDrawingNode drawingNode)
         {

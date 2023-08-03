@@ -4,8 +4,8 @@ public sealed class DrawingNodeEditor
 {
     private readonly IDrawingNodeFactory _factory;
     private readonly IDrawingNode _node;
-    private string? _clipboard;
-    private IConnector? _connector;
+    private string _clipboard;
+    private IConnector _connector;
     private double _pressedX = double.NaN;
     private double _pressedY = double.NaN;
 
@@ -15,7 +15,7 @@ public sealed class DrawingNodeEditor
         _factory = factory;
     }
 
-    public T? Clone<T>(T source)
+    public T Clone<T>(T source)
     {
         var serialize = _node.GetSerializer();
         if (serialize is null)
@@ -290,7 +290,7 @@ public sealed class DrawingNodeEditor
         var pressedX = _pressedX;
         var pressedY = _pressedY;
 
-        var clipboard = serializer.Deserialize<Clipboard?>(_clipboard);
+        var clipboard = serializer.Deserialize<Clipboard>(_clipboard);
         if (clipboard is null)
         {
             return;
@@ -519,7 +519,7 @@ public sealed class DrawingNodeEditor
 
     private class Clipboard
     {
-        public ISet<INode>? SelectedNodes { get; set; }
-        public ISet<IConnector>? SelectedConnectors { get; set; }
+        public ISet<INode> SelectedNodes { get; set; }
+        public ISet<IConnector> SelectedConnectors { get; set; }
     }
 }

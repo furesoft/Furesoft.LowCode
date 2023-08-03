@@ -6,16 +6,16 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class DrawingDropHandler : DefaultDropHandler
 {
-    public static readonly StyledProperty<Control?> RelativeToProperty =
-        AvaloniaProperty.Register<DrawingDropHandler, Control?>(nameof(RelativeTo));
+    public static readonly StyledProperty<Control> RelativeToProperty =
+        AvaloniaProperty.Register<DrawingDropHandler, Control>(nameof(RelativeTo));
 
-    public Control? RelativeTo
+    public Control RelativeTo
     {
         get => GetValue(RelativeToProperty);
         set => SetValue(RelativeToProperty, value);
     }
 
-    private bool Validate(IDrawingNode drawing, object? sender, DragEventArgs e, bool bExecute)
+    private bool Validate(IDrawingNode drawing, object sender, DragEventArgs e, bool bExecute)
     {
         var relativeTo = RelativeTo ?? sender as Control;
         if (relativeTo is null)
@@ -82,8 +82,8 @@ public class DrawingDropHandler : DefaultDropHandler
         return false;
     }
 
-    public override bool Validate(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
-        object? state)
+    public override bool Validate(object sender, DragEventArgs e, object sourceContext, object targetContext,
+        object state)
     {
         if (targetContext is IDrawingNode drawing)
         {
@@ -93,8 +93,8 @@ public class DrawingDropHandler : DefaultDropHandler
         return false;
     }
 
-    public override bool Execute(object? sender, DragEventArgs e, object? sourceContext, object? targetContext,
-        object? state)
+    public override bool Execute(object sender, DragEventArgs e, object sourceContext, object targetContext,
+        object state)
     {
         if (targetContext is IDrawingNode drawing)
         {

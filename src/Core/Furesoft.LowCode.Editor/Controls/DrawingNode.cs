@@ -5,11 +5,11 @@ namespace Furesoft.LowCode.Editor.Controls;
 
 public class DrawingNode : TemplatedControl
 {
-    public static readonly StyledProperty<Control?> InputSourceProperty =
-        AvaloniaProperty.Register<DrawingNode, Control?>(nameof(InputSource));
+    public static readonly StyledProperty<Control> InputSourceProperty =
+        AvaloniaProperty.Register<DrawingNode, Control>(nameof(InputSource));
 
-    public static readonly StyledProperty<Canvas?> AdornerCanvasProperty =
-        AvaloniaProperty.Register<DrawingNode, Canvas?>(nameof(AdornerCanvas));
+    public static readonly StyledProperty<Canvas> AdornerCanvasProperty =
+        AvaloniaProperty.Register<DrawingNode, Canvas>(nameof(AdornerCanvas));
 
     public static readonly StyledProperty<bool> EnableSnapProperty =
         AvaloniaProperty.Register<DrawingNode, bool>(nameof(EnableSnap));
@@ -29,13 +29,13 @@ public class DrawingNode : TemplatedControl
     public static readonly StyledProperty<double> GridCellHeightProperty =
         AvaloniaProperty.Register<DrawingNode, double>(nameof(GridCellHeight));
 
-    public Control? InputSource
+    public Control InputSource
     {
         get => GetValue(InputSourceProperty);
         set => SetValue(InputSourceProperty, value);
     }
 
-    public Canvas? AdornerCanvas
+    public Canvas AdornerCanvas
     {
         get => GetValue(AdornerCanvasProperty);
         set => SetValue(AdornerCanvasProperty, value);

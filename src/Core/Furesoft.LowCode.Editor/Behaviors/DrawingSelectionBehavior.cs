@@ -9,11 +9,11 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class DrawingSelectionBehavior : Behavior<ItemsControl>
 {
-    public static readonly StyledProperty<Control?> InputSourceProperty =
-        AvaloniaProperty.Register<DrawingSelectionBehavior, Control?>(nameof(InputSource));
+    public static readonly StyledProperty<Control> InputSourceProperty =
+        AvaloniaProperty.Register<DrawingSelectionBehavior, Control>(nameof(InputSource));
 
-    public static readonly StyledProperty<Canvas?> AdornerCanvasProperty =
-        AvaloniaProperty.Register<DrawingSelectionBehavior, Canvas?>(nameof(AdornerCanvas));
+    public static readonly StyledProperty<Canvas> AdornerCanvasProperty =
+        AvaloniaProperty.Register<DrawingSelectionBehavior, Canvas>(nameof(AdornerCanvas));
 
     public static readonly StyledProperty<bool> EnableSnapProperty =
         AvaloniaProperty.Register<DrawingSelectionBehavior, bool>(nameof(EnableSnap));
@@ -24,22 +24,22 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
     public static readonly StyledProperty<double> SnapYProperty =
         AvaloniaProperty.Register<DrawingSelectionBehavior, double>(nameof(SnapY), 1.0);
 
-    private IDisposable? _dataContextDisposable;
+    private IDisposable _dataContextDisposable;
     private bool _dragSelectedItems;
-    private IDrawingNode? _drawingNode;
-    private Control? _inputSource;
-    private SelectedAdorner? _selectedAdorner;
+    private IDrawingNode _drawingNode;
+    private Control _inputSource;
+    private SelectedAdorner _selectedAdorner;
     private Rect _selectedRect;
-    private SelectionAdorner? _selectionAdorner;
+    private SelectionAdorner _selectionAdorner;
     private Point _start;
 
-    public Control? InputSource
+    public Control InputSource
     {
         get => GetValue(InputSourceProperty);
         set => SetValue(InputSourceProperty, value);
     }
 
-    public Canvas? AdornerCanvas
+    public Canvas AdornerCanvas
     {
         get => GetValue(AdornerCanvasProperty);
         set => SetValue(AdornerCanvasProperty, value);
@@ -98,7 +98,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
 
         _dataContextDisposable = AssociatedObject
             .GetObservable(StyledElement.DataContextProperty)
-            .Subscribe(new AnonymousObserver<object?>(
+            .Subscribe(new AnonymousObserver<object>(
                 x =>
                 {
                     if (x is IDrawingNode drawingNode)
@@ -162,7 +162,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
         DeInitialize();
     }
 
-    private void DrawingNode_SelectionChanged(object? sender, EventArgs e)
+    private void DrawingNode_SelectionChanged(object sender, EventArgs e)
     {
         if (AssociatedObject?.DataContext is not IDrawingNode)
         {
@@ -195,7 +195,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
         }
     }
 
-    private void Pressed(object? sender, PointerPressedEventArgs e)
+    private void Pressed(object sender, PointerPressedEventArgs e)
     {
         if (e.Handled)
         {
@@ -295,7 +295,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
         e.Handled = true;
     }
 
-    private void Released(object? sender, PointerReleasedEventArgs e)
+    private void Released(object sender, PointerReleasedEventArgs e)
     {
         if (Equals(e.Pointer.Captured, _inputSource))
         {
@@ -318,12 +318,12 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
         }
     }
 
-    private void CaptureLost(object? sender, PointerCaptureLostEventArgs e)
+    private void CaptureLost(object sender, PointerCaptureLostEventArgs e)
     {
         RemoveSelection();
     }
 
-    private void Moved(object? sender, PointerEventArgs e)
+    private void Moved(object sender, PointerEventArgs e)
     {
         var info = e.GetCurrentPoint(_inputSource);
 

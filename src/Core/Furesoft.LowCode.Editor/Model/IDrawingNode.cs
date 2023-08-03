@@ -2,12 +2,12 @@ using System.Windows.Input;
 
 namespace Furesoft.LowCode.Editor.Model;
 
-public delegate void SelectionChangedEventHandler(object? sender, EventArgs e);
+public delegate void SelectionChangedEventHandler(object sender, EventArgs e);
 
 public interface IDrawingNode : INode
 {
-    IList<INode>? Nodes { get; set; }
-    IList<IConnector>? Connectors { get; set; }
+    IList<INode> Nodes { get; set; }
+    IList<IConnector> Connectors { get; set; }
     bool EnableSnap { get; set; }
     double SnapX { get; set; }
     double SnapY { get; set; }
@@ -21,17 +21,17 @@ public interface IDrawingNode : INode
     ICommand SelectAllNodesCommand { get; }
     ICommand DeselectAllNodesCommand { get; }
     ICommand DeleteNodesCommand { get; }
-    public event SelectionChangedEventHandler? SelectionChanged;
-    ISet<INode>? GetSelectedNodes();
+    public event SelectionChangedEventHandler SelectionChanged;
+    ISet<INode> GetSelectedNodes();
     void NotifySelectionChanged();
     void NotifyDeselectedNodes();
     void NotifyDeselectedConnectors();
-    void SetSelectedNodes(ISet<INode>? nodes);
-    ISet<IConnector>? GetSelectedConnectors();
-    void SetSelectedConnectors(ISet<IConnector>? connectors);
-    INodeSerializer? GetSerializer();
-    void SetSerializer(INodeSerializer? serializer);
-    public T? Clone<T>(T source);
+    void SetSelectedNodes(ISet<INode> nodes);
+    ISet<IConnector> GetSelectedConnectors();
+    void SetSelectedConnectors(ISet<IConnector> connectors);
+    INodeSerializer GetSerializer();
+    void SetSerializer(INodeSerializer serializer);
+    public T Clone<T>(T source);
     bool IsPinConnected(IPin pin);
     bool IsConnectorMoving();
     void CancelConnector();

@@ -6,8 +6,8 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class NodesSelectedBehavior : Behavior<ItemsControl>
 {
-    private IDisposable? _dataContextDisposable;
-    private IDrawingNode? _drawingNode;
+    private IDisposable _dataContextDisposable;
+    private IDrawingNode _drawingNode;
 
     protected override void OnAttached()
     {
@@ -55,7 +55,7 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
     }
 
 
-    private void DrawingNode_SelectionChanged(object? sender, EventArgs e)
+    private void DrawingNode_SelectionChanged(object sender, EventArgs e)
     {
         if (AssociatedObject?.DataContext is not IDrawingNode)
         {

@@ -10,7 +10,7 @@ public class NodeZoomBorder : ZoomBorder
         ResetMatrix();
     }
 
-    public void ZoomToCommand(object? value)
+    public void ZoomToCommand(object value)
     {
         if (Child == null || value is not string s)
         {

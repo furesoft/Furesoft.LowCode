@@ -6,10 +6,10 @@ namespace Furesoft.LowCode.Editor.Behaviors;
 
 public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
 {
-    public static readonly StyledProperty<IDrawingNode?> DrawingProperty =
-        AvaloniaProperty.Register<InsertTemplateOnDoubleTappedBehavior, IDrawingNode?>(nameof(Drawing));
+    public static readonly StyledProperty<IDrawingNode> DrawingProperty =
+        AvaloniaProperty.Register<InsertTemplateOnDoubleTappedBehavior, IDrawingNode>(nameof(Drawing));
 
-    public IDrawingNode? Drawing
+    public IDrawingNode Drawing
     {
         get => GetValue(DrawingProperty);
         set => SetValue(DrawingProperty, value);
@@ -33,7 +33,7 @@ public class InsertTemplateOnDoubleTappedBehavior : Behavior<Control>
         }
     }
 
-    private void DoubleTapped(object? sender, RoutedEventArgs args)
+    private void DoubleTapped(object sender, RoutedEventArgs args)
     {
         if (AssociatedObject is {DataContext: INodeTemplate template} && Drawing is { } drawing)
         {
