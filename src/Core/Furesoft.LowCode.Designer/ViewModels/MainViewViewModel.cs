@@ -303,6 +303,7 @@ public partial class MainViewViewModel : ViewModelBase
                 {
                     Editor.Drawing = drawing;
                     Editor.Drawing.SetSerializer(Editor.Serializer);
+                    Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
                 }
             }
             catch (Exception)
