@@ -10,9 +10,9 @@ public class PostRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    public override async Task Invoke(CancellationToken cancellationToken)
+    public override async Task Invoke(CancellationToken cancellationToken, string evaluatedUrl)
     {
-        var result = await client.PostAsync(Evaluate<string>(URL), new StringContent(Content), cancellationToken);
+        var result = await client.PostAsync(evaluatedUrl, new StringContent(Content), cancellationToken);
         
         SetOutVariable(OutVariable, result);
     }

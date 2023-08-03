@@ -31,8 +31,8 @@ public abstract class RestBaseNode : InputOutputNode
     {
         ApplyHeaders();
 
-        return Invoke(cancellationToken);
+        return Invoke(cancellationToken, Evaluate<string>(URL));
     }
 
-    public abstract Task Invoke(CancellationToken cancellationToken);
+    public abstract Task Invoke(CancellationToken cancellationToken, string evaluatedURL);
 }
