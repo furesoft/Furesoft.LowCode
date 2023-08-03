@@ -2,16 +2,17 @@
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
-public class DeleteRequest : RestBaseNode, IOutVariableProvider
+public class PatchRequest : RestBaseNode, IOutVariableProvider
 {
+    public string Content { get; set; }
     public string OutVariable { get; set; }
 
-    public DeleteRequest() : base("DELETE")
+    public PatchRequest() : base("PATCH")
     {
     }
 
     public override Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken)
     {
-        return client.DeleteAsync("/", cancellationToken);
+        return client.PatchAsync("/", new StringContent(Content), cancellationToken);
     }
 }

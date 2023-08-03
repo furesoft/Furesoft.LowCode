@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel;
+using System.Net;
 using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
 [Description("Send a POST Request To A Server")]
 [NodeCategory("Network/REST")]
-public abstract class RestBaseNode : InputOutputNode
+public abstract class RestBaseNode : InputNode, IOutVariableProvider
 {
     protected RestBaseNode(string label) : base(label)
     {
@@ -13,26 +14,46 @@ public abstract class RestBaseNode : InputOutputNode
 
     public string URL { get; set; }
 
+    [Pin("On Success", PinAlignment.Bottom)]
+    public IOutputPin SuccessPin { get; set; }
+
+    [Pin("On Failure", PinAlignment.Right)]
+    public IOutputPin FailurePin { get; set; }
+
     public BindingList<string> Headers { get; set; } = new();
 
     protected HttpClient client = new();
+    public string OutVariable { get; set; }
 
     private void ApplyHeaders()
     {
         foreach (var header in Headers)
         {
-            var spl = Evaluate<string>(header).Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            
+            var spl = Evaluate<string>(header)
+                .Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
             client.DefaultRequestHeaders.Add(spl[0], spl[1]);
         }
     }
 
-    public sealed override Task Execute(CancellationToken cancellationToken)
+    public sealed override async Task Execute(CancellationToken cancellationToken)
     {
         ApplyHeaders();
+        client.BaseAddress = new(Evaluate<string>(URL));
 
-        return Invoke(cancellationToken, Evaluate<string>(URL));
+        var response = await Invoke(cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            SetOutVariable(OutVariable, await response.Content.ReadAsStringAsync(cancellationToken));
+            await ContinueWith(SuccessPin, cancellationToken: cancellationToken);
+        }
+        else
+        {
+            SetOutVariable(OutVariable, response.ReasonPhrase);
+            await ContinueWith(FailurePin, cancellationToken: cancellationToken);
+        }
     }
 
-    public abstract Task Invoke(CancellationToken cancellationToken, string evaluatedURL);
+    public abstract Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken);
 }

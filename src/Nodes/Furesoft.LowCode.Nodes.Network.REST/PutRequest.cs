@@ -10,10 +10,8 @@ public class PutRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    public override async Task Invoke(CancellationToken cancellationToken, string evaluatedUrl)
+    public override Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken)
     {
-        var result = await client.PutAsync(evaluatedUrl, new StringContent(Content), cancellationToken);
-        
-        SetOutVariable(OutVariable, result);
+        return client.PutAsync("/", new StringContent(Content), cancellationToken);
     }
 }
