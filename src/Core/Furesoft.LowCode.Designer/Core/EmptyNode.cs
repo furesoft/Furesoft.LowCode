@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
+using Avalonia.Controls;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
@@ -225,5 +226,30 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         sb.AppendLine(PreviousNode?.GetCallStack());
 
         return sb.ToString();
+    }
+    
+    public Control GetNodeView(ref double width, ref double height)
+    {
+        Control nodeView = null;
+
+        var nodeViewAttribute = this.GetAttribute<NodeViewAttribute>();
+        if (nodeViewAttribute != null)
+        {
+            nodeView = (Control) Activator.CreateInstance(nodeViewAttribute.Type);
+
+            if (nodeView!.MinHeight > height)
+            {
+                height = nodeView.MinHeight;
+            }
+
+            if (nodeView.MinWidth > width)
+            {
+                width = nodeView.MinWidth;
+            }
+
+            nodeView.Tag = nodeViewAttribute.Parameter;
+        }
+
+        return nodeView;
     }
 }

@@ -110,25 +110,7 @@ public partial class NodeFactory : INodeFactory
                 pin.prop.PropertyType == typeof(IOutputPin) ? PinMode.Output : PinMode.Input,
                 pin.Item1.AllowMultipleConnections);
 
-        Control nodeView = null;
-
-        var nodeViewAttribute = emptyNode.GetAttribute<NodeViewAttribute>();
-        if (nodeViewAttribute != null)
-        {
-            nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
-
-            if (nodeView!.MinHeight > height)
-            {
-                height = nodeView.MinHeight;
-            }
-
-            if (nodeView.MinWidth > width)
-            {
-                width = nodeView.MinWidth;
-            }
-
-            nodeView.Tag = nodeViewAttribute.Parameter;
-        }
+        var nodeView = emptyNode.GetNodeView(ref width, ref height);
 
         return CreateNode(emptyNode, pins, position, width, height, nodeView);
     }

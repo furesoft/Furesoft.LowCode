@@ -517,7 +517,7 @@ public sealed class DrawingNodeEditor
         }
     }
 
-    private class Clipboard
+    public class Clipboard
     {
         public ISet<INode> SelectedNodes { get; set; }
         public ISet<IConnector> SelectedConnectors { get; set; }

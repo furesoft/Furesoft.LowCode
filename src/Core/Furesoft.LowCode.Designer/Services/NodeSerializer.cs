@@ -1,6 +1,9 @@
 using System.Reflection;
 using System.Text;
+using Avalonia.Controls;
+using Furesoft.LowCode.Designer.Core;
 using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Editor.MVVM;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -21,6 +24,7 @@ internal class NodeSerializer : INodeSerializer
             ContractResolver = new ListContractResolver(listType),
             NullValueHandling = NullValueHandling.Ignore
         };
+        _settings.Converters.Add(new ControlConverter());
     }
 
     public string Serialize<T>(T value)
@@ -30,7 +34,42 @@ internal class NodeSerializer : INodeSerializer
 
     public T Deserialize<T>(string text)
     {
-        return JsonConvert.DeserializeObject<T>(text, _settings);
+        var obj = JsonConvert.DeserializeObject<T>(text, _settings);
+
+        if (obj is CustomNodeViewModel node)
+        {
+            InitNodeView<T>(node);
+        }
+        
+        if (obj is DrawingNodeEditor.Clipboard clp)
+        {
+            foreach (var n in clp.SelectedNodes)
+            {
+                InitNodeView<T>((CustomNodeViewModel)n);
+            }
+        }
+
+        if (obj is DrawingNodeViewModel dvm)
+        {
+            foreach (var n in dvm.Nodes)
+            {
+                InitNodeView<T>((CustomNodeViewModel)n);
+            }
+        }
+
+        return obj;
+    }
+
+    private static void InitNodeView<T>(CustomNodeViewModel node)
+    {
+        double w = 60;
+        double h = 60;
+
+        var view = node.DefiningNode.GetNodeView(ref w, ref h);
+
+        view.DataContext = node.DefiningNode;
+
+        node.Content = view;
     }
 
     public T Load<T>(string path)
@@ -77,5 +116,20 @@ internal class NodeSerializer : INodeSerializer
         {
             return base.CreateProperties(type, memberSerialization).Where(p => p.Writable).ToList();
         }
+    }
+}
+
+internal class ControlConverter : JsonConverter<UserControl>
+{
+    public override void WriteJson(JsonWriter writer, UserControl value, JsonSerializer serializer)
+    {
+        writer.WriteNull();
+    }
+
+    public override UserControl ReadJson(JsonReader reader, Type objectType, UserControl existingValue,
+        bool hasExistingValue,
+        JsonSerializer serializer)
+    {
+        return (UserControl)Activator.CreateInstance(objectType);
     }
 }
