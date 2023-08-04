@@ -1,0 +1,1 @@
+https://github.com/elsa-workflows/elsa-core/blob/master/src/activities/Elsa.Activities.Rpa.Web/Activities/ClickElement.cs
