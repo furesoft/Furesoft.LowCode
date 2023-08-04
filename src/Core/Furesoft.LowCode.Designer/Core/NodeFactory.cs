@@ -27,6 +27,7 @@ public partial class NodeFactory : INodeFactory
         var nodeTypes =
             from folder in SearchPaths
             from assemblyFile in Directory.GetFiles(folder, "*.dll")
+            where !assemblyFile.Contains("Avalonia")
             let assembly = Assembly.LoadFrom(assemblyFile)
             from type in assembly.GetTypes()
             where IsVisualNode(type)
