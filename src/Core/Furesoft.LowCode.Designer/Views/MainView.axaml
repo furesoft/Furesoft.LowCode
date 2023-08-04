@@ -8,10 +8,9 @@
              xmlns:views="clr-namespace:Furesoft.LowCode.Designer.Views"
              mc:Ignorable="d" d:DesignWidth="1030" d:DesignHeight="740"
              x:Class="Furesoft.LowCode.Designer.Views.MainView"
-             x:CompileBindings="True" x:DataType="viewModels1:MainViewViewModel"
+             x:CompileBindings="False" x:DataType="viewModels1:MainViewViewModel"
              ClipToBounds="False"
-             ZoomControl="{Binding #EditorControl.ZoomControl}"
-             FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter">
+             FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter"><!--ZoomControl="{Binding #EditorControl.ZoomControl}"-->
   <Design.DataContext>
     <viewModels1:MainViewViewModel />
   </Design.DataContext>
@@ -19,101 +18,162 @@
   <UserControl.KeyBindings>
     <KeyBinding Gesture="F5" Command="{Binding EvaluateCommand}" />
   </UserControl.KeyBindings>
-  
+
   <DockPanel>
     <views:MenuView ZoomControl="{Binding #EditorControl.ZoomControl}"
                     DrawingNode="{Binding #EditorControl.DrawingNode}"
                     x:CompileBindings="False"
                     DockPanel.Dock="Top" />
-    <Grid ColumnDefinitions="200,8,*,8,300" RowDefinitions="*">
-      <Grid RowDefinitions="35,*" Grid.Column="0">
-        <TextBox Text="{ReflectionBinding SearchTerm, Mode=TwoWay}" Margin="5" />
+    <DockControl x:Name="Dock" Grid.Row="1" InitializeLayout="True" InitializeFactory="True">
+      <DockControl.Factory>
+        <Factory />
+      </DockControl.Factory>
 
-        <editor:Toolbox Grid.Row="1" Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
-      </Grid>
+      <RootDock x:Name="Root" Id="Root" IsCollapsable="False" DefaultDockable="{Binding #MainLayout}">
+        <ProportionalDock x:Name="MainLayout" Id="MainLayout" Orientation="Horizontal">
+          <ToolDock x:Name="LeftPane" Id="LeftPane" Proportion="0" Alignment="Left">
+            <Tool x:Name="ProjectView" Id="ProjectView" Title="Project Explorer" x:DataType="Tool">
+              <TextBlock Text="{Binding Title}" />
+            </Tool>
+            <Tool x:Name="ToolboxTool" Id="ToolboxView" Title="Toolbox" x:DataType="Tool">
+              <Grid RowDefinitions="35,*" DataContext="{Binding $parent[Window].DataContext}">
+                <TextBox Text="{ReflectionBinding SearchTerm, Mode=TwoWay}" Margin="5" />
 
-      <editor:Editor x:CompileBindings="False" Name="EditorControl" DataContext="{Binding Editor.Drawing}"
-                     Grid.Column="1" Grid.ColumnSpan="2">
-        <editor:Editor.KeyBindings>
-          <KeyBinding Command="{Binding NewCommand}"
-                      Gesture="{OnPlatform macOS=CMD+N, iOS=CMD+N, Default=Ctrl+N}" />
-          <KeyBinding Command="{Binding OpenCommand}"
-                      Gesture="{OnPlatform macOS=CMD+O, iOS=CMD+O, Default=Ctrl+O}" />
-          <KeyBinding Command="{Binding SaveCommand}"
-                      Gesture="{OnPlatform macOS=CMD+S, iOS=CMD+S, Default=Ctrl+S}" />
-          <KeyBinding Command="{Binding CopyNodesCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+C, iOS=CMD+C, Default=Ctrl+C}" />
-          <KeyBinding Command="{Binding PasteNodesCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+V, iOS=CMD+V, Default=Ctrl+V}" />
-          <KeyBinding Command="{Binding DuplicateNodesCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+D, iOS=CMD+D, Default=Ctrl+D}" />
-          <KeyBinding Command="{Binding DeleteNodesCommand, FallbackValue={x:Null}}"
-                      Gesture="Delete" />
-          <KeyBinding Command="{Binding SelectAllNodesCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+A, iOS=CMD+A, Default=Ctrl+A}" />
-          <KeyBinding Command="{Binding DeselectAllNodesCommand, FallbackValue={x:Null}}"
-                      Gesture="Escape" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+D0, iOS=CMD+D0, Default=Ctrl+D0}" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+NumPad0, iOS=CMD+NumPad0, Default=Ctrl+NumPad0}"
-                      x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
-                      Gesture="Z" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+D1, iOS=CMD+D1, Default=Ctrl+D1}" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+NumPad1, iOS=CMD+NumPad1, Default=Ctrl+NumPad1}"
-                      x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
-                      Gesture="X" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FitToFillCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+D2, iOS=CMD+D2, Default=Ctrl+D2}" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FitToFillCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+NumPad2, iOS=CMD+NumPad2, Default=Ctrl+NumPad2}"
-                      x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FillCanvasCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+D3, iOS=CMD+D3, Default=Ctrl+D3}" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.FillCanvasCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+NumPad3, iOS=CMD+NumPad3, Default=Ctrl+NumPad3}"
-                      x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
-                      Gesture="Add" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
-                      Gesture="OemPlus" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+NumPad0, iOS=CMD+Add, Default=Ctrl+Add}" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+OemPlus, iOS=CMD+OemPlus, Default=Ctrl+OemPlus}"
-                      x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
-                      Gesture="Subtract" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
-                      Gesture="OemMinus" x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+Subtract, iOS=CMD+Subtract, Default=Ctrl+Subtract}"
-                      x:CompileBindings="False" />
-          <KeyBinding Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
-                      Gesture="{OnPlatform macOS=CMD+OemMinus, iOS=CMD+OemMinus, Default=Ctrl+OemMinus}"
-                      x:CompileBindings="False" />
-        </editor:Editor.KeyBindings>
-      </editor:Editor>
+                <editor:Toolbox Grid.Row="1" Templates="{ReflectionBinding Templates, Mode=TwoWay}" Name="ToolboxView" />
+              </Grid>
+            </Tool>
+          </ToolDock>
 
-      <GridSplitter Grid.Column="1" Background="Transparent" />
-      <GridSplitter Grid.Column="3" Background="Transparent" />
+          <ProportionalDockSplitter x:Name="LeftSplitter" Id="LeftSplitter" />
+          <ProportionalDock x:Name="TopPane" Id="TopPane" Orientation="Vertical">
+            <ProportionalDock x:Name="RightPane" Id="RightPane" Orientation="Horizontal">
+              <DocumentDock x:Name="DocumentsPane" Id="DocumentsPane" CanCreateDocument="True">
+                <DocumentDock.DocumentTemplate>
+                  <DocumentTemplate>
+                    <editor:Editor x:CompileBindings="False" Name="EditorControl"
+                                   DataContext="{Binding $parent[Window].DataContext.Editor.Drawing}">
+                      <editor:Editor.KeyBindings>
+                        <KeyBinding Command="{Binding NewCommand}"
+                                    Gesture="{OnPlatform macOS=CMD+N, iOS=CMD+N, Default=Ctrl+N}" />
+                        <KeyBinding Command="{Binding OpenCommand}"
+                                    Gesture="{OnPlatform macOS=CMD+O, iOS=CMD+O, Default=Ctrl+O}" />
+                        <KeyBinding Command="{Binding SaveCommand}"
+                                    Gesture="{OnPlatform macOS=CMD+S, iOS=CMD+S, Default=Ctrl+S}" />
+                        <KeyBinding Command="{Binding CopyNodesCommand, FallbackValue={x:Null}}"
+                                    Gesture="{OnPlatform macOS=CMD+C, iOS=CMD+C, Default=Ctrl+C}" />
+                        <KeyBinding Command="{Binding PasteNodesCommand, FallbackValue={x:Null}}"
+                                    Gesture="{OnPlatform macOS=CMD+V, iOS=CMD+V, Default=Ctrl+V}" />
+                        <KeyBinding Command="{Binding DuplicateNodesCommand, FallbackValue={x:Null}}"
+                                    Gesture="{OnPlatform macOS=CMD+D, iOS=CMD+D, Default=Ctrl+D}" />
+                        <KeyBinding Command="{Binding DeleteNodesCommand, FallbackValue={x:Null}}"
+                                    Gesture="Delete" />
+                        <KeyBinding Command="{Binding SelectAllNodesCommand, FallbackValue={x:Null}}"
+                                    Gesture="{OnPlatform macOS=CMD+A, iOS=CMD+A, Default=Ctrl+A}" />
+                        <KeyBinding Command="{Binding DeselectAllNodesCommand, FallbackValue={x:Null}}"
+                                    Gesture="Escape" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+D0, iOS=CMD+D0, Default=Ctrl+D0}" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+NumPad0, iOS=CMD+NumPad0, Default=Ctrl+NumPad0}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
+                          Gesture="Z" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+D1, iOS=CMD+D1, Default=Ctrl+D1}" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+NumPad1, iOS=CMD+NumPad1, Default=Ctrl+NumPad1}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
+                          Gesture="X" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FitToFillCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+D2, iOS=CMD+D2, Default=Ctrl+D2}" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FitToFillCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+NumPad2, iOS=CMD+NumPad2, Default=Ctrl+NumPad2}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FillCanvasCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+D3, iOS=CMD+D3, Default=Ctrl+D3}" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.FillCanvasCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+NumPad3, iOS=CMD+NumPad3, Default=Ctrl+NumPad3}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+                          Gesture="Add" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+                          Gesture="OemPlus" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+NumPad0, iOS=CMD+Add, Default=Ctrl+Add}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+OemPlus, iOS=CMD+OemPlus, Default=Ctrl+OemPlus}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+                          Gesture="Subtract" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+                          Gesture="OemMinus" x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+Subtract, iOS=CMD+Subtract, Default=Ctrl+Subtract}"
+                          x:CompileBindings="False" />
+                        <KeyBinding
+                          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+                          Gesture="{OnPlatform macOS=CMD+OemMinus, iOS=CMD+OemMinus, Default=Ctrl+OemMinus}"
+                          x:CompileBindings="False" />
+                      </editor:Editor.KeyBindings>
+                    </editor:Editor>
+                  </DocumentTemplate>
+                </DocumentDock.DocumentTemplate>
+              </DocumentDock>
 
-      <Grid Grid.Column="4">
-        <ScrollViewer>
-          <StackPanel Margin="4">
-            <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
-            <Separator />
+              <ProportionalDockSplitter x:Name="RightSplitter" Id="RightSplitter" />
 
-            <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
-                             ShowStyle="Alphabetic" ShowTitle="False"
-                             SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
-          </StackPanel>
-        </ScrollViewer>
-      </Grid>
-    </Grid>
+              <ToolDock x:Name="PropertiesPane" Id="PropertiesPane" Proportion="0" Alignment="Right">
+                <Tool x:Name="Properties" Id="Properties" Title="Properties" x:DataType="Tool" DataContext="{Binding $parent[Window].DataContext}">
+                  <ScrollViewer>
+                    <StackPanel Margin="4" DataContext="{Binding $parent[Window].DataContext}">
+                      <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
+                      <Separator />
+
+                      <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
+                                       ShowStyle="Alphabetic" ShowTitle="False"
+                                       SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+                    </StackPanel>
+                  </ScrollViewer>
+                </Tool>
+              </ToolDock>
+
+            </ProportionalDock>
+
+            <ProportionalDockSplitter x:Name="BottomSplitter" Id="BottomSplitter" />
+
+            <ToolDock x:Name="BottomPane" Id="BottomPane" Proportion="0" Alignment="Bottom" ActiveDockable="Output">
+              <Tool x:Name="ErrorList" Id="ErrorList" Title="Error List" x:DataType="Tool">
+                <TextBlock Text="{Binding Title}" />
+              </Tool>
+              <Tool x:Name="Output" Id="Output" Title="Output" x:DataType="Tool">
+                <TextBlock Text="{Binding Title}" />
+              </Tool>
+            </ToolDock>
+
+          </ProportionalDock>
+
+        </ProportionalDock>
+      </RootDock>
+
+    </DockControl>
   </DockPanel>
 </UserControl>
