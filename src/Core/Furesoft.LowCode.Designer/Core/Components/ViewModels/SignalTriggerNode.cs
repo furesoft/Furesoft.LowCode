@@ -11,26 +11,14 @@ public class SignalTriggerNode : InputOutputNode
 {
     public SignalTriggerNode() : base("Trigger")
     {
-        /* VisualNode.Signals.Signals.CollectionChanged += (sender, args) =>
-         {
-             var argsNewItem = (SignalStorage.Signal)args.NewItems[0];
-             Signals.Add(argsNewItem);
-         };
-         
-         Signals = new(VisualNode.Signals.Signals);
-         
-         Signals.Add(new("OnEnter"));
-         Signals.Add(new("OnLeaver"));
-         Signals.Add(new("OnSomething"));
- 
-         Signals.SelectedValue = Signals.First();*/
+
     }
 
-    public SelectableList<SignalStorage.Signal> Signals { get; set; }
+    public string Signal { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        //await VisualNode.Signals.Trigger(Signals.SelectedValue.Name, token: cancellationToken);
+        await _evaluator.Signals.Trigger(Signal, token: cancellationToken);
 
         await ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }

@@ -20,7 +20,7 @@ public class Evaluator
 
     internal Debugger Debugger { get; }
 
-    public static SignalStorage Signals { get; set; } = new();
+    public SignalStorage Signals { get; set; } = new();
 
     public async Task Execute(CancellationToken cancellationToken)
     {
@@ -31,11 +31,25 @@ public class Evaluator
         entryNode.DefiningNode._evaluator = this;
         entryNode.DefiningNode._evaluator.Debugger.CurrentNode = entryNode.DefiningNode;
 
+        foreach (var signal in GetSignals())
+        {
+            signal.Drawing = _drawing;
+            signal._evaluator = this;
+            signal._evaluator.Debugger.CurrentNode = entryNode.DefiningNode;
+            Signals.Register(signal.Signal, signal);
+        }
+
         try
         {
             await entryNode.DefiningNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
+    }
+
+    public IReadOnlyList<SignalNode> GetSignals()
+    {
+        return _drawing.Nodes.OfType<CustomNodeViewModel>().Select(_ => _.DefiningNode)
+            .OfType<SignalNode>().ToList();
     }
 
     public T Evaluate<T>(string src)
