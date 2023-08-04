@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using Avalonia.Controls;
+using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Editor.MVVM;
@@ -79,7 +80,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             }
             catch (OutVariableException)
             {
-                
             }
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -98,8 +98,9 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         return GetConnectedNodes(pinMembername, PinMode.Input).First();
     }
 
-    private IEnumerable<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode)
+    private IReadOnlyList<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode)
     {
+        var result = new List<EmptyNode>();
         var pinName = GetPinName(pinMembername);
         var connections = GetConnections();
         var pinViewModel = GetPinViewModel(pinName, mode);
@@ -108,21 +109,24 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
         foreach (var pinConnection in pinConnections)
         {
-            InitNextNode(pinConnection, pinName, out var parent);
+            InitNextNode(pinConnection, pinName, out var parent, mode);
 
-            yield return parent;
+            result.Add(parent);
         }
-    }
 
-    private void InitNextNode(IConnector pinConnection, string pinName, out EmptyNode parentNode)
+        return result;
+    }
+    
+
+    private void InitNextNode(IConnector pinConnection, string pinName, out EmptyNode parentNode, PinMode mode)
     {
         CustomNodeViewModel parent;
 
-        if (pinConnection.Start.Name == pinName)
+        if (pinConnection.Start.Name == pinName && pinConnection.Start.Mode == mode)
         {
             parent = pinConnection.End.Parent as CustomNodeViewModel;
         }
-        else if (pinConnection.End.Name == pinName)
+        else if (pinConnection.End.Name == pinName && pinConnection.End.Mode == mode)
         {
             parent = pinConnection.Start.Parent as CustomNodeViewModel;
         }
@@ -187,7 +191,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         return Context.Eval(StripToJsString<T>(src)).As<T>();
     }
-    
+
     private string StripToJsString<T>(string src)
     {
         if (typeof(T) == typeof(string) && src.StartsWith('"') && src.EndsWith('"'))
@@ -204,7 +208,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         {
             return;
         }
-        
+
         Context.GetVariable(name).Assign(value);
     }
 
@@ -227,15 +231,15 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
         return sb.ToString();
     }
-    
+
     public Control GetNodeView(ref double width, ref double height)
     {
-        Control nodeView = null;
+        Control nodeView = new DefaultNodeView();
 
         var nodeViewAttribute = this.GetAttribute<NodeViewAttribute>();
         if (nodeViewAttribute != null)
         {
-            nodeView = (Control) Activator.CreateInstance(nodeViewAttribute.Type);
+            nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
 
             if (nodeView!.MinHeight > height)
             {
