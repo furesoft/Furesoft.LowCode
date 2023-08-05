@@ -3,18 +3,15 @@ using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
 
-public class GetAttributeNode : WebNode, IOutVariableProvider
+public class IsElementPresentNode : WebNode, IOutVariableProvider
 {
     [DataMember(EmitDefaultValue = false)]
     public string Selector { get; set; } = string.Empty;
-    
-    [DataMember(EmitDefaultValue = false)]
-    public string Attribute { get; set; } = string.Empty;
-    
+
     [DataMember(EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
-    public GetAttributeNode() : base("Get Attribute")
+    public IsElementPresentNode() : base("Is Element Present")
     {
     }
 
@@ -22,7 +19,8 @@ public class GetAttributeNode : WebNode, IOutVariableProvider
     {
         var page = GetPage();
 
-        var element = await page.QuerySelectorAsync(Selector);
-        SetOutVariable(OutVariable, await element.GetPropertyAsync(Attribute));
+        var element = await page.QuerySelectorAllAsync(Selector);
+
+        SetOutVariable(OutVariable, element.Any());
     }
 }
