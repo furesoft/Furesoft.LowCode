@@ -189,19 +189,9 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     protected T Evaluate<T>(string src)
     {
-        return Context.Eval(StripToJsString<T>(src)).As<T>();
+        return Context.Eval(src).As<T>();
     }
-
-    private string StripToJsString<T>(string src)
-    {
-        if (typeof(T) == typeof(string) && src.StartsWith('"') && src.EndsWith('"'))
-        {
-            return src;
-        }
-
-        return string.Format("{0}{1}{0}", '"', src.Replace(@"\", @"\\"));
-    }
-
+    
     protected void SetOutVariable(string name, object value)
     {
         if (string.IsNullOrEmpty(name))

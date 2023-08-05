@@ -17,6 +17,7 @@
 
   <StyleInclude Source="avares://Furesoft.LowCode.Designer/Styles/Nodes.axaml" />
   <StyleInclude Source="avares://Furesoft.LowCode.Designer/Styles/Icons.axaml" />
+  <StyleInclude Source="avares://Furesoft.LowCode.Designer/ConsoleControl.axaml" />
 
   <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
   <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />

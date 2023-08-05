@@ -6,6 +6,7 @@
              xmlns:pg="clr-namespace:Avalonia.PropertyGrid.Controls;assembly=Avalonia.PropertyGrid"
              xmlns:viewModels1="clr-namespace:Furesoft.LowCode.Designer.ViewModels"
              xmlns:views="clr-namespace:Furesoft.LowCode.Designer.Views"
+             xmlns:designer="clr-namespace:Furesoft.LowCode.Designer"
              mc:Ignorable="d" d:DesignWidth="1030" d:DesignHeight="740"
              x:Class="Furesoft.LowCode.Designer.Views.MainView"
              x:CompileBindings="True" x:DataType="viewModels1:MainViewViewModel"
@@ -111,6 +112,8 @@
             <pg:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
                              ShowStyle="Alphabetic" ShowTitle="False"
                              SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+            
+            <designer:ConsoleControl />
           </StackPanel>
         </ScrollViewer>
       </Grid>

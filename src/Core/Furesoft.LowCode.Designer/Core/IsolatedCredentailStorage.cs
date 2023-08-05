@@ -6,21 +6,22 @@ namespace Furesoft.LowCode.Designer.Core;
 public class IsolatedCredentailStorage : ICredentialStorage, IDisposable
 {
     private readonly IsolatedStorageFile _storage;
-    private readonly IsolatedStorageFileStream _file;
     private Dictionary<string, object> _data = new();
 
     public IsolatedCredentailStorage()
     {
         _storage = IsolatedStorageFile.GetMachineStoreForApplication();
         
-        _file = _storage.OpenFile("credentials.json", FileMode.OpenOrCreate);
+        var file = _storage.OpenFile("credentials.json", FileMode.OpenOrCreate);
+        _data = JsonConvert.DeserializeObject<Dictionary<string, object>>(new StreamReader(file).ReadToEnd());
+        file.Dispose();
     }
 
     public void Add(string key, object value)
     {
         var json = JsonConvert.SerializeObject(_data);
 
-        using var writer = new StreamWriter(_file);
+        using var writer = new StreamWriter(_storage.OpenFile("credentials.json", FileMode.Create));
         writer.Write(json);
     }
 
@@ -33,12 +34,16 @@ public class IsolatedCredentailStorage : ICredentialStorage, IDisposable
 
     public IEnumerable<string> GetKeys()
     {
-        return _data.Keys;
+        if (_data == null)
+        {
+            return Array.Empty<string>();
+        }
+        
+        return _data?.Keys;
     }
 
     public void Dispose()
     {
-        _file.Dispose();
         _storage?.Dispose();
     }
 }
