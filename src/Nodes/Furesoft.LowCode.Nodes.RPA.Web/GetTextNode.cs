@@ -19,4 +19,3 @@ public class GetTextNode : WebNode, IOutVariableProvider
         SetOutVariable(OutVariable, element.GetPropertyAsync("innerText"));
     }
 }
-
