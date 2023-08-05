@@ -1,4 +1,5 @@
 ﻿using Furesoft.LowCode.Designer.Core;
+using Furesoft.LowCode.Nodes.RPA.Web.Core;
 using NiL.JS.Extensions;
 using PuppeteerSharp;
 
@@ -35,7 +36,14 @@ public abstract class WebNode : InputOutputNode
             throw new InvalidNodeConnectionException("There is no Node connected that opens a web browser");
         }
 
-        return browserVariable.As<IBrowser>();
+        var browser =  browserVariable.As<IBrowser>();
+
+        if (browser.IsClosed || !browser.IsConnected)
+        {
+            throw new BrowserNotStartedException();
+        }
+
+        return browser;
     }
 
     public sealed override async Task Execute(CancellationToken cancellationToken)
