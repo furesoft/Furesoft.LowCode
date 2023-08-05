@@ -2,12 +2,13 @@
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
 
-public class GetTextNode : WebNode, IOutVariableProvider
+public class GetAttributeNode : WebNode, IOutVariableProvider
 {
     public string Selector { get; set; } = string.Empty;
+    public string Attribute { get; set; } = string.Empty;
     public string OutVariable { get; set; }
 
-    public GetTextNode() : base("Get Text")
+    public GetAttributeNode() : base("Get Attribute")
     {
     }
 
@@ -16,7 +17,6 @@ public class GetTextNode : WebNode, IOutVariableProvider
         var page = GetPage();
 
         var element = await page.QuerySelectorAsync(Selector);
-        SetOutVariable(OutVariable, element.GetPropertyAsync("innerText"));
+        SetOutVariable(OutVariable, element.GetPropertyAsync(Attribute));
     }
 }
-
