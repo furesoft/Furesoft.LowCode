@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using Avalonia;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.ViewModels;
@@ -79,6 +80,17 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
             cancellationToken.ThrowIfCancellationRequested();
         }
+    }
+
+    protected T GetPreviousNode<T>()
+        where T : EmptyNode
+    {
+        if (PreviousNode is T node)
+        {
+            return node;
+        }
+
+        return PreviousNode?.GetPreviousNode<T>();
     }
 
     protected T Evaluate<T>(string src)
