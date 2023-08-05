@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Designer.Core.Components.ViewModels;
+﻿using System.IO.IsolatedStorage;
+using Furesoft.LowCode.Designer.Core.Components.ViewModels;
 using Furesoft.LowCode.Designer.Core.Debugging;
 using Furesoft.LowCode.Editor.Model;
 using NiL.JS.Core;
@@ -16,11 +17,18 @@ public class Evaluator
         _drawing = drawing;
         Context = new();
         Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+
+        foreach (var credentialName in CredentialStorage.GetKeys())
+        {
+            Context.GlobalContext.DefineConstant(credentialName,  JSValue.Wrap(CredentialStorage.Get(credentialName)));
+        }
     }
 
     internal Debugger Debugger { get; }
 
-    public SignalStorage Signals { get; set; } = new();
+    public SignalStorage Signals { get; } = new();
+    public ICredentialStorage CredentialStorage { get; set; }
 
     public async Task Execute(CancellationToken cancellationToken)
     {
