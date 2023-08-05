@@ -25,6 +25,6 @@ public class OpenBrowserNode : WebNode
         var page = await browser.NewPageAsync();
         await page.GoToAsync(Evaluate<string>(URL));
         
-        DefineConstant(pageVariableName, page);
+        DefineConstant(PageVariableName, page);
     }
 }

@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.Nodes.RPA.Web;
 [NodeCategory("Automation/Web")]
 public abstract class WebNode : InputOutputNode
 {
-    protected string pageVariableName = "browserPage";
+    protected const string PageVariableName = "browserPage";
 
     protected WebNode(string label) : base(label)
     {
@@ -15,7 +15,7 @@ public abstract class WebNode : InputOutputNode
 
     protected Page GetPage()
     {
-        var pageVariable = Context.GetVariable(pageVariableName);
+        var pageVariable = Context.GetVariable(PageVariableName);
 
         if (pageVariable.IsUndefined())
         {
