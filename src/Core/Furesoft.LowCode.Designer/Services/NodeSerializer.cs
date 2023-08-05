@@ -65,7 +65,7 @@ internal class NodeSerializer : INodeSerializer
         double w = 60;
         double h = 60;
 
-        var view = node.DefiningNode.GetNodeView(ref w, ref h);
+        var view = node.DefiningNode.GetView(ref w, ref h);
 
         view.DataContext = node.DefiningNode;
 

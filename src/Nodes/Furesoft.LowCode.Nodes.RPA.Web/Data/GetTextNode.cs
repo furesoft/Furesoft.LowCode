@@ -1,17 +1,18 @@
 ﻿using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core;
+using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
-namespace Furesoft.LowCode.Nodes.RPA.Web;
+namespace Furesoft.LowCode.Nodes.RPA.Web.Data;
 
-public class IsElementPresentNode : WebNode, IOutVariableProvider
+public class GetTextNode : WebNode, IOutVariableProvider
 {
     [DataMember(EmitDefaultValue = false)]
     public string Selector { get; set; } = string.Empty;
-
+    
     [DataMember(EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
-    public IsElementPresentNode() : base("Is Element Present")
+    public GetTextNode() : base("Get Text")
     {
     }
 
@@ -19,8 +20,7 @@ public class IsElementPresentNode : WebNode, IOutVariableProvider
     {
         var page = GetPage();
 
-        var element = await page.QuerySelectorAllAsync(Selector);
-
-        SetOutVariable(OutVariable, element.Any());
+        var element = await page.QuerySelectorAsync(Selector);
+        SetOutVariable(OutVariable, element.GetPropertyAsync("innerText"));
     }
 }

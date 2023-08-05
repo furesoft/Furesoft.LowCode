@@ -1,8 +1,8 @@
-﻿using System.Net.Mime;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core.Components.Views;
+using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
-namespace Furesoft.LowCode.Nodes.RPA.Web;
+namespace Furesoft.LowCode.Nodes.RPA.Web.Interaction;
 
 [NodeView(typeof(IconNodeView),
     Parameter =

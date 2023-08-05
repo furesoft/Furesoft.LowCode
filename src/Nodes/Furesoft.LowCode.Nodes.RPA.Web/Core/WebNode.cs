@@ -1,9 +1,8 @@
 ﻿using Furesoft.LowCode.Designer.Core;
-using Furesoft.LowCode.Nodes.RPA.Web.Core;
 using NiL.JS.Extensions;
 using PuppeteerSharp;
 
-namespace Furesoft.LowCode.Nodes.RPA.Web;
+namespace Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 [NodeCategory("Automation/Web")]
 public abstract class WebNode : InputOutputNode

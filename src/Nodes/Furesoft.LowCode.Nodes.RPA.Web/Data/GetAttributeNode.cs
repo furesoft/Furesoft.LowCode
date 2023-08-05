@@ -1,7 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core;
+using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
-namespace Furesoft.LowCode.Nodes.RPA.Web;
+namespace Furesoft.LowCode.Nodes.RPA.Web.Data;
 
 public class GetAttributeNode : WebNode, IOutVariableProvider
 {

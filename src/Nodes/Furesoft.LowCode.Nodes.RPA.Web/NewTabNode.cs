@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
 
