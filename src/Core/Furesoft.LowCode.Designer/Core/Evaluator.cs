@@ -18,11 +18,6 @@ public class Evaluator
         Context = new();
         Debugger = new(Context);
         CredentialStorage = new IsolatedCredentailStorage();
-
-        foreach (var credentialName in CredentialStorage.GetKeys())
-        {
-            Context.GlobalContext.DefineConstant(credentialName,  JSValue.Wrap(CredentialStorage.Get(credentialName)));
-        }
     }
 
     internal Debugger Debugger { get; }
@@ -32,6 +27,8 @@ public class Evaluator
 
     public async Task Execute(CancellationToken cancellationToken)
     {
+        InitCredentils();
+        
         var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
             .First(node => node.DefiningNode.GetType() == typeof(EntryNode));
 
@@ -49,6 +46,14 @@ public class Evaluator
             await entryNode.DefiningNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
+    }
+
+    private void InitCredentils()
+    {
+        foreach (var credentialName in CredentialStorage.GetKeys())
+        {
+            Context.GlobalContext.DefineConstant(credentialName, JSValue.Wrap(CredentialStorage.Get(credentialName)));
+        }
     }
 
     private void InitNode(EmptyNode node)
