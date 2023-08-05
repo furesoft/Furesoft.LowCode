@@ -22,6 +22,7 @@ public class CatchNode : InputNode
     [Pin("Do", PinAlignment.Bottom)] public IOutputPin DoPin { get; set; }
 
     [Description("Give the error a name. If its not set the name will be 'error'")]
+    [DataMember(EmitDefaultValue = false)]
     public string ErrorName
     {
         get => _errorName;

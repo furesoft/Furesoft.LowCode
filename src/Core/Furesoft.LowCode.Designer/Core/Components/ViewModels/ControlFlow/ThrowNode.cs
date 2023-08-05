@@ -14,7 +14,9 @@ public class ThrowNode : InputNode
     {
     }
 
-    [Description("The error message")] public string Message { get; set; }
+    [Description("The error message")]
+    [DataMember(EmitDefaultValue = false)]
+    public string Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {

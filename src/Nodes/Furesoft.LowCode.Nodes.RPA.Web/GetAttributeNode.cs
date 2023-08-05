@@ -1,11 +1,17 @@
-﻿using Furesoft.LowCode.Designer.Core;
+﻿using System.Runtime.Serialization;
+using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
 
 public class GetAttributeNode : WebNode, IOutVariableProvider
 {
+    [DataMember(EmitDefaultValue = false)]
     public string Selector { get; set; } = string.Empty;
+    
+    [DataMember(EmitDefaultValue = false)]
     public string Attribute { get; set; } = string.Empty;
+    
+    [DataMember(EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
     public GetAttributeNode() : base("Get Attribute")

@@ -8,18 +8,14 @@ namespace Furesoft.LowCode.Nodes.Network;
 [NodeCategory("Network")]
 public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
 {
-    private string _url;
-
     public GetSiteContentNode() : base("Get Site Content")
     {
     }
 
-    public string URL
-    {
-        get => _url;
-        set => SetProperty(ref _url, value);
-    }
+    [DataMember(EmitDefaultValue = false)]
+    public string URL { get; set; }
 
+    [DataMember(EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

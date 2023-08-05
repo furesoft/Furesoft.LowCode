@@ -8,6 +8,7 @@ namespace Furesoft.LowCode.Nodes.RPA.Web;
 public abstract class WebNode : InputOutputNode
 {
     protected const string PageVariableName = "browserPage";
+    protected const string BrowserVariableName = "browser";
 
     protected WebNode(string label) : base(label)
     {
@@ -23,6 +24,18 @@ public abstract class WebNode : InputOutputNode
         }
 
         return pageVariable.As<Page>();
+    }
+    
+    protected IBrowser GetBrowser()
+    {
+        var browserVariable = Context.GetVariable(BrowserVariableName);
+
+        if (browserVariable.IsUndefined())
+        {
+            throw new InvalidNodeConnectionException("There is no Node connected that opens a web browser");
+        }
+
+        return browserVariable.As<IBrowser>();
     }
 
     public sealed override async Task Execute(CancellationToken cancellationToken)

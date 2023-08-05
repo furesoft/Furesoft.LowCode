@@ -12,6 +12,7 @@ public class SignalNode : OutputNode
 
     }
 
+    [DataMember(EmitDefaultValue = false)]
     public string Signal { get; set; }
 
 

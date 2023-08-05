@@ -1,7 +1,10 @@
-﻿namespace Furesoft.LowCode.Nodes.RPA.Web;
+﻿using System.Runtime.Serialization;
+
+namespace Furesoft.LowCode.Nodes.RPA.Web;
 
 public class ClickNode : WebNode
 {
+    [DataMember(EmitDefaultValue = false)]
     public string Selector { get; set; } = string.Empty;
 
     public ClickNode() : base("Click")

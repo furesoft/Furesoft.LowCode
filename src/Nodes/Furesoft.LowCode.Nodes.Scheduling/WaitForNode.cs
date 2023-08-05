@@ -19,6 +19,7 @@ public class WaitForNode : InputOutputNode
     [Pin("Do", PinAlignment.Right)] public IOutputPin DoNode { get; } = null;
 
     [Description("The time to wait in milliseconds")]
+    [DataMember(EmitDefaultValue = false)]
     public int WaitTime { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

@@ -14,6 +14,7 @@ public class RepeatNode : InputOutputNode
     {
     }
 
+    [DataMember(EmitDefaultValue = false)]
     public string Times { get; set; }
 
 

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
@@ -11,6 +12,7 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     {
     }
 
+    [DataMember(EmitDefaultValue = false)]
     public string URL { get; set; }
 
     [Pin("On Success", PinAlignment.Bottom)]

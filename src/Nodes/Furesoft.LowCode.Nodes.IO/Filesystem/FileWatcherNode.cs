@@ -8,8 +8,13 @@ public class FileWatcherNode : InputOutputNode
     {
     }
 
+    [DataMember(EmitDefaultValue = false)]
     public string Path { get; set; }
+    
+    [DataMember(EmitDefaultValue = false)]
     public string Filter { get; set; }
+    
+    [DataMember(EmitDefaultValue = false)]
     public bool IncludeSubDirectories { get; set; }
 
     [Pin("On Change", PinAlignment.Right)] public IOutputPin OnChangedPin { get; set; }

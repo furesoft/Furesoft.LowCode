@@ -14,6 +14,7 @@ public class CommentNode : EmptyNode
     {
     }
     
+    [DataMember(EmitDefaultValue = false)]
     public string Comment
     {
         get => _comment;

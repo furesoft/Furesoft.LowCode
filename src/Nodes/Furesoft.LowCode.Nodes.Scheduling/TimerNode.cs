@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core;
 using Timer = System.Timers.Timer;
 
@@ -15,6 +16,7 @@ public class TimerNode : InputOutputNode
     [Pin("Ellapsed", PinAlignment.Right)] 
     public IOutputPin EllapsedPin { get; set; }
 
+    [DataMember(EmitDefaultValue = false)]
     public double Interval { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

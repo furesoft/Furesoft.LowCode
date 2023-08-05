@@ -4,10 +4,12 @@
 [NodeCategory("IO/FileSystem")]
 public class CopyItemNode : InputOutputNode
 {
+    [DataMember(EmitDefaultValue = false)]
     [Description("The Path of the items to be copied")]
     public string SourcePath { get; set; }
     
     [Description("The Path to the to the destination of the items")]
+    [DataMember(EmitDefaultValue = false)]
     public string DestinationPath { get; set; }
     public CopyItemNode() : base("CopyItem")
     {

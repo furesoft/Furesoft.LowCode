@@ -13,6 +13,7 @@ public class SignalTriggerNode : InputOutputNode
 
     }
 
+    [DataMember(EmitDefaultValue = false)]
     public string Signal { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
