@@ -15,13 +15,20 @@ public abstract class WebNode : InputOutputNode
 
     protected Page GetPage()
     {
-        return Context.GetVariable(pageVariableName).As<Page>();
+        var pageVariable = Context.GetVariable(pageVariableName);
+
+        if (pageVariable.IsUndefined())
+        {
+            throw new InvalidNodeConnectionException("There is no Node connected that opens a web browser");
+        }
+
+        return pageVariable.As<Page>();
     }
 
     public sealed override async Task Execute(CancellationToken cancellationToken)
     {
         await Invoke(cancellationToken);
-        
+
         await ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
 
