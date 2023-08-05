@@ -27,15 +27,12 @@ public class Evaluator
         var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
             .First(node => node.DefiningNode.GetType() == typeof(EntryNode));
 
-        entryNode.DefiningNode.Drawing = _drawing;
-        entryNode.DefiningNode._evaluator = this;
-        entryNode.DefiningNode._evaluator.Debugger.CurrentNode = entryNode.DefiningNode;
+        InitNode(entryNode.DefiningNode);
 
         foreach (var signal in GetSignals())
         {
-            signal.Drawing = _drawing;
-            signal._evaluator = this;
-            signal._evaluator.Debugger.CurrentNode = entryNode.DefiningNode;
+            InitNode(signal);
+
             Signals.Register(signal.Signal, signal);
         }
 
@@ -44,6 +41,15 @@ public class Evaluator
             await entryNode.DefiningNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
+    }
+
+    private void InitNode(EmptyNode node)
+    {
+        node.Drawing = _drawing;
+        node._evaluator = this;
+        node._evaluator.Debugger.CurrentNode = node;
+
+        node.OnInit();
     }
 
     public IReadOnlyList<SignalNode> GetSignals()

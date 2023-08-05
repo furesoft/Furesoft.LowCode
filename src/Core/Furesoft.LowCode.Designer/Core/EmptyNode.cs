@@ -256,4 +256,9 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
         return nodeView;
     }
+
+    public virtual void OnInit()
+    {
+        
+    }
 }
