@@ -4,7 +4,6 @@ using Furesoft.LowCode.Designer.Core.Components.Views;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 
-[DataContract(IsReference = true)]
 [NodeView(typeof(CommentView))]
 [Description("A comment")]
 public class CommentNode : EmptyNode
@@ -14,8 +13,7 @@ public class CommentNode : EmptyNode
     public CommentNode() : base("Comment")
     {
     }
-
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    
     public string Comment
     {
         get => _comment;

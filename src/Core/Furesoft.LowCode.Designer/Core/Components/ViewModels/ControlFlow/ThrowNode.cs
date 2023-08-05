@@ -4,7 +4,6 @@ using Furesoft.LowCode.Designer.Core.Components.Views;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels.ControlFlow;
 
-[DataContract(IsReference = true)]
 [NodeCategory("Control Flow")]
 [Description("Throw an error and abort the execution")]
 [NodeView(typeof(IconNodeView),

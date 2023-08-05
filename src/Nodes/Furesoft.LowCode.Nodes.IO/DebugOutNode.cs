@@ -2,7 +2,6 @@
 
 namespace Furesoft.LowCode.Nodes.IO;
 
-[DataContract(IsReference = true)]
 [Description("Write a text to the debug log")]
 [NodeCategory("IO/Debug")]
 [NodeView(typeof(IconNodeView),

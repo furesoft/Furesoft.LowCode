@@ -1,6 +1,5 @@
 ﻿namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
-[DataContract(IsReference = true)]
 [Description("Read a file")]
 [NodeCategory("IO/FileSystem")]
 [NodeView(typeof(IconNodeView),

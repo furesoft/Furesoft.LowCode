@@ -5,7 +5,6 @@ using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels.ControlFlow;
 
-[DataContract(IsReference = true)]
 [NodeCategory("Control Flow")]
 [Description("Catches an error")]
 [NodeView(typeof(IconNodeView),

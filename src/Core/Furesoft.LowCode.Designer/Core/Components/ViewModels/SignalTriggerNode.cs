@@ -5,7 +5,6 @@ using Avalonia.PropertyGrid.Model.Collections;
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 
 [Description("Triggers the selected signal with the specified argument")]
-[DataContract(IsReference = true)]
 [NodeCategory]
 public class SignalTriggerNode : InputOutputNode
 {
