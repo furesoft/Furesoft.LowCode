@@ -1,5 +1,4 @@
-﻿using System.IO.IsolatedStorage;
-using Furesoft.LowCode.Designer.Core.Components.ViewModels;
+﻿using Furesoft.LowCode.Designer.Core.Components.ViewModels;
 using Furesoft.LowCode.Designer.Core.Debugging;
 using Furesoft.LowCode.Editor.Model;
 using NiL.JS.Core;

@@ -114,6 +114,7 @@
                              SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
             
             <designer:ConsoleControl />
+            <designer:DebugOutputControl />
           </StackPanel>
         </ScrollViewer>
       </Grid>
