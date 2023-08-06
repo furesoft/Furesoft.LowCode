@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;

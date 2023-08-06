@@ -31,6 +31,7 @@ public class DockFactory : Factory
         var document1 = new DocumentViewModel(_nodeFactory) {Id = "Document1", Title = "New Graph"};
         var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
+        var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
 
         var leftDock = new ProportionalDock
         {
@@ -63,6 +64,22 @@ public class DockFactory : Factory
                 }
             )
         };
+        
+        var bottomDock = new ProportionalDock
+        {
+            Proportion = 0.25,
+            Orientation = Orientation.Horizontal,
+            ActiveDockable = null,
+            VisibleDockables = CreateList<IDockable>
+            (
+                new ToolDock
+                {
+                    ActiveDockable = consoleTool,
+                    Alignment = Alignment.Bottom,
+                    GripMode = GripMode.Visible
+                }
+            )
+        };
 
         var documentDock = new GraphDocumentDock(_nodeFactory)
         {
@@ -81,7 +98,9 @@ public class DockFactory : Factory
                 new ProportionalDockSplitter(),
                 documentDock,
                 new ProportionalDockSplitter(),
-                rightDock
+                rightDock,
+                new ProportionalDockSplitter(),
+                bottomDock
             )
         };
         
@@ -103,6 +122,7 @@ public class DockFactory : Factory
         {
             ["Document1"] = () => new GraphDocument(),
             ["Properties"] = () => new PropertiesTool(),
+            ["Console"] = () => new ConsoleTool(),
             ["Toolbox"] = () => new ToolBoxTool(),
         };
 

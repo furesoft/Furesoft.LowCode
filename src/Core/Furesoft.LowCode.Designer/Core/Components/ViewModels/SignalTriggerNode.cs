@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using Avalonia.PropertyGrid.Model.Collections;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 

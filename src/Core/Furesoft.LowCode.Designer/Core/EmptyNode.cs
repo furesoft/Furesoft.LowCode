@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Avalonia;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.ViewModels;
-using Furesoft.LowCode.Editor.Model;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 

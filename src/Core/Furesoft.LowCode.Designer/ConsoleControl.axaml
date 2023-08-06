@@ -8,9 +8,9 @@
   <Style Selector="controls|ConsoleControl">
     <Setter Property="Template">
       <ControlTemplate>
-        <Grid ColumnDefinitions="*,Auto" RowDefinitions="125,35">
+        <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,35">
           <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2">
-            <ScrollViewer Name="PART_ScrollViewer" MaxHeight="125" Grid.ColumnSpan="2">
+            <ScrollViewer Name="PART_ScrollViewer" MaxHeight="125">
               <TextBlock MaxHeight="125" Name="PART_Output" TextWrapping="Wrap" />
             </ScrollViewer>
           </Border>

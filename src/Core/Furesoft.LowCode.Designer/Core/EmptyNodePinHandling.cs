@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 

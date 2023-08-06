@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
-using Furesoft.LowCode.Designer.Layout.Models;
 using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
