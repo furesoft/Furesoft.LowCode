@@ -59,6 +59,7 @@ public class ConsoleControl : TemplatedControl
             _mrs.Set();
             _inputBox.Text = "";
             _inputBox.IsEnabled = false;
+            _btn.IsEnabled = _inputBox.IsEnabled;
         }
 
         public override string ReadLine()
@@ -66,6 +67,7 @@ public class ConsoleControl : TemplatedControl
             Dispatcher.UIThread.Post(() =>
             {
                 _inputBox.IsEnabled = true;
+                _btn.IsEnabled = _inputBox.IsEnabled;
             });
             
             _mrs.WaitOne();
