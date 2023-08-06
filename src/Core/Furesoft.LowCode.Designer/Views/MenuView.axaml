@@ -42,6 +42,7 @@
       <MenuItem Header="Step" Command="{Binding StepCommand}" />
       <MenuItem Header="Continue" Command="{Binding ContinueCommand}" />
       <MenuItem Header="Cancel" Command="{Binding CancelCommand}" />
+      <MenuItem Header="Analyze" Command="{Binding AnalyzeCommand}" />
       <MenuItem Header="_File">
         <MenuItem Header="_New"
                   Command="{Binding NewCommand}"

@@ -27,10 +27,9 @@ public class Evaluator
     {
         InitCredentils();
         
-        var entryNode = _drawing.Nodes.OfType<CustomNodeViewModel>()
-            .First(node => node.DefiningNode.GetType() == typeof(EntryNode));
+        var entryNode = _drawing.GetNodes<EntryNode>().First().DefiningNode;
 
-        InitNode(entryNode.DefiningNode);
+        InitNode(entryNode);
 
         foreach (var signal in GetSignals())
         {
@@ -41,7 +40,7 @@ public class Evaluator
 
         try
         {
-            await entryNode.DefiningNode.Execute(cancellationToken);
+            await entryNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
     }
@@ -65,8 +64,10 @@ public class Evaluator
 
     public IReadOnlyList<SignalNode> GetSignals()
     {
-        return _drawing.Nodes.OfType<CustomNodeViewModel>().Select(_ => _.DefiningNode)
-            .OfType<SignalNode>().ToList();
+        return _drawing.GetNodes<SignalNode>()
+            .Select(node => node.DefiningNode)
+            .OfType<SignalNode>()
+            .ToList();
     }
 
     public T Evaluate<T>(string src)

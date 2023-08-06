@@ -114,6 +114,12 @@ public partial class MainViewViewModel : ViewModelBase
     {
         await Evaluator.Debugger.Continue();
     }
+    
+    [RelayCommand]
+    public void Analyze()
+    {
+       var messages = new GraphAnalyzer().Analyze(SelectedDocument.Editor.Drawing);
+    }
 
     [RelayCommand]
     private void Exit()

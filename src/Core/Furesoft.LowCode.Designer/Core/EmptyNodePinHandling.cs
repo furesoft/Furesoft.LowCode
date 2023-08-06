@@ -6,19 +6,25 @@ namespace Furesoft.LowCode.Designer.Core;
 
 public partial class EmptyNode
 {
-    protected IEnumerable<EmptyNode> GetInputs(IInputPin pin,
+    public IEnumerable<EmptyNode> GetInputs(IInputPin pin,
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input);
     }
+    
+    public IEnumerable<EmptyNode> GetOutputs(IOutputPin pin,
+        [CallerArgumentExpression("pin")] string pinMembername = null)
+    {
+        return GetConnectedNodes(pinMembername, PinMode.Output);
+    }
 
-    protected EmptyNode GetInput(IInputPin pin,
+    public EmptyNode GetInput(IInputPin pin,
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input)[0];
     }
 
-    private IReadOnlyList<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode)
+    public IReadOnlyList<EmptyNode> GetConnectedNodes(string pinMembername, PinMode mode)
     {
         var result = new List<EmptyNode>();
         var pinName = GetPinName(pinMembername);
@@ -86,6 +92,8 @@ public partial class EmptyNode
 
     private string GetPinName(string propertyName)
     {
+        propertyName = StripPinName(propertyName);
+        
         var propInfo = GetType().GetProperty(propertyName);
 
         var attr = propInfo.GetCustomAttribute<PinAttribute>();
@@ -96,5 +104,15 @@ public partial class EmptyNode
         }
 
         return attr.Name;
+    }
+
+    private string StripPinName(string propertyName)
+    {
+        if (!propertyName.Contains("."))
+        {
+            return propertyName;
+        }
+
+        return propertyName.Split(".")[^1];
     }
 }
