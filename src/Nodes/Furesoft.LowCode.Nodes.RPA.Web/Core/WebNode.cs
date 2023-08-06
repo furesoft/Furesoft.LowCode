@@ -20,7 +20,7 @@ public abstract class WebNode : InputOutputNode
 
         if (pageVariable.IsUndefined())
         {
-            throw new InvalidNodeConnectionException("There is no Node connected that opens a web browser");
+            throw CreateError("There is no Node connected that opens a web browser");
         }
 
         return pageVariable.As<Page>();

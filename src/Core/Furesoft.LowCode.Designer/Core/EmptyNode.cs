@@ -44,7 +44,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     /// </summary>
     [Browsable(false)]
     public EmptyNode PreviousNode { get; set; }
-    
+
     public abstract Task Execute(CancellationToken cancellationToken);
 
     protected async Task ContinueWith(IOutputPin pin, Context context = null,
@@ -80,6 +80,17 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         }
     }
 
+    protected Exception CreateError(string msg)
+    {
+        return new GraphException(new(msg), this);
+    }
+
+    protected Exception CreateError<TException>(string msg)
+        where TException : Exception
+    {
+        return new GraphException((Exception)Activator.CreateInstance(typeof(TException), msg), this);
+    }
+
     protected T GetPreviousNode<T>()
         where T : EmptyNode
     {
@@ -95,7 +106,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         return Context.Eval(src).As<T>();
     }
-    
+
     protected void SetOutVariable(string name, object value)
     {
         if (string.IsNullOrEmpty(name))
@@ -105,7 +116,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
         Context.GetVariable(name).Assign(value);
     }
-    
+
     protected void DeleteConstant(string name)
     {
         Context.GetVariable(name).Assign(JSValue.Undefined);
@@ -143,6 +154,5 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     public virtual void OnInit()
     {
-        
     }
 }

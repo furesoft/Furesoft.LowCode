@@ -59,7 +59,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
             }
             else
             {
-                throw new IOException("Resolved Symlink doesn't link to a Directory");
+                throw CreateError<IOException>("Resolved Symlink doesn't link to a Directory");
             }
         }
 

@@ -36,7 +36,7 @@ public class CreateNewItem : InputOutputNode
                     File.Create(Path.Combine(path, ItemName));
                     break;
                 default:
-                    throw new ArgumentException("Invalid item type");
+                    throw CreateError<ArgumentException>("Invalid item type");
             }
         }
 

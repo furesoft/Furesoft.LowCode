@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 
@@ -22,6 +23,6 @@ public class ErrorNode : InputNode
     {
         var msg = Evaluate<string>(Message);
 
-        throw new ApplicationException(msg);
+        throw CreateError(msg);
     }
 }
