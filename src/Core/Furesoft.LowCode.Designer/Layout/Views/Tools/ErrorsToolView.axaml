@@ -1,0 +1,28 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Furesoft.LowCode.Designer.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ErrorsToolView">
+  <Grid Focusable="True">
+    <Grid.Resources>
+      <StreamGeometry x:Key="Icon">M11 11H9V5H11M11 15H9V13H11M10 0A10 10 0 000 10 10 10 0 0010 20 10 10 0 0020 10 10 10 0 0010 0Z</StreamGeometry>
+    </Grid.Resources>
+
+    <ListBox ItemsSource="{Binding $parent[Window].DataContext.Errors, Mode=TwoWay}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <Viewbox Margin="2">
+              <Path Fill="{ReflectionBinding Severity, Converter={x:Static converters:MessageSeverityColorConverter.Instance}}"
+                    Data="{StaticResource Icon}" />
+            </Viewbox>
+
+            <TextBlock Margin="5,0" Text="{Binding Content}" VerticalAlignment="Center" FontSize="13" />
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </Grid>
+</UserControl>

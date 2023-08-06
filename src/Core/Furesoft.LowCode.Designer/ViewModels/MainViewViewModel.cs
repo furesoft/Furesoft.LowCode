@@ -6,6 +6,7 @@ using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
 using Dock.Model.Mvvm.Controls;
+using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
@@ -15,8 +16,12 @@ public partial class MainViewViewModel : ViewModelBase
 {
     private readonly IFactory _dockFactory;
 
+    private readonly GraphAnalyzer _graphAnalyzer = new();
+
     private CancellationTokenSource _cancellationTokenSource = new();
     private IRootDock _layout;
+
+    [ObservableProperty] private ObservableCollection<Message> _errors;
     [ObservableProperty] private DocumentViewModel _selectedDocument;
 
     [ObservableProperty] private EmptyNode _selectedNode;
@@ -82,7 +87,6 @@ public partial class MainViewViewModel : ViewModelBase
         _cancellationTokenSource = new();
     }
 
-
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
     {
         var selectedNodes = SelectedDocument.Editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
@@ -102,6 +106,7 @@ public partial class MainViewViewModel : ViewModelBase
     public async Task Evaluate()
     {
         Evaluator = new(SelectedDocument.Editor.Drawing);
+
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
 
@@ -130,7 +135,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public void Analyze()
     {
-        var messages = new GraphAnalyzer().Analyze(SelectedDocument.Editor.Drawing);
+        Errors = new(_graphAnalyzer.Analyze(SelectedDocument.Editor.Drawing));
     }
 
     [RelayCommand]
@@ -177,7 +182,7 @@ public partial class MainViewViewModel : ViewModelBase
     private void New()
     {
         var editor = SelectedDocument.Editor;
-        
+
         editor.Drawing = editor.Factory.CreateDrawing();
         editor.Drawing.SetSerializer(editor.Serializer);
         Evaluator = new(editor.Drawing);
