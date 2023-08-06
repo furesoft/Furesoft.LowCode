@@ -1,78 +1,68 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
-using Avalonia;
-using Avalonia.Controls;
+﻿using System.Windows.Input;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Furesoft.LowCode.Designer.Core;
-using Furesoft.LowCode.Designer.Core.Components.ViewModels;
-using Furesoft.LowCode.Designer.Services;
-using Furesoft.LowCode.Editor.Controls;
-using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Editor.MVVM;
+using Dock.Model.Controls;
+using Dock.Model.Core;
+using Dock.Model.Core.Events;
+using Furesoft.LowCode.Designer.Layout.Models;
+using Furesoft.LowCode.Designer.Layout.ViewModels;
+using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
 
 public partial class MainViewViewModel : ViewModelBase
 {
-    private readonly Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
+    private readonly IFactory _dockFactory;
 
     private CancellationTokenSource _cancellationTokenSource = new();
-    [ObservableProperty] private EditorViewModel _editor;
-    [ObservableProperty] private string _searchTerm = string.Empty;
+    private IRootDock _layout;
+    [ObservableProperty] private DocumentViewModel _selectedDocument;
+
     [ObservableProperty] private EmptyNode _selectedNode;
 
     public MainViewViewModel()
     {
-        _editor = new();
-
-        var dn = new DynamicNode("Dynamic");
-        dn.AddPin("Flow Input", PinAlignment.Top, PinMode.Input);
-
         var nodeFactory = new NodeFactory();
-        nodeFactory.AddDynamicNode(dn);
+        _dockFactory = new DockFactory(nodeFactory);
+        _dockFactory.FocusedDockableChanged += DockFactoryOnFocusedDockableChanged;
 
-        _editor.Serializer = new NodeSerializer(typeof(ObservableCollection<>));
-        _editor.Factory = nodeFactory;
-        _editor.Templates = _editor.Factory.CreateTemplates();
-        _editor.Drawing = _editor.Factory.CreateDrawing();
-        _editor.Drawing.SetSerializer(_editor.Serializer);
-        _editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+        Layout = _dockFactory?.CreateLayout();
+        if (Layout is not null)
+        {
+            _dockFactory?.InitLayout(Layout);
+            if (Layout is { } root)
+            {
+                root.Navigate.Execute("Home");
+            }
+        }
 
-        CategorizeTemplates(_editor.Templates);
-        TransformToTree();
-
-        PropertyChanged += OnPropertyChanged;
+        NewLayout = new RelayCommand(ResetLayout);
     }
 
     public Evaluator Evaluator { get; set; }
-    public ObservableCollection<object> Templates { get; set; } = new();
 
-    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+
+    public IRootDock Layout
     {
-        if (e.PropertyName == nameof(SearchTerm))
+        get => _layout;
+        set => SetProperty(ref _layout, value);
+    }
+
+    public ICommand NewLayout { get; }
+
+    private void DockFactoryOnFocusedDockableChanged(object sender, FocusedDockableChangedEventArgs e)
+    {
+        if (e.Dockable is DocumentViewModel document)
         {
-            Search(SearchTerm);
+            SelectedDocument = document;
+            SelectedNode = null;
+
+            //ToDo: Optimize
+            _selectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
         }
     }
 
-    private void CategorizeTemplates(IList<INodeTemplate> templates)
-    {
-        foreach (var nodeTemplate in templates.Select(_ => (_, (CustomNodeViewModel)_.Template)))
-        {
-            var category = nodeTemplate.Item2.DefiningNode.GetAttribute<NodeCategoryAttribute>()?.Category ?? "General";
-
-            if (!_categorizedNodeTemplates.ContainsKey(category))
-            {
-                _categorizedNodeTemplates.Add(category, new());
-            }
-
-            _categorizedNodeTemplates[category].Add(nodeTemplate._);
-        }
-    }
 
     [RelayCommand]
     public void Cancel()
@@ -81,106 +71,10 @@ public partial class MainViewViewModel : ViewModelBase
         _cancellationTokenSource = new();
     }
 
-    [RelayCommand]
-    public void Search(string term)
-    {
-        if (string.IsNullOrEmpty(term))
-        {
-            CollapseAll();
-            return;
-        }
-
-        Search(Templates);
-    }
-
-    private void CollapseAll()
-    {
-        foreach (var template in Templates)
-        {
-            switch (template)
-            {
-                case TreeViewItem tvi:
-                    tvi.IsExpanded = false;
-                    tvi.IsVisible = true;
-                    break;
-
-                case NodeTemplateViewModel vm:
-                    vm.IsVisible = true;
-                    break;
-            }
-        }
-    }
-
-    private void Search(IEnumerable<object> children)
-    {
-        foreach (var item in children)
-        {
-            switch (item)
-            {
-                case NodeTemplateViewModel vm:
-                    vm.IsVisible = string.IsNullOrEmpty(SearchTerm) ||
-                                   vm.Title.IndexOf(SearchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
-                    break;
-                case TreeViewItem tvi:
-                    Search(tvi.Items);
-
-                    tvi.IsVisible = tvi.Items.OfType<NodeTemplateViewModel>().Any(child => child.IsVisible);
-                    tvi.IsExpanded = tvi.IsVisible;
-                    break;
-            }
-        }
-    }
-
-    private void TransformToTree()
-    {
-        var treeCache = new Dictionary<string, TreeViewItem>();
-        var currentPathBuilder = new StringBuilder();
-
-        foreach (var nodeTemplate in _categorizedNodeTemplates)
-        {
-            var spl = nodeTemplate.Key.Split("/");
-            TreeViewItem parentItem = null;
-            currentPathBuilder.Clear();
-
-            for (var index = 0; index < spl.Length; index++)
-            {
-                var s = spl[index];
-                currentPathBuilder.Append(index == 0 ? "" : "/").Append(s);
-                var currentPath = currentPathBuilder.ToString();
-
-                if (!treeCache.TryGetValue(currentPath, out var treeViewItem))
-                {
-                    treeViewItem = new() {Header = s};
-                    if (index == 0)
-                    {
-                        Templates.Insert(0, treeViewItem);
-                    }
-                    else
-                    {
-                        treeCache[
-                                currentPathBuilder.Remove(currentPath.LastIndexOf('/'),
-                                    currentPath.Length - currentPath.LastIndexOf('/')).ToString()].Items
-                            .Insert(0, treeViewItem);
-                    }
-
-                    treeCache.Add(currentPath, treeViewItem);
-                }
-
-                parentItem = treeViewItem;
-            }
-
-            parentItem.Header = spl[^1];
-
-            foreach (var node in nodeTemplate.Value)
-            {
-                parentItem.Items.Add(node);
-            }
-        }
-    }
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
     {
-        var selectedNodes = _editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
+        var selectedNodes = _selectedDocument.Editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
 
         if (selectedNodes != null)
         {
@@ -194,24 +88,21 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public Task Evaluate()
+    public async Task Evaluate()
     {
-        Evaluator = new(_editor.Drawing);
-        
-        return Task.Run(async () =>
-        {
-            await Evaluator.Execute(_cancellationTokenSource.Token);
-        });
+        Evaluator = new(_selectedDocument.Editor.Drawing);
+        await Evaluator.Execute(_cancellationTokenSource.Token);
     }
 
     [RelayCommand]
     public async Task Debug()
     {
-        Evaluator = new(_editor.Drawing);
+        Evaluator = new(_selectedDocument.Editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
 
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
+
 
     [RelayCommand]
     public async Task Step()
@@ -234,22 +125,48 @@ public partial class MainViewViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private void About()
+
+    public void CloseLayout()
     {
-        // TODO: About dialog.
+        if (Layout is IDock dock)
+        {
+            if (dock.Close.CanExecute(null))
+            {
+                dock.Close.Execute(null);
+            }
+        }
     }
+
+    public void ResetLayout()
+    {
+        if (Layout is not null)
+        {
+            if (Layout.Close.CanExecute(null))
+            {
+                Layout.Close.Execute(null);
+            }
+        }
+
+        var layout = _dockFactory?.CreateLayout();
+        if (layout is not null)
+        {
+            Layout = layout;
+            _dockFactory?.InitLayout(layout);
+        }
+    }
+
 
     [RelayCommand]
     private void New()
     {
-        if (Editor?.Factory is not null)
+        if (_selectedDocument.Editor?.Factory is not null)
         {
-            Editor.Drawing = Editor.Factory.CreateDrawing();
-            Editor.Drawing.SetSerializer(Editor.Serializer);
-            Evaluator = new(_editor.Drawing);
+            _selectedDocument.Editor.Drawing = _selectedDocument.Editor.Factory.CreateDrawing();
+            _selectedDocument.Editor.Drawing.SetSerializer(_selectedDocument.Editor.Serializer);
+            Evaluator = new(_selectedDocument.Editor.Drawing);
         }
     }
+
 
     private List<FilePickerFileType> GetOpenFileTypes()
     {
@@ -274,10 +191,11 @@ public partial class MainViewViewModel : ViewModelBase
         };
     }
 
+
     [RelayCommand]
     private async Task Open()
     {
-        if (Editor?.Serializer is null)
+        if (_selectedDocument.Editor?.Serializer is null)
         {
             return;
         }
@@ -302,18 +220,16 @@ public partial class MainViewViewModel : ViewModelBase
                 await using var stream = await file.OpenReadAsync();
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
-                var drawing = Editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
+                var drawing = _selectedDocument.Editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
                 if (drawing is not null)
                 {
-                    Editor.Drawing = drawing;
-                    Editor.Drawing.SetSerializer(Editor.Serializer);
-                    Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+                    _selectedDocument.Editor.Drawing = drawing;
+                    _selectedDocument.Editor.Drawing.SetSerializer(_selectedDocument.Editor.Serializer);
+                    _selectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
                 }
             }
             catch (Exception)
             {
-                //Debug.WriteLine(ex.Message);
-                //Debug.WriteLine(ex.StackTrace);
             }
         }
     }
@@ -321,7 +237,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        if (Editor?.Serializer is null)
+        if (_selectedDocument.Editor?.Serializer is null)
         {
             return;
         }
@@ -336,7 +252,7 @@ public partial class MainViewViewModel : ViewModelBase
         {
             Title = "Save drawing",
             FileTypeChoices = GetSaveFileTypes(),
-            SuggestedFileName = Path.GetFileNameWithoutExtension("drawing"),
+            SuggestedFileName = Path.GetFileNameWithoutExtension("graph"),
             DefaultExtension = "json",
             ShowOverwritePrompt = true
         });
@@ -345,7 +261,7 @@ public partial class MainViewViewModel : ViewModelBase
         {
             try
             {
-                var json = Editor.Serializer.Serialize(Editor.Drawing);
+                var json = _selectedDocument.Editor.Serializer.Serialize(_selectedDocument.Editor.Drawing);
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream);
                 await writer.WriteAsync(json);
@@ -354,100 +270,6 @@ public partial class MainViewViewModel : ViewModelBase
             {
                 //Debug.WriteLine(ex.Message);
                 //Debug.WriteLine(ex.StackTrace);
-            }
-        }
-    }
-
-    [RelayCommand]
-    public async Task Export()
-    {
-        if (Editor?.Drawing is null)
-        {
-            return;
-        }
-
-        var storageProvider = StorageService.GetStorageProvider();
-        if (storageProvider is null)
-        {
-            return;
-        }
-
-        var file = await storageProvider.SaveFilePickerAsync(new()
-        {
-            Title = "Export drawing",
-            FileTypeChoices = GetExportFileTypes(),
-            SuggestedFileName = Path.GetFileNameWithoutExtension("drawing"),
-            DefaultExtension = "png",
-            ShowOverwritePrompt = true
-        });
-
-        if (file is not null)
-        {
-            try
-            {
-                var control = new DrawingNode {DataContext = Editor.Drawing};
-
-                var root = new ExportRoot
-                {
-                    Width = Editor.Drawing.Width, Height = Editor.Drawing.Height, Child = control
-                };
-
-                root.ApplyTemplate();
-                root.InvalidateMeasure();
-                root.InvalidateArrange();
-                root.UpdateLayout();
-
-                var size = new Size(Editor.Drawing.Width, Editor.Drawing.Height);
-
-                if (file.Name.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                {
-                    using var ms = new MemoryStream();
-                    ExportRenderer.RenderPng(root, size, ms);
-                    await using var stream = await file.OpenWriteAsync();
-                    ms.Position = 0;
-                    await stream.WriteAsync(ms.ToArray());
-                }
-
-                if (file.Name.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
-                {
-                    using var ms = new MemoryStream();
-                    ExportRenderer.RenderSvg(root, size, ms);
-                    await using var stream = await file.OpenWriteAsync();
-                    ms.Position = 0;
-                    await stream.WriteAsync(ms.ToArray());
-                }
-
-                if (file.Name.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
-                {
-                    using var ms = new MemoryStream();
-                    ExportRenderer.RenderPdf(root, size, ms, 96);
-                    await using var stream = await file.OpenWriteAsync();
-                    ms.Position = 0;
-                    await stream.WriteAsync(ms.ToArray());
-                }
-
-                if (file.Name.EndsWith("xps", StringComparison.OrdinalIgnoreCase))
-                {
-                    using var ms = new MemoryStream();
-                    ExportRenderer.RenderXps(control, size, ms, 96);
-                    await using var stream = await file.OpenWriteAsync();
-                    ms.Position = 0;
-                    await stream.WriteAsync(ms.ToArray());
-                }
-
-                if (file.Name.EndsWith("skp", StringComparison.OrdinalIgnoreCase))
-                {
-                    using var ms = new MemoryStream();
-                    ExportRenderer.RenderSkp(control, size, ms);
-                    await using var stream = await file.OpenWriteAsync();
-                    ms.Position = 0;
-                    await stream.WriteAsync(ms.ToArray());
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
             }
         }
     }

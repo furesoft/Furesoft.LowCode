@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ToolboxToolView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Furesoft.LowCode.Editor.Controls;assembly=Furesoft.LowCode.Editor"
+             xmlns:tools="clr-namespace:Furesoft.LowCode.Designer.Layout.ViewModels.Tools"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400"
+             x:DataType="tools:ToolboxToolViewModel" x:CompileBindings="True">
+  <Grid Focusable="True">
+    <Grid RowDefinitions="35,*">
+      <TextBox Text="{Binding SearchTerm, Mode=TwoWay}" Margin="5" />
+
+      <controls:Toolbox Grid.Row="1" Templates="{Binding Templates, Mode=TwoWay}" Name="ToolboxView" />
+    </Grid>
+  </Grid>
+</UserControl>

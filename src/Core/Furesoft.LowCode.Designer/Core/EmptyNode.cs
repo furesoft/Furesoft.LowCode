@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Designer.ViewModels;
-using Furesoft.LowCode.Editor.MVVM;
+using Furesoft.LowCode.Editor.Model;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 

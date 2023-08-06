@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Designer.ViewModels;

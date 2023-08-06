@@ -1,8 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using Furesoft.LowCode.Designer.Core.Components.ViewModels;
-using Furesoft.LowCode.Editor;
+﻿using Furesoft.LowCode.Editor;
 using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 

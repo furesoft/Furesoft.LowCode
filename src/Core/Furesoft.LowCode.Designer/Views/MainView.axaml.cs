@@ -1,6 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Furesoft.LowCode.Editor.Controls;
+﻿using Avalonia.Controls;
 
 namespace Furesoft.LowCode.Designer.Views;
 
@@ -12,6 +10,8 @@ public partial class MainView : UserControl
     public MainView()
     {
         InitializeComponent();
+        
+        
     }
 
     public NodeZoomBorder ZoomControl

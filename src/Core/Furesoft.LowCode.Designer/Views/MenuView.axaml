@@ -8,7 +8,7 @@
              Name="MenuUserControl"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"
              x:Class="Furesoft.LowCode.Designer.Views.MenuView"
-             x:CompileBindings="True" x:DataType="viewModels1:MainViewViewModel">
+             x:CompileBindings="False" x:DataType="viewModels1:MainViewViewModel">
 
   <Design.DataContext>
     <viewModels1:MainViewViewModel />
@@ -26,7 +26,7 @@
             DockPanel.Dock="Right">
       <Button.Flyout>
         <Flyout ShowMode="TransientWithDismissOnPointerMoveAway" Placement="BottomEdgeAlignedRight">
-          <editor:DrawingNodeProperties DataContext="{Binding Editor.Drawing, FallbackValue={x:Null}}" />
+          <editor:DrawingNodeProperties DataContext="{Binding SelectedDocument.Editor.Drawing, FallbackValue={x:Null}}" />
         </Flyout>
       </Button.Flyout>
       <PathIcon Width="16" Height="16"

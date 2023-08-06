@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.PropertiesToolView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Avalonia.PropertyGrid.Controls;assembly=Avalonia.PropertyGrid"
+             xmlns:tools="clr-namespace:Furesoft.LowCode.Designer.Layout.ViewModels.Tools"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400"
+             x:DataType="tools:PropertiesToolViewModel" x:CompileBindings="False">
+  <Grid Focusable="True">
+    <ScrollViewer>
+      <StackPanel Margin="4" DataContext="{Binding $parent[Window].DataContext}">
+        <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
+        <Separator />
+
+        <controls:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
+                         ShowStyle="Alphabetic" ShowTitle="False"
+                         SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

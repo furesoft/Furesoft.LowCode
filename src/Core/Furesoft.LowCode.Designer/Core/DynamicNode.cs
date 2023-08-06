@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Avalonia.Controls;
-using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 

@@ -3,7 +3,6 @@ using System.Reflection;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 
@@ -27,6 +26,7 @@ public partial class NodeFactory : INodeFactory
         var nodeTypes =
             from folder in SearchPaths
             from assemblyFile in Directory.GetFiles(folder, "*.dll")
+            where !assemblyFile.Contains("Avalonia")
             let assembly = Assembly.LoadFrom(assemblyFile)
             from type in assembly.GetTypes()
             where IsVisualNode(type)
