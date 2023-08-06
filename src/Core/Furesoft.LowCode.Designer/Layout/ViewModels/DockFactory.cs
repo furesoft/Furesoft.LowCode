@@ -32,6 +32,7 @@ public class DockFactory : Factory
         var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
+        var debugOutputTool = new DebugOutputToolViewModel() {Id = "DebugOutput", Title = "Debug Output"};
 
         var leftDock = new ProportionalDock
         {
@@ -75,6 +76,12 @@ public class DockFactory : Factory
                 new ToolDock
                 {
                     ActiveDockable = consoleTool,
+                    Alignment = Alignment.Bottom,
+                    GripMode = GripMode.Visible
+                },
+                new ToolDock
+                {
+                    ActiveDockable = debugOutputTool,
                     Alignment = Alignment.Bottom,
                     GripMode = GripMode.Visible
                 }
@@ -123,6 +130,7 @@ public class DockFactory : Factory
             ["Document1"] = () => new GraphDocument(),
             ["Properties"] = () => new PropertiesTool(),
             ["Console"] = () => new ConsoleTool(),
+            ["DebugOutput"] = () => new DebugOutputTool(),
             ["Toolbox"] = () => new ToolBoxTool(),
         };
 
