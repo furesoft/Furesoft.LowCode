@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="Furesoft.LowCode.Designer.Layout.Views.Documents.DocumentView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Furesoft.LowCode.Editor.Controls;assembly=Furesoft.LowCode.Editor"
+             xmlns:documents="clr-namespace:Furesoft.LowCode.Designer.Layout.ViewModels.Documents"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400"
+             x:DataType="documents:DocumentViewModel" x:CompileBindings="True">
+  <Grid Focusable="True">
+    <controls:Editor x:CompileBindings="False" Name="EditorControl"
+                     DataContext="{Binding Editor.Drawing}">
+      <controls:Editor.KeyBindings>
+        <KeyBinding Command="{Binding NewCommand}"
+                    Gesture="{OnPlatform macOS=CMD+N, iOS=CMD+N, Default=Ctrl+N}" />
+        <KeyBinding Command="{Binding OpenCommand}"
+                    Gesture="{OnPlatform macOS=CMD+O, iOS=CMD+O, Default=Ctrl+O}" />
+        <KeyBinding Command="{Binding SaveCommand}"
+                    Gesture="{OnPlatform macOS=CMD+S, iOS=CMD+S, Default=Ctrl+S}" />
+        <KeyBinding Command="{Binding CopyNodesCommand, FallbackValue={x:Null}}"
+                    Gesture="{OnPlatform macOS=CMD+C, iOS=CMD+C, Default=Ctrl+C}" />
+        <KeyBinding Command="{Binding PasteNodesCommand, FallbackValue={x:Null}}"
+                    Gesture="{OnPlatform macOS=CMD+V, iOS=CMD+V, Default=Ctrl+V}" />
+        <KeyBinding Command="{Binding DuplicateNodesCommand, FallbackValue={x:Null}}"
+                    Gesture="{OnPlatform macOS=CMD+D, iOS=CMD+D, Default=Ctrl+D}" />
+        <KeyBinding Command="{Binding DeleteNodesCommand, FallbackValue={x:Null}}"
+                    Gesture="Delete" />
+        <KeyBinding Command="{Binding SelectAllNodesCommand, FallbackValue={x:Null}}"
+                    Gesture="{OnPlatform macOS=CMD+A, iOS=CMD+A, Default=Ctrl+A}" />
+        <KeyBinding Command="{Binding DeselectAllNodesCommand, FallbackValue={x:Null}}"
+                    Gesture="Escape" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+D0, iOS=CMD+D0, Default=Ctrl+D0}" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+NumPad0, iOS=CMD+NumPad0, Default=Ctrl+NumPad0}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ResetZoomCommand, FallbackValue={x:Null}}"
+          Gesture="Z" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+D1, iOS=CMD+D1, Default=Ctrl+D1}" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+NumPad1, iOS=CMD+NumPad1, Default=Ctrl+NumPad1}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FitCanvasCommand, FallbackValue={x:Null}}"
+          Gesture="X" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FitToFillCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+D2, iOS=CMD+D2, Default=Ctrl+D2}" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FitToFillCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+NumPad2, iOS=CMD+NumPad2, Default=Ctrl+NumPad2}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FillCanvasCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+D3, iOS=CMD+D3, Default=Ctrl+D3}" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.FillCanvasCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+NumPad3, iOS=CMD+NumPad3, Default=Ctrl+NumPad3}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+          Gesture="Add" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+          Gesture="OemPlus" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+NumPad0, iOS=CMD+Add, Default=Ctrl+Add}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomInCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+OemPlus, iOS=CMD+OemPlus, Default=Ctrl+OemPlus}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+          Gesture="Subtract" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+          Gesture="OemMinus" x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+Subtract, iOS=CMD+Subtract, Default=Ctrl+Subtract}"
+          x:CompileBindings="False" />
+        <KeyBinding
+          Command="{Binding #EditorControl.ZoomControl.ZoomOutCommand, FallbackValue={x:Null}}"
+          Gesture="{OnPlatform macOS=CMD+OemMinus, iOS=CMD+OemMinus, Default=Ctrl+OemMinus}"
+          x:CompileBindings="False" />
+      </controls:Editor.KeyBindings>
+    </controls:Editor>
+  </Grid>
+</UserControl>

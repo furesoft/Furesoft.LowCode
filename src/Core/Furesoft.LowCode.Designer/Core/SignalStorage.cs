@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Avalonia.PropertyGrid.Model.Extensions;
+﻿using Avalonia.PropertyGrid.Model.Extensions;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.Core;

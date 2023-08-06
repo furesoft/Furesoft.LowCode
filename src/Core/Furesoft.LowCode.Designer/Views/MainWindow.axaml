@@ -14,7 +14,7 @@
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="False"
         ExtendClientAreaChromeHints="PreferSystemChrome"
-        x:CompileBindings="True" x:DataType="viewModels:MainViewViewModel">
+        x:CompileBindings="False" x:DataType="viewModels:MainViewViewModel">
 
   <Design.DataContext>
     <viewModels:MainViewViewModel />

@@ -1,6 +1,4 @@
-﻿using Furesoft.LowCode.Editor.MVVM;
-
-namespace Furesoft.LowCode.Designer.Core;
+﻿namespace Furesoft.LowCode.Designer.Core;
 
 public class CustomNodeViewModel : NodeViewModel
 {

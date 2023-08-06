@@ -3,7 +3,6 @@ using System.Reflection;
 using Avalonia.Controls;
 using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Editor.MVVM;
 
 namespace Furesoft.LowCode.Designer.Core;
 

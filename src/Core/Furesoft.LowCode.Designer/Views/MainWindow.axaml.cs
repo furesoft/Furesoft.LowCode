@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls;
 
 namespace Furesoft.LowCode.Designer.Views;
