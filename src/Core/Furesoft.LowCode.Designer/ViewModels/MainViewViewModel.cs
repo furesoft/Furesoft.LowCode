@@ -88,7 +88,7 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public async Task Evaluate()
+    public Task Evaluate()
     {
         Evaluator = new(_selectedDocument.Editor.Drawing);
         await Evaluator.Execute(_cancellationTokenSource.Token);

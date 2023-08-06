@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Network.REST\Furesoft.LowCode.Nodes.Network.REST.csproj" />
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Network\Furesoft.LowCode.Nodes.Network.csproj" />
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.RPA.Web\Furesoft.LowCode.Nodes.RPA.Web.csproj" />
+    <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Scheduling\Furesoft.LowCode.Nodes.Scheduling.csproj" />
     <ProjectReference Include="..\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
   </ItemGroup>
 

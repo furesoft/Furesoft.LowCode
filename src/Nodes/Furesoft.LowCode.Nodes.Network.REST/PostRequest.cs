@@ -1,10 +1,14 @@
-﻿using Furesoft.LowCode.Designer.Core;
+﻿using System.Runtime.Serialization;
+using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
 public class PostRequest : RestBaseNode, IOutVariableProvider
 {
+    [DataMember(EmitDefaultValue = false)]
     public string Content { get; set; }
+    
+    [DataMember(EmitDefaultValue = false)]
     public string OutVariable { get; set; }
     public PostRequest() : base("POST")
     {

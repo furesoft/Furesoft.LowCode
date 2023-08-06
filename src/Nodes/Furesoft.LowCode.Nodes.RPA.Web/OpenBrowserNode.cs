@@ -1,11 +1,15 @@
-﻿using PuppeteerSharp;
+﻿using System.Runtime.Serialization;
+using Furesoft.LowCode.Nodes.RPA.Web.Core;
+using PuppeteerSharp;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
 
 public class OpenBrowserNode : WebNode
 {
+    [DataMember(EmitDefaultValue = false)]
     public string URL { get; set; }
 
+    [DataMember(EmitDefaultValue = false)]
     public bool UseHeadless { get; set; }
     
     public OpenBrowserNode() : base("Open Browser")
@@ -17,14 +21,16 @@ public class OpenBrowserNode : WebNode
     {
         using var browserFetcher = new BrowserFetcher();
         await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        
         var browser = await Puppeteer.LaunchAsync(new LaunchOptions
         {
             Headless = UseHeadless
         });
         
-        var page = await browser.NewPageAsync();
+        var page = (await browser.PagesAsync())[0];
         await page.GoToAsync(Evaluate<string>(URL));
         
-        DefineConstant(pageVariableName, page);
+        DefineConstant(PageVariableName, page);
+        DefineConstant(BrowserVariableName, page);
     }
 }

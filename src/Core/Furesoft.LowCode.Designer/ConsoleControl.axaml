@@ -1,0 +1,24 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Furesoft.LowCode.Designer">
+  <Design.PreviewWith>
+    <controls:ConsoleControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|ConsoleControl">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="*,Auto" RowDefinitions="125,35">
+          <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2">
+            <ScrollViewer Name="PART_ScrollViewer" MaxHeight="125" Grid.ColumnSpan="2">
+              <TextBlock MaxHeight="125" Name="PART_Output" TextWrapping="Wrap" />
+            </ScrollViewer>
+          </Border>
+
+          <TextBox Grid.Row="1" Name="PART_Input" Margin="5" IsEnabled="False" />
+          <Button Grid.Row="1" Grid.Column="1" Name="PART_Submit" Content=">" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

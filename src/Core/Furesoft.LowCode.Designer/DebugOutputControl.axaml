@@ -1,0 +1,17 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Furesoft.LowCode.Designer">
+  <Design.PreviewWith>
+    <controls:DebugOutputControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|DebugOutputControl">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ScrollViewer Name="PART_ScrollViewer" MaxHeight="125">
+          <TextBlock MaxHeight="125" Text="{TemplateBinding OutputText, Mode=TwoWay}" TextWrapping="Wrap" />
+        </ScrollViewer>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

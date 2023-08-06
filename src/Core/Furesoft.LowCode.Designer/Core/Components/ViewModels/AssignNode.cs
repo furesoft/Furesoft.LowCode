@@ -5,7 +5,6 @@ using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.Core.Components.ViewModels;
 
-[DataContract(IsReference = true)]
 [NodeCategory("Data")]
 [NodeView(typeof(AssignNodeView))]
 [Description("Save a value for later usage")]

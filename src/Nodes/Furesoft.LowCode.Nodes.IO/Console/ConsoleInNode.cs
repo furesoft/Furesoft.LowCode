@@ -1,6 +1,5 @@
 ﻿namespace Furesoft.LowCode.Nodes.IO.Console;
 
-[DataContract(IsReference = true)]
 [Description("Read a value from the console")]
 [NodeCategory("IO/Console")]
 [NodeView(typeof(IconNodeView),

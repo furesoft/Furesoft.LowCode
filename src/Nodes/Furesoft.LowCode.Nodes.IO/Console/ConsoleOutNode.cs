@@ -1,6 +1,5 @@
 ﻿namespace Furesoft.LowCode.Nodes.IO.Console;
 
-[DataContract(IsReference = true)]
 [Description("Write a text to the console")]
 [NodeCategory("IO/Console")]
 [NodeView(typeof(IconNodeView),
