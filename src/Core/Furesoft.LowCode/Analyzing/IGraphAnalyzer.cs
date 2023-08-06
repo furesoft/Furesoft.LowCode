@@ -2,6 +2,7 @@
 
 public interface IGraphAnalyzer
 {
-    public IList<Message> Messages { get; }
+    IList<Message> Messages { get; }
+    public AnalyzerContext AnalyzerContext { get; set; }
     void Analyze(object node);
 }

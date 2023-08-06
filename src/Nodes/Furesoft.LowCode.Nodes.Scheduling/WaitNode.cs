@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Designer.Core;
-using Furesoft.LowCode.Designer.Core.Components.Views;
+using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;
 

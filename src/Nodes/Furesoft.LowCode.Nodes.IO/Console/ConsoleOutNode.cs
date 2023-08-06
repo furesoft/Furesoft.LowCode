@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.Nodes.IO.Console;
+﻿using Furesoft.LowCode.NodeViews;
+
+namespace Furesoft.LowCode.Nodes.IO.Console;
 
 [Description("Write a text to the console")]
 [NodeCategory("IO/Console")]

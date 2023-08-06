@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Designer.Core;
 using Timer = System.Timers.Timer;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;

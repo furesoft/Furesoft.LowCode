@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nodes", "Nodes", "{2C2DF358
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode", "src\Core\Furesoft.LowCode\Furesoft.LowCode.csproj", "{257807C6-D407-4FF6-AF38-EE3BE668A65B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Designer", "src\Core\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj", "{68696D41-A95E-48D4-BC04-0C24FDA3B4EC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Desktop", "src\Core\Furesoft.LowCode.Desktop\Furesoft.LowCode.Desktop.csproj", "{38A66893-E823-469E-B187-C8DD848A0DA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Editor", "src\Core\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj", "{0571D077-3A1A-4E2F-A735-24BE54A20911}"
@@ -37,10 +35,6 @@ Global
 		{257807C6-D407-4FF6-AF38-EE3BE668A65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{257807C6-D407-4FF6-AF38-EE3BE668A65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{257807C6-D407-4FF6-AF38-EE3BE668A65B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68696D41-A95E-48D4-BC04-0C24FDA3B4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68696D41-A95E-48D4-BC04-0C24FDA3B4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68696D41-A95E-48D4-BC04-0C24FDA3B4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68696D41-A95E-48D4-BC04-0C24FDA3B4EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38A66893-E823-469E-B187-C8DD848A0DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{38A66893-E823-469E-B187-C8DD848A0DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38A66893-E823-469E-B187-C8DD848A0DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU

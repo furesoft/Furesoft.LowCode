@@ -7,6 +7,6 @@
   <Application.Styles>
     <FluentTheme />
 
-    <StyleInclude Source="avares://Furesoft.LowCode.Designer/Default.axaml" />
+    <StyleInclude Source="avares://Furesoft.LowCode/Designer/Default.axaml" />
   </Application.Styles>
 </Application>

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Designer.Core;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 

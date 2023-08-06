@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
+    <ProjectReference Include="..\..\Core\Furesoft.LowCode\Furesoft.LowCode.csproj" />
   </ItemGroup>
 
 </Project>

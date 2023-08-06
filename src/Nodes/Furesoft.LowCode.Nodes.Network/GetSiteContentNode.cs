@@ -1,4 +1,4 @@
-﻿using Furesoft.LowCode.Designer.Core.Components.Views;
+﻿using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.Network;
 

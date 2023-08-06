@@ -16,7 +16,6 @@
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Network\Furesoft.LowCode.Nodes.Network.csproj" />
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.RPA.Web\Furesoft.LowCode.Nodes.RPA.Web.csproj" />
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Scheduling\Furesoft.LowCode.Nodes.Scheduling.csproj" />
-    <ProjectReference Include="..\Furesoft.LowCode.Designer\Furesoft.LowCode.Designer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +31,12 @@
       <DependentUpon>App.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Avalonia.Themes.Fluent">
+      <HintPath>..\..\..\..\..\..\.nuget\packages\avalonia.themes.fluent\11.0.2\lib\net6.0\Avalonia.Themes.Fluent.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using Furesoft.LowCode.Designer.Core;
-using NiL.JS.Extensions;
+﻿using NiL.JS.Extensions;
 using PuppeteerSharp;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web.Core;

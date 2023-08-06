@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
-using Furesoft.LowCode.Designer.Core.Components.Views;
 using Furesoft.LowCode.Nodes.RPA.Web.Core;
+using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web.Interaction;
 

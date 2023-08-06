@@ -1,5 +1,4 @@
 ﻿using Furesoft.LowCode.Nodes.RPA.Web.Core;
-using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
 

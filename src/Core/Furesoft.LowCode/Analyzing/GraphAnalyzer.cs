@@ -1,40 +1,28 @@
-﻿namespace Furesoft.LowCode.Analyzing;
+﻿using Furesoft.LowCode.Designer;
+using Furesoft.LowCode.Editor.Model;
 
-public abstract class GraphAnalyzer<T> : IGraphAnalyzer
+namespace Furesoft.LowCode.Analyzing;
+
+public sealed class GraphAnalyzer
 {
-    public IList<Message> Messages { get; } = new List<Message>();
-
-    public void Analyze(object node)
+    public IList<Message> Analyze(IDrawingNode drawing)
     {
-        Analyze((T)node);
-    }
-
-    public abstract void Analyze(T node);
-
-    protected void AddMessage(Severity severity, string message, params object[] targets)
-    {
-        var msg = new Message()
-        {
-            Severity = severity,
-            Content = message,
-            Targets = targets
-        };
+        var messages = new List<Message>();
         
-        Messages.Add(msg);
-    }
+        foreach (var node in drawing.Nodes.OfType<CustomNodeViewModel>())
+        {
+            var analyzers = node.AnalyzerContext.GetAnalyzers(node.DefiningNode);
 
-    protected void AddError(string message, params object[] targets)
-    {
-        AddMessage(Severity.Error, message, targets);
-    }
-    
-    protected void AddWarning(string message, params object[] targets)
-    {
-        AddMessage(Severity.Warning, message, targets);
-    }
-    
-    protected void AddInfo(string message, params object[] targets)
-    {
-        AddMessage(Severity.Info, message, targets);
+            foreach (var analyzer in analyzers)
+            {
+                node.DefiningNode.Drawing = drawing;
+
+                analyzer.AnalyzerContext = node.AnalyzerContext;
+                analyzer.Analyze(node.DefiningNode);
+                messages.AddRange(analyzer.Messages);
+            }
+        }
+
+        return messages;
     }
 }

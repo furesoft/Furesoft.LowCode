@@ -1,9 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using DockMvvmSample.Views;
-using Furesoft.LowCode.Designer.Layout.ViewModels;
-using Furesoft.LowCode.Designer.Layout.Views;
 
 namespace DockMvvmSample;
 

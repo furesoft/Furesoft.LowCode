@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.Nodes.IO.Console;
+﻿using Furesoft.LowCode.NodeViews;
+
+namespace Furesoft.LowCode.Nodes.IO.Console;
 
 [Description("Read a value from the console")]
 [NodeCategory("IO/Console")]

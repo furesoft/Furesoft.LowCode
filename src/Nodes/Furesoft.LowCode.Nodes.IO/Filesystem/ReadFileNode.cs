@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.Nodes.IO.Filesystem;
+﻿using Furesoft.LowCode.NodeViews;
+
+namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [Description("Read a file")]
 [NodeCategory("IO/FileSystem")]
