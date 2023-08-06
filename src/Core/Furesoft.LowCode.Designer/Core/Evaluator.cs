@@ -26,7 +26,7 @@ public class Evaluator
     public async Task Execute(CancellationToken cancellationToken)
     {
         InitCredentils();
-        
+
         var entryNode = _drawing.GetNodes<EntryNode>().First().DefiningNode;
 
         InitNode(entryNode);
@@ -49,7 +49,9 @@ public class Evaluator
     {
         foreach (var credentialName in CredentialStorage.GetKeys())
         {
-            Context.GlobalContext.DefineConstant(credentialName, JSValue.Wrap(CredentialStorage.Get(credentialName)));
+            var wrapValue = Context.GlobalContext.WrapValue(CredentialStorage.Get(credentialName));
+
+            Context.GlobalContext.DefineConstant(credentialName, wrapValue);
         }
     }
 

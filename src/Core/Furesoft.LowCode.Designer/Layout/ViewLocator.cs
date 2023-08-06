@@ -1,3 +1,4 @@
+#nullable enable
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Dock.Model.Core;
@@ -14,10 +15,10 @@ public class ViewLocator : IDataTemplate
             return new TextBlock { Text = "Invalid Data Type" };
         }
         var type = Type.GetType(name);
-        if (type is { })
+        if (type is not null)
         {
             var instance = Activator.CreateInstance(type);
-            if (instance is { })
+            if (instance is not null)
             {
                 return (Control)instance;
             }
@@ -34,6 +35,6 @@ public class ViewLocator : IDataTemplate
 
     public bool Match(object? data)
     {
-        return data is ObservableObject || data is IDockable;
+        return data is ObservableObject or IDockable;
     }
 }

@@ -9,7 +9,7 @@ public class PostRequest : RestBaseNode, IOutVariableProvider
     public string Content { get; set; }
     
     [DataMember(EmitDefaultValue = false)]
-    public string OutVariable { get; set; }
+    public new string OutVariable { get; set; }
     public PostRequest() : base("POST")
     {
     }

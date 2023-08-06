@@ -7,5 +7,5 @@ public interface IOutVariableProvider
 {
     [Description("Where to store the output")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string OutVariable { get; set; }
+    string OutVariable { get; set; }
 }

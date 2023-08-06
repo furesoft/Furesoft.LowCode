@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
+using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
@@ -37,6 +38,8 @@ public partial class MainViewViewModel : ViewModelBase
         }
 
         NewLayout = new RelayCommand(ResetLayout);
+
+        SetInitialSelectedDocument();
     }
 
     public Evaluator Evaluator { get; set; }
@@ -50,6 +53,15 @@ public partial class MainViewViewModel : ViewModelBase
 
     public ICommand NewLayout { get; }
 
+    private void SetInitialSelectedDocument()
+    {
+        var dock = (ProportionalDock)Layout.DefaultDockable;
+
+        var documentDock = dock.VisibleDockables.OfType<DocumentDock>().FirstOrDefault();
+
+        SelectedDocument = documentDock.ActiveDockable as DocumentViewModel;
+    }
+
     private void DockFactoryOnFocusedDockableChanged(object sender, FocusedDockableChangedEventArgs e)
     {
         if (e.Dockable is DocumentViewModel document)
@@ -58,7 +70,7 @@ public partial class MainViewViewModel : ViewModelBase
             SelectedNode = null;
 
             //ToDo: Optimize
-            _selectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+            SelectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
         }
     }
 
@@ -73,7 +85,7 @@ public partial class MainViewViewModel : ViewModelBase
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
     {
-        var selectedNodes = _selectedDocument.Editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
+        var selectedNodes = SelectedDocument.Editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
 
         if (selectedNodes != null)
         {
@@ -89,14 +101,14 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public async Task Evaluate()
     {
-        Evaluator = new(_selectedDocument.Editor.Drawing);
+        Evaluator = new(SelectedDocument.Editor.Drawing);
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
 
     [RelayCommand]
     public async Task Debug()
     {
-        Evaluator = new(_selectedDocument.Editor.Drawing);
+        Evaluator = new(SelectedDocument.Editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
 
         await Evaluator.Execute(_cancellationTokenSource.Token);
@@ -114,11 +126,11 @@ public partial class MainViewViewModel : ViewModelBase
     {
         await Evaluator.Debugger.Continue();
     }
-    
+
     [RelayCommand]
     public void Analyze()
     {
-       var messages = new GraphAnalyzer().Analyze(SelectedDocument.Editor.Drawing);
+        var messages = new GraphAnalyzer().Analyze(SelectedDocument.Editor.Drawing);
     }
 
     [RelayCommand]
@@ -164,12 +176,11 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private void New()
     {
-        if (_selectedDocument.Editor?.Factory is not null)
-        {
-            _selectedDocument.Editor.Drawing = _selectedDocument.Editor.Factory.CreateDrawing();
-            _selectedDocument.Editor.Drawing.SetSerializer(_selectedDocument.Editor.Serializer);
-            Evaluator = new(_selectedDocument.Editor.Drawing);
-        }
+        var editor = SelectedDocument.Editor;
+        
+        editor.Drawing = editor.Factory.CreateDrawing();
+        editor.Drawing.SetSerializer(editor.Serializer);
+        Evaluator = new(editor.Drawing);
     }
 
 
@@ -200,10 +211,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private async Task Open()
     {
-        if (_selectedDocument.Editor?.Serializer is null)
-        {
-            return;
-        }
+        var editor = SelectedDocument.Editor;
 
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
@@ -225,13 +233,18 @@ public partial class MainViewViewModel : ViewModelBase
                 await using var stream = await file.OpenReadAsync();
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
-                var drawing = _selectedDocument.Editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
-                if (drawing is not null)
+
+
+                var drawing = editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
+
+                if (drawing is null)
                 {
-                    _selectedDocument.Editor.Drawing = drawing;
-                    _selectedDocument.Editor.Drawing.SetSerializer(_selectedDocument.Editor.Serializer);
-                    _selectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+                    return;
                 }
+
+                editor.Drawing = drawing;
+                editor.Drawing.SetSerializer(editor.Serializer);
+                editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
             }
             catch (Exception)
             {
@@ -242,11 +255,6 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        if (_selectedDocument.Editor?.Serializer is null)
-        {
-            return;
-        }
-
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
         {
@@ -266,7 +274,8 @@ public partial class MainViewViewModel : ViewModelBase
         {
             try
             {
-                var json = _selectedDocument.Editor.Serializer.Serialize(_selectedDocument.Editor.Drawing);
+                var json = SelectedDocument.Editor.Serializer.Serialize(SelectedDocument.Editor.Drawing);
+
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream);
                 await writer.WriteAsync(json);

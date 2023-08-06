@@ -23,7 +23,7 @@ public class SignalStorage
         {
             if (value != null)
             {
-                handlerNode.Context.DefineConstant(name, JSValue.Wrap(value));
+                handlerNode.Context.DefineConstant(name, handlerNode.Context.GlobalContext.WrapValue(value));
             }
 
             await handlerNode.Execute(token);

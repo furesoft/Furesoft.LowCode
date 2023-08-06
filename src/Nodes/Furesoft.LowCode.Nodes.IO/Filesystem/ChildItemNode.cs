@@ -67,7 +67,8 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
         {
             ItemType.File => dirInfo.GetFiles(SearchPattern, searchOption),
             ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
-            ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption)
+            ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption),
+            _ => throw new ArgumentOutOfRangeException()
         };
         fileInfos = fileInfos.Where(x => !x.Attributes.HasFlag(ExcludedFlags)).ToArray();
 
