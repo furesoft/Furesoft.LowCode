@@ -1,9 +1,12 @@
-﻿using System.Text;
+﻿using System.Collections.Specialized;
+using System.Text;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Furesoft.LowCode.Designer;
 
@@ -23,9 +26,18 @@ public class ConsoleControl : TemplatedControl
         _inputBox = e.NameScope.Find<TextBox>("PART_Input");
         _btn = e.NameScope.Find<Button>("PART_Submit");
         _scrollViewer = e.NameScope.Find<ScrollViewer>("PART_ScrollViewer");
+        _inputBox.KeyDown += InputBoxOnKeyDown;
 
         Console.SetOut(new Writer(_outputBlock, _scrollViewer));
         Console.SetIn(new Reader(_inputBox, _btn));
+    }
+
+    private void InputBoxOnKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            _btn.Command.Execute(null);
+        }
     }
 
     public class Reader : TextReader
@@ -40,10 +52,10 @@ public class ConsoleControl : TemplatedControl
             _inputBox = inputBox;
             _button = button;
             _mrs = new(false);
-            _button.Click += ButtonOnClick;
+            _button.Command = new RelayCommand(ButtonOnClick);
         }
 
-        private void ButtonOnClick(object sender, RoutedEventArgs e)
+        private void ButtonOnClick()
         {
             _inputText = _inputBox.Text;
             _mrs.Set();
