@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Designer;
 
@@ -22,6 +23,8 @@ public class AnalyzerContext
             .Select(_ => Activator.CreateInstance(_) as IGraphAnalyzer);
     }
 
+    //ToDo: Figure out from which direction the node comes in dependency of the current node
+    
     //bool IsOutputConnected<Type>(bool indirection)
     //bool IsInputConnected<Type>(bool indirection)
 
@@ -37,7 +40,7 @@ public class AnalyzerContext
     {
         return _viewModel.DefiningNode.GetConnectedNodes(pinMembername, PinMode.Input).Any();
     }
-    
+
     public bool HasConnection(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         return _viewModel.DefiningNode.GetConnectedNodes(pinMembername, PinMode.Output).Any();
