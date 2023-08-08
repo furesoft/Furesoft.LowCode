@@ -54,9 +54,15 @@ public class AnalyzerContext
         }
 
         var type = typeof(T);
-        var currentNodeInputs = GetNodeConnections(mode, node);
+        var currentNodeConnections = GetNodeConnections(mode, node);
 
-        foreach (var currentNodeInput in currentNodeInputs)
+        // Ignore nodes without pins
+        if (!currentNodeConnections.Any())
+        {
+            return true;
+        }
+
+        foreach (var currentNodeInput in currentNodeConnections)
         {
             if (currentNodeInput.DefiningNode.GetType() == type)
             {
