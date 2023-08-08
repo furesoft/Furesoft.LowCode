@@ -6,7 +6,7 @@ namespace Furesoft.LowCode.Analyzing;
 
 public sealed class GraphAnalyzer
 {
-    private readonly Dictionary<CustomNodeViewModel, List<CustomNodeViewModel>> adjacencyMatrix = new();
+    private readonly AdjancencyMatrix _adjacencyMatrix = new();
     
     public IList<Message> Analyze(IDrawingNode drawing)
     {
@@ -23,6 +23,7 @@ public sealed class GraphAnalyzer
                 node.DefiningNode.Drawing = drawing;
 
                 analyzer.AnalyzerContext = node.AnalyzerContext;
+                analyzer.AnalyzerContext.AdjancencyMatrix = _adjacencyMatrix;
                 analyzer.Analyze(node.DefiningNode);
                 messages.AddRange(analyzer.Messages);
             }
@@ -33,15 +34,15 @@ public sealed class GraphAnalyzer
     
     private void BuildAdjanceMatrix(IDrawingNode graphNode)
     {
-        adjacencyMatrix.Clear();
+        _adjacencyMatrix.Clear();
         
         foreach (var node in graphNode.Nodes.OfType<CustomNodeViewModel>())
         {
-            adjacencyMatrix[node] = new();
+            _adjacencyMatrix[node] = new();
 
             var connectedNodes = GetConnenctedNodes(node, graphNode);
 
-            adjacencyMatrix[node].AddRange(connectedNodes);
+            _adjacencyMatrix[node].AddRange(connectedNodes);
         }
         
         PrintAdjanceMatrix();
@@ -61,11 +62,11 @@ public sealed class GraphAnalyzer
             var start = connection.Start.Parent as CustomNodeViewModel;
             var end = connection.End.Parent as CustomNodeViewModel;
 
-            if (start.DefiningNode == node.DefiningNode)
+            if (start!.DefiningNode == node.DefiningNode)
             {
                 nodes.Add(end);
             }
-            else if (end.DefiningNode == node.DefiningNode)
+            else if (end!.DefiningNode == node.DefiningNode)
             {
                 nodes.Add(start);
             }
@@ -77,9 +78,10 @@ public sealed class GraphAnalyzer
     private void PrintAdjanceMatrix()
     {
         Debug.WriteLine("Adjacency Matrix:");
-        foreach (var sourceNode in adjacencyMatrix.Keys)
+        
+        foreach (var sourceNode in _adjacencyMatrix.Keys)
         {
-            var targetNodes = adjacencyMatrix[sourceNode];
+            var targetNodes = _adjacencyMatrix[sourceNode];
 
             Debug.WriteLine($"{sourceNode.Name} -> {string.Join(',', targetNodes.Select(_=> _.DefiningNode.GetClassName()))}");
         }

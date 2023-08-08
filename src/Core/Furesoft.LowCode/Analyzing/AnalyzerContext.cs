@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Designer;
 
@@ -13,6 +12,8 @@ public class AnalyzerContext
     {
         _viewModel = viewModel;
     }
+
+    public AdjancencyMatrix AdjancencyMatrix { get; set; }
 
     public IEnumerable<IGraphAnalyzer> GetAnalyzers(EmptyNode node)
     {
