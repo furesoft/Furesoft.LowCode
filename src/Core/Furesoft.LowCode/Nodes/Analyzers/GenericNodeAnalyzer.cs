@@ -11,7 +11,7 @@ public class GenericNodeAnalyzer : GraphAnalyzerBase<EmptyNode>
 
         if (!(isEntryConnected || isSignalConnected))
         {
-            AddError("This execution path will never be executet. Connect it with Entry or Signal", node);
+            AddError("This execution path will never be executed. Connect it with Entry or Signal", node);
         }
     }
 }

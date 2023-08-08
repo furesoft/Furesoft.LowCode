@@ -15,11 +15,13 @@
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
             <Viewbox Margin="2">
-              <Path Fill="{ReflectionBinding Severity, Converter={x:Static converters:MessageSeverityColorConverter.Instance}}"
-                    Data="{StaticResource Icon}" />
+              <Path
+                Fill="{ReflectionBinding Severity, Converter={x:Static converters:MessageSeverityColorConverter.Instance}}"
+                Data="{StaticResource Icon}" />
             </Viewbox>
 
-            <TextBlock Margin="5,0" Text="{Binding Content}" VerticalAlignment="Center" FontSize="13" />
+            <TextBlock Margin="5,0"
+                       Text="{Binding Content}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="13" />
           </StackPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>
