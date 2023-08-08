@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Designer;
-using Furesoft.LowCode.Nodes;
 
 namespace Furesoft.LowCode.Analyzing;
 
@@ -25,17 +24,29 @@ public class AnalyzerContext
             .Select(_ => Activator.CreateInstance(_) as IGraphAnalyzer);
     }
 
-    public bool IsInputConnected<T>(uint indirectionLength = 1)
+    /// <summary>
+    /// Check if a node is connected before the current node
+    /// </summary>
+    /// <param name="maxIndirection">Maxmimum iterations to check. -1 disables the maxIndirection</param>
+    /// <typeparam name="T">The node type to check for</typeparam>
+    /// <returns></returns>
+    public bool IsInputConnected<T>(int maxIndirection = -1)
     {
-        return IsConnectedRecursive<T>(PinMode.Input, indirectionLength, _viewModel);
+        return IsConnectedRecursive<T>(PinMode.Input, maxIndirection, _viewModel);
     }
     
-    public bool IsOutputConnected<T>(uint indirectionLength = 1)
+    /// <summary>
+    /// Check if a node is connected after the current node
+    /// </summary>
+    /// <param name="maxIndirection">Maxmimum iterations to check. -1 disables the maxIndirection</param>
+    /// <typeparam name="T">The node type to check for</typeparam>
+    /// <returns></returns>
+    public bool IsOutputConnected<T>(int indirectionLength = -1)
     {
-        return IsConnectedRecursive<T>(PinMode.Input, indirectionLength, _viewModel);
+        return IsConnectedRecursive<T>(PinMode.Output, indirectionLength, _viewModel);
     }
 
-    private bool IsConnectedRecursive<T>(PinMode mode, uint indirectionLength, CustomNodeViewModel node)
+    private bool IsConnectedRecursive<T>(PinMode mode, int indirectionLength, CustomNodeViewModel node)
     {
         if (indirectionLength == 0)
         {
@@ -56,7 +67,15 @@ public class AnalyzerContext
 
             foreach (var connection in connections)
             {
-                if (connection.DefiningNode is not EntryNode && IsConnectedRecursive<T>(mode, indirectionLength - 1, connection))
+                // If indirectionLength == -1 ignore it
+                var indireciton = indirectionLength == - 1 ? indirectionLength : indirectionLength - 1;
+                
+                if (connection.DefiningNode.GetType() == type)
+                {
+                    return true;
+                }
+                
+                if (IsConnectedRecursive<T>(mode,  indireciton, connection))
                 {
                     return true;
                 }
@@ -94,11 +113,11 @@ public class AnalyzerContext
 
     public bool HasConnection(IInputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        return _viewModel.DefiningNode.GetConnectedNodes(pinMembername, PinMode.Input).Any();
+        return AdjancencyMatrix[_viewModel].Any(_=> _.Mode == PinMode.Output);
     }
 
     public bool HasConnection(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        return _viewModel.DefiningNode.GetConnectedNodes(pinMembername, PinMode.Output).Any();
+        return AdjancencyMatrix[_viewModel].Any(_=> _.Mode == PinMode.Output);
     }
 }

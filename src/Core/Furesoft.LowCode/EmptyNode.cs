@@ -2,7 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Avalonia.Controls;
+using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.ViewModels;
+using Furesoft.LowCode.Nodes.Analyzers;
 using Furesoft.LowCode.NodeViews;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
@@ -10,6 +12,7 @@ using NiL.JS.Extensions;
 namespace Furesoft.LowCode;
 
 [DataContract(IsReference = true)]
+[GraphAnalyzer(typeof(GenericNodeAnalyzer))]
 public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 {
     private string _description;

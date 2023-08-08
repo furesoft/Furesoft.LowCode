@@ -24,7 +24,9 @@ public sealed class GraphAnalyzer
 
                 analyzer.AnalyzerContext = node.AnalyzerContext;
                 analyzer.AnalyzerContext.AdjancencyMatrix = _adjacencyMatrix;
+                
                 analyzer.Analyze(node.DefiningNode);
+                
                 messages.AddRange(analyzer.Messages);
             }
         }

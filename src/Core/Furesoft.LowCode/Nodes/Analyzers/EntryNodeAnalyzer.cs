@@ -8,7 +8,7 @@ public class EntryNodeAnalyzer : GraphAnalyzerBase<EntryNode>
     {
         var hasSignalNodes = AnalyzerContext.IsNodePresentInGraph<SignalNode>();
 
-        if (!(AnalyzerContext.HasConnection(node.OutputPin) || hasSignalNodes))
+        if (!AnalyzerContext.HasConnection(node.OutputPin) && !hasSignalNodes)
         {
             AddInfo("No node connected to entry node", node);
         }
