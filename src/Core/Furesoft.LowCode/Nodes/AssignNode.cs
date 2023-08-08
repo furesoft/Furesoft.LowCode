@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 using NiL.JS.Core;
@@ -16,6 +18,7 @@ public class AssignNode : InputOutputNode
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The name of the variable")]
+    [Required]
     public string Name { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]

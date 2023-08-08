@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 
@@ -19,6 +20,7 @@ public class WaitForNode : InputOutputNode
 
     [Description("The time to wait in milliseconds")]
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public int WaitTime { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

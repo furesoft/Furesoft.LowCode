@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 
@@ -16,6 +18,7 @@ public class ConditionNode : InputNode
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public string Condition
     {
         get => _condition;

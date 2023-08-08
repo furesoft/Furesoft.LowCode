@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.NodeViews;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.Network;
 
@@ -13,9 +14,11 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
     }
 
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string URL { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string OutVariable { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

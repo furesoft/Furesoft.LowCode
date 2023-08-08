@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 using NiL.JS.Core;
@@ -15,6 +16,7 @@ public class RepeatNode : InputOutputNode
     }
 
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string Times { get; set; }
 
 

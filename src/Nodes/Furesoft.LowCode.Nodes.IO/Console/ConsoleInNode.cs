@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.NodeViews;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.IO.Console;
 
@@ -14,6 +15,7 @@ public class ConsoleInNode : InputOutputNode
 
     [Description("The input from the console")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public string Output { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)

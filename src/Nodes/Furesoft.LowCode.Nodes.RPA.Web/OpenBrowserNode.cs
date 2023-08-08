@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Nodes.RPA.Web.Core;
 using PuppeteerSharp;
 
@@ -7,6 +8,7 @@ namespace Furesoft.LowCode.Nodes.RPA.Web;
 public class OpenBrowserNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string URL { get; set; }
 
     [DataMember(EmitDefaultValue = false)]

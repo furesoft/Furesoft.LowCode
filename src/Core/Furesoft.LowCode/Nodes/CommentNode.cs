@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 
@@ -15,6 +16,7 @@ public class CommentNode : EmptyNode
     }
     
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string Comment
     {
         get => _comment;

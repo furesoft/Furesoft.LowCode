@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web;
@@ -6,6 +7,7 @@ namespace Furesoft.LowCode.Nodes.RPA.Web;
 public class NewTabNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string URL { get; set; }
 
     public NewTabNode() : base("New Tab")

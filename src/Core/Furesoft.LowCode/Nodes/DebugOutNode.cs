@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 
@@ -18,6 +19,7 @@ public class DebugOutNode : InputOutputNode
 
     [Description("The text to display")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public string Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)

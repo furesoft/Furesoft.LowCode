@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 using MsBox.Avalonia;
@@ -23,6 +24,7 @@ public class MessageBoxNode : InputOutputNode
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
+    [Required]
     public string Message
     {
         get => _message;

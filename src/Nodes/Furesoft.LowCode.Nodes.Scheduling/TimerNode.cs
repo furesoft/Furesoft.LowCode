@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Timer = System.Timers.Timer;
 
@@ -16,6 +17,7 @@ public class TimerNode : InputOutputNode
     public IOutputPin EllapsedPin { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public double Interval { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

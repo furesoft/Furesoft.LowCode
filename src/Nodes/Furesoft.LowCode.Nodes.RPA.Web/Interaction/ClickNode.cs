@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web.Interaction;
@@ -6,6 +7,7 @@ namespace Furesoft.LowCode.Nodes.RPA.Web.Interaction;
 public class ClickNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string Selector { get; set; } = string.Empty;
 
     public ClickNode() : base("Click")

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Furesoft.LowCode.Nodes;
@@ -13,6 +14,7 @@ public class SignalTriggerNode : InputOutputNode
     }
 
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string Signal { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)

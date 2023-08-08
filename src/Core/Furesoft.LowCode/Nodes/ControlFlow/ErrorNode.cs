@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 
@@ -16,6 +17,7 @@ public class ErrorNode : InputNode
 
     [Description("The error message")]
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public string Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
