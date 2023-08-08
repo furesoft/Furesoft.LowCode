@@ -22,6 +22,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     protected EmptyNode(string label)
     {
         Label = label;
+        ID = Guid.NewGuid();
     }
 
     [Browsable(false)] public Context Context { get; private set; }
@@ -33,6 +34,10 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         get => _label;
         set => SetProperty(ref _label, value);
     }
+
+    [Browsable(false)]
+    [DataMember(EmitDefaultValue = false)]
+    public Guid ID { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Browsable(false)]

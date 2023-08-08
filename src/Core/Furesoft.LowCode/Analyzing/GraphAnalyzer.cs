@@ -13,7 +13,7 @@ public sealed class GraphAnalyzer
         BuildAdjanceMatrix(drawing);
         
         var messages = new List<Message>();
-        
+
         foreach (var node in drawing.Nodes.OfType<CustomNodeViewModel>())
         {
             var analyzers = node.AnalyzerContext.GetAnalyzers(node.DefiningNode);

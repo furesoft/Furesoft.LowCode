@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Designer;
+using Furesoft.LowCode.Nodes;
 
 namespace Furesoft.LowCode.Analyzing;
 
@@ -25,7 +26,7 @@ public class AnalyzerContext
     }
 
     /// <summary>
-    /// Check if a node is connected before the current node
+    ///     Check if a node is connected before the current node
     /// </summary>
     /// <param name="maxIndirection">Maxmimum iterations to check. -1 disables the maxIndirection</param>
     /// <typeparam name="T">The node type to check for</typeparam>
@@ -34,9 +35,9 @@ public class AnalyzerContext
     {
         return IsConnectedRecursive<T>(PinMode.Input, maxIndirection, _viewModel);
     }
-    
+
     /// <summary>
-    /// Check if a node is connected after the current node
+    ///     Check if a node is connected after the current node
     /// </summary>
     /// <param name="maxIndirection">Maxmimum iterations to check. -1 disables the maxIndirection</param>
     /// <typeparam name="T">The node type to check for</typeparam>
@@ -61,7 +62,7 @@ public class AnalyzerContext
         {
             return true;
         }
-
+        
         foreach (var currentNodeInput in currentNodeConnections)
         {
             if (currentNodeInput.DefiningNode.GetType() == type)
@@ -74,14 +75,14 @@ public class AnalyzerContext
             foreach (var connection in connections)
             {
                 // If indirectionLength == -1 ignore it
-                var indireciton = indirectionLength == - 1 ? indirectionLength : indirectionLength - 1;
-                
+                var indireciton = indirectionLength == -1 ? indirectionLength : indirectionLength - 1;
+
                 if (connection.DefiningNode.GetType() == type)
                 {
                     return true;
                 }
-                
-                if (IsConnectedRecursive<T>(mode,  indireciton, connection))
+
+                if (IsConnectedRecursive<T>(mode, indireciton, connection))
                 {
                     return true;
                 }
@@ -102,11 +103,42 @@ public class AnalyzerContext
             {
                 continue;
             }
-            
+
             result.Add(currentConnection.Node);
         }
-        
+
         return result;
+    }
+
+    private IEnumerable<EmptyNode> GetNodeConnections(PinMode mode, EmptyNode node)
+    {
+        var currentConnections = GetNodeConnectionsFromMatrix(node);
+        var result = new List<EmptyNode>();
+
+        foreach (var currentConnection in currentConnections)
+        {
+            if (currentConnection.Mode != mode)
+            {
+                continue;
+            }
+
+            result.Add(currentConnection.Node.DefiningNode);
+        }
+
+        return result;
+    }
+
+    private List<(CustomNodeViewModel Node, PinMode Mode)> GetNodeConnectionsFromMatrix(EmptyNode node)
+    {
+        foreach (var key in AdjancencyMatrix)
+        {
+            if (key.Key.DefiningNode == node)
+            {
+                return key.Value;
+            }
+        }
+
+        return null;
     }
 
     public bool IsNodePresentInGraph<T>()
@@ -119,11 +151,70 @@ public class AnalyzerContext
 
     public bool HasConnection(IInputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        return AdjancencyMatrix[_viewModel].Any(_=> _.Mode == PinMode.Output);
+        return AdjancencyMatrix[_viewModel].Any(_ => _.Mode == PinMode.Output);
     }
 
     public bool HasConnection(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        return AdjancencyMatrix[_viewModel].Any(_=> _.Mode == PinMode.Output);
+        return AdjancencyMatrix[_viewModel].Any(_ => _.Mode == PinMode.Output);
+    }
+
+    public IEnumerable<EmptyNode> FindDisconnectedNodes()
+    {
+        return _viewModel.DefiningNode.Drawing.Nodes
+            .OfType<EmptyNode>()
+            .Where(node => !IsInputConnected<EmptyNode>() && !IsOutputConnected<EmptyNode>())
+            .ToList();
+    }
+
+    public IEnumerable<CustomNodeViewModel> FindCommonNeighbors(CustomNodeViewModel node1, CustomNodeViewModel node2)
+    {
+        var neighbors1 = GetNodeConnections(PinMode.Input, node1)
+            .Union(GetNodeConnections(PinMode.Output, node1))
+            .Distinct();
+
+        var neighbors2 = GetNodeConnections(PinMode.Input, node2)
+            .Union(GetNodeConnections(PinMode.Output, node2))
+            .Distinct();
+
+        return neighbors1.Intersect(neighbors2);
+    }
+
+    public bool HasCycle(EmptyNode startNode)
+    {
+        var visited = new HashSet<EmptyNode>();
+        var recursionStack = new HashSet<EmptyNode>();
+
+        return HasCycle(startNode, visited, recursionStack);
+    }
+
+    private bool HasCycle(EmptyNode node, HashSet<EmptyNode> visited, HashSet<EmptyNode> recursionStack)
+    {
+        if (recursionStack.Contains(node))
+        {
+            return true; // Found a back edge, indicating a cycle
+        }
+
+        if (visited.Contains(node))
+        {
+            return false; // Already visited, no cycle
+        }
+
+        visited.Add(node);
+        recursionStack.Add(node);
+
+        var neighbors = GetNodeConnections(PinMode.Output, node);
+
+        foreach (var neighbor in neighbors)
+        {
+            if (HasCycle(neighbor, visited, recursionStack))
+            {
+                return true; // Found a cycle in the neighbor's subtree
+            }
+        }
+
+        recursionStack.Remove(node);
+
+        return false; // No cycle found in the subtree rooted at this node
     }
 }
