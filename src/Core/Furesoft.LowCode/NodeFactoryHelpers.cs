@@ -69,7 +69,7 @@ public partial class NodeFactory
         NodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
         var pinArray = pins as (string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)[] ?? pins.ToArray();
-        
+
         for (var i = 0; i < pinArray.Length; i++)
         {
             var pin = pinArray[i];

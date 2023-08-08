@@ -6,12 +6,12 @@ namespace Furesoft.LowCode;
 public class IsolatedCredentailStorage : ICredentialStorage, IDisposable
 {
     private readonly IsolatedStorageFile _storage;
-    private Dictionary<string, object> _data = new();
+    private readonly Dictionary<string, object> _data = new();
 
     public IsolatedCredentailStorage()
     {
         _storage = IsolatedStorageFile.GetMachineStoreForApplication();
-        
+
         var file = _storage.OpenFile("credentials.json", FileMode.OpenOrCreate);
         _data = JsonConvert.DeserializeObject<Dictionary<string, object>>(new StreamReader(file).ReadToEnd());
         file.Dispose();
@@ -38,7 +38,7 @@ public class IsolatedCredentailStorage : ICredentialStorage, IDisposable
         {
             return Array.Empty<string>();
         }
-        
+
         return _data?.Keys;
     }
 

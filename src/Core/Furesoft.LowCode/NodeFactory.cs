@@ -13,11 +13,11 @@ public partial class NodeFactory : INodeFactory
 
     private readonly List<DynamicNode> _dynamicNodes = new();
 
-    public readonly List<string> SearchPaths = new() {"."};
+    public readonly List<string> SearchPaths = new() { "." };
 
     public IList<INodeTemplate> CreateTemplates()
     {
-        bool IsVisualNode(Type type)
+        static bool IsVisualNode(Type type)
         {
             return typeof(EmptyNode).IsAssignableFrom(type) && type.IsClass && type.Name != nameof(EmptyNode);
         }
@@ -119,7 +119,7 @@ public partial class NodeFactory : INodeFactory
     private static (double, double) RecalculateBoundsWithMargin(EmptyNode node, (double width, double height) size,
         int maxPinTopBottom, int maxPinLeftRight)
     {
-        double Calculate(int max)
+        static double Calculate(int max)
         {
             return max * (2 + PinSize) * 1.6;
         }
@@ -152,14 +152,14 @@ public partial class NodeFactory : INodeFactory
 
     private static void CreateFactoryNodeTemplates(IEnumerable<Type> nodes, List<INodeTemplate> templates)
     {
-        bool IsFactoryNode(Type node)
+        static bool IsFactoryNode(Type node)
         {
             return typeof(INodeFactory).IsAssignableFrom(node);
         }
 
         var factoryNodes = from node in nodes
-            where IsFactoryNode(node)
-            select Activator.CreateInstance(node);
+                           where IsFactoryNode(node)
+                           select Activator.CreateInstance(node);
 
         foreach (var factoryNode in factoryNodes)
         {
@@ -171,7 +171,7 @@ public partial class NodeFactory : INodeFactory
 
     private static void CreateNormalNodeTemplates(IEnumerable<Type> nodes, List<INodeTemplate> templates)
     {
-        bool IsNormalNode(Type node)
+        static bool IsNormalNode(Type node)
         {
             return !typeof(INodeFactory).IsAssignableFrom(node) && node != typeof(DynamicNode) && !node.IsAbstract;
         }
@@ -182,11 +182,13 @@ public partial class NodeFactory : INodeFactory
             select (EmptyNode)Activator.CreateInstance(node);
 
         templates.AddRange(from node in normalNodes
-            let ignoreAttribute = node.GetAttribute<IgnoreTemplateAttribute>()
-            where ignoreAttribute == null
-            select new NodeTemplateViewModel
-            {
-                Title = node.Label, Template = CreateNode(node, (0, 0)), Preview = CreateNode(node, (0, 0))
-            });
+                           let ignoreAttribute = node.GetAttribute<IgnoreTemplateAttribute>()
+                           where ignoreAttribute == null
+                           select new NodeTemplateViewModel
+                           {
+                                Title = node.Label, 
+                                Template = CreateNode(node, (0, 0)), 
+                                Preview = CreateNode(node, (0, 0))
+                           });
     }
 }
