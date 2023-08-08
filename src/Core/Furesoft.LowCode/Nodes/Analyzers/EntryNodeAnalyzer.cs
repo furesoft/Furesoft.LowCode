@@ -2,7 +2,7 @@
 
 namespace Furesoft.LowCode.Nodes.Analyzers;
 
-public class EntryNodeAnalyzerBase : GraphAnalyzerBase<EntryNode>
+public class EntryNodeAnalyzer : GraphAnalyzerBase<EntryNode>
 {
     public override void Analyze(EntryNode node)
     {

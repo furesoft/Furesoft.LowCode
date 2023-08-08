@@ -1,9 +1,12 @@
-﻿using NiL.JS.Extensions;
+﻿using Furesoft.LowCode.Analyzing;
+using Furesoft.LowCode.Nodes.RPA.Web.Analyzers;
+using NiL.JS.Extensions;
 using PuppeteerSharp;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 [NodeCategory("Automation/Web")]
+[GraphAnalyzer(typeof(WebBrowserAnalyzer))]
 public abstract class WebNode : InputOutputNode
 {
     protected const string PageVariableName = "browserPage";

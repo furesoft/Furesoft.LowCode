@@ -8,7 +8,7 @@ namespace Furesoft.LowCode.Nodes;
 [IgnoreTemplate]
 [NodeView(typeof(EntryView))]
 [Description("The starting node of the graph")]
-[GraphAnalyzer(typeof(EntryNodeAnalyzerBase))]
+[GraphAnalyzer(typeof(EntryNodeAnalyzer))]
 public class EntryNode : OutputNode
 {
     public EntryNode() : base("Entry")
