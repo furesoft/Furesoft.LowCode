@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Analyzing;
+using Furesoft.LowCode.Nodes.Analyzers;
 
 namespace Furesoft.LowCode.Nodes;
 
 [Description("Executes when a Signal was triggered")]
+[GraphAnalyzer(typeof(SignalNodeAnalyzer))]
 [NodeCategory]
 public class SignalNode : OutputNode
 {
