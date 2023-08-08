@@ -7,20 +7,22 @@ namespace Furesoft.LowCode;
 
 public partial class EmptyNode
 {
+    private readonly Dictionary<(string, PinMode), IReadOnlyList<EmptyNode>> _connectedNodesCache = new();
+
     public IEnumerable<EmptyNode> GetInputs(IInputPin pin,
-        [CallerArgumentExpression("pin")] string pinMembername = null)
+        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input);
     }
 
     public IEnumerable<EmptyNode> GetOutputs(IOutputPin pin,
-        [CallerArgumentExpression("pin")] string pinMembername = null)
+        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Output);
     }
 
     public EmptyNode GetInput(IInputPin pin,
-        [CallerArgumentExpression("pin")] string pinMembername = null)
+        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input)[0];
     }
@@ -29,6 +31,13 @@ public partial class EmptyNode
     {
         var result = new List<EmptyNode>();
         var pinName = GetPinName(pinMembername);
+        var cacheKey = (pinMembername, mode);
+
+        if (_connectedNodesCache.ContainsKey(cacheKey))
+        {
+            return _connectedNodesCache[cacheKey];
+        }
+
         var connections = GetConnections();
         var pinViewModel = GetPinViewModel(pinName, mode);
 
@@ -41,9 +50,11 @@ public partial class EmptyNode
             result.Add(parent);
         }
 
+        _connectedNodesCache.Add(cacheKey, result);
+
         return result;
     }
-    
+
     private void InitNextNode(IConnector pinConnection, string pinName, out EmptyNode parentNode, PinMode mode)
     {
         CustomNodeViewModel parent;
@@ -68,31 +79,33 @@ public partial class EmptyNode
     private static IEnumerable<IConnector> GetPinConnections(IEnumerable<IConnector> connections, IPin pinViewModel)
     {
         return from conn in connections
-            where conn.Start == pinViewModel || conn.End == pinViewModel
-            select conn;
+               where conn.Start == pinViewModel || conn.End == pinViewModel
+               select conn;
     }
 
     private IPin GetPinViewModel(string pinName, PinMode mode)
     {
         return (from node in Drawing.Nodes
-            where ((CustomNodeViewModel)node).DefiningNode == this
-            from pinn in node.Pins
-            where pinn.Name == pinName
-            select pinn).OfType<PinViewModel>().FirstOrDefault(_ => _.Mode == mode);
+                where ((CustomNodeViewModel)node).DefiningNode == this
+                from pinn in node.Pins
+                where pinn.Name == pinName
+                select pinn)
+                .OfType<PinViewModel>()
+                .FirstOrDefault(_ => _.Mode == mode);
     }
 
     private IEnumerable<IConnector> GetConnections()
     {
         return from connection in Drawing.Connectors
-            where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == this
+               where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == this
                   || ((CustomNodeViewModel)connection.End.Parent).DefiningNode == this
-            select connection;
+               select connection;
     }
 
     private string GetPinName(string propertyName)
     {
         propertyName = StripPinName(propertyName);
-        
+
         var propInfo = GetType().GetProperty(propertyName);
 
         var attr = propInfo.GetCustomAttribute<PinAttribute>();
