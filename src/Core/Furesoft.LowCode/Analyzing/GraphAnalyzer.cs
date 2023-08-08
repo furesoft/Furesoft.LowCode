@@ -48,14 +48,14 @@ public sealed class GraphAnalyzer
         PrintAdjanceMatrix();
     }
     
-    private IEnumerable<CustomNodeViewModel> GetConnenctedNodes(CustomNodeViewModel node, IDrawingNode graphNode)
+    private IEnumerable<(CustomNodeViewModel, PinMode)> GetConnenctedNodes(CustomNodeViewModel node, IDrawingNode graphNode)
     {
         var connections = from connection in graphNode.Connectors
             where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == node.DefiningNode
                   || ((CustomNodeViewModel)connection.End.Parent).DefiningNode == node.DefiningNode
             select connection;
 
-        var nodes = new List<CustomNodeViewModel>();
+        var nodes = new List<(CustomNodeViewModel, PinMode)>();
         
         foreach (var connection in connections)
         {
@@ -64,11 +64,11 @@ public sealed class GraphAnalyzer
 
             if (start!.DefiningNode == node.DefiningNode)
             {
-                nodes.Add(end);
+                nodes.Add((end, connection.Start.Mode));
             }
             else if (end!.DefiningNode == node.DefiningNode)
             {
-                nodes.Add(start);
+                nodes.Add((start, connection.End.Mode));
             }
         }
 
@@ -83,7 +83,7 @@ public sealed class GraphAnalyzer
         {
             var targetNodes = _adjacencyMatrix[sourceNode];
 
-            Debug.WriteLine($"{sourceNode.Name} -> {string.Join(',', targetNodes.Select(_=> _.DefiningNode.GetClassName()))}");
+            Debug.WriteLine($"{sourceNode.Name} -> {string.Join(',', targetNodes.Select(_=> _.Node.DefiningNode.GetClassName() + " " + _.Mode))}");
         }
     }
 }
