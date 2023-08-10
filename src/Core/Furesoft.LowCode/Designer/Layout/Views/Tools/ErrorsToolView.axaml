@@ -10,7 +10,7 @@
       <StreamGeometry x:Key="Icon">M11 11H9V5H11M11 15H9V13H11M10 0A10 10 0 000 10 10 10 0 0010 20 10 10 0 0020 10 10 10 0 0010 0Z</StreamGeometry>
     </Grid.Resources>
 
-    <ListBox ItemsSource="{Binding $parent[Window].DataContext.Errors, Mode=TwoWay}">
+    <ListBox DoubleTapped="InputElement_OnDoubleTapped" ItemsSource="{Binding $parent[Window].DataContext.Errors, Mode=TwoWay}">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <StackPanel Orientation="Horizontal">

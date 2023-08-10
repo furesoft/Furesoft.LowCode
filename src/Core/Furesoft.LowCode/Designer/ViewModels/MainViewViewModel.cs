@@ -26,6 +26,7 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private DocumentViewModel _selectedDocument;
 
     [ObservableProperty] private EmptyNode _selectedNode;
+    [ObservableProperty] private NodeZoomBorder _zoomBorder;
 
     public MainViewViewModel()
     {
@@ -77,6 +78,7 @@ public partial class MainViewViewModel : ViewModelBase
 
             //ToDo: Optimize
             SelectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+            
         }
     }
 

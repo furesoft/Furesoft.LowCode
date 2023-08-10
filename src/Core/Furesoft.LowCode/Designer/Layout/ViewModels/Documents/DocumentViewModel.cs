@@ -5,6 +5,7 @@ namespace Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 public partial class DocumentViewModel : Document
 {
     [ObservableProperty] private EditorViewModel _editor;
+    [ObservableProperty] private NodeZoomBorder _nodeZoomBorder;
 
     public DocumentViewModel(NodeFactory nodeFactory)
     {
