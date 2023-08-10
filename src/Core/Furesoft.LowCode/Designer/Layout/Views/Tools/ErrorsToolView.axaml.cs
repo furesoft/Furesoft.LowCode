@@ -33,6 +33,8 @@ public partial class ErrorsToolView : UserControl
         var window = (Window)VisualRoot;
         var vm = (MainViewViewModel)window.DataContext;
         NodeZoomBorder zoomControl = vm.SelectedDocument.NodeZoomBorder;
+
+        //ToDo: figure out how to get the coordinates of a node here
         zoomControl.ZoomTo(0.5, node.);
     }
 }

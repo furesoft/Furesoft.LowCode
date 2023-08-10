@@ -79,6 +79,7 @@ public partial class NodeFactory : INodeFactory
         viewModel.Content = nodeView;
         viewModel.Name = node.Label;
         viewModel.DefiningNode = node;
+        node.ViewModel = viewModel;
 
         var attributes = TypeDescriptor.GetAttributes(node);
         var descriptionAttribute = attributes.OfType<DescriptionAttribute>().FirstOrDefault();

@@ -3,9 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Avalonia.Controls;
 using Furesoft.LowCode.Analyzing;
+using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Nodes.Analyzers;
 using Furesoft.LowCode.NodeViews;
+using Newtonsoft.Json;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 
@@ -18,6 +20,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     private string _description;
     internal Evaluator _evaluator;
     private string _label;
+    internal CustomNodeViewModel ViewModel;
 
     protected EmptyNode(string label)
     {
