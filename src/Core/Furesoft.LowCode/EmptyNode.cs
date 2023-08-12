@@ -17,7 +17,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     private string _description;
     internal Evaluator _evaluator;
     private string _label;
-    private string _name;
     private bool _showDescription;
 
     protected EmptyNode(string label)
@@ -53,13 +52,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         get => _showDescription;
         set => SetProperty(ref _showDescription, value);
-    }
-
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string Name
-    {
-        get => _name;
-        set => SetProperty(ref _name, value);
     }
 
     /// <summary>

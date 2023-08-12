@@ -12,7 +12,7 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:INode">
-        <StackPanel Orientation="Horizontal" Spacing="8" ToolTip.Tip="{Binding Content.DataContext.Name, Mode=TwoWay}">
+        <StackPanel Orientation="Horizontal" Spacing="8" ToolTip.Tip="{Binding Content.DataContext.Description, Mode=TwoWay}">
           <Panel Width="{Binding Width}"
                  Height="{Binding Height}">
             <ContentPresenter Name="PART_ContentPresenter"
