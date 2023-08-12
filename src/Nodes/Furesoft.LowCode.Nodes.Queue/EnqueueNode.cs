@@ -10,12 +10,12 @@ public class EnqueueNode : QueueBaseNode
     {
     }
 
-    [DataMember] public Evaluatable Data { get; set; }
+    [DataMember] public Evaluatable<object> Data { get; set; }
 
 
     public override Task Invoke(CancellationToken cancellationToken)
     {
-        QueueManager.Instance.Enqueue(Queue, Evaluate<object>(Data));
+        QueueManager.Instance.Enqueue(Queue, Evaluate(Data));
 
         return Task.CompletedTask;
     }

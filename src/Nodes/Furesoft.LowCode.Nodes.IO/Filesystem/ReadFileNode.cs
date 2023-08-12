@@ -14,13 +14,13 @@ public class ReadFileNode : InputOutputNode, IOutVariableProvider
 
     [Description("Destination Filename")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public Evaluatable Filename { get; set; }
+    public Evaluatable<string> Filename { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public string OutVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var filename = Evaluate<string>(Filename);
+        var filename = Evaluate(Filename);
 
         SetOutVariable(OutVariable, File.ReadAllText(filename));
 

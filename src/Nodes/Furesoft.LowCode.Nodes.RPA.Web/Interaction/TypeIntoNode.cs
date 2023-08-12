@@ -16,7 +16,7 @@ public class TypeIntoNode : WebNode
     
     
     [DataMember(EmitDefaultValue = false)] 
-    public Evaluatable Text { get; set; }
+    public Evaluatable<string> Text { get; set; }
 
     public TypeIntoNode() : base("Type Into")
     {
@@ -28,6 +28,6 @@ public class TypeIntoNode : WebNode
 
         var element = await page.QuerySelectorAsync(Selector);
 
-        await element.TypeAsync(Evaluate<string>(Text));
+        await element.TypeAsync(Evaluate(Text));
     }
 }

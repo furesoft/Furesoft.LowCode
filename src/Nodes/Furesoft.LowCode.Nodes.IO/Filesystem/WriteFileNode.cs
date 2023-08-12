@@ -14,16 +14,16 @@ public class WriteFileNode : InputOutputNode
 
     [Description("Destination Filename")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public Evaluatable Filename { get; set; }
+    public Evaluatable<string> Filename { get; set; }
 
     [Description("The content to save")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public Evaluatable Content { get; set; }
+    public Evaluatable<string> Content { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var filename = Evaluate<string>(Filename);
-        var content = Evaluate<string>(Content);
+        var filename = Evaluate(Filename);
+        var content = Evaluate(Content);
 
         File.WriteAllText(filename, content);
 

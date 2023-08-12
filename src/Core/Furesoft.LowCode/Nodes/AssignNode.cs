@@ -23,7 +23,7 @@ public class AssignNode : InputOutputNode
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The value of the variable")]
-    public Evaluatable Value { get; set; }
+    public Evaluatable<object> Value { get; set; }
 
 
     public override async Task Execute(CancellationToken cancellationToken)

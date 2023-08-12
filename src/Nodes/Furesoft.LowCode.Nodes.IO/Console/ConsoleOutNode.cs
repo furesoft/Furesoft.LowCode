@@ -16,11 +16,11 @@ public class ConsoleOutNode : InputOutputNode
     [Description("The text to display")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Required]
-    public Evaluatable Message { get; set; }
+    public Evaluatable<string> Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var msg = Evaluate<string>(Message);
+        var msg = Evaluate(Message);
 
         System.Console.WriteLine(msg);
 

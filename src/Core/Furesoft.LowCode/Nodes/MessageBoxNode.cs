@@ -20,7 +20,7 @@ public class MessageBoxNode : InputOutputNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     [Required]
-    public Evaluatable Message { get; set; }
+    public Evaluatable<string> Message { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
@@ -29,7 +29,7 @@ public class MessageBoxNode : InputOutputNode
     public override async Task Execute(CancellationToken cancellationToken)
     {
         var box = MessageBoxManager
-            .GetMessageBoxStandard(Title, Evaluate<string>(Message));
+            .GetMessageBoxStandard(Title, Evaluate(Message));
 
         await box.ShowWindowAsync();
 

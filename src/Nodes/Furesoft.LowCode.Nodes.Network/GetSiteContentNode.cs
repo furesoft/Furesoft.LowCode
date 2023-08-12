@@ -15,7 +15,7 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public Evaluatable URL { get; set; }
+    public Evaluatable<string> URL { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
@@ -24,7 +24,7 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
     public override async Task Execute(CancellationToken cancellationToken)
     {
         var client = new HttpClient();
-        var content = await client.GetStringAsync(Evaluate<string>(URL), cancellationToken);
+        var content = await client.GetStringAsync(Evaluate(URL), cancellationToken);
 
         SetOutVariable(OutVariable, content);
 

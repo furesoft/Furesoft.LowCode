@@ -18,11 +18,11 @@ public class ErrorNode : InputNode
     [Description("The error message")]
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public Evaluatable Message { get; set; }
+    public Evaluatable<string> Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var msg = Evaluate<string>(Message);
+        var msg = Evaluate(Message);
 
         throw CreateError(msg);
     }

@@ -9,7 +9,7 @@ public class OpenBrowserNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public Evaluatable URL { get; set; }
+    public Evaluatable<string> URL { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
     public bool UseHeadless { get; set; }
@@ -30,7 +30,7 @@ public class OpenBrowserNode : WebNode
         });
         
         var page = (await browser.PagesAsync())[0];
-        await page.GoToAsync(Evaluate<string>(URL));
+        await page.GoToAsync(Evaluate(URL));
         
         DefineConstant(PageVariableName, page);
         DefineConstant(BrowserVariableName, page);

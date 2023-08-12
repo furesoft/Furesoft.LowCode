@@ -109,7 +109,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         return PreviousNode?.GetPreviousNode<T>();
     }
 
-    protected T Evaluate<T>(Evaluatable src)
+    protected T Evaluate<T>(Evaluatable<T> src)
     {
         return Context.Eval(src.Source).As<T>();
     }

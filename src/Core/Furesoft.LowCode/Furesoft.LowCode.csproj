@@ -35,23 +35,24 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NiL.JS" Version="2.5.1661"/>
+    <PackageReference Include="NiL.JS" Version="2.5.1661" />
+    <PackageReference Include="Splat" Version="14.7.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj"/>
+    <ProjectReference Include="..\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Designer\Layout\Views\Tools\ConsoleToolView.axaml"/>
-    <AdditionalFiles Include="Designer\Layout\Views\Tools\DebugOutputToolView.axaml"/>
-    <AdditionalFiles Include="Designer\Layout\Views\Tools\ErrorsToolView.axaml"/>
-    <AdditionalFiles Include="Designer\Styles\Icons.axaml"/>
-    <AdditionalFiles Include="Designer\Styles\Nodes.axaml"/>
-    <AdditionalFiles Include="Designer\Styles\Themes.axaml"/>
-    <AdditionalFiles Include="Designer\Views\MainView.axaml"/>
-    <AdditionalFiles Include="Designer\Views\MainWindow.axaml"/>
-    <AdditionalFiles Include="Designer\Views\MenuView.axaml"/>
+    <AdditionalFiles Include="Designer\Layout\Views\Tools\ConsoleToolView.axaml" />
+    <AdditionalFiles Include="Designer\Layout\Views\Tools\DebugOutputToolView.axaml" />
+    <AdditionalFiles Include="Designer\Layout\Views\Tools\ErrorsToolView.axaml" />
+    <AdditionalFiles Include="Designer\Styles\Icons.axaml" />
+    <AdditionalFiles Include="Designer\Styles\Nodes.axaml" />
+    <AdditionalFiles Include="Designer\Styles\Themes.axaml" />
+    <AdditionalFiles Include="Designer\Views\MainView.axaml" />
+    <AdditionalFiles Include="Designer\Views\MainWindow.axaml" />
+    <AdditionalFiles Include="Designer\Views\MenuView.axaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,12 +67,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Nodes\Views\AssignNodeView.axaml"/>
-    <UpToDateCheckInput Remove="Nodes\Views\CommentView.axaml"/>
-    <UpToDateCheckInput Remove="Nodes\Views\ConditionView.axaml"/>
-    <UpToDateCheckInput Remove="Nodes\Views\DefaultNodeView.axaml"/>
-    <UpToDateCheckInput Remove="Nodes\Views\EntryView.axaml"/>
-    <UpToDateCheckInput Remove="Nodes\Views\IconNodeView.axaml"/>
+    <UpToDateCheckInput Remove="Nodes\Views\AssignNodeView.axaml" />
+    <UpToDateCheckInput Remove="Nodes\Views\CommentView.axaml" />
+    <UpToDateCheckInput Remove="Nodes\Views\ConditionView.axaml" />
+    <UpToDateCheckInput Remove="Nodes\Views\DefaultNodeView.axaml" />
+    <UpToDateCheckInput Remove="Nodes\Views\EntryView.axaml" />
+    <UpToDateCheckInput Remove="Nodes\Views\IconNodeView.axaml" />
   </ItemGroup>
 
 </Project>

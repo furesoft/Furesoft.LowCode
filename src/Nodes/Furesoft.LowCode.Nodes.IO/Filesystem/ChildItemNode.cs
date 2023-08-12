@@ -14,7 +14,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
 
     [Description("The Path to the Folder to get the Items")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public Evaluatable FolderPath { get; set; }
+    public Evaluatable<string> FolderPath { get; set; }
 
     [Description("Should the search be recursive")]
     [DataMember(IsRequired = false, EmitDefaultValue = true)]
@@ -44,7 +44,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var folderPath = Evaluate<string>(FolderPath);
+        var folderPath = Evaluate(FolderPath);
         var searchOption = IsRecurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
         if (string.IsNullOrEmpty(SearchPattern))

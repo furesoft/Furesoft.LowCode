@@ -18,7 +18,7 @@ public class ConditionNode : InputNode
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Required]
-    public Evaluatable Condition { get; set; }
+    public Evaluatable<bool> Condition { get; set; }
 
     [Pin("True", PinAlignment.Bottom)] public IOutputPin TruePin { get; set; }
 
@@ -26,7 +26,7 @@ public class ConditionNode : InputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var value = Evaluate<bool>(Condition);
+        var value = Evaluate(Condition);
 
         if (value)
         {

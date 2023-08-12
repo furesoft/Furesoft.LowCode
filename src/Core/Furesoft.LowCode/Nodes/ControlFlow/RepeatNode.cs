@@ -17,14 +17,14 @@ public class RepeatNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public Evaluatable Times { get; set; }
+    public Evaluatable<int> Times { get; set; }
 
 
     [Pin("Do", PinAlignment.Right)] public IOutputPin DoPin { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var times = Evaluate<int>(Times);
+        var times = Evaluate(Times);
 
         for (var i = 0; i < times; i++)
         {

@@ -8,7 +8,7 @@ public class NewTabNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public Evaluatable URL { get; set; }
+    public Evaluatable<string> URL { get; set; }
 
     public NewTabNode() : base("New Tab")
     {
@@ -18,7 +18,7 @@ public class NewTabNode : WebNode
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
         var page = await GetBrowser().NewPageAsync();
-        await page.GoToAsync(Evaluate<string>(URL));
+        await page.GoToAsync(Evaluate(URL));
         
         DefineConstant(PageVariableName, page);
     }

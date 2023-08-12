@@ -1,6 +1,6 @@
 ﻿namespace Furesoft.LowCode;
 
-public class Evaluatable
+public class Evaluatable<T>
 {
     public Evaluatable(string source)
     {

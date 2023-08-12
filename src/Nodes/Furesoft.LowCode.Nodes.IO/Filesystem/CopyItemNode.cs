@@ -10,11 +10,11 @@ public class CopyItemNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)]
     [Description("The Path of the items to be copied")]
-    public Evaluatable SourcePath { get; set; }
+    public Evaluatable<string> SourcePath { get; set; }
 
     [Description("The Path to the to the destination of the items")]
     [DataMember(EmitDefaultValue = false)]
-    public Evaluatable DestinationPath { get; set; }
+    public Evaluatable<string> DestinationPath { get; set; }
 
     [Description("Should a folder be copied recursively. No effect on file copies.")]
     [DataMember(EmitDefaultValue = false)]
@@ -22,8 +22,8 @@ public class CopyItemNode : InputOutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var sourcePath = Evaluate<string>(SourcePath);
-        var destinationPath = Evaluate<string>(DestinationPath);
+        var sourcePath = Evaluate(SourcePath);
+        var destinationPath = Evaluate(DestinationPath);
         var folderDestinationPath = Path.GetDirectoryName(destinationPath);
         if (!Directory.Exists(folderDestinationPath))
         {

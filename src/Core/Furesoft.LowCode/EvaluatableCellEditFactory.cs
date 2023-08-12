@@ -15,7 +15,7 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
     public override Control HandleNewProperty(PropertyCellContext context)
     {
-        if (context.Property.PropertyType != typeof(Evaluatable))
+        if (context.Property.PropertyType.Name != typeof(Evaluatable<>).Name)
         {
             return null;
         }
@@ -23,7 +23,7 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
         var control = new TextEditor();
         control.TextChanged += (s, e) =>
         {
-            SetAndRaise(context, control, new Evaluatable(control.Text));
+            SetAndRaise(context, control, new Evaluatable<object>(control.Text));
         };
 
         _textmate = control.InstallTextMate(options);
@@ -35,7 +35,7 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
     public override bool HandlePropertyChanged(PropertyCellContext context)
     {
-        if (context.Property.PropertyType != typeof(Evaluatable))
+        if (context.Property.PropertyType != typeof(Evaluatable<>))
         {
             return false;
         }
@@ -44,7 +44,7 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
         if (context.CellEdit is TextEditor ts)
         {
-            var value = (Evaluatable)context.Property.GetValue(context.Target);
+            var value = (Evaluatable<object>)context.Property.GetValue(context.Target);
             ts.Document.Text = value?.Source;
             
             ts.InvalidateVisual();

@@ -16,7 +16,7 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public Evaluatable URL { get; set; }
+    public Evaluatable<string> URL { get; set; }
 
     [Pin("On Success", PinAlignment.Bottom)]
     public IOutputPin SuccessPin { get; set; }
@@ -41,7 +41,7 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     public sealed override async Task Execute(CancellationToken cancellationToken)
     {
         ApplyHeaders();
-        client.BaseAddress = new(Evaluate<string>(URL));
+        client.BaseAddress = new(Evaluate(URL));
 
         var response = await Invoke(cancellationToken);
 
