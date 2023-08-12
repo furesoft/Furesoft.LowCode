@@ -1,23 +1,18 @@
 ﻿using Dock.Avalonia.Controls;
-using Dock.Model.Avalonia.Controls;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Mvvm;
+using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Designer.Layout.Models.Tools;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
-using Document = Dock.Model.Mvvm.Controls.Document;
-using DocumentDock = Dock.Model.Mvvm.Controls.DocumentDock;
-using ProportionalDock = Dock.Model.Mvvm.Controls.ProportionalDock;
-using ProportionalDockSplitter = Dock.Model.Mvvm.Controls.ProportionalDockSplitter;
-using ToolDock = Dock.Model.Mvvm.Controls.ToolDock;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels;
 
 public class DockFactory : Factory
 {
     private readonly NodeFactory _nodeFactory;
-    private DocumentDock _documentDock;
+    public DocumentDock DocumentDock { get; private set; }
     private IRootDock _rootDock;
 
     public DockFactory(NodeFactory nodeFactory)
@@ -32,9 +27,9 @@ public class DockFactory : Factory
 
     public void CreateDocument(Document document)
     {
-        AddDockable(_documentDock, document);
+        AddDockable(DocumentDock, document);
         SetActiveDockable(document);
-        SetFocusedDockable(_documentDock, document);
+        SetFocusedDockable(DocumentDock, document);
     }
 
     public override IRootDock CreateLayout()
@@ -44,8 +39,6 @@ public class DockFactory : Factory
 
         var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
-        var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
-        var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
         var errorTool = new ErrorsToolViewModel {Id = "Errors", Title = "Errors"};
         var projectTool = new ProjectToolViewModel {Id = "Project", Title = "Project"};
 
@@ -60,7 +53,7 @@ public class DockFactory : Factory
                 {
                     ActiveDockable = toolboxTool,
                     VisibleDockables = CreateList<IDockable>(toolboxTool, projectTool),
-                    Alignment = Alignment.Bottom
+                    Alignment = Alignment.Left
                 }
             )
         };
@@ -74,22 +67,22 @@ public class DockFactory : Factory
             (
                 new ToolDock
                 {
-                    ActiveDockable = consoleTool,
+                    ActiveDockable = propertiesTool,
                     VisibleDockables = CreateList<IDockable>(propertiesTool, errorTool),
-                    Alignment = Alignment.Bottom,
+                    Alignment = Alignment.Right,
                     GripMode = GripMode.Visible
                 }
             )
         };
-
-        _documentDock = new()
+        
+        DocumentDock = new()
         {
             IsCollapsable = false,
             ActiveDockable = document1,
             VisibleDockables = CreateList<IDockable>(document1, document2),
             CanCreateDocument = false
         };
-
+        
         var mainLayout = new ProportionalDock
         {
             Id = "Home",
@@ -98,12 +91,32 @@ public class DockFactory : Factory
             (
                 leftDock,
                 new ProportionalDockSplitter(),
-                _documentDock,
+                DocumentDock,
                 new ProportionalDockSplitter(),
                 rightDock
             )
         };
-        
+
+        var debugView = CreateDebugView(propertiesTool);
+
+        var rootDock = CreateRootDock();
+
+        rootDock.IsCollapsable = false;
+        rootDock.ActiveDockable = debugView;
+        rootDock.DefaultDockable = mainLayout;
+        rootDock.VisibleDockables = CreateList<IDockable>(debugView, mainLayout);
+
+
+        _rootDock = rootDock;
+
+        return rootDock;
+    }
+
+    private ProportionalDock CreateDebugView(PropertiesToolViewModel propertiesTool)
+    {
+        var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
+        var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
+
         var rightDebugDock = new ProportionalDock
         {
             Proportion = 0.25,
@@ -120,7 +133,7 @@ public class DockFactory : Factory
                 }
             )
         };
-        
+
         var leftDebugDock = new ProportionalDock
         {
             Proportion = 0.25,
@@ -130,14 +143,12 @@ public class DockFactory : Factory
             (
                 new ToolDock
                 {
-                    ActiveDockable = toolboxTool,
-                    VisibleDockables = CreateList<IDockable>(),
-                    Alignment = Alignment.Bottom
+                    ActiveDockable = null, VisibleDockables = CreateList<IDockable>(), Alignment = Alignment.Bottom
                 }
             )
         };
-        
-        var debugView = new ProportionalDock()
+
+        var debugView = new ProportionalDock
         {
             Id = "Debug",
             Title = "Debug",
@@ -146,24 +157,13 @@ public class DockFactory : Factory
             (
                 leftDebugDock,
                 new ProportionalDockSplitter(),
-                _documentDock,
+                DocumentDock,
                 new ProportionalDockSplitter(),
                 rightDebugDock
             )
         };
-        
 
-        var rootDock = CreateRootDock();
-
-        rootDock.IsCollapsable = false;
-        rootDock.ActiveDockable = debugView;
-        rootDock.DefaultDockable = mainLayout;
-        rootDock.VisibleDockables = CreateList<IDockable>(debugView, mainLayout);
-
-        
-        _rootDock = rootDock;
-
-        return rootDock;
+        return debugView;
     }
 
     public override void InitLayout(IDockable layout)
@@ -180,7 +180,7 @@ public class DockFactory : Factory
 
         DockableLocator = new Dictionary<string, Func<IDockable>>
         {
-            ["Root"] = () => _rootDock, ["Documents"] = () => _documentDock
+            ["Root"] = () => _rootDock, ["Documents"] = () => DocumentDock
         };
 
         HostWindowLocator = new() {[nameof(IDockWindow)] = () => new HostWindow()};

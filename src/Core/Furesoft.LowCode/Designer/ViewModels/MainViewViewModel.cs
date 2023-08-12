@@ -16,7 +16,7 @@ namespace Furesoft.LowCode.Designer.ViewModels;
 
 public partial class MainViewViewModel : ViewModelBase
 {
-    private readonly IFactory _dockFactory;
+    private readonly DockFactory _dockFactory;
 
     private readonly GraphAnalyzer _graphAnalyzer = new();
 
@@ -65,11 +65,7 @@ public partial class MainViewViewModel : ViewModelBase
 
     private void SetInitialSelectedDocument()
     {
-        var dock = (ProportionalDock)Layout.DefaultDockable;
-
-        var documentDock = dock.VisibleDockables.OfType<DocumentDock>().FirstOrDefault();
-
-        SelectedDocument = documentDock.ActiveDockable as GraphDocumentViewModel;
+        SelectedDocument = _dockFactory.DocumentDock.ActiveDockable as GraphDocumentViewModel;
     }
 
     private void DockFactoryOnFocusedDockableChanged(object sender, FocusedDockableChangedEventArgs e)
