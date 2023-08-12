@@ -35,6 +35,7 @@ public class DockFactory : Factory
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
         var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
         var errorTool = new ErrorsToolViewModel {Id = "Errors", Title = "Errors"};
+        var projectTool = new ProjectToolViewModel() {Id = "Project", Title = "Project"};
 
         var leftDock = new ProportionalDock
         {
@@ -46,7 +47,7 @@ public class DockFactory : Factory
                 new ToolDock
                 {
                     ActiveDockable = toolboxTool,
-                    VisibleDockables = CreateList<IDockable>(toolboxTool),
+                    VisibleDockables = CreateList<IDockable>(toolboxTool, projectTool),
                     Alignment = Alignment.Bottom
                 }
             )
@@ -124,7 +125,8 @@ public class DockFactory : Factory
             ["Console"] = () => new ConsoleTool(),
             ["DebugOutput"] = () => new DebugOutputTool(),
             ["Toolbox"] = () => new ToolBoxTool(),
-            ["Errors"] = () => new ErrorTool()
+            ["Errors"] = () => new ErrorTool(),
+            ["Project"] = () => new ProjectTool(),
         };
 
         DockableLocator = new Dictionary<string, Func<IDockable>>
