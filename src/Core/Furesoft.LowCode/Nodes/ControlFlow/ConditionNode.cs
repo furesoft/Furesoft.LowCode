@@ -11,7 +11,6 @@ namespace Furesoft.LowCode.Nodes.ControlFlow;
 [Description("Change control flow based on condition")]
 public class ConditionNode : InputNode
 {
-    private string _condition;
 
     public ConditionNode() : base("Condition")
     {
@@ -19,11 +18,7 @@ public class ConditionNode : InputNode
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Required]
-    public string Condition
-    {
-        get => _condition;
-        set => SetProperty(ref _condition, value);
-    }
+    public Evaluatable Condition { get; set; }
 
     [Pin("True", PinAlignment.Bottom)] public IOutputPin TruePin { get; set; }
 

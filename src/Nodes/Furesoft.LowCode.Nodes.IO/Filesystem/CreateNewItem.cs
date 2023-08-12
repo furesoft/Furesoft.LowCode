@@ -14,7 +14,7 @@ public class CreateNewItem : InputOutputNode
 
     [Description("Where should the items be created")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public BindingList<string> TargetPaths { get; set; } = new();
+    public BindingList<Evaluatable> TargetPaths { get; set; } = new();
 
     [Description("What should the name of the item be")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]

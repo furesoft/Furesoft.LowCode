@@ -4,19 +4,21 @@
 [NodeCategory("IO/FileSystem")]
 public class CopyItemNode : InputOutputNode
 {
-    [DataMember(EmitDefaultValue = false)]
-    [Description("The Path of the items to be copied")]
-    public string SourcePath { get; set; }
-    [Description("The Path to the to the destination of the items")]
-    [DataMember(EmitDefaultValue = false)]
-    public string DestinationPath { get; set; }
-    [Description("Should a folder be copied recursively. No effect on file copies.")]
-    [DataMember(EmitDefaultValue = false)]
-    public bool IsRecursive { get; set; }
-
     public CopyItemNode() : base("CopyItem")
     {
     }
+
+    [DataMember(EmitDefaultValue = false)]
+    [Description("The Path of the items to be copied")]
+    public Evaluatable SourcePath { get; set; }
+
+    [Description("The Path to the to the destination of the items")]
+    [DataMember(EmitDefaultValue = false)]
+    public Evaluatable DestinationPath { get; set; }
+
+    [Description("Should a folder be copied recursively. No effect on file copies.")]
+    [DataMember(EmitDefaultValue = false)]
+    public bool IsRecursive { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -27,6 +29,7 @@ public class CopyItemNode : InputOutputNode
         {
             Directory.CreateDirectory(folderDestinationPath);
         }
+
         if (File.Exists(sourcePath))
         {
             var target = Path.Combine(Path.GetFileName(sourcePath), destinationPath);
@@ -41,17 +44,18 @@ public class CopyItemNode : InputOutputNode
             else
             {
                 var files = Directory.GetFiles(sourcePath);
-                foreach (string file in files)
+                foreach (var file in files)
                 {
                     var fileName = Path.GetFileName(file);
                     var destination = Path.Combine(folderDestinationPath, fileName);
                     File.Copy(file, destination, true);
                 }
             }
-
         }
+
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }
+
     public static void CopyFilesRecursively(string sourcePath, string destinationPath)
     {
         if (Directory.Exists(sourcePath))

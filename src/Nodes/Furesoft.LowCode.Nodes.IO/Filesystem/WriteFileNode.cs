@@ -14,11 +14,11 @@ public class WriteFileNode : InputOutputNode
 
     [Description("Destination Filename")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string Filename { get; set; }
+    public Evaluatable Filename { get; set; }
 
     [Description("The content to save")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string Content { get; set; }
+    public Evaluatable Content { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {

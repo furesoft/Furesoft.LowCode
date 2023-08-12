@@ -4,14 +4,13 @@ namespace Furesoft.LowCode.Nodes.Network.REST;
 
 public class PostRequest : RestBaseNode, IOutVariableProvider
 {
-    [DataMember(EmitDefaultValue = false)]
-    public string Content { get; set; }
-    
-    [DataMember(EmitDefaultValue = false)]
-    public new string OutVariable { get; set; }
     public PostRequest() : base("POST")
     {
     }
+
+    [DataMember(EmitDefaultValue = false)] public string Content { get; set; }
+
+    [DataMember(EmitDefaultValue = false)] public new string OutVariable { get; set; }
 
     public override Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken)
     {

@@ -15,7 +15,7 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string URL { get; set; }
+    public Evaluatable URL { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
     [Required]

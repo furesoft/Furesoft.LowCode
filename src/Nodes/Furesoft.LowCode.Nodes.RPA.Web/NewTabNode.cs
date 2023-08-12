@@ -8,7 +8,7 @@ public class NewTabNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string URL { get; set; }
+    public Evaluatable URL { get; set; }
 
     public NewTabNode() : base("New Tab")
     {
