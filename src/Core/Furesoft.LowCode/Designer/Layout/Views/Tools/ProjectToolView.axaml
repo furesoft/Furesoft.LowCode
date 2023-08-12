@@ -2,11 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Furesoft.LowCode.Designer.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ProjectToolView">
-  <Grid Focusable="True">
+  <Grid Focusable="True" DataContext="{Binding $parent[Window].DataContext.OpenedProject, Mode=TwoWay}">
     <TreeView>
-      <TreeViewItem Header="Project xyz" IsExpanded="True">
+      <TreeViewItem Header="{Binding Name, Converter={converters:ProjectNameConverter}}" IsExpanded="True">
         <TreeViewItem Header="Sources" />
         <TreeViewItem Header="main" />
       </TreeViewItem>

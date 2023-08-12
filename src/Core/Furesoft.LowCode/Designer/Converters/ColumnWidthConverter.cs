@@ -1,15 +1,10 @@
-using System.Globalization;
-using Avalonia.Data.Converters;
-
 namespace Furesoft.LowCode.Designer.Converters;
 
-public class ColumnWidthConverter : IValueConverter
+public class ColumnWidthConverter : ValueConverter<ColumnWidthConverter, bool>
 {
-    public static readonly ColumnWidthConverter Instance = new();
-
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    protected override object Convert(bool flag, Type targetType, object parameter)
     {
-        if (value is bool flag && parameter is double width)
+        if (parameter is double width)
         {
             if (flag)
             {
@@ -20,10 +15,5 @@ public class ColumnWidthConverter : IValueConverter
         }
 
         return AvaloniaProperty.UnsetValue;
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
     }
 }

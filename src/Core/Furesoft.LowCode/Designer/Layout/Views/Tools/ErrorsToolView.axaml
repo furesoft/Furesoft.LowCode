@@ -16,7 +16,7 @@
           <StackPanel Orientation="Horizontal">
             <Viewbox Margin="2">
               <Path
-                Fill="{ReflectionBinding Severity, Converter={x:Static converters:MessageSeverityColorConverter.Instance}}"
+                Fill="{ReflectionBinding Severity, Converter={converters:MessageSeverityColorConverter}}"
                 Data="{StaticResource Icon}" />
             </Viewbox>
 

@@ -10,6 +10,7 @@ using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Nodes;
+using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
 
@@ -26,6 +27,7 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private DocumentViewModel _selectedDocument;
 
     [ObservableProperty] private EmptyNode _selectedNode;
+    [ObservableProperty] private Project _openedProject;
 
     public MainViewViewModel()
     {
@@ -46,6 +48,8 @@ public partial class MainViewViewModel : ViewModelBase
         NewLayout = new RelayCommand(ResetLayout);
 
         SetInitialSelectedDocument();
+        
+        OpenedProject = Project.Load("test.zip");
     }
 
     public Evaluator Evaluator { get; set; }
