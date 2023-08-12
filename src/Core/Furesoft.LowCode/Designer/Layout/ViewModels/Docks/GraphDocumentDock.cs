@@ -22,7 +22,7 @@ public class GraphDocumentDock : DocumentDock
         }
 
         var index = VisibleDockables?.Count + 1;
-        var document = new DocumentViewModel(_factory) {Id = $"Document{index}", Title = $"Document{index}"};
+        var document = new GraphDocumentViewModel(_factory) {Id = $"Document{index}", Title = $"Document{index}"};
 
         Factory?.AddDockable(this, document);
         Factory?.SetActiveDockable(document);

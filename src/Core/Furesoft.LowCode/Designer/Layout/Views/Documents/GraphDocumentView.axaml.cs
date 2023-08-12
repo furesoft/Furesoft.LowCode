@@ -1,8 +1,8 @@
 ﻿namespace Furesoft.LowCode.Designer.Layout.Views.Documents;
 
-public partial class DocumentView : UserControl
+public partial class GraphDocumentView : UserControl
 {
-    public DocumentView()
+    public GraphDocumentView()
     {
         InitializeComponent();
     }

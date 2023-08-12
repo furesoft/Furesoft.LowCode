@@ -2,11 +2,11 @@
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
-public partial class DocumentViewModel : Document
+public partial class GraphDocumentViewModel : Document
 {
     [ObservableProperty] private EditorViewModel _editor;
 
-    public DocumentViewModel(NodeFactory nodeFactory)
+    public GraphDocumentViewModel(NodeFactory nodeFactory)
     {
         _editor = new();
 

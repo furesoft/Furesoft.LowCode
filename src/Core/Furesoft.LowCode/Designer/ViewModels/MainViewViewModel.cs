@@ -24,7 +24,7 @@ public partial class MainViewViewModel : ViewModelBase
     private IRootDock _layout;
 
     [ObservableProperty] private ObservableCollection<Message> _errors;
-    [ObservableProperty] private DocumentViewModel _selectedDocument;
+    [ObservableProperty] private GraphDocumentViewModel _selectedGraphDocument;
 
     [ObservableProperty] private EmptyNode _selectedNode;
     [ObservableProperty] private Project _openedProject;
@@ -69,18 +69,18 @@ public partial class MainViewViewModel : ViewModelBase
 
         var documentDock = dock.VisibleDockables.OfType<DocumentDock>().FirstOrDefault();
 
-        SelectedDocument = documentDock.ActiveDockable as DocumentViewModel;
+        SelectedGraphDocument = documentDock.ActiveDockable as GraphDocumentViewModel;
     }
 
     private void DockFactoryOnFocusedDockableChanged(object sender, FocusedDockableChangedEventArgs e)
     {
-        if (e.Dockable is DocumentViewModel document)
+        if (e.Dockable is GraphDocumentViewModel document)
         {
-            SelectedDocument = document;
+            SelectedGraphDocument = document;
             SelectedNode = null;
 
             //ToDo: Optimize
-            SelectedDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
+            SelectedGraphDocument.Editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
         }
     }
 
@@ -94,7 +94,7 @@ public partial class MainViewViewModel : ViewModelBase
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
     {
-        var selectedNodes = SelectedDocument.Editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
+        var selectedNodes = SelectedGraphDocument.Editor.Drawing.GetSelectedNodes()?.OfType<CustomNodeViewModel>();
 
         if (selectedNodes != null)
         {
@@ -110,7 +110,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public async Task Evaluate()
     {
-        Evaluator = new(SelectedDocument.Editor.Drawing);
+        Evaluator = new(SelectedGraphDocument.Editor.Drawing);
 
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
@@ -118,7 +118,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public async Task Debug()
     {
-        Evaluator = new(SelectedDocument.Editor.Drawing);
+        Evaluator = new(SelectedGraphDocument.Editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
 
         await Evaluator.Execute(_cancellationTokenSource.Token);
@@ -140,7 +140,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public void Analyze()
     {
-        Errors = new(_graphAnalyzer.Analyze(SelectedDocument.Editor.Drawing));
+        Errors = new(_graphAnalyzer.Analyze(SelectedGraphDocument.Editor.Drawing));
     }
 
     [RelayCommand]
@@ -186,7 +186,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private void New()
     {
-        var editor = SelectedDocument.Editor;
+        var editor = SelectedGraphDocument.Editor;
 
         editor.Drawing = editor.Factory.CreateDrawing();
         editor.Drawing.SetSerializer(editor.Serializer);
@@ -221,7 +221,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private async Task Open()
     {
-        var editor = SelectedDocument.Editor;
+        var editor = SelectedGraphDocument.Editor;
 
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
@@ -284,7 +284,7 @@ public partial class MainViewViewModel : ViewModelBase
         {
             try
             {
-                var json = SelectedDocument.Editor.Serializer.Serialize(SelectedDocument.Editor.Drawing);
+                var json = SelectedGraphDocument.Editor.Serializer.Serialize(SelectedGraphDocument.Editor.Drawing);
 
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream);

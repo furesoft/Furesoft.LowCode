@@ -29,7 +29,8 @@ public class DockFactory : Factory
 
     public override IRootDock CreateLayout()
     {
-        var document1 = new DocumentViewModel(_nodeFactory) {Id = "Document1", Title = "New Graph"};
+        var document1 = new GraphDocumentViewModel(_nodeFactory) {Id = "Document1", Title = "New Graph"};
+        var document2 = new SourceDocumentViewModel() {Id = "main.js", Title = "main.js"};
         var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
@@ -85,7 +86,7 @@ public class DockFactory : Factory
         {
             IsCollapsable = false,
             ActiveDockable = document1,
-            VisibleDockables = CreateList<IDockable>(document1),
+            VisibleDockables = CreateList<IDockable>(document1, document2),
             CanCreateDocument = true
         };
 
