@@ -8,9 +8,22 @@ namespace Furesoft.LowCode.Nodes.Queue;
 [Description("Add Data To A Queue For Later Proccessing")]
 public abstract class QueueBaseNode : InputOutputNode
 {
-    [DataMember, Required] public string Queue { get; set; }
+    private string _queue;
+
+    [DataMember, Required]
+    public string Queue
+    {
+        get => _queue;
+        set
+        {
+            _queue = value;
+            Description = Label + " " + value;
+        }
+    }
+
     protected QueueBaseNode(string label) : base(label)
     {
+        ShowDescription = true;
     }
 
     public sealed override async Task Execute(CancellationToken cancellationToken)
