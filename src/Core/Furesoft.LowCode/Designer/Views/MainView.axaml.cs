@@ -1,6 +1,4 @@
-﻿using Avalonia.Controls;
-
-namespace Furesoft.LowCode.Designer.Views;
+﻿namespace Furesoft.LowCode.Designer.Views;
 
 public partial class MainView : UserControl
 {

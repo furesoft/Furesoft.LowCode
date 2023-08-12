@@ -2,5 +2,7 @@
 
 public class Graph : ProjectItem
 {
-    public string Content { get; set; }
+    public Graph(string name, string content) : base(name, content)
+    {
+    }
 }

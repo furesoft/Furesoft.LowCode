@@ -1,6 +1,4 @@
-﻿using Avalonia.Controls;
-
-namespace Furesoft.LowCode.Designer.Layout.Views.Documents;
+﻿namespace Furesoft.LowCode.Designer.Layout.Views.Documents;
 
 public partial class DocumentView : UserControl
 {

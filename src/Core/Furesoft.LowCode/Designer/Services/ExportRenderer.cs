@@ -1,5 +1,4 @@
 using System.Reflection;
-using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Skia.Helpers;

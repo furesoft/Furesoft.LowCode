@@ -2,5 +2,7 @@
 
 public class SourceFile : ProjectItem
 {
-    public string Content { get; set; }
+    public SourceFile(string name, string content) : base(name, content)
+    {
+    }
 }
