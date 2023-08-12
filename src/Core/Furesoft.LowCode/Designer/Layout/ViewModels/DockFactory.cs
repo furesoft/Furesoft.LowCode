@@ -1,11 +1,16 @@
 ﻿using Dock.Avalonia.Controls;
+using Dock.Model.Avalonia.Controls;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Mvvm;
-using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Designer.Layout.Models.Tools;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
+using Document = Dock.Model.Mvvm.Controls.Document;
+using DocumentDock = Dock.Model.Mvvm.Controls.DocumentDock;
+using ProportionalDock = Dock.Model.Mvvm.Controls.ProportionalDock;
+using ProportionalDockSplitter = Dock.Model.Mvvm.Controls.ProportionalDockSplitter;
+using ToolDock = Dock.Model.Mvvm.Controls.ToolDock;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels;
 
@@ -47,7 +52,7 @@ public class DockFactory : Factory
         var leftDock = new ProportionalDock
         {
             Proportion = 0.25,
-            Orientation = Orientation.Vertical,
+            Orientation = Orientation.Horizontal,
             ActiveDockable = null,
             VisibleDockables = CreateList<IDockable>
             (
@@ -63,25 +68,14 @@ public class DockFactory : Factory
         var rightDock = new ProportionalDock
         {
             Proportion = 0.25,
-            Orientation = Orientation.Vertical,
-            ActiveDockable = null,
-            VisibleDockables = CreateList<IDockable>
-            (
-                new ToolDock {ActiveDockable = propertiesTool, Alignment = Alignment.Top, GripMode = GripMode.Visible}
-            )
-        };
-
-        var bottomDock = new ProportionalDock
-        {
-            Proportion = 0.25,
             Orientation = Orientation.Horizontal,
-            ActiveDockable = null,
+            ActiveDockable = propertiesTool,
             VisibleDockables = CreateList<IDockable>
             (
                 new ToolDock
                 {
                     ActiveDockable = consoleTool,
-                    VisibleDockables = CreateList<IDockable>(consoleTool, debugOutputTool, errorTool),
+                    VisibleDockables = CreateList<IDockable>(propertiesTool, errorTool),
                     Alignment = Alignment.Bottom,
                     GripMode = GripMode.Visible
                 }
@@ -98,6 +92,7 @@ public class DockFactory : Factory
 
         var mainLayout = new ProportionalDock
         {
+            Id = "Home",
             Orientation = Orientation.Horizontal,
             VisibleDockables = CreateList<IDockable>
             (
@@ -105,17 +100,66 @@ public class DockFactory : Factory
                 new ProportionalDockSplitter(),
                 _documentDock,
                 new ProportionalDockSplitter(),
-                rightDock,
-                new ProportionalDockSplitter(),
-                bottomDock
+                rightDock
             )
         };
-
+        
+        var rightDebugDock = new ProportionalDock
+        {
+            Proportion = 0.25,
+            Orientation = Orientation.Horizontal,
+            ActiveDockable = propertiesTool,
+            VisibleDockables = CreateList<IDockable>
+            (
+                new ToolDock
+                {
+                    ActiveDockable = consoleTool,
+                    VisibleDockables = CreateList<IDockable>(consoleTool, debugOutputTool),
+                    Alignment = Alignment.Bottom,
+                    GripMode = GripMode.Visible
+                }
+            )
+        };
+        
+        var leftDebugDock = new ProportionalDock
+        {
+            Proportion = 0.25,
+            Orientation = Orientation.Horizontal,
+            ActiveDockable = null,
+            VisibleDockables = CreateList<IDockable>
+            (
+                new ToolDock
+                {
+                    ActiveDockable = toolboxTool,
+                    VisibleDockables = CreateList<IDockable>(),
+                    Alignment = Alignment.Bottom
+                }
+            )
+        };
+        
+        var debugView = new ProportionalDock()
+        {
+            Id = "Debug",
+            Title = "Debug",
+            Orientation = Orientation.Horizontal,
+            VisibleDockables = CreateList<IDockable>
+            (
+                leftDebugDock,
+                new ProportionalDockSplitter(),
+                _documentDock,
+                new ProportionalDockSplitter(),
+                rightDebugDock
+            )
+        };
+        
 
         var rootDock = CreateRootDock();
 
         rootDock.IsCollapsable = false;
+        rootDock.ActiveDockable = debugView;
         rootDock.DefaultDockable = mainLayout;
+        rootDock.VisibleDockables = CreateList<IDockable>(debugView, mainLayout);
+
         
         _rootDock = rootDock;
 

@@ -20,7 +20,7 @@
   </UserControl.KeyBindings>
 
   <DockPanel>
-    <views:MenuView ZoomControl="{Binding #EditorControl.ZoomControl}"
+    <views:MenuView ZoomControl="{Binding SelectedDocument.Editor.ZoomControl}"
                     DrawingNode="{Binding SelectedDocument.Editor.DrawingNode}"
                     x:CompileBindings="False"
                     DockPanel.Dock="Top" />

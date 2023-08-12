@@ -92,8 +92,11 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public void Cancel()
     {
+        Layout.Navigate.Execute("Home");
+        
         _cancellationTokenSource.Cancel();
         _cancellationTokenSource = new();
+        
     }
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
@@ -123,6 +126,8 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public async Task Debug()
     {
+        Layout.Navigate.Execute("Debug");
+        
         Evaluator = new(((GraphDocumentViewModel)SelectedDocument).Editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
 
