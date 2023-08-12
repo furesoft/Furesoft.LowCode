@@ -21,7 +21,7 @@
 
   <DockPanel>
     <views:MenuView ZoomControl="{Binding #EditorControl.ZoomControl}"
-                    DrawingNode="{Binding #EditorControl.DrawingNode}"
+                    DrawingNode="{Binding SelectedDocument.Editor.DrawingNode}"
                     x:CompileBindings="False"
                     DockPanel.Dock="Top" />
 

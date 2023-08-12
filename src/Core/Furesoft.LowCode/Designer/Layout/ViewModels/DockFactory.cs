@@ -3,19 +3,16 @@ using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
-using Furesoft.LowCode.Designer.Layout.Models.Documents;
 using Furesoft.LowCode.Designer.Layout.Models.Tools;
-using Furesoft.LowCode.Designer.Layout.ViewModels.Docks;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
-using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels;
 
 public class DockFactory : Factory
 {
     private readonly NodeFactory _nodeFactory;
-    private IDocumentDock _documentDock;
+    private DocumentDock _documentDock;
     private IRootDock _rootDock;
 
     public DockFactory(NodeFactory nodeFactory)
@@ -25,20 +22,27 @@ public class DockFactory : Factory
 
     public override IDocumentDock CreateDocumentDock()
     {
-        return new GraphDocumentDock(_nodeFactory);
+        return new DocumentDock();
+    }
+
+    public void CreateDocument(Document document)
+    {
+        AddDockable(_documentDock, document);
+        SetActiveDockable(document);
+        SetFocusedDockable(_documentDock, document);
     }
 
     public override IRootDock CreateLayout()
     {
-        var document1 = new GraphDocumentViewModel(_nodeFactory) {Id = "Document1", Title = "New Graph"};
+        var document1 = new GraphDocumentViewModel(_nodeFactory, "Main Graph");
         var document2 = new SourceDocumentViewModel(new("main.js", "function hello(){}"));
-        
+
         var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
         var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
         var errorTool = new ErrorsToolViewModel {Id = "Errors", Title = "Errors"};
-        var projectTool = new ProjectToolViewModel() {Id = "Project", Title = "Project"};
+        var projectTool = new ProjectToolViewModel {Id = "Project", Title = "Project"};
 
         var leftDock = new ProportionalDock
         {
@@ -84,12 +88,12 @@ public class DockFactory : Factory
             )
         };
 
-        var documentDock = new GraphDocumentDock(_nodeFactory)
+        _documentDock = new()
         {
             IsCollapsable = false,
             ActiveDockable = document1,
             VisibleDockables = CreateList<IDockable>(document1, document2),
-            CanCreateDocument = true
+            CanCreateDocument = false
         };
 
         var mainLayout = new ProportionalDock
@@ -99,7 +103,7 @@ public class DockFactory : Factory
             (
                 leftDock,
                 new ProportionalDockSplitter(),
-                documentDock,
+                _documentDock,
                 new ProportionalDockSplitter(),
                 rightDock,
                 new ProportionalDockSplitter(),
@@ -112,8 +116,7 @@ public class DockFactory : Factory
 
         rootDock.IsCollapsable = false;
         rootDock.DefaultDockable = mainLayout;
-
-        _documentDock = documentDock;
+        
         _rootDock = rootDock;
 
         return rootDock;
@@ -123,13 +126,12 @@ public class DockFactory : Factory
     {
         ContextLocator = new()
         {
-            ["Document1"] = () => new GraphDocument(),
             ["Properties"] = () => new PropertiesTool(),
             ["Console"] = () => new ConsoleTool(),
             ["DebugOutput"] = () => new DebugOutputTool(),
             ["Toolbox"] = () => new ToolBoxTool(),
             ["Errors"] = () => new ErrorTool(),
-            ["Project"] = () => new ProjectTool(),
+            ["Project"] = () => new ProjectTool()
         };
 
         DockableLocator = new Dictionary<string, Func<IDockable>>
