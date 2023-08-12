@@ -10,23 +10,21 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <MergeResourceInclude Source="/Designer/Styles/Themes.axaml" />
+        <MergeResourceInclude Source="/Designer/Styles/Icons.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
-    
+
     <Color x:Key="RegionColor">Transparent</Color>
   </Styles.Resources>
 
   <StyleInclude Source="avares://Furesoft.LowCode.Editor/Themes/NodeEditorTheme.axaml" />
+  <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/Styles/Nodes.axaml" />
-  <StyleInclude Source="avares://Furesoft.LowCode/Designer/Styles/Icons.axaml" />
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/ConsoleControl.axaml" />
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/DebugOutputControl.axaml" />
   <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 
-  <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
-  <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
-  
   <DockFluentTheme />
 
   <Style Selector="DocumentControl">

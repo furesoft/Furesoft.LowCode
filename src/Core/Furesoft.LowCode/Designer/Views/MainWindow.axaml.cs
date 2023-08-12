@@ -1,5 +1,3 @@
-using Avalonia.Controls;
-
 namespace Furesoft.LowCode.Designer.Views;
 
 public partial class MainWindow : Window

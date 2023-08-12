@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Designer.Views;
+using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Desktop;
 

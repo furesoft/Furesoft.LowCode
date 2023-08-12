@@ -1,0 +1,36 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Furesoft.LowCode.Designer.Converters"
+             xmlns:projectSystem="clr-namespace:Furesoft.LowCode.ProjectSystem"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ProjectToolView">
+  <Grid Focusable="True" DataContext="{Binding $parent[Window].DataContext.OpenedProject, Mode=TwoWay}">
+    <TreeView>
+      <TreeView.DataTemplates>
+        <DataTemplate DataType="projectSystem:SourceFile">
+          <StackPanel Spacing="5" Orientation="Horizontal">
+            <Viewbox Margin="5" VerticalAlignment="Center">
+              <Path Classes="node" Data="{StaticResource SourceFileIcon}" />
+            </Viewbox>
+            
+            <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBlock>
+          </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="projectSystem:GraphItem">
+          <StackPanel Spacing="5" Orientation="Horizontal">
+            <Viewbox Margin="5" VerticalAlignment="Center">
+              <Path Classes="node" Data="{StaticResource GraphFileIcon}" />
+            </Viewbox>
+            
+            <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBlock>
+          </StackPanel>
+        </DataTemplate>
+      </TreeView.DataTemplates>
+      
+      <TreeViewItem Header="{Binding Name, Converter={converters:ProjectNameConverter}}" IsExpanded="True"
+                    ItemsSource="{Binding Items, Mode=TwoWay}" />
+    </TreeView>
+  </Grid>
+</UserControl>

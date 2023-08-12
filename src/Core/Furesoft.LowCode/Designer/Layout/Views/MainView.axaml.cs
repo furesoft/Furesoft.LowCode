@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls;
-using Dock.Avalonia;
+﻿using Dock.Avalonia;
 
 namespace Furesoft.LowCode.Designer.Layout.Views;
 

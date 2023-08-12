@@ -1,5 +1,4 @@
 #nullable enable
-using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Dock.Model.Core;
 

@@ -1,7 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-
-namespace Furesoft.LowCode.NodeViews;
+﻿namespace Furesoft.LowCode.NodeViews;
 
 public partial class EntryView : UserControl
 {

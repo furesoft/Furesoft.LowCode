@@ -26,7 +26,7 @@
             DockPanel.Dock="Right">
       <Button.Flyout>
         <Flyout ShowMode="TransientWithDismissOnPointerMoveAway" Placement="BottomEdgeAlignedRight">
-          <editor:DrawingNodeProperties DataContext="{Binding SelectedDocument.Editor.Drawing, FallbackValue={x:Null}}" />
+          <editor:DrawingNodeProperties DataContext="{Binding SelectedGraphDocument.Editor.Drawing, FallbackValue={x:Null}}" />
         </Flyout>
       </Button.Flyout>
       <PathIcon Width="16" Height="16"
