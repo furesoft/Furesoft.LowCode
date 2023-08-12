@@ -10,6 +10,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <MergeResourceInclude Source="/Designer/Styles/Themes.axaml" />
+        <MergeResourceInclude Source="/Designer/Styles/Icons.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
     
@@ -19,7 +20,6 @@
   <StyleInclude Source="avares://Furesoft.LowCode.Editor/Themes/NodeEditorTheme.axaml" />
 
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/Styles/Nodes.axaml" />
-  <StyleInclude Source="avares://Furesoft.LowCode/Designer/Styles/Icons.axaml" />
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/ConsoleControl.axaml" />
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/DebugOutputControl.axaml" />
 

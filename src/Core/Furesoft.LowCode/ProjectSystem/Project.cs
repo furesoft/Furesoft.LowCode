@@ -12,7 +12,7 @@ public class Project
     public string Name { get; set; }
     public string Version { get; set; }
 
-    [JsonIgnore] public List<ProjectItem> Items { get; set; } = new();
+    [JsonIgnore] public ObservableCollection<ProjectItem> Items { get; set; } = new();
 
     public static Project Load(string path)
     {
@@ -36,7 +36,7 @@ public class Project
             switch (extension)
             {
                 case ".json":
-                    item = new Graph(entry.Name, entryContent);
+                    item = new GraphItem(entry.Name, entryContent);
                     break;
                 case ".js":
                     item = new SourceFile(entry.Name, entryContent);
