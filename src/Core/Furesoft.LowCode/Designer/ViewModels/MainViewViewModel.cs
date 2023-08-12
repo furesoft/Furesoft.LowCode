@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
+using Avalonia.PropertyGrid.Services;
 using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Controls;
 using Dock.Model.Core;
@@ -46,6 +47,8 @@ public partial class MainViewViewModel : ViewModelBase
         NewLayout = new RelayCommand(ResetLayout);
 
         SetInitialSelectedDocument();
+        
+        CellEditFactoryService.Default.AddFactory(new EvaluatableCellEditFactory());
     }
 
     public Evaluator Evaluator { get; set; }

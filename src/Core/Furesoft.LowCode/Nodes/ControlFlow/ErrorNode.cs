@@ -18,7 +18,7 @@ public class ErrorNode : InputNode
     [Description("The error message")]
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string Message { get; set; }
+    public Evaluatable Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {

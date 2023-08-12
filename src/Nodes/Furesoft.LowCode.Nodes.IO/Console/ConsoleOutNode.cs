@@ -16,7 +16,7 @@ public class ConsoleOutNode : InputOutputNode
     [Description("The text to display")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Required]
-    public string Message { get; set; }
+    public Evaluatable Message { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {

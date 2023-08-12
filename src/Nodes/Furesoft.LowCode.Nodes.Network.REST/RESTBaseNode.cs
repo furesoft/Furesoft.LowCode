@@ -8,13 +8,15 @@ namespace Furesoft.LowCode.Nodes.Network.REST;
 [NodeCategory("Network/REST")]
 public abstract class RestBaseNode : InputNode, IOutVariableProvider
 {
+    protected HttpClient client = new();
+
     protected RestBaseNode(string label) : base(label)
     {
     }
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string URL { get; set; }
+    public Evaluatable URL { get; set; }
 
     [Pin("On Success", PinAlignment.Bottom)]
     public IOutputPin SuccessPin { get; set; }
@@ -23,15 +25,13 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     public IOutputPin FailurePin { get; set; }
 
     public BindingList<string> Headers { get; set; } = new();
-
-    protected HttpClient client = new();
     public string OutVariable { get; set; }
 
     private void ApplyHeaders()
     {
         foreach (var header in Headers)
         {
-            var spl = Evaluate<string>(header)
+            var spl = header
                 .Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             client.DefaultRequestHeaders.Add(spl[0], spl[1]);

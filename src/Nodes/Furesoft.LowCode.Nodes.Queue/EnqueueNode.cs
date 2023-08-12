@@ -10,7 +10,7 @@ public class EnqueueNode : QueueBaseNode
     {
     }
 
-    [DataMember] public string Data { get; set; }
+    [DataMember] public Evaluatable Data { get; set; }
 
 
     public override Task Invoke(CancellationToken cancellationToken)

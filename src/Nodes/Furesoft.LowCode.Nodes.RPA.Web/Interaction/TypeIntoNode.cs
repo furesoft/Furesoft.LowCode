@@ -16,7 +16,7 @@ public class TypeIntoNode : WebNode
     
     
     [DataMember(EmitDefaultValue = false)] 
-    public string Text { get; set; } = string.Empty;
+    public Evaluatable Text { get; set; }
 
     public TypeIntoNode() : base("Type Into")
     {

@@ -14,10 +14,9 @@ public class ReadFileNode : InputOutputNode, IOutVariableProvider
 
     [Description("Destination Filename")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string Filename { get; set; }
+    public Evaluatable Filename { get; set; }
 
-    [DataMember(EmitDefaultValue = false)]
-    public string OutVariable { get; set; }
+    [DataMember(EmitDefaultValue = false)] public string OutVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {

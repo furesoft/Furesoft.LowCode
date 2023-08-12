@@ -14,7 +14,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
 
     [Description("The Path to the Folder to get the Items")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public string FolderPath { get; set; }
+    public Evaluatable FolderPath { get; set; }
 
     [Description("Should the search be recursive")]
     [DataMember(IsRequired = false, EmitDefaultValue = true)]

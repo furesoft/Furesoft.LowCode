@@ -14,7 +14,7 @@
         <TextBlock Text="{Binding SelectedNode.Description, Mode=TwoWay}" TextWrapping="Wrap" />
         <Separator />
 
-        <controls:PropertyGrid AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
+        <controls:PropertyGrid Name="properties" AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
                          ShowStyle="Alphabetic" ShowTitle="False"
                          SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
       </StackPanel>

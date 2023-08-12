@@ -27,7 +27,7 @@ public abstract class WebNode : InputOutputNode
 
         return pageVariable.As<Page>();
     }
-    
+
     protected IBrowser GetBrowser()
     {
         var browserVariable = Context.GetVariable(BrowserVariableName);
@@ -37,7 +37,7 @@ public abstract class WebNode : InputOutputNode
             throw new InvalidNodeConnectionException("There is no Node connected that opens a web browser");
         }
 
-        var browser =  browserVariable.As<IBrowser>();
+        var browser = browserVariable.As<IBrowser>();
 
         if (browser.IsClosed || !browser.IsConnected)
         {

@@ -11,8 +11,8 @@ public class WebBrowserAnalyzer : GraphAnalyzerBase<WebNode>
         {
             return;
         }
-        
-        var isBrowserConnectedBefore = this.AnalyzerContext.IsInputConnected<OpenBrowserNode>();
+
+        var isBrowserConnectedBefore = AnalyzerContext.IsInputConnected<OpenBrowserNode>();
 
         if (!isBrowserConnectedBefore)
         {

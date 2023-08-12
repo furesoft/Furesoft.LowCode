@@ -17,7 +17,7 @@ public class RepeatNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string Times { get; set; }
+    public Evaluatable Times { get; set; }
 
 
     [Pin("Do", PinAlignment.Right)] public IOutputPin DoPin { get; set; }

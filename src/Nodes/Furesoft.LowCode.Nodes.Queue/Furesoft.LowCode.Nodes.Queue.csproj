@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Furesoft.LowCode\Furesoft.LowCode.csproj" />
+    <ProjectReference Include="..\..\Core\Furesoft.LowCode\Furesoft.LowCode.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +21,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="DiskQueue" Version="1.6.8" />
+    <PackageReference Include="DiskQueue" Version="1.6.8"/>
   </ItemGroup>
 </Project>

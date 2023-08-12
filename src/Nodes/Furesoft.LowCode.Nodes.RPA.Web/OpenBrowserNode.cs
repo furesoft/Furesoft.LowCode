@@ -9,7 +9,7 @@ public class OpenBrowserNode : WebNode
 {
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string URL { get; set; }
+    public Evaluatable URL { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
     public bool UseHeadless { get; set; }

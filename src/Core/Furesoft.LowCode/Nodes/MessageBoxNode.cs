@@ -12,37 +12,24 @@ namespace Furesoft.LowCode.Nodes;
 [Description("Shows a message in a new window")]
 public class MessageBoxNode : InputOutputNode
 {
-    private string _message;
-    private string _title;
-
     public MessageBoxNode() : base("MessageBox")
     {
-        _message = string.Empty;
-        _title = "Info";
     }
 
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     [Required]
-    public string Message
-    {
-        get => _message;
-        set => SetProperty(ref _message, value);
-    }
+    public Evaluatable Message { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
-    public string Title
-    {
-        get => _title;
-        set => SetProperty(ref _title, value);
-    }
+    public string Title { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
         var box = MessageBoxManager
-            .GetMessageBoxStandard(_title, Evaluate<string>(_message));
+            .GetMessageBoxStandard(Title, Evaluate<string>(Message));
 
         await box.ShowWindowAsync();
 
