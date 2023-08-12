@@ -8,6 +8,7 @@ using Furesoft.LowCode.Designer.Layout.Models.Tools;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Docks;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
+using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels;
 
@@ -30,7 +31,8 @@ public class DockFactory : Factory
     public override IRootDock CreateLayout()
     {
         var document1 = new GraphDocumentViewModel(_nodeFactory) {Id = "Document1", Title = "New Graph"};
-        var document2 = new SourceDocumentViewModel() {Id = "main.js", Title = "main.js"};
+        var document2 = new SourceDocumentViewModel(new("main.js", "function hello(){}"));
+        
         var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
