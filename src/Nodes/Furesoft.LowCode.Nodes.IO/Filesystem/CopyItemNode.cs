@@ -25,28 +25,26 @@ public class CopyItemNode : InputOutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var sourcePath = Evaluate(SourcePath);
-        var destinationPath = Evaluate(DestinationPath);
-        var folderDestinationPath = Path.GetDirectoryName(destinationPath);
+        var folderDestinationPath = Path.GetDirectoryName(DestinationPath);
         if (!Directory.Exists(folderDestinationPath))
         {
             Directory.CreateDirectory(folderDestinationPath);
         }
 
-        if (File.Exists(sourcePath))
+        if (File.Exists(SourcePath))
         {
-            var target = Path.Combine(Path.GetFileName(sourcePath), destinationPath);
-            File.Copy(sourcePath, target);
+            var target = Path.Combine(Path.GetFileName(SourcePath), DestinationPath);
+            File.Copy(SourcePath, target);
         }
-        else if (Directory.Exists(sourcePath))
+        else if (Directory.Exists(SourcePath))
         {
             if (IsRecursive)
             {
-                CopyFilesRecursively(sourcePath, destinationPath);
+                CopyFilesRecursively(SourcePath, DestinationPath);
             }
             else
             {
-                var files = Directory.GetFiles(sourcePath);
+                var files = Directory.GetFiles(SourcePath);
                 foreach (var file in files)
                 {
                     var fileName = Path.GetFileName(file);

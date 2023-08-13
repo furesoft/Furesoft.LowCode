@@ -26,10 +26,10 @@ public class ArchiveNode : InputOutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        await using (var zip = File.OpenWrite(Evaluate(OutputFilename)))
+        await using (var zip = File.OpenWrite(OutputFilename))
         using (var zipWriter = WriterFactory.Open(zip, Type, CompressionType.Deflate))
         {
-            zipWriter.WriteAll(Evaluate(Path), SearchPattern, SearchOption);
+            zipWriter.WriteAll(Path, SearchPattern, SearchOption);
         }
 
         await ContinueWith(OutputPin, cancellationToken: cancellationToken);

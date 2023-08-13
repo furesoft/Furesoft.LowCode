@@ -26,9 +26,7 @@ public class DebugOutNode : InputOutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var msg = Evaluate(Message);
-
-        OutputWriter.WriteLine(msg);
+        OutputWriter.WriteLine(Message);
 
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }

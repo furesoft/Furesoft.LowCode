@@ -18,7 +18,7 @@ public class NewTabNode : WebNode
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
         var page = await GetBrowser().NewPageAsync();
-        await page.GoToAsync(Evaluate(URL));
+        await page.GoToAsync(URL);
 
         DefineConstant(PageVariableName, page);
     }

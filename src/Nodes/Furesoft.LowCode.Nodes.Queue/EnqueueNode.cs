@@ -19,7 +19,7 @@ public class EnqueueNode : QueueBaseNode
 
     public override Task Invoke(CancellationToken cancellationToken)
     {
-        QueueManager.Instance.Enqueue(Queue, Evaluate(Data));
+        QueueManager.Instance.Enqueue(Queue, Data);
 
         return Task.CompletedTask;
     }

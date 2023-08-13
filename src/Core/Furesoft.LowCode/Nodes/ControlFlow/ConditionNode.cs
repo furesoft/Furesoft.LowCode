@@ -26,9 +26,7 @@ public class ConditionNode : InputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var value = Evaluate(Condition);
-
-        if (value)
+        if (Condition)
         {
             return ContinueWith(TruePin, cancellationToken: cancellationToken);
         }

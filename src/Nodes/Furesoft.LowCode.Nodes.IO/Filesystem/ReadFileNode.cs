@@ -33,9 +33,7 @@ public class ReadFileNode : InputOutputNode, IOutVariableProvider
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var filename = Evaluate(Filename);
-
-        SetOutVariable(OutVariable, File.ReadAllText(filename));
+        SetOutVariable(OutVariable, File.ReadAllText(Filename));
 
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }

@@ -28,6 +28,6 @@ public class TypeIntoNode : WebNode
 
         var element = await page.QuerySelectorAsync(Selector);
 
-        await element.TypeAsync(Evaluate(Text));
+        await element.TypeAsync(Text);
     }
 }

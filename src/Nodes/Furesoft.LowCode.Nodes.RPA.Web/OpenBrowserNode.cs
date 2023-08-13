@@ -26,7 +26,7 @@ public class OpenBrowserNode : WebNode
         var browser = await Puppeteer.LaunchAsync(new() {Headless = UseHeadless});
 
         var page = (await browser.PagesAsync())[0];
-        await page.GoToAsync(Evaluate(URL));
+        await page.GoToAsync(URL);
 
         DefineConstant(PageVariableName, page);
         DefineConstant(BrowserVariableName, page);

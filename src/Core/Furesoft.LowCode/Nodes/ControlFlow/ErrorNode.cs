@@ -24,8 +24,6 @@ public class ErrorNode : InputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var msg = Evaluate(Message);
-
-        throw CreateError(msg);
+        throw CreateError(Message);
     }
 }

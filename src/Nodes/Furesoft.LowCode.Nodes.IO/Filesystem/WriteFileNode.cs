@@ -24,10 +24,7 @@ public class WriteFileNode : InputOutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var filename = Evaluate(Filename);
-        var content = Evaluate(Content);
-
-        File.WriteAllText(filename, content);
+        File.WriteAllText(Filename, Content);
 
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }

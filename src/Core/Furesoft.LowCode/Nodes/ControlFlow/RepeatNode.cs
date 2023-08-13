@@ -26,9 +26,7 @@ public class RepeatNode : InputOutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var times = Evaluate(Times);
-
-        for (var i = 0; i < times; i++)
+        for (var i = 0; i < Times; i++)
         {
             var context = new Context(Context);
             context.DefineConstant("index", i);

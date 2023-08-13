@@ -22,9 +22,20 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
         var control = new TextEditor();
         control.TextChanged += (s, e) =>
         {
-            SetAndRaise(context, control, new Evaluatable<object>(control.Text));
+            var instance = (dynamic)Activator.CreateInstance(context.Property.PropertyType, control.Text);
+            try
+            {
+
+                instance.Parent = (EmptyNode)context.Target;
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            
+            SetAndRaise(context, control, instance);
         };
-        control.Text = context.Property.GetValue(context.Target)?.ToString();
+        control.Text = ((dynamic)context.Property.GetValue(context.Target)).Source;
 
         _textmate = control.InstallTextMate(_options);
 
@@ -44,7 +55,7 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
         if (context.CellEdit is TextEditor ts)
         {
-            var value = (Evaluatable<object>)context.Property.GetValue(context.Target);
+            var value = (dynamic)context.Property.GetValue(context.Target);
             ts.Document.Text = value?.Source;
 
             ts.InvalidateVisual();

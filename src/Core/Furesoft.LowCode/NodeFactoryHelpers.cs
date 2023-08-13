@@ -1,6 +1,8 @@
-﻿using Furesoft.LowCode.Designer;
+﻿using System.ComponentModel;
+using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor;
 using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
 
 namespace Furesoft.LowCode;
@@ -78,6 +80,27 @@ public partial class NodeFactory
 
             viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, (Editor.Model.PinAlignment)pin.Alignment,
                 pin.Name, pin.MultipleConnections);
+        }
+    }
+
+    private static void SetEvaluableParents(EmptyNode node)
+    {
+        var props = TypeDescriptor.GetProperties(node);
+
+        foreach (PropertyDescriptor prop in props)
+        {
+            if (prop.PropertyType.Name != typeof(Evaluatable<>).Name)
+            {
+                continue;
+            }
+
+            var value = (dynamic)prop.GetValue(node);
+
+            value ??= Activator.CreateInstance(prop.PropertyType, "");
+            
+            value.Parent = node;
+
+            prop.SetValue(node, value);
         }
     }
 }

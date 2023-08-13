@@ -28,9 +28,8 @@ public class CreateNewItem : InputOutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        foreach (var item in TargetPaths)
+        foreach (var path in TargetPaths)
         {
-            var path = Evaluate(item);
             switch (ItemType)
             {
                 case ItemTypes.Directory:

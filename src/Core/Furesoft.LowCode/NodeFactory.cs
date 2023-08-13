@@ -80,6 +80,8 @@ public partial class NodeFactory : INodeFactory
         viewModel.Name = node.Label;
         viewModel.DefiningNode = node;
 
+        SetEvaluableParents(node);
+
         var attributes = TypeDescriptor.GetAttributes(node);
         var descriptionAttribute = attributes.OfType<DescriptionAttribute>().FirstOrDefault();
         if (descriptionAttribute != null)

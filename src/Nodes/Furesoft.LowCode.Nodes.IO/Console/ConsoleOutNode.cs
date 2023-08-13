@@ -22,9 +22,7 @@ public class ConsoleOutNode : InputOutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var msg = Evaluate(Message);
-
-        System.Console.WriteLine(msg);
+        System.Console.WriteLine(Message);
 
         return ContinueWith(OutputPin, cancellationToken: cancellationToken);
     }

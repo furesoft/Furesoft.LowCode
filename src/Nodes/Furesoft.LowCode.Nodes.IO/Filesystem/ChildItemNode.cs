@@ -46,7 +46,6 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var folderPath = Evaluate(FolderPath);
         var searchOption = IsRecurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
         if (string.IsNullOrEmpty(SearchPattern))
@@ -54,7 +53,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
             SearchPattern = "*";
         }
 
-        var dirInfo = new DirectoryInfo(folderPath);
+        var dirInfo = new DirectoryInfo(FolderPath);
         if (FollowSymlink)
         {
             if (dirInfo.ResolveLinkTarget(true) is DirectoryInfo resolvedDir)

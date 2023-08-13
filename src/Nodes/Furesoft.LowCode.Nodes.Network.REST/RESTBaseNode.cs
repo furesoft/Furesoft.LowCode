@@ -43,7 +43,7 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     public sealed override async Task Execute(CancellationToken cancellationToken)
     {
         ApplyHeaders();
-        client.BaseAddress = new(Evaluate(URL));
+        client.BaseAddress = new(URL);
 
         var response = await Invoke(cancellationToken);
 
