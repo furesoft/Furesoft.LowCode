@@ -6,6 +6,7 @@ using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Analyzers;
 using Furesoft.LowCode.NodeViews;
+using Newtonsoft.Json;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 
@@ -29,7 +30,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     [Browsable(false)] public Context Context { get; private set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    [Browsable(false)]
+    [Browsable(false), JsonIgnore]
     public string Label
     {
         get => _label;
@@ -41,7 +42,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     public Guid ID { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    [Browsable(false)]
+    [Browsable(false), JsonIgnore]
     public string Description
     {
         get => _description;

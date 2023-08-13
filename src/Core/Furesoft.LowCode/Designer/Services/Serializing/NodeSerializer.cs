@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using Furesoft.LowCode.Designer.Services.Serializing;
 using Furesoft.LowCode.Editor.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -113,20 +114,5 @@ internal class NodeSerializer : INodeSerializer
         {
             return base.CreateProperties(type, memberSerialization).Where(p => p.Writable).ToList();
         }
-    }
-}
-
-internal class ControlConverter : JsonConverter<UserControl>
-{
-    public override void WriteJson(JsonWriter writer, UserControl value, JsonSerializer serializer)
-    {
-        writer.WriteNull();
-    }
-
-    public override UserControl ReadJson(JsonReader reader, Type objectType, UserControl existingValue,
-        bool hasExistingValue,
-        JsonSerializer serializer)
-    {
-        return (UserControl)Activator.CreateInstance(objectType);
     }
 }
