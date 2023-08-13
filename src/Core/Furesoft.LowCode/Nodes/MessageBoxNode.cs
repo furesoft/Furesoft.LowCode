@@ -25,7 +25,6 @@ public class MessageBoxNode : InputOutputNode
     public Evaluatable<string> Message { get; set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    [Description("The message to display")]
     public Evaluatable<string> Title { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
