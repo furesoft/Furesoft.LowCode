@@ -10,6 +10,7 @@ using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
+using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.ProjectSystem;
 
@@ -33,7 +34,7 @@ public partial class MainViewViewModel : ViewModelBase
     public MainViewViewModel()
     {
         var nodeFactory = new NodeFactory();
-        _dockFactory = new DockFactory(nodeFactory);
+        _dockFactory = new(nodeFactory);
         _dockFactory.FocusedDockableChanged += DockFactoryOnFocusedDockableChanged;
 
         Layout = _dockFactory?.CreateLayout();
@@ -51,7 +52,7 @@ public partial class MainViewViewModel : ViewModelBase
         SetInitialSelectedDocument();
 
         OpenedProject = Project.Load("test.zip");
-        
+
         CellEditFactoryService.Default.AddFactory(new EvaluatableCellEditFactory());
     }
 
@@ -92,10 +93,9 @@ public partial class MainViewViewModel : ViewModelBase
     public void Cancel()
     {
         Layout.Navigate.Execute("Home");
-        
+
         _cancellationTokenSource.Cancel();
         _cancellationTokenSource = new();
-        
     }
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)
@@ -126,7 +126,7 @@ public partial class MainViewViewModel : ViewModelBase
     public async Task Debug()
     {
         Layout.Navigate.Execute("Debug");
-        
+
         Evaluator = new(((GraphDocumentViewModel)SelectedDocument).Editor.Drawing);
         Evaluator.Debugger.IsAttached = true;
 

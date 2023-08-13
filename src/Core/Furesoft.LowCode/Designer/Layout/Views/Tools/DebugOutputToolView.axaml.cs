@@ -12,4 +12,3 @@ public partial class DebugOutputToolView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

@@ -14,13 +14,8 @@ public abstract class GraphAnalyzerBase<T> : IGraphAnalyzer
 
     protected void AddMessage(Severity severity, string message, params object[] targets)
     {
-        var msg = new Message()
-        {
-            Severity = severity,
-            Content = message,
-            Targets = targets
-        };
-        
+        var msg = new Message {Severity = severity, Content = message, Targets = targets};
+
         Messages.Add(msg);
     }
 
@@ -28,12 +23,12 @@ public abstract class GraphAnalyzerBase<T> : IGraphAnalyzer
     {
         AddMessage(Severity.Error, message, targets);
     }
-    
+
     protected void AddWarning(string message, params object[] targets)
     {
         AddMessage(Severity.Warning, message, targets);
     }
-    
+
     protected void AddInfo(string message, params object[] targets)
     {
         AddMessage(Severity.Info, message, targets);

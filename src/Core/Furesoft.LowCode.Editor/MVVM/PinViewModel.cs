@@ -53,7 +53,7 @@ public partial class PinViewModel : IPin
 
     public void OnMoved()
     {
-        Moved?.Invoke(this, new(this, _x, _y));
+        Moved?.Invoke(this, new(this, X, Y));
     }
 
     public void OnSelected()

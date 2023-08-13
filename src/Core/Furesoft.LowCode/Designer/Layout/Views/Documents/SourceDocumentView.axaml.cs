@@ -43,7 +43,7 @@ public partial class SourceDocumentView : UserControl
         {
             Editor.Document.Text = vm.Source.Content;
         }
-        
+
         _textmate.SetGrammar(options.GetScopeByExtension(".js"));
     }
 }

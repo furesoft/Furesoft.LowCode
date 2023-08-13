@@ -1,4 +1,7 @@
-﻿namespace Furesoft.LowCode.Nodes.IO.Filesystem;
+﻿using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Evaluation;
+
+namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [Description("Copies Filesystem Items")]
 [NodeCategory("IO/FileSystem")]

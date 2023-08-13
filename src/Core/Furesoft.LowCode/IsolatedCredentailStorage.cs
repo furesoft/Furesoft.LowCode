@@ -5,8 +5,8 @@ namespace Furesoft.LowCode;
 
 public class IsolatedCredentailStorage : ICredentialStorage, IDisposable
 {
-    private readonly IsolatedStorageFile _storage;
     private readonly Dictionary<string, object> _data = new();
+    private readonly IsolatedStorageFile _storage;
 
     public IsolatedCredentailStorage()
     {

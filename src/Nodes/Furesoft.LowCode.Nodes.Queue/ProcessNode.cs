@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Furesoft.LowCode.Attributes;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.Queue;

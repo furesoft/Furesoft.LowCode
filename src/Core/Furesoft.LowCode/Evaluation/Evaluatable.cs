@@ -1,4 +1,4 @@
-﻿namespace Furesoft.LowCode;
+﻿namespace Furesoft.LowCode.Evaluation;
 
 public class Evaluatable<T>
 {

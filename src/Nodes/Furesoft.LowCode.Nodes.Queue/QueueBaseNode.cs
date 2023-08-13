@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Attributes;
 
 namespace Furesoft.LowCode.Nodes.Queue;
 
@@ -10,7 +11,13 @@ public abstract class QueueBaseNode : InputOutputNode
 {
     private string _queue;
 
-    [DataMember, Required]
+    protected QueueBaseNode(string label) : base(label)
+    {
+        ShowDescription = true;
+    }
+
+    [DataMember]
+    [Required]
     public string Queue
     {
         get => _queue;
@@ -19,11 +26,6 @@ public abstract class QueueBaseNode : InputOutputNode
             _queue = value;
             Description = Label + " " + value;
         }
-    }
-
-    protected QueueBaseNode(string label) : base(label)
-    {
-        ShowDescription = true;
     }
 
     public sealed override async Task Execute(CancellationToken cancellationToken)

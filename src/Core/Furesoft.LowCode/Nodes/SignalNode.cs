@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Analyzing;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.Analyzers;
 
 namespace Furesoft.LowCode.Nodes;
@@ -13,7 +14,6 @@ public class SignalNode : OutputNode
 {
     public SignalNode() : base("Signal")
     {
-
     }
 
     [DataMember(EmitDefaultValue = false)]

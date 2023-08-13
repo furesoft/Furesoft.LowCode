@@ -29,8 +29,8 @@
       <DockControl.DataTemplates>
         <layout:ViewLocator />
       </DockControl.DataTemplates>
-      </DockControl>
-    
+    </DockControl>
+
     <Panel DataContext="{Binding Layout.ActiveDockable}">
       <TextBlock Text="{Binding FocusedDockable, FallbackValue={}}"
                  Margin="4"

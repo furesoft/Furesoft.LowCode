@@ -10,7 +10,6 @@
              d:DesignWidth="1000" d:DesignHeight="550" x:CompileBindings="False"
              FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter">
   <UserControl.Resources>
-    <StreamGeometry x:Key="DarkTheme">M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Zm0-2V4a8 8 0 1 1 0 16Z</StreamGeometry>
   </UserControl.Resources>
   <Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent">
     <Menu Grid.Row="0" Grid.Column="0" VerticalAlignment="Top">
@@ -67,9 +66,9 @@
         </Grid.Styles>
       </Grid>
     </Panel>
-    
+
     <DockControl x:Name="DockControl" Layout="{Binding Layout}" Margin="4"
-                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
     <Panel DataContext="{Binding Layout.ActiveDockable}"
            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
       <TextBlock Text="{Binding FocusedDockable, FallbackValue={}}"

@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode;
+﻿using Furesoft.LowCode.Attributes;
+
+namespace Furesoft.LowCode;
 
 public abstract class InputNode : EmptyNode
 {

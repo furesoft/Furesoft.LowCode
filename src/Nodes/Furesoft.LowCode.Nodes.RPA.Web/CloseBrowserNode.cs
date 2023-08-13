@@ -11,7 +11,7 @@ public class CloseBrowserNode : WebNode
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
         await GetBrowser().CloseAsync();
-        
+
         DeleteConstant(BrowserVariableName);
     }
 }

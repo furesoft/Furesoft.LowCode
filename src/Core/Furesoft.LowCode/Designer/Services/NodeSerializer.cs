@@ -35,14 +35,14 @@ internal class NodeSerializer : INodeSerializer
 
         if (obj is CustomNodeViewModel node)
         {
-            InitNodeView<T>(node);
+            InitNodeView(node);
         }
-        
+
         if (obj is DrawingNodeEditor.Clipboard clp)
         {
             foreach (var n in clp.SelectedNodes)
             {
-                InitNodeView<T>((CustomNodeViewModel)n);
+                InitNodeView((CustomNodeViewModel)n);
             }
         }
 
@@ -50,14 +50,14 @@ internal class NodeSerializer : INodeSerializer
         {
             foreach (var n in dvm.Nodes)
             {
-                InitNodeView<T>((CustomNodeViewModel)n);
+                InitNodeView((CustomNodeViewModel)n);
             }
         }
 
         return obj;
     }
 
-    private static void InitNodeView<T>(CustomNodeViewModel node)
+    private static void InitNodeView(CustomNodeViewModel node)
     {
         double w = 60;
         double h = 60;

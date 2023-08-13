@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.NodeViews;
@@ -12,7 +13,7 @@ public partial class NodeFactory : INodeFactory
 
     private readonly List<DynamicNode> _dynamicNodes = new();
 
-    public readonly List<string> SearchPaths = new() { "." };
+    public readonly List<string> SearchPaths = new() {"."};
 
     public IList<INodeTemplate> CreateTemplates()
     {
@@ -157,8 +158,8 @@ public partial class NodeFactory : INodeFactory
         }
 
         var factoryNodes = from node in nodes
-                           where IsFactoryNode(node)
-                           select Activator.CreateInstance(node);
+            where IsFactoryNode(node)
+            select Activator.CreateInstance(node);
 
         foreach (var factoryNode in factoryNodes)
         {
@@ -181,13 +182,11 @@ public partial class NodeFactory : INodeFactory
             select (EmptyNode)Activator.CreateInstance(node);
 
         templates.AddRange(from node in normalNodes
-                           let ignoreAttribute = node.GetAttribute<IgnoreTemplateAttribute>()
-                           where ignoreAttribute == null
-                           select new NodeTemplateViewModel
-                           {
-                                Title = node.Label, 
-                                Template = CreateNode(node, (0, 0)), 
-                                Preview = CreateNode(node, (0, 0))
-                           });
+            let ignoreAttribute = node.GetAttribute<IgnoreTemplateAttribute>()
+            where ignoreAttribute == null
+            select new NodeTemplateViewModel
+            {
+                Title = node.Label, Template = CreateNode(node, (0, 0)), Preview = CreateNode(node, (0, 0))
+            });
     }
 }

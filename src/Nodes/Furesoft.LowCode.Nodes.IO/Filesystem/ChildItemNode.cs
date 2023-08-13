@@ -1,4 +1,6 @@
-﻿using Furesoft.LowCode.NodeViews;
+﻿using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Evaluation;
+using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
@@ -70,7 +72,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
             ItemType.File => dirInfo.GetFiles(SearchPattern, searchOption),
             ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
             ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException("Unknown Type")
         };
         fileInfos = fileInfos.Where(x => !x.Attributes.HasFlag(ExcludedFlags)).ToArray();
 

@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.Nodes.IO.Filesystem;
+﻿using Furesoft.LowCode.Attributes;
+
+namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [NodeCategory("IO/FileSystem")]
 [Description("Watch for Changes on the filesystem")]

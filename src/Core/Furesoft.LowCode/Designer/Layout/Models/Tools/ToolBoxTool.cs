@@ -1,5 +1,4 @@
-﻿
-namespace Furesoft.LowCode.Designer.Layout.Models.Tools;
+﻿namespace Furesoft.LowCode.Designer.Layout.Models.Tools;
 
 public class ToolBoxTool
 {

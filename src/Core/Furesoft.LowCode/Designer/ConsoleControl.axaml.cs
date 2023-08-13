@@ -39,10 +39,10 @@ public class ConsoleControl : TemplatedControl
 
     public class Reader : TextReader
     {
-        private readonly TextBox _inputBox;
         private readonly Button _button;
-        private AutoResetEvent _mrs;
+        private readonly TextBox _inputBox;
         private string _inputText;
+        private readonly AutoResetEvent _mrs;
 
         public Reader(TextBox inputBox, Button button)
         {
@@ -68,7 +68,7 @@ public class ConsoleControl : TemplatedControl
                 _inputBox.IsEnabled = true;
                 _button.IsEnabled = _inputBox.IsEnabled;
             });
-            
+
             _mrs.WaitOne();
 
             return _inputText;

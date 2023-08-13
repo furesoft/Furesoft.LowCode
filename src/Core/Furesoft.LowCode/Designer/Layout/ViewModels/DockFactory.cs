@@ -12,13 +12,14 @@ namespace Furesoft.LowCode.Designer.Layout.ViewModels;
 public class DockFactory : Factory
 {
     private readonly NodeFactory _nodeFactory;
-    public DocumentDock DocumentDock { get; private set; }
     private IRootDock _rootDock;
 
     public DockFactory(NodeFactory nodeFactory)
     {
         _nodeFactory = nodeFactory;
     }
+
+    public DocumentDock DocumentDock { get; private set; }
 
     public override IDocumentDock CreateDocumentDock()
     {
@@ -74,7 +75,7 @@ public class DockFactory : Factory
                 }
             )
         };
-        
+
         DocumentDock = new()
         {
             IsCollapsable = false,
@@ -82,7 +83,7 @@ public class DockFactory : Factory
             VisibleDockables = CreateList<IDockable>(document1, document2),
             CanCreateDocument = false
         };
-        
+
         var mainLayout = new ProportionalDock
         {
             Id = "Home",

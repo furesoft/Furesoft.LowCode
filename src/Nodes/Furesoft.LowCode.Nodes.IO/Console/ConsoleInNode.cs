@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.IO.Console;
@@ -13,7 +14,6 @@ public class ConsoleInNode : InputOutputNode, IOutVariableProvider
 
     public ConsoleInNode() : base("Console Input")
     {
-        
     }
 
     [Description("The input from the console")]

@@ -2,14 +2,13 @@
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Nodes;
 using NiL.JS.Core;
-using NiL.JS.Extensions;
 
-namespace Furesoft.LowCode;
+namespace Furesoft.LowCode.Evaluation;
 
 public class Evaluator
 {
     private readonly IDrawingNode _drawing;
-    public Context Context;
+    public readonly Context Context;
 
     public Evaluator(IDrawingNode drawing)
     {
@@ -52,6 +51,11 @@ public class Evaluator
         {
             var wrapValue = Context.GlobalContext.WrapValue(CredentialStorage.Get(credentialName));
 
+            if (Context.GlobalContext.GetVariable(credentialName) != JSValue.NotExists)
+            {
+                return;
+            }
+
             Context.GlobalContext.DefineConstant(credentialName, wrapValue);
         }
     }
@@ -71,10 +75,5 @@ public class Evaluator
             .Select(node => node.DefiningNode)
             .OfType<SignalNode>()
             .ToList();
-    }
-
-    public T Evaluate<T>(string src)
-    {
-        return Context.Eval(src).As<T>();
     }
 }

@@ -4,16 +4,16 @@ namespace Furesoft.LowCode.Designer;
 
 public class CustomNodeViewModel : NodeViewModel
 {
-    public AnalyzerContext AnalyzerContext { get; }
-
     public CustomNodeViewModel()
     {
         AnalyzerContext = new(this);
     }
 
+    public AnalyzerContext AnalyzerContext { get; }
+
     public bool IsRemovable { get; set; } = true;
     public bool IsMovable { get; set; } = true;
-    
+
     public string Category { get; set; }
 
     public EmptyNode DefiningNode { get; set; }

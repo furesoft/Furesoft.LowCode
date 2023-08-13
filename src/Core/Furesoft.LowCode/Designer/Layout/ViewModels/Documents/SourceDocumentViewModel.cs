@@ -3,7 +3,7 @@ using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
-public partial class SourceDocumentViewModel : Document
+public class SourceDocumentViewModel : Document
 {
     public SourceDocumentViewModel(SourceFile source)
     {

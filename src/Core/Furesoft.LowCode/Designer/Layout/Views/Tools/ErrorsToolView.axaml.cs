@@ -12,4 +12,3 @@ public partial class ErrorsToolView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

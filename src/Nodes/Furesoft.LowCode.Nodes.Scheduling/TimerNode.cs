@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Attributes;
 using Timer = System.Timers.Timer;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;
@@ -13,8 +14,7 @@ public class TimerNode : InputOutputNode
     {
     }
 
-    [Pin("Ellapsed", PinAlignment.Right)] 
-    public IOutputPin EllapsedPin { get; set; }
+    [Pin("Ellapsed", PinAlignment.Right)] public IOutputPin EllapsedPin { get; set; }
 
     [DataMember(EmitDefaultValue = false)]
     [Required]

@@ -12,4 +12,3 @@ public partial class ProjectToolView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

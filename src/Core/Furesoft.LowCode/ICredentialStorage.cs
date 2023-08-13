@@ -10,5 +10,4 @@ public interface ICredentialStorage
     {
         return (T)Get(key);
     }
-
 }

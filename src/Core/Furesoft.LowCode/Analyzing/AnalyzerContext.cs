@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Designer;
-using Furesoft.LowCode.Nodes;
 
 namespace Furesoft.LowCode.Analyzing;
 
@@ -62,7 +61,7 @@ public class AnalyzerContext
         {
             return true;
         }
-        
+
         foreach (var currentNodeInput in currentNodeConnections)
         {
             if (currentNodeInput.DefiningNode.GetType() == type)
@@ -138,7 +137,7 @@ public class AnalyzerContext
             }
         }
 
-        return null;
+        return new();
     }
 
     public bool IsNodePresentInGraph<T>()
@@ -205,12 +204,9 @@ public class AnalyzerContext
 
         var neighbors = GetNodeConnections(PinMode.Output, node);
 
-        foreach (var neighbor in neighbors)
+        if (neighbors.Any(neighbor => HasCycle(neighbor, visited, recursionStack)))
         {
-            if (HasCycle(neighbor, visited, recursionStack))
-            {
-                return true; // Found a cycle in the neighbor's subtree
-            }
+            return true; // Found a cycle in the neighbor's subtree
         }
 
         recursionStack.Remove(node);

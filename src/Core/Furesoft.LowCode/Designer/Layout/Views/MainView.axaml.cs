@@ -9,12 +9,12 @@ public partial class MainView : UserControl
         InitializeComponent();
         InitializeMenu();
     }
-    
+
 
     private void InitializeMenu()
     {
         var optionsIsDragEnabled = this.FindControl<MenuItem>("OptionsIsDragEnabled");
-        if (optionsIsDragEnabled is { })
+        if (optionsIsDragEnabled is not null)
         {
             optionsIsDragEnabled.Click += (_, _) =>
             {
@@ -27,7 +27,7 @@ public partial class MainView : UserControl
         }
 
         var optionsIsDropEnabled = this.FindControl<MenuItem>("OptionsIsDropEnabled");
-        if (optionsIsDropEnabled is { })
+        if (optionsIsDropEnabled is not null)
         {
             optionsIsDropEnabled.Click += (_, _) =>
             {

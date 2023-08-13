@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.NodeViews;
 using NiL.JS.Core;
 

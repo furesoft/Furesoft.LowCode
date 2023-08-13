@@ -9,7 +9,7 @@ public class GenericNodeAnalyzer : GraphAnalyzerBase<EmptyNode>
         var isEntryConnected = AnalyzerContext.IsInputConnected<EntryNode>();
         var isSignalConnected = AnalyzerContext.IsInputConnected<SignalNode>();
         var hasCycle = AnalyzerContext.HasCycle(node);
-        
+
         if (!(isEntryConnected || isSignalConnected))
         {
             AddError("This execution path will never be executed. Connect it with Entry or Signal", node);

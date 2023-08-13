@@ -2,6 +2,7 @@
 using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Mvvm.Controls;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
@@ -106,32 +107,7 @@ public partial class ToolboxToolViewModel : Tool
             TreeViewItem parentItem = null;
             currentPathBuilder.Clear();
 
-            for (var index = 0; index < spl.Length; index++)
-            {
-                var s = spl[index];
-                currentPathBuilder.Append(index == 0 ? "" : "/").Append(s);
-                var currentPath = currentPathBuilder.ToString();
-
-                if (!treeCache.TryGetValue(currentPath, out var treeViewItem))
-                {
-                    treeViewItem = new() {Header = s};
-                    if (index == 0)
-                    {
-                        Templates.Insert(0, treeViewItem);
-                    }
-                    else
-                    {
-                        treeCache[
-                                currentPathBuilder.Remove(currentPath.LastIndexOf('/'),
-                                    currentPath.Length - currentPath.LastIndexOf('/')).ToString()].Items
-                            .Insert(0, treeViewItem);
-                    }
-
-                    treeCache.Add(currentPath, treeViewItem);
-                }
-
-                parentItem = treeViewItem;
-            }
+            parentItem = CreateTreeViewItem(spl, currentPathBuilder, treeCache, parentItem);
 
             parentItem.Header = spl[^1];
 
@@ -140,5 +116,38 @@ public partial class ToolboxToolViewModel : Tool
                 parentItem.Items.Add(node);
             }
         }
+    }
+
+    private TreeViewItem CreateTreeViewItem(string[] spl, StringBuilder currentPathBuilder, Dictionary<string, TreeViewItem> treeCache,
+        TreeViewItem parentItem)
+    {
+        for (var index = 0; index < spl.Length; index++)
+        {
+            var s = spl[index];
+            currentPathBuilder.Append(index == 0 ? "" : "/").Append(s);
+            var currentPath = currentPathBuilder.ToString();
+
+            if (!treeCache.TryGetValue(currentPath, out var treeViewItem))
+            {
+                treeViewItem = new() {Header = s};
+                if (index == 0)
+                {
+                    Templates.Insert(0, treeViewItem);
+                }
+                else
+                {
+                    treeCache[
+                            currentPathBuilder.Remove(currentPath.LastIndexOf('/'),
+                                currentPath.Length - currentPath.LastIndexOf('/')).ToString()].Items
+                        .Insert(0, treeViewItem);
+                }
+
+                treeCache.Add(currentPath, treeViewItem);
+            }
+
+            parentItem = treeViewItem;
+        }
+
+        return parentItem;
     }
 }

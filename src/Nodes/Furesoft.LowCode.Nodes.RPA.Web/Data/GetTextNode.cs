@@ -6,17 +6,17 @@ namespace Furesoft.LowCode.Nodes.RPA.Web.Data;
 
 public class GetTextNode : WebNode, IOutVariableProvider
 {
-    [DataMember(EmitDefaultValue = false)]
-    [Required]
-    public string Selector { get; set; } = string.Empty;
-    
-    [DataMember(EmitDefaultValue = false)]
-    [Required]
-    public string OutVariable { get; set; }
-
     public GetTextNode() : base("Get Text")
     {
     }
+
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public string Selector { get; set; } = string.Empty;
+
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public string OutVariable { get; set; }
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {

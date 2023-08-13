@@ -11,8 +11,9 @@ public class ViewLocator : IDataTemplate
         var name = data?.GetType().FullName?.Replace("ViewModel", "View");
         if (name is null)
         {
-            return new TextBlock { Text = "Invalid Data Type" };
+            return new TextBlock {Text = "Invalid Data Type"};
         }
+
         var type = Type.GetType(name);
         if (type is not null)
         {
@@ -21,15 +22,11 @@ public class ViewLocator : IDataTemplate
             {
                 return (Control)instance;
             }
-            else
-            {
-                return new TextBlock { Text = "Create Instance Failed: " + type.FullName };
-            }
+
+            return new TextBlock {Text = "Create Instance Failed: " + type.FullName};
         }
-        else
-        {
-            return new TextBlock { Text = "Not Found: " + name };
-        }
+
+        return new TextBlock {Text = "Not Found: " + name};
     }
 
     public bool Match(object? data)

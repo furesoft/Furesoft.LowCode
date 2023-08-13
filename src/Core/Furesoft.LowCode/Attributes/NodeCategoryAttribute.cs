@@ -1,4 +1,4 @@
-﻿namespace Furesoft.LowCode;
+﻿namespace Furesoft.LowCode.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeCategoryAttribute : Attribute

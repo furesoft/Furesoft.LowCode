@@ -1,4 +1,5 @@
 ﻿using Furesoft.LowCode.Analyzing;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.RPA.Web.Analyzers;
 using NiL.JS.Extensions;
 using PuppeteerSharp;

@@ -12,4 +12,3 @@ public partial class ConsoleToolView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

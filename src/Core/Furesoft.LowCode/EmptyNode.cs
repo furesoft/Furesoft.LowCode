@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.ViewModels;
+using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Analyzers;
 using Furesoft.LowCode.NodeViews;
 using NiL.JS.Core;
@@ -77,21 +78,26 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
                 await _evaluator.Debugger.WaitTask;
             }
 
-            node._evaluator = _evaluator;
-            node.Context = context ?? _evaluator.Context;
-            node.Drawing = Drawing;
-            node.PreviousNode = this;
-            node._evaluator.Debugger.CurrentNode = node;
-
-            try
-            {
-                await node?.Execute(cancellationToken);
-            }
-            catch (OutVariableException)
-            {
-            }
+            await InitAndExecuteNode(context, cancellationToken, node);
 
             cancellationToken.ThrowIfCancellationRequested();
+        }
+    }
+
+    private async Task InitAndExecuteNode(Context context, CancellationToken cancellationToken, EmptyNode node)
+    {
+        node._evaluator = _evaluator;
+        node.Context = context ?? _evaluator.Context;
+        node.Drawing = Drawing;
+        node.PreviousNode = this;
+        node._evaluator.Debugger.CurrentNode = node;
+
+        try
+        {
+            await node?.Execute(cancellationToken);
+        }
+        catch (OutVariableException)
+        {
         }
     }
 
@@ -129,24 +135,26 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             return;
         }
 
-        Context.GetVariable(name).Assign(value);
+        Context.GetVariable(name).Assign(value, Context);
     }
 
     protected void DeleteConstant(string name)
     {
-        Context.GetVariable(name).Assign(JSValue.Undefined);
+        Context.GetVariable(name).Assign(JSValue.NotExists);
     }
 
     protected void DefineConstant(string name, object value, Context context = null)
     {
-        (context ?? Context).DefineVariable(name).Assign(Context.GlobalContext.WrapValue(value));
+        (context ?? Context).DefineVariable(name)
+            .Assign(Context.GlobalContext.WrapValue(value));
     }
 
     public Control GetView(ref double width, ref double height)
     {
         Control nodeView = new DefaultNodeView();
 
-        var nodeViewAttribute = this.GetAttribute<NodeViewAttribute>();
+        var nodeViewAttribute = GetAttribute<NodeViewAttribute>();
+
         if (nodeViewAttribute != null)
         {
             nodeView = (Control)Activator.CreateInstance(nodeViewAttribute.Type);
@@ -169,5 +177,12 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     public virtual void OnInit()
     {
+    }
+
+    public T GetAttribute<T>()
+        where T : Attribute
+    {
+        return TypeDescriptor.GetAttributes(this)
+            .OfType<T>().FirstOrDefault();
     }
 }

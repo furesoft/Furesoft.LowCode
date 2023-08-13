@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor.Model;
 
@@ -10,19 +11,22 @@ public partial class EmptyNode
     private readonly Dictionary<(string, PinMode), IReadOnlyList<EmptyNode>> _connectedNodesCache = new();
 
     public IEnumerable<EmptyNode> GetInputs(IInputPin pin,
-        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
+        [CallerArgumentExpression(nameof(pin))]
+        string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input);
     }
 
     public IEnumerable<EmptyNode> GetOutputs(IOutputPin pin,
-        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
+        [CallerArgumentExpression(nameof(pin))]
+        string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Output);
     }
 
     public EmptyNode GetInput(IInputPin pin,
-        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
+        [CallerArgumentExpression(nameof(pin))]
+        string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Input)[0];
     }
@@ -33,9 +37,9 @@ public partial class EmptyNode
         var pinName = GetPinName(pinMembername);
         var cacheKey = (pinMembername, mode);
 
-        if (_connectedNodesCache.ContainsKey(cacheKey))
+        if (_connectedNodesCache.TryGetValue(cacheKey, out var nodes))
         {
-            return _connectedNodesCache[cacheKey];
+            return nodes;
         }
 
         var connections = GetConnections();
@@ -55,6 +59,7 @@ public partial class EmptyNode
         return result;
     }
 
+    // ReSharper disable once FlagArgument
     private void InitNextNode(IConnector pinConnection, string pinName, out EmptyNode parentNode, PinMode mode)
     {
         CustomNodeViewModel parent;
@@ -73,14 +78,14 @@ public partial class EmptyNode
             return;
         }
 
-        parentNode = parent.DefiningNode;
+        parentNode = parent?.DefiningNode;
     }
 
     private static IEnumerable<IConnector> GetPinConnections(IEnumerable<IConnector> connections, IPin pinViewModel)
     {
         return from conn in connections
-               where conn.Start == pinViewModel || conn.End == pinViewModel
-               select conn;
+            where conn.Start == pinViewModel || conn.End == pinViewModel
+            select conn;
     }
 
     private IPin GetPinViewModel(string pinName, PinMode mode)
@@ -90,16 +95,16 @@ public partial class EmptyNode
                 from pinn in node.Pins
                 where pinn.Name == pinName
                 select pinn)
-                .OfType<PinViewModel>()
-                .FirstOrDefault(_ => _.Mode == mode);
+            .OfType<PinViewModel>()
+            .FirstOrDefault(_ => _.Mode == mode);
     }
 
     private IEnumerable<IConnector> GetConnections()
     {
         return from connection in Drawing.Connectors
-               where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == this
+            where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == this
                   || ((CustomNodeViewModel)connection.End.Parent).DefiningNode == this
-               select connection;
+            select connection;
     }
 
     private string GetPinName(string propertyName)
@@ -108,23 +113,15 @@ public partial class EmptyNode
 
         var propInfo = GetType().GetProperty(propertyName);
 
-        var attr = propInfo.GetCustomAttribute<PinAttribute>();
+        var attr = propInfo!.GetCustomAttribute<PinAttribute>();
 
-        if (attr == null)
-        {
-            return propInfo.Name;
-        }
-
-        return attr.Name;
+        return attr == null ? propInfo!.Name : attr.Name;
     }
 
     private string StripPinName(string propertyName)
     {
-        if (!propertyName.Contains("."))
-        {
-            return propertyName;
-        }
-
-        return propertyName.Split(".")[^1];
+        return propertyName.Contains('.')
+            ? propertyName.Split(".")[^1]
+            : propertyName;
     }
 }

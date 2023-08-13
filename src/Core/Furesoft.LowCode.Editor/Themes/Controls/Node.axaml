@@ -12,15 +12,17 @@
 
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:INode">
-        <StackPanel Orientation="Horizontal" Spacing="8" ToolTip.Tip="{Binding Content.DataContext.Description, Mode=TwoWay}">
+        <StackPanel Orientation="Horizontal" Spacing="8"
+                    ToolTip.Tip="{Binding Content.DataContext.Description, Mode=TwoWay}">
           <Panel Width="{Binding Width}"
                  Height="{Binding Height}">
             <ContentPresenter Name="PART_ContentPresenter"
                               Content="{Binding Content}" />
             <controls:Pins Name="PART_Pins" />
           </Panel>
-          
-          <TextBlock IsVisible="{Binding Content.DataContext.ShowDescription, Mode=TwoWay}" VerticalAlignment="Center" Text="{Binding Content.DataContext.Description, Mode=TwoWay}" />
+
+          <TextBlock IsVisible="{Binding Content.DataContext.ShowDescription, Mode=TwoWay}" VerticalAlignment="Center"
+                     Text="{Binding Content.DataContext.Description, Mode=TwoWay}" />
         </StackPanel>
       </ControlTemplate>
     </Setter>

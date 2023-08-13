@@ -16,8 +16,8 @@
     <Setter Property="Template">
       <ControlTemplate x:DataType="model:IPin">
         <controls1:PinShape Name="PART_Pin" Fill="{Binding Mode, Converter={converters:PinModeConverter}}"
-                 Width="{Binding Width}" Mode="{Binding Mode}" PinAlignment="{Binding Alignment}"
-                 Height="{Binding Height}" />
+                            Width="{Binding Width}" Mode="{Binding Mode}" PinAlignment="{Binding Alignment}"
+                            Height="{Binding Height}" />
       </ControlTemplate>
     </Setter>
 

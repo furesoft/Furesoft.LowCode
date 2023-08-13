@@ -6,21 +6,21 @@ namespace Furesoft.LowCode.Nodes.RPA.Web.Data;
 
 public class GetAttributeNode : WebNode, IOutVariableProvider
 {
-    [DataMember(EmitDefaultValue = false)]
-    [Required]
-    public string Selector { get; set; } = string.Empty;
-    
-    [DataMember(EmitDefaultValue = false)]
-    [Required]
-    public string Attribute { get; set; } = string.Empty;
-    
-    [DataMember(EmitDefaultValue = false)]
-    [Required]
-    public string OutVariable { get; set; }
-
     public GetAttributeNode() : base("Get Attribute")
     {
     }
+
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public string Selector { get; set; } = string.Empty;
+
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public string Attribute { get; set; } = string.Empty;
+
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public string OutVariable { get; set; }
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {

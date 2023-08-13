@@ -55,7 +55,7 @@ public class QueueManager : IDisposable
 
         return queue.EstimatedCountOfItemsInQueue;
     }
-    
+
     public void ClearQueue(string queueName)
     {
         var queue = GetQueue<object>(queueName);

@@ -7,11 +7,11 @@ namespace Furesoft.LowCode.Analyzing;
 public sealed class GraphAnalyzer
 {
     private readonly AdjancencyMatrix _adjacencyMatrix = new();
-    
+
     public IList<Message> Analyze(IDrawingNode drawing)
     {
         BuildAdjanceMatrix(drawing);
-        
+
         var messages = new List<Message>();
 
         foreach (var node in drawing.Nodes.OfType<CustomNodeViewModel>())
@@ -24,20 +24,20 @@ public sealed class GraphAnalyzer
 
                 analyzer.AnalyzerContext = node.AnalyzerContext;
                 analyzer.AnalyzerContext.AdjancencyMatrix = _adjacencyMatrix;
-                
+
                 analyzer.Analyze(node.DefiningNode);
-                
+
                 messages.AddRange(analyzer.Messages);
             }
         }
 
         return messages;
     }
-    
+
     private void BuildAdjanceMatrix(IDrawingNode graphNode)
     {
         _adjacencyMatrix.Clear();
-        
+
         foreach (var node in graphNode.Nodes.OfType<CustomNodeViewModel>())
         {
             _adjacencyMatrix[node] = new();
@@ -46,11 +46,12 @@ public sealed class GraphAnalyzer
 
             _adjacencyMatrix[node].AddRange(connectedNodes);
         }
-        
+
         PrintAdjanceMatrix();
     }
-    
-    private IEnumerable<(CustomNodeViewModel, PinMode)> GetConnenctedNodes(CustomNodeViewModel node, IDrawingNode graphNode)
+
+    private IEnumerable<(CustomNodeViewModel, PinMode)> GetConnenctedNodes(CustomNodeViewModel node,
+        IDrawingNode graphNode)
     {
         var connections = from connection in graphNode.Connectors
             where ((CustomNodeViewModel)connection.Start.Parent).DefiningNode == node.DefiningNode
@@ -58,7 +59,7 @@ public sealed class GraphAnalyzer
             select connection;
 
         var nodes = new List<(CustomNodeViewModel, PinMode)>();
-        
+
         foreach (var connection in connections)
         {
             var start = connection.Start.Parent as CustomNodeViewModel;
@@ -80,12 +81,13 @@ public sealed class GraphAnalyzer
     private void PrintAdjanceMatrix()
     {
         Debug.WriteLine("Adjacency Matrix:");
-        
+
         foreach (var sourceNode in _adjacencyMatrix.Keys)
         {
             var targetNodes = _adjacencyMatrix[sourceNode];
 
-            Debug.WriteLine($"{sourceNode.Name} -> {string.Join(',', targetNodes.Select(_=> _.Node.DefiningNode.GetClassName() + " " + _.Mode))}");
+            Debug.WriteLine(
+                $"{sourceNode.Name} -> {string.Join(',', targetNodes.Select(_ => _.Node.DefiningNode.GetClassName() + " " + _.Mode))}");
         }
     }
 }

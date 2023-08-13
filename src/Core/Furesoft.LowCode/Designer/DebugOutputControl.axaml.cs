@@ -19,7 +19,7 @@ public class DebugOutputControl : TemplatedControl
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         DebugOutNode.OutputWriter = new DebugOutputWriter(this);
-        
+
         base.OnApplyTemplate(e);
     }
 }

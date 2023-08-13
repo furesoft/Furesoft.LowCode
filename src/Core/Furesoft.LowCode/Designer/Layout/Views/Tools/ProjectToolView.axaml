@@ -14,8 +14,8 @@
             <Viewbox Margin="5" VerticalAlignment="Center">
               <Path Classes="node" Data="{StaticResource SourceFileIcon}" />
             </Viewbox>
-            
-            <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBlock>
+
+            <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
           </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="projectSystem:GraphItem">
@@ -23,12 +23,12 @@
             <Viewbox Margin="5" VerticalAlignment="Center">
               <Path Classes="node" Data="{StaticResource GraphFileIcon}" />
             </Viewbox>
-            
-            <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}"></TextBlock>
+
+            <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
           </StackPanel>
         </DataTemplate>
       </TreeView.DataTemplates>
-      
+
       <TreeViewItem Header="{Binding Name, Converter={converters:ProjectNameConverter}}" IsExpanded="True"
                     ItemsSource="{Binding Items, Mode=TwoWay}" />
     </TreeView>

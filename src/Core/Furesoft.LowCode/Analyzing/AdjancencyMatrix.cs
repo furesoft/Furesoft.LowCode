@@ -4,5 +4,4 @@ namespace Furesoft.LowCode.Analyzing;
 
 public class AdjancencyMatrix : Dictionary<CustomNodeViewModel, List<(CustomNodeViewModel Node, PinMode Mode)>>
 {
-    
 }

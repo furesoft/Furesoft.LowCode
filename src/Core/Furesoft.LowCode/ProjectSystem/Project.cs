@@ -42,7 +42,7 @@ public class Project
                     item = new SourceFile(entry.Name, entryContent);
                     break;
             }
-            
+
             proj.Items.Add(item);
         }
 

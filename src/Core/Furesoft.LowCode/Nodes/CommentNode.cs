@@ -9,12 +9,15 @@ namespace Furesoft.LowCode.Nodes;
 [Description("A comment")]
 public class CommentNode : EmptyNode
 {
+    [Browsable(false)]
+    public new bool ShowDescription { get; set; }
+    
     private string _comment = "This is a comment";
 
     public CommentNode() : base("Comment")
     {
     }
-    
+
     [DataMember(EmitDefaultValue = false)]
     [Required]
     public string Comment

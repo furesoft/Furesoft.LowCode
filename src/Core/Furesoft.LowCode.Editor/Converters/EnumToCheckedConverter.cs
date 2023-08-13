@@ -5,7 +5,7 @@ namespace Furesoft.LowCode.Editor.Converters;
 
 internal class EnumToCheckedConverter : ValueConverter<EnumToCheckedConverter, bool>
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public new object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return Equals(value, parameter);
     }

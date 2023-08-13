@@ -70,7 +70,7 @@ public partial class NodeViewModel : INode
 
     public virtual void OnMoved()
     {
-        Moved?.Invoke(this, new(this, _x, _y));
+        Moved?.Invoke(this, new(this, X, Y));
     }
 
     public virtual void OnSelected()
@@ -85,6 +85,6 @@ public partial class NodeViewModel : INode
 
     public virtual void OnResized()
     {
-        Resized?.Invoke(this, new(this, _x, _y, _width, _height));
+        Resized?.Invoke(this, new(this, X, Y, Width, Height));
     }
 }

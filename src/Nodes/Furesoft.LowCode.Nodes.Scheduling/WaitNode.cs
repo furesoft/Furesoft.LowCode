@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;
@@ -13,7 +14,6 @@ public class WaitNode : InputOutputNode
 {
     public WaitNode() : base("Wait")
     {
-        
     }
 
     [Description("The time to wait in milliseconds")]

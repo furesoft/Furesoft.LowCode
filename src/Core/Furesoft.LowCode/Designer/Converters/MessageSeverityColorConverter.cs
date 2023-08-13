@@ -12,7 +12,7 @@ public class MessageSeverityColorConverter : ValueConverter<MessageSeverityColor
             Severity.Warning => new SolidColorBrush(new Color(255, 217, 183, 41)),
             Severity.Error => Brushes.Red,
             Severity.Info => new SolidColorBrush(new Color(255, 255, 165, 0)),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException("Unkown Message Severity")
         };
     }
 }

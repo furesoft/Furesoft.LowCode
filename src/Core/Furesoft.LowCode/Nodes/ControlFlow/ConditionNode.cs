@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.ControlFlow;
@@ -11,7 +12,6 @@ namespace Furesoft.LowCode.Nodes.ControlFlow;
 [Description("Change control flow based on condition")]
 public class ConditionNode : InputNode
 {
-
     public ConditionNode() : base("Condition")
     {
     }

@@ -6,6 +6,10 @@ namespace Furesoft.LowCode.Nodes.RPA.Web.Data;
 
 public class IsElementPresentNode : WebNode, IOutVariableProvider
 {
+    public IsElementPresentNode() : base("Is Element Present")
+    {
+    }
+
     [DataMember(EmitDefaultValue = false)]
     [Required]
     public string Selector { get; set; } = string.Empty;
@@ -13,10 +17,6 @@ public class IsElementPresentNode : WebNode, IOutVariableProvider
     [DataMember(EmitDefaultValue = false)]
     [Required]
     public string OutVariable { get; set; }
-
-    public IsElementPresentNode() : base("Is Element Present")
-    {
-    }
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {

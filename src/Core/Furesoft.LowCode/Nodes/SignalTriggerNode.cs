@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Attributes;
 
 namespace Furesoft.LowCode.Nodes;
 
@@ -10,7 +11,6 @@ public class SignalTriggerNode : InputOutputNode
 {
     public SignalTriggerNode() : base("Trigger")
     {
-
     }
 
     [DataMember(EmitDefaultValue = false)]
