@@ -50,12 +50,12 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
         if (response.IsSuccessStatusCode)
         {
             SetOutVariable(OutVariable, await response.Content.ReadAsStringAsync(cancellationToken));
-            await ContinueWith(SuccessPin, cancellationToken: cancellationToken);
+            await ContinueWith(SuccessPin, cancellationToken);
         }
         else
         {
             SetOutVariable(OutVariable, response.ReasonPhrase);
-            await ContinueWith(FailurePin, cancellationToken: cancellationToken);
+            await ContinueWith(FailurePin, cancellationToken);
         }
     }
 

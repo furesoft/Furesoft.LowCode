@@ -24,6 +24,6 @@ public class ConsoleOutNode : InputOutputNode
     {
         System.Console.WriteLine(Message);
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

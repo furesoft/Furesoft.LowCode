@@ -52,7 +52,7 @@ public abstract class WebNode : InputOutputNode
     {
         await Invoke(cancellationToken);
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 
     protected abstract Task Invoke(CancellationToken cancellationToken);

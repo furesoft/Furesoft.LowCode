@@ -42,6 +42,6 @@ public class AssignNode : InputOutputNode
             jsVar.Assign(value);
         }
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

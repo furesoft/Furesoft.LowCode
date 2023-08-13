@@ -84,6 +84,6 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
             SetOutVariable(OutVariable, fileInfos);
         }
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

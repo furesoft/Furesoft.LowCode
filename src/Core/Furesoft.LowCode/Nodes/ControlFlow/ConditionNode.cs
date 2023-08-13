@@ -28,9 +28,9 @@ public class ConditionNode : InputNode
     {
         if (Condition)
         {
-            return ContinueWith(TruePin, cancellationToken: cancellationToken);
+            return ContinueWith(TruePin, cancellationToken);
         }
 
-        return ContinueWith(FalsePin, cancellationToken: cancellationToken);
+        return ContinueWith(FalsePin, cancellationToken);
     }
 }

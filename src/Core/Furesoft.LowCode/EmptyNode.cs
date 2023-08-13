@@ -64,8 +64,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     public abstract Task Execute(CancellationToken cancellationToken);
 
-    protected async Task ContinueWith(IOutputPin pin, Context context = null,
-        CancellationToken cancellationToken = default,
+    protected async Task ContinueWith(IOutputPin pin, CancellationToken cancellationToken, Context context = null,
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
         _evaluator.Debugger.ResetWait();

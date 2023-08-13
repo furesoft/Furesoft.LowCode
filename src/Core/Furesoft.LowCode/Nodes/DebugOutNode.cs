@@ -28,6 +28,6 @@ public class DebugOutNode : InputOutputNode
     {
         OutputWriter.WriteLine(Message);
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

@@ -21,6 +21,6 @@ public class SignalTriggerNode : InputOutputNode
     {
         await _evaluator.Signals.Trigger(Signal, token: cancellationToken);
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

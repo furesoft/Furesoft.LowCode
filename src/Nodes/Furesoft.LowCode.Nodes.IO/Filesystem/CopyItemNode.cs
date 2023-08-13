@@ -54,7 +54,7 @@ public class CopyItemNode : InputOutputNode
             }
         }
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 
     public static void CopyFilesRecursively(string sourcePath, string destinationPath)

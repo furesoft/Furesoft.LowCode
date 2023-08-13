@@ -21,6 +21,6 @@ public class EntryNode : OutputNode
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

@@ -23,6 +23,6 @@ public class SignalNode : OutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

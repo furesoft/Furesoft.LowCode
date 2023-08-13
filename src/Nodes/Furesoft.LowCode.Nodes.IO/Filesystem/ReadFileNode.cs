@@ -35,6 +35,6 @@ public class ReadFileNode : InputOutputNode, IOutVariableProvider
     {
         SetOutVariable(OutVariable, File.ReadAllText(Filename));
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

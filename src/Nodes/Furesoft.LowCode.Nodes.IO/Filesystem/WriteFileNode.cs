@@ -26,6 +26,6 @@ public class WriteFileNode : InputOutputNode
     {
         File.WriteAllText(Filename, Content);
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

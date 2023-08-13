@@ -34,14 +34,14 @@ public class CatchNode : InputNode
     {
         try
         {
-            await ContinueWith(DoPin);
+            await ContinueWith(DoPin, cancellationToken);
         }
         catch (Exception ex)
         {
             var subContext = new Context(Context);
             DefineConstant(ErrorName, ex, subContext);
 
-            await ContinueWith(OnErrorPin, subContext, cancellationToken);
+            await ContinueWith(OnErrorPin, cancellationToken, subContext);
         }
     }
 }

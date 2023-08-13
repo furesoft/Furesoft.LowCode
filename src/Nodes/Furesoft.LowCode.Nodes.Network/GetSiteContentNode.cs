@@ -30,6 +30,6 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
 
         SetOutVariable(OutVariable, content);
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

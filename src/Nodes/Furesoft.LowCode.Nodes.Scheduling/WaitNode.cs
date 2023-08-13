@@ -25,6 +25,6 @@ public class WaitNode : InputOutputNode
     {
         await Task.Delay(WaitTime, cancellationToken);
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

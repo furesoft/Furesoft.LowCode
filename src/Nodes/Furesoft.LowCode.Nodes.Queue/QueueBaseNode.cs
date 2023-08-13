@@ -32,7 +32,7 @@ public abstract class QueueBaseNode : InputOutputNode
     {
         await Invoke(cancellationToken);
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 
     public abstract Task Invoke(CancellationToken cancellationToken);

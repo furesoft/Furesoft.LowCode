@@ -28,8 +28,8 @@ public class WaitForNode : InputOutputNode
     {
         var cts = new CancellationTokenSource();
 
-        await Task.WhenAny(ContinueWith(DoNode, cancellationToken: cancellationToken), Task.Delay(WaitTime, cts.Token));
+        await Task.WhenAny(ContinueWith(DoNode, cancellationToken), Task.Delay(WaitTime, cts.Token));
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

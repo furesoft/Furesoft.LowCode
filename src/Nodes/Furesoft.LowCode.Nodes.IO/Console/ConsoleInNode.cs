@@ -34,6 +34,6 @@ public class ConsoleInNode : InputOutputNode, IOutVariableProvider
         var input = System.Console.ReadLine();
         SetOutVariable(OutVariable, input);
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

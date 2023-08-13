@@ -46,12 +46,12 @@ public class FileWatcherNode : InputOutputNode
             await ContinueAfterEvent(cancellationToken, args);
         };
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 
     private async Task ContinueAfterEvent(CancellationToken cancellationToken, FileSystemEventArgs args)
     {
         DefineConstant("changed", args);
-        await ContinueWith(OnChangedPin, cancellationToken: cancellationToken);
+        await ContinueWith(OnChangedPin, cancellationToken);
     }
 }

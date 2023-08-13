@@ -37,6 +37,6 @@ public class ExtractNode : InputOutputNode
             reader.WriteEntryToDirectory(OutputDirectory, new() { ExtractFullPath = true, Overwrite = true });
         }
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

@@ -34,6 +34,6 @@ public class MessageBoxNode : InputOutputNode
 
         await box.ShowWindowAsync();
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

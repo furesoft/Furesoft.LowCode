@@ -34,7 +34,7 @@ public class ArchiveNode : InputOutputNode
             zipWriter.WriteAll(Path, SearchPattern, SearchOption);
         }
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 
     [DataMember(EmitDefaultValue = false)]

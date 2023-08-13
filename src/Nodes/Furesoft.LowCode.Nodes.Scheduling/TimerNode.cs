@@ -26,10 +26,10 @@ public class TimerNode : InputOutputNode
         timer.Interval = Interval;
         timer.Elapsed += async (sender, args) =>
         {
-            await ContinueWith(EllapsedPin, cancellationToken: cancellationToken);
+            await ContinueWith(EllapsedPin, cancellationToken);
         };
         timer.Start();
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

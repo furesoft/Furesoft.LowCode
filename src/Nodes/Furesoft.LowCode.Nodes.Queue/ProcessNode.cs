@@ -21,7 +21,7 @@ public class ProcessNode : QueueBaseNode
             subContext.DefineConstant("item",
                 Context.GlobalContext.WrapValue(QueueManager.Instance.Dequeue<object>(Queue)));
 
-            await ContinueWith(DoPin, subContext, cancellationToken);
+            await ContinueWith(DoPin, cancellationToken, subContext);
         }
     }
 }

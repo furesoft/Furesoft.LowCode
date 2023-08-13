@@ -43,6 +43,6 @@ public class CreateNewItem : InputOutputNode
             }
         }
 
-        return ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        return ContinueWith(OutputPin, cancellationToken);
     }
 }

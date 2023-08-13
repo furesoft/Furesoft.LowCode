@@ -31,9 +31,9 @@ public class RepeatNode : InputOutputNode
             var context = new Context(Context);
             context.DefineConstant("index", i);
 
-            await ContinueWith(DoPin, context, cancellationToken);
+            await ContinueWith(DoPin, cancellationToken, context);
         }
 
-        await ContinueWith(OutputPin, cancellationToken: cancellationToken);
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }
