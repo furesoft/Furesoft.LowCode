@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
@@ -16,12 +17,15 @@ public class ArchiveNode : InputOutputNode
     }
 
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> Path { get; set; }
     
+    [Required]
     [DataMember(EmitDefaultValue = false)]
     public Evaluatable<string> OutputFilename { get; set; }
     
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public ArchiveType Type { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public string SearchPattern { get; set; } = "*";

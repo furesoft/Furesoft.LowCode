@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
 
@@ -18,6 +19,7 @@ public class ReadFileNode : InputOutputNode, IOutVariableProvider
 
     [Description("Destination Filename")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> Filename { get; set; }
 
     [DataMember(EmitDefaultValue = false)]

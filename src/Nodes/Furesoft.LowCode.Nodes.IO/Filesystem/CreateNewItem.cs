@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
 
@@ -20,6 +21,7 @@ public class CreateNewItem : InputOutputNode
 
     [Description("What should the name of the item be")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public string ItemName { get; set; }
 
     [Description("Which item should be created")]

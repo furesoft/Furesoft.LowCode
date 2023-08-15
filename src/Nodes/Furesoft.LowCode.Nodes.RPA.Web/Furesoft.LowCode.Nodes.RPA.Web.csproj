@@ -13,12 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
-    <PackageReference Include="PuppeteerSharp" Version="10.1.2"/>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="PuppeteerSharp" Version="10.1.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Furesoft.LowCode\Furesoft.LowCode.csproj"/>
+    <ProjectReference Include="..\..\Core\Furesoft.LowCode\Furesoft.LowCode.csproj" />
   </ItemGroup>
 
 </Project>

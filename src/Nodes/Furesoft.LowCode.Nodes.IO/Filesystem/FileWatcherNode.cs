@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
@@ -10,7 +11,9 @@ public class FileWatcherNode : InputOutputNode
     {
     }
 
-    [DataMember(EmitDefaultValue = false)] public string Path { get; set; }
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public string Path { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public string Filter { get; set; }
 

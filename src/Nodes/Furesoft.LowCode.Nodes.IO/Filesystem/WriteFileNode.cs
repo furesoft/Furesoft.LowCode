@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
 
@@ -16,10 +17,12 @@ public class WriteFileNode : InputOutputNode
 
     [Description("Destination Filename")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> Filename { get; set; }
 
     [Description("The content to save")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> Content { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)

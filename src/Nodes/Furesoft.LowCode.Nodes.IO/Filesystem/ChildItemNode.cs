@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
 
@@ -42,6 +43,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public FileAttributes ExcludedFlags { get; set; }
 
+    [Required]
     public string OutVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)

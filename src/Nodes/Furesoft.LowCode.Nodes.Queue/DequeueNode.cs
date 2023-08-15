@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.NodeViews;
 
@@ -13,7 +14,8 @@ public class DequeueNode : QueueBaseNode, IOutVariableProvider
     {
     }
 
-    [DataMember] public string OutVariable { get; set; }
+    [Required, DataMember]
+    public string OutVariable { get; set; }
 
 
     public override Task Invoke(CancellationToken cancellationToken)

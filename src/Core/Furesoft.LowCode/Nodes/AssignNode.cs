@@ -25,6 +25,7 @@ public class AssignNode : InputOutputNode
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The value of the variable")]
+    [Required]
     public Evaluatable<object> Value { get; set; }
 
 

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
@@ -12,9 +13,11 @@ public class ExtractNode : InputOutputNode
 {
     
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> ArchiveFilename { get; set; }
     
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> OutputDirectory { get; set; }
     
     public ExtractNode() : base("Extract Archive")

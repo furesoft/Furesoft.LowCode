@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
@@ -14,7 +15,7 @@ public class EnqueueNode : QueueBaseNode
     {
     }
 
-    [DataMember] public Evaluatable<object> Data { get; set; }
+    [DataMember, Required] public Evaluatable<object> Data { get; set; }
 
 
     public override Task Invoke(CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
@@ -8,7 +9,9 @@ public class PatchRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    [DataMember(EmitDefaultValue = false)] public string Content { get; set; }
+    [DataMember(EmitDefaultValue = false)] 
+    [Required]
+    public string Content { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public new string OutVariable { get; set; }
 

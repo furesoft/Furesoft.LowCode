@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
@@ -11,12 +12,12 @@ public class CopyItemNode : InputOutputNode
     {
     }
 
-    [DataMember(EmitDefaultValue = false)]
-    [Description("The Path of the items to be copied")]
+    [DataMember(EmitDefaultValue = false), Description("The Path of the items to be copied"), Required]
     public Evaluatable<string> SourcePath { get; set; }
 
     [Description("The Path to the to the destination of the items")]
     [DataMember(EmitDefaultValue = false)]
+    [Required]
     public Evaluatable<string> DestinationPath { get; set; }
 
     [Description("Should a folder be copied recursively. No effect on file copies.")]

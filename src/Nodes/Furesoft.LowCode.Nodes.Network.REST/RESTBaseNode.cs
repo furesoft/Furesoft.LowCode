@@ -27,6 +27,8 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     public IOutputPin FailurePin { get; set; }
 
     public BindingList<string> Headers { get; set; } = new();
+    
+    [Required]
     public string OutVariable { get; set; }
 
     private void ApplyHeaders()

@@ -1,4 +1,4 @@
-﻿using Avalonia.PropertyGrid.Model.Extensions;
+﻿using PropertyModels.Extensions;
 
 namespace Furesoft.LowCode;
 

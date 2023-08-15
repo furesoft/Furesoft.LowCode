@@ -20,7 +20,9 @@ public class TypeIntoNode : WebNode
     public string Selector { get; set; } = string.Empty;
 
 
-    [DataMember(EmitDefaultValue = false)] public Evaluatable<string> Text { get; set; }
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public Evaluatable<string> Text { get; set; }
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
