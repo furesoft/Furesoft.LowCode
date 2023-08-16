@@ -117,6 +117,7 @@ public class DockFactory : Factory
     {
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
         var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
+        var debugLocalsTool = new DebugLocalsToolViewModel {Id = "DebugLocals", Title = "Locals"};
 
         var rightDebugDock = new ProportionalDock
         {
@@ -144,7 +145,7 @@ public class DockFactory : Factory
             (
                 new ToolDock
                 {
-                    ActiveDockable = null, VisibleDockables = CreateList<IDockable>(), Alignment = Alignment.Bottom
+                    ActiveDockable = null, VisibleDockables = CreateList<IDockable>(debugLocalsTool), Alignment = Alignment.Bottom
                 }
             )
         };

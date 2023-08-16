@@ -13,6 +13,7 @@ using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.ProjectSystem;
+using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
 
@@ -30,6 +31,7 @@ public partial class MainViewViewModel : ViewModelBase
     [ObservableProperty] private Document _selectedDocument;
 
     [ObservableProperty] private EmptyNode _selectedNode;
+    [ObservableProperty] private string _text;
 
     public MainViewViewModel()
     {
@@ -57,6 +59,14 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     public Evaluator Evaluator { get; set; }
+
+    [RelayCommand]
+    public void DebugEvaluate()
+    {
+        Context context = Evaluator.Debugger.CurrentNode.Context ?? Evaluator.Context;
+        
+        var result = context.Eval(Text);
+    }
 
 
     public IRootDock Layout
