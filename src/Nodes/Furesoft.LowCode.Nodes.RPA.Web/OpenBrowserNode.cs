@@ -21,7 +21,7 @@ public class OpenBrowserNode : WebNode
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
         using var browserFetcher = new BrowserFetcher();
-        await browserFetcher.DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+        await browserFetcher.DownloadAsync();
 
         var browser = await Puppeteer.LaunchAsync(new() {Headless = UseHeadless});
 

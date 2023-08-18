@@ -63,11 +63,26 @@ public class Connector : Shape
                 ref p1X, ref p1Y,
                 ref p2X, ref p2Y);
 
-            var midY = SnapHelper.Snap((p1Y + p2Y) / 2, connector.Parent.SnapY);
+            if (connector.Start.Parent == connector.End.Parent)
+            {
+                if (connector.Start.Alignment == PinAlignment.Top && connector.End.Alignment == PinAlignment.Bottom
+                    || connector.Start.Alignment == PinAlignment.Bottom && connector.End.Alignment == PinAlignment.Top)
+                {
+                    context.LineTo(new(p1X, p1Y));
+                    context.LineTo(new(p1X + connector.Start.Parent.Width, p1Y));
+                    context.LineTo(new(p2X + connector.Start.Parent.Width, p2Y));
+                    context.LineTo(new(p2X, p2Y));
+                    context.LineTo(EndPoint);
+                }
+            }
+            else
+            {
+                var midY = SnapHelper.Snap((p1Y + p2Y) / 2, connector.Parent.SnapY);
 
-            context.LineTo(new(p1X, p1Y));
-            context.LineTo(new(EndPoint.X, midY));
-            context.LineTo(EndPoint);
+                context.LineTo(new(p1X, p1Y));
+                context.LineTo(new(EndPoint.X, midY));
+                context.LineTo(EndPoint);
+            }
         }
         else
         {

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections;
+using System.Windows.Input;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Avalonia.PropertyGrid.Services;
@@ -59,6 +60,7 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     public Evaluator Evaluator { get; set; }
+    public ObservableCollection<TreeViewItem> Items { get; set; } = new();
 
     [RelayCommand]
     public void DebugEvaluate()
@@ -66,6 +68,70 @@ public partial class MainViewViewModel : ViewModelBase
         Context context = Evaluator.Debugger.CurrentNode.Context ?? Evaluator.Context;
         
         var result = context.Eval(Text);
+        var item = ConvertToTreeItem(result);
+        item.Header = "$result = " + item.Header;
+        
+        Items.Clear();
+        Items.Add(item);
+
+        foreach (var key in context)
+        {
+            Items.Add(ConvertToTreeItem(context.GetVariable(key)));
+        }
+        
+        var parent = new TreeViewItem(){Header = "Global Context"};
+        parent.Items.Add(ConvertContextToTreeItem(context.GlobalContext));
+        Items.Add(parent);
+    }
+
+    private TreeViewItem ConvertContextToTreeItem(Context c)
+    {
+        var root = new TreeViewItem();
+        foreach (var key in c)
+        {
+            var parent = new TreeViewItem(){Header = "Parent Context"};
+            parent.Items.Add(ConvertToTreeItem(c.GetVariable(key)));
+            
+            root.Items.Add(ConvertToTreeItem(c.GetVariable(key)));
+        }
+
+        return root;
+    }
+
+    private TreeViewItem ConvertToTreeItem(JSValue value)
+    {
+        var item = new TreeViewItem() {Header = value};
+        if (value.ValueType == JSValueType.Object)
+        {
+            var children = ConvertJsObjectToTreeItem(value);
+            
+            foreach (var child in children)
+            {
+                item.Items.Add(child);
+            }
+        }
+
+        return item;
+    }
+
+    private IEnumerable<TreeViewItem> ConvertJsObjectToTreeItem(JSValue value)
+    {
+        foreach (var kv in value)
+        {
+            var item = new TreeViewItem();
+
+            item.Header = kv.Key + ": " + kv.Value;
+
+            if (kv.Value.ValueType == JSValueType.Object)
+            {
+                foreach (var child in kv.Value)
+                {
+                    item.Items.Add(ConvertJsObjectToTreeItem(child.Value));
+                }
+            }
+            
+            yield return item;
+        }
     }
 
 
