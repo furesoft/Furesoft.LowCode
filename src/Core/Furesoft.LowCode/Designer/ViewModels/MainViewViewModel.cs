@@ -65,7 +65,7 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public void DebugEvaluate()
     {
-        Context context = Evaluator.Debugger.CurrentNode.Context ?? Evaluator.Context;
+        var context = Evaluator.Debugger.CurrentNode.Context ?? Evaluator.Context;
         
         var result = context.Eval(Text);
         var item = ConvertToTreeItem(result);

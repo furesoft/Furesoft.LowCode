@@ -12,17 +12,27 @@ public class Project
     public string Name { get; set; }
     public string Version { get; set; }
 
+    [JsonIgnore] public OptionsProvider Options { get; } = new();
+
     [JsonIgnore] public ObservableCollection<ProjectItem> Items { get; set; } = new();
 
     public static Project Load(string path)
     {
         using var zip = ZipFile.OpenRead(path);
         using var jsonStream = zip.GetEntry("meta.json")!.Open();
+        var optionsEntry = zip.GetEntry("options.json");
+
         var proj = JsonConvert.DeserializeObject<Project>(new StreamReader(jsonStream).ReadToEnd());
+
+        if (optionsEntry != null)
+        {
+            using var optionsStream = optionsEntry.Open();
+            proj.Options.Open(optionsStream);
+        }
 
         foreach (var entry in zip.Entries)
         {
-            if (entry.Name == "meta.json")
+            if (entry.Name == "meta.json" || entry.Name == "options.json")
             {
                 continue;
             }
@@ -32,16 +42,12 @@ public class Project
             var sr = new StreamReader(entryStream);
             var entryContent = sr.ReadToEnd();
 
-            ProjectItem item = null;
-            switch (extension)
+            ProjectItem item = extension switch
             {
-                case ".json":
-                    item = new GraphItem(entry.Name, entryContent);
-                    break;
-                case ".js":
-                    item = new SourceFile(entry.Name, entryContent);
-                    break;
-            }
+                ".json" => new GraphItem(entry.Name, entryContent),
+                ".js" => new SourceFile(entry.Name, entryContent),
+                _ => null
+            };
 
             proj.Items.Add(item);
         }
@@ -53,6 +59,7 @@ public class Project
     {
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
         WriteMetadata(zip);
+        Options.SaveTo(zip.CreateEntry("options.json").Open());
 
         foreach (var item in Items)
         {

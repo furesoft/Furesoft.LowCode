@@ -20,6 +20,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     internal Evaluator _evaluator;
     private string _label;
     private bool _showDescription;
+    public OptionsProvider Options;
 
     protected EmptyNode(string label)
     {
@@ -91,6 +92,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         node.Drawing = Drawing;
         node.PreviousNode = this;
         node._evaluator.Debugger.CurrentNode = node;
+        node.Options = _evaluator.Options;
 
         try
         {

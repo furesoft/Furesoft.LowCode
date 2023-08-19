@@ -9,6 +9,7 @@ public class Evaluator
 {
     private readonly IDrawingNode _drawing;
     public readonly Context Context;
+    public OptionsProvider Options;
 
     public Evaluator(IDrawingNode drawing)
     {
@@ -65,6 +66,7 @@ public class Evaluator
         node.Drawing = _drawing;
         node._evaluator = this;
         node._evaluator.Debugger.CurrentNode = node;
+        node.Options = Options;
 
         node.OnInit();
     }
