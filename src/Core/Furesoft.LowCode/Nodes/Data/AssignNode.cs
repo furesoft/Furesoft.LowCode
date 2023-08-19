@@ -6,7 +6,7 @@ using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
 using NiL.JS.Core;
 
-namespace Furesoft.LowCode.Nodes;
+namespace Furesoft.LowCode.Nodes.Data;
 
 [NodeCategory("Data")]
 [NodeView(typeof(IconNodeView),
