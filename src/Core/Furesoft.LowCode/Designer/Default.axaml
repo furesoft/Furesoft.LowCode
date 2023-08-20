@@ -24,6 +24,7 @@
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/ConsoleControl.axaml" />
   <StyleInclude Source="avares://Furesoft.LowCode/Designer/DebugOutputControl.axaml" />
   <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+  <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 
   <DockFluentTheme />
 
