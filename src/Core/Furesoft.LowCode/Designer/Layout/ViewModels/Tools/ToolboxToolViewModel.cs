@@ -51,22 +51,24 @@ public partial class ToolboxToolViewModel : Tool
     {
         if (string.IsNullOrEmpty(term))
         {
-            CollapseAll();
+            CollapseAll(Templates);
             return;
         }
 
         Search(Templates);
     }
 
-    private void CollapseAll()
+    private void CollapseAll(IEnumerable<object> templates)
     {
-        foreach (var template in Templates)
+        foreach (var template in templates)
         {
             switch (template)
             {
                 case TreeViewItem tvi:
                     tvi.IsExpanded = false;
                     tvi.IsVisible = true;
+
+                    CollapseAll(tvi.Items);
                     break;
 
                 case NodeTemplateViewModel vm:
