@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
+using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [Description("Copies Filesystem Items")]
 [NodeCategory("IO/FileSystem")]
+[NodeView(typeof(IconNodeView), "m 619.7 200 l 429.3 0 a 50 50 90 0 1 50 50 l 0 700 a 50 50 90 0 1 -50 50 l -900 0 a 50 50 90 0 1 -50 -50 l 0 -800 a 50 50 90 0 1 50 -50 l 370.7 0 l 100 100 z m -420.7 0 l 0 700 l 800 0 l 0 -600 l -420.7 0 l -100 -100 l -279.3 0 z m 400 350 l 0 -150 l 200 200 l -200 200 l 0 -150 l -200 0 l 0 -100 l 200 0 z")]
 public class CopyItemNode : InputOutputNode
 {
     public CopyItemNode() : base("CopyItem")
