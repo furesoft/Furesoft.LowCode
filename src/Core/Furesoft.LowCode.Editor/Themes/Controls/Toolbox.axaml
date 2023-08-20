@@ -32,6 +32,7 @@
                   <i:BehaviorCollection>
                     <idd:ContextDragBehavior />
                     <behaviors:InsertTemplateOnDoubleTappedBehavior Drawing="{ReflectionBinding Editor.Drawing}" />
+                    <behaviors:SingleClickExpansionBehavior />
                   </i:BehaviorCollection>
                 </i:BehaviorCollectionTemplate>
               </Setter>
