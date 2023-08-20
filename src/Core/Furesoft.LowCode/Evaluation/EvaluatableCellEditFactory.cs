@@ -1,4 +1,5 @@
-﻿using Avalonia.PropertyGrid.Controls;
+﻿using Avalonia.Media;
+using Avalonia.PropertyGrid.Controls;
 using Avalonia.PropertyGrid.Controls.Factories;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
@@ -25,14 +26,12 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
             var instance = (dynamic)Activator.CreateInstance(context.Property.PropertyType, control.Text);
             try
             {
-
                 instance.Parent = (EmptyNode)context.Target;
             }
             catch (Exception ex)
             {
-                
             }
-            
+
             SetAndRaise(context, control, instance);
         };
         control.Text = ((dynamic)context.Property.GetValue(context.Target)).Source;
@@ -41,7 +40,14 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
         _textmate.SetGrammar(_options.GetScopeByExtension(".js"));
 
-        return control;
+        return new Border
+        {
+            Child = control,
+            BorderBrush = Brushes.White,
+            BorderThickness = new(1),
+            Padding = new(5),
+            CornerRadius = new(3)
+        };
     }
 
     public override bool HandlePropertyChanged(PropertyCellContext context)
@@ -53,7 +59,7 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
         ValidateProperty(context.CellEdit, context.Property, context.Target);
 
-        if (context.CellEdit is TextEditor ts)
+        if (context.CellEdit is Border b && b.Child is TextEditor ts)
         {
             var value = (dynamic)context.Property.GetValue(context.Target);
             ts.Document.Text = value?.Source;
