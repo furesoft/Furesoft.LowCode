@@ -13,6 +13,7 @@ using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
+using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.ProjectSystem;
 using NiL.JS.Core;
 
@@ -57,6 +58,7 @@ public partial class MainViewViewModel : ViewModelBase
         OpenedProject = Project.Load("test.zip");
 
         CellEditFactoryService.Default.AddFactory(new EvaluatableCellEditFactory());
+        CellEditFactoryService.Default.AddFactory(new DataTableColumnsCellEditFactory());
     }
 
     public Evaluator Evaluator { get; set; }
