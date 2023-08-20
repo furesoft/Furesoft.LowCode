@@ -44,6 +44,11 @@ public class BuildDataTableNode : InputOutputNode, IOutVariableProvider
             .Select(_ => new DataColumn {ColumnName = _.ColumnName, ReadOnly = _.IsReadOnly, DataType = _.DataType})
             .ToArray());
 
+        foreach (var row in Rows)
+        {
+            Table.Rows.Add(row);
+        }
+
         DefineConstant(OutVariable, Table);
 
         await ContinueWith(OutputPin, cancellationToken);
