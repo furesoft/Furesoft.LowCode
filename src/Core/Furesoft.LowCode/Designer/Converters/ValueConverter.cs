@@ -18,7 +18,12 @@ public abstract class ValueConverter<TValueConverter, TValue> : MarkupExtension,
         return Convert(tValue, targetType, parameter);
     }
 
-    public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return ConvertBack((TValue)value, targetType, parameter);
+    }
+
+    public virtual object ConvertBack(TValue value, Type targetType, object parameter)
     {
         throw new NotImplementedException();
     }

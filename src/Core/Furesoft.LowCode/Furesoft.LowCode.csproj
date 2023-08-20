@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.4" />
     <PackageReference Include="Avalonia.Skia" Version="11.0.3" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.3" />
     <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.1" />
@@ -74,5 +75,6 @@
     <UpToDateCheckInput Remove="Nodes\Views\EntryView.axaml" />
     <UpToDateCheckInput Remove="Nodes\Views\IconNodeView.axaml" />
   </ItemGroup>
+
 
 </Project>
