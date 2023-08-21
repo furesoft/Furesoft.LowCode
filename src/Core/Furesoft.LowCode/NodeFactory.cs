@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
+using AvaloniaEdit.Utils;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor.Model;
@@ -40,6 +41,22 @@ public partial class NodeFactory : INodeFactory
         CreateDynamicNodeTemplates(templates);
 
         return templates;
+    }
+
+    public DynamicNode CreateSubGraphNode(string label, Dictionary<string, object> properties,
+        IEnumerable<KeyValuePair<string, (PinAlignment, PinMode, bool)>> Pins, string category,
+        Func<DynamicNode, CancellationToken, Task> action)
+    {
+        var node = new DynamicNode(label);
+
+        node.Properties.AddRange(properties);
+        node.Pins.AddRange(Pins);
+
+        TypeDescriptor.AddAttributes(node, new NodeCategoryAttribute(category));
+
+        node.Action = action;
+
+        return node;
     }
 
     public void AddDynamicNode(DynamicNode node)
