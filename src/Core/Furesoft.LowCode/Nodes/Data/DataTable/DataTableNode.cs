@@ -7,6 +7,7 @@ namespace Furesoft.LowCode.Nodes.Data.DataTable;
 
 public abstract class DataTableNode : InputOutputNode
 {
+    public TableAction Action { get; }
     private string _tableName;
 
     [DataMember(EmitDefaultValue = false)]
@@ -16,14 +17,15 @@ public abstract class DataTableNode : InputOutputNode
         set
         {
             SetProperty(ref _tableName, value);
-            Description = $"{Label} '{TableName}'";
+            Description = $"{Action} '{TableName}'";
         }
     }
 
     [DataMember(EmitDefaultValue = false)]
     public Evaluatable<string> Path { get; set; }
-    public DataTableNode(string label) : base(label)
+    public DataTableNode(TableAction action, string label) : base(label)
     {
+        Action = action;
     }
 
     public override async Task Execute(CancellationToken cancellationToken)
