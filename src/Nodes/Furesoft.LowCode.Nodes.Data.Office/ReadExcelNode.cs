@@ -50,12 +50,12 @@ public class ReadExcelNode : DataTableNode
 
     public string GetCellValue(SpreadsheetDocument document, Cell cell)
     {
-        SharedStringTablePart stringTablePart = document.WorkbookPart.SharedStringTablePart;
-        string value = cell.CellValue.InnerXml;
+        var stringTablePart = document.WorkbookPart!.SharedStringTablePart;
+        var value = cell.CellValue!.InnerXml;
 
         if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
         {
-            return stringTablePart.SharedStringTable.ChildElements[Int32.Parse(value)].InnerText;
+            return stringTablePart!.SharedStringTable.ChildElements[int.Parse(value)].InnerText;
         }
         else
         {
