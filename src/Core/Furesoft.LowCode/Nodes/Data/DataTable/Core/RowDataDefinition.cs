@@ -1,14 +1,4 @@
-﻿using System.Dynamic;
-
-namespace Furesoft.LowCode.Nodes.Data.DataTable;
-
-public partial class ColumnDataDefinition : ObservableObject
-{
-    [ObservableProperty] private string _columnName;
-    [ObservableProperty] private bool _isReadOnly;
-    [ObservableProperty] private Type _dataType;
-}
-
+﻿namespace Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
 public class RowDataDefinition : ObservableObject
 {

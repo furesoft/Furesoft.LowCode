@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.Data.DataTable;
+using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Furesoft.LowCode.NodeViews;
 using Sylvan.Data.Csv;
 

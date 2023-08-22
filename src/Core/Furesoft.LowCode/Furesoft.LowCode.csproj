@@ -65,6 +65,14 @@
       <DependentUpon>DebugOutputControl.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Nodes\Data\DataTable\Core\ColumnsWindow.axaml.cs">
+      <DependentUpon>ColumnsWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Nodes\Data\DataTable\Core\RowsWindow.axaml.cs">
+      <DependentUpon>RowsWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -75,6 +83,7 @@
     <UpToDateCheckInput Remove="Nodes\Views\EntryView.axaml" />
     <UpToDateCheckInput Remove="Nodes\Views\IconNodeView.axaml" />
   </ItemGroup>
+
 
 
 </Project>

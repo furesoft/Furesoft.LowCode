@@ -1,13 +1,13 @@
 ﻿using Avalonia.PropertyGrid.Controls;
 using Avalonia.PropertyGrid.Controls.Factories;
 
-namespace Furesoft.LowCode.Nodes.Data.DataTable;
+namespace Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
-public class DataTableRowsCellEditFactory : AbstractCellEditFactory
+public class DataTableColumnsCellEditFactory : AbstractCellEditFactory
 {
     public override Control HandleNewProperty(PropertyCellContext context)
     {
-        if (context.Property.PropertyType != typeof(ObservableCollection<RowDataDefinition>))
+        if (context.Property.PropertyType != typeof(ObservableCollection<ColumnDataDefinition>))
         {
             return null;
         }
@@ -18,7 +18,7 @@ public class DataTableRowsCellEditFactory : AbstractCellEditFactory
         btn.Tag = context.Property.GetValue(context.Target);
         btn.Click += (sender, _) =>
         {
-            var wndw = new RowsWindow();
+            var wndw = new ColumnsWindow();
             wndw.DataContext = context.Target;
 
             wndw.Show();
@@ -29,7 +29,7 @@ public class DataTableRowsCellEditFactory : AbstractCellEditFactory
 
     public override bool HandlePropertyChanged(PropertyCellContext context)
     {
-        if (context.Property.PropertyType != typeof(ObservableCollection<RowDataDefinition>))
+        if (context.Property.PropertyType != typeof(ObservableCollection<ColumnDataDefinition>))
         {
             return false;
         }

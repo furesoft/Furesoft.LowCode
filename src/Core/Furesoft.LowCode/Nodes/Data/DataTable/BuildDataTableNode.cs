@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
 namespace Furesoft.LowCode.Nodes.Data.DataTable;
 
@@ -23,7 +24,7 @@ public class BuildDataTableNode : InputOutputNode, IOutVariableProvider
 
     [Browsable(false)] public System.Data.DataTable Table { get; set; }
 
-    public ObservableCollection<ColumnDataDefinition> Columns { get; set; } = new();
+    public ObservableCollection<Core.ColumnDataDefinition> Columns { get; set; } = new();
     public ObservableCollection<RowDataDefinition> Rows { get; set; } = new();
 
     [Browsable(false)] public ICommand AddColumnCommand { get; set; }

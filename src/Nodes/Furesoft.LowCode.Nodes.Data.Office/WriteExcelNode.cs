@@ -5,6 +5,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.Data.DataTable;
+using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.Data.Office;

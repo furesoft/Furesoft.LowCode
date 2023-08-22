@@ -13,6 +13,7 @@ using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.Nodes.Data.DataTable;
+using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Furesoft.LowCode.ProjectSystem;
 using NiL.JS.Core;
 

@@ -1,9 +1,7 @@
-﻿using System.Dynamic;
-using Avalonia.Controls.Templates;
-using Avalonia.Data;
+﻿using Avalonia.Controls.Templates;
 using Avalonia.Interactivity;
 
-namespace Furesoft.LowCode.Nodes.Data.DataTable;
+namespace Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
 public partial class RowsWindow : Window
 {

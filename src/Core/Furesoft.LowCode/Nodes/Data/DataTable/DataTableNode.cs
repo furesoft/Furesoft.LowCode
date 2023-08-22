@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using Furesoft.LowCode.Evaluation;
+using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 
