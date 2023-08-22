@@ -408,6 +408,11 @@ public sealed class DrawingNodeEditor
 
     private List<IConnector> GetConnectionsForNodes(IEnumerable<INode> nodes)
     {
+        if (nodes == null)
+        {
+            return new();
+        }
+
         var result = new List<IConnector>();
 
         foreach (var node in nodes)

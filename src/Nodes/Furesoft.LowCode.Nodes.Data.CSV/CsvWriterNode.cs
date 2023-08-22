@@ -20,8 +20,6 @@ public class CsvWriterNode : DataTableNode
         await using var writer = CsvDataWriter.Create(Path);
         var dataTable = GetTable();
 
-        if (dataTable == null) throw CreateError($"Table '{TableName}' not exists.");
-
         var dataTableReader = new DataTableReader(dataTable);
         await writer.WriteAsync(dataTableReader, cancellationToken);
     }

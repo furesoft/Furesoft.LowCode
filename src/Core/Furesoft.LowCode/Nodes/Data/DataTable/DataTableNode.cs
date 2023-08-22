@@ -7,8 +7,14 @@ namespace Furesoft.LowCode.Nodes.Data.DataTable;
 
 public abstract class DataTableNode : InputOutputNode
 {
-    public TableAction Action { get; }
     private string _tableName;
+
+    protected DataTableNode(TableAction action, string label) : base(label)
+    {
+        Action = action;
+    }
+
+    public TableAction Action { get; }
 
     [DataMember(EmitDefaultValue = false)]
     public string TableName
@@ -21,13 +27,7 @@ public abstract class DataTableNode : InputOutputNode
         }
     }
 
-    [DataMember(EmitDefaultValue = false)]
-    public Evaluatable<string> Path { get; set; }
-
-    protected DataTableNode(TableAction action, string label) : base(label)
-    {
-        Action = action;
-    }
+    [DataMember(EmitDefaultValue = false)] public Evaluatable<string> Path { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
@@ -40,7 +40,15 @@ public abstract class DataTableNode : InputOutputNode
     {
         var value = Context.GetVariable(TableName);
 
-        return value != JSValue.NotExists ? value.As<System.Data.DataTable>() : null;
+        if (value == JSValue.NotExists)
+        {
+            var dt = new System.Data.DataTable();
+            SetTable(dt);
+
+            return dt;
+        }
+
+        return value.As<System.Data.DataTable>();
     }
 
     protected void SetTable(System.Data.DataTable table)
