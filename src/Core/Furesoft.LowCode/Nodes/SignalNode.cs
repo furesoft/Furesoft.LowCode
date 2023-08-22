@@ -12,14 +12,24 @@ namespace Furesoft.LowCode.Nodes;
 [NodeCategory]
 public class SignalNode : OutputNode
 {
+    private string _signal;
+
     public SignalNode() : base("Signal")
     {
     }
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string Signal { get; set; }
+    public string Signal
+    {
+        get => _signal;
+        set
+        {
+            SetProperty(ref _signal, value);
 
+            Description = $"On '{value}'";
+        }
+    }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {

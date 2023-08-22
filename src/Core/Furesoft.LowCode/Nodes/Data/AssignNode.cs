@@ -14,6 +14,8 @@ namespace Furesoft.LowCode.Nodes.Data;
 [Description("Save a value for later usage")]
 public class AssignNode : InputOutputNode
 {
+    private string _name;
+
     public AssignNode() : base("Assign Variable")
     {
     }
@@ -21,7 +23,16 @@ public class AssignNode : InputOutputNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The name of the variable")]
     [Required]
-    public string Name { get; set; }
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            SetProperty(ref _name, value);
+
+            Description = $"Assign '{value}'";
+        }
+    }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The value of the variable")]

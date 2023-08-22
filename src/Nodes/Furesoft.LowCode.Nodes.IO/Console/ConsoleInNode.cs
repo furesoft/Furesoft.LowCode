@@ -25,7 +25,7 @@ public class ConsoleInNode : InputOutputNode, IOutVariableProvider
         set
         {
             SetProperty(ref _outVariable, value);
-            Description = "Save console input to " + value;
+            Description = "Assign console input to " + value;
         }
     }
 
