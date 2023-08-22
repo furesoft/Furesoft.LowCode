@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Furesoft.LowCode.Editor.Model;
+using Newtonsoft.Json;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
 
@@ -9,6 +10,7 @@ public class ViewModelBase : ObservableObject
 
     public event Action OnRequestClose;
 
+    [JsonIgnore, Browsable(false)]
     public bool IsLoaded { get; set; }
 
 
