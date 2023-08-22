@@ -13,7 +13,7 @@ public class RemoveColumnsNode : DataTableNode
     {
     }
 
-    protected override Task Invoke(CancellationToken cancellationToken)
+    protected override async Task Invoke(CancellationToken cancellationToken)
     {
         var dataTable = GetTable();
 
