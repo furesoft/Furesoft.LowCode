@@ -12,6 +12,8 @@ namespace Furesoft.LowCode.Nodes.Scheduling;
 [Description("Wait for the specified time")]
 public class WaitNode : InputOutputNode
 {
+    private int _waitTime;
+
     public WaitNode() : base("Wait")
     {
     }
@@ -19,7 +21,16 @@ public class WaitNode : InputOutputNode
     [Description("The time to wait in milliseconds")]
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public int WaitTime { get; set; }
+    public int WaitTime
+    {
+        get => _waitTime;
+        set
+        {
+            SetProperty(ref _waitTime, value);
+
+            Description = $"Wait {value} milliseconds";
+        }
+    }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
