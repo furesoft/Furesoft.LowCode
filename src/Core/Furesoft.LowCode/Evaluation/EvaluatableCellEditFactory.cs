@@ -34,7 +34,13 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
 
             SetAndRaise(context, control, instance);
         };
-        control.Text = ((dynamic)context.Property.GetValue(context.Target)).Source;
+
+
+        var value = context.Property.GetValue(context.Target);
+        if (value != null)
+        {
+            control.Text = ((dynamic)value).Source;
+        }
 
         _textmate = control.InstallTextMate(_options);
 
