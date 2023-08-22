@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.RPA.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.Scheduling", "src\Nodes\Furesoft.LowCode.Nodes.Scheduling\Furesoft.LowCode.Nodes.Scheduling.csproj", "{73D24E72-AE94-49E5-8971-6E164342C418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockMvvmSample", "src\DockMvvmSample\DockMvvmSample.csproj", "{457D416D-DBF0-42AB-86C9-2596371DCDB9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.Queue", "src\Nodes\Furesoft.LowCode.Nodes.Queue\Furesoft.LowCode.Nodes.Queue.csproj", "{29957E57-C0B0-4BBD-9806-7E249C4C9334}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.IO.Archives", "src\Nodes\Furesoft.LowCode.Nodes.IO.Archives\Furesoft.LowCode.Nodes.IO.Archives.csproj", "{71C6104F-0D75-4E55-9336-C5DA2326DCE3}"

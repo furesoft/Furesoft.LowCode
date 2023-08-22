@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Avalonia.PropertyGrid.Services;
@@ -65,15 +64,24 @@ public partial class MainViewViewModel : ViewModelBase
     public Evaluator Evaluator { get; set; }
     public ObservableCollection<TreeViewItem> Items { get; set; } = new();
 
+
+    public IRootDock Layout
+    {
+        get => _layout;
+        set => SetProperty(ref _layout, value);
+    }
+
+    public ICommand NewLayout { get; }
+
     [RelayCommand]
     public void DebugEvaluate()
     {
         var context = Evaluator.Debugger.CurrentNode.Context ?? Evaluator.Context;
-        
+
         var result = context.Eval(Text);
         var item = ConvertToTreeItem(result);
         item.Header = "$result = " + item.Header;
-        
+
         Items.Clear();
         Items.Add(item);
 
@@ -81,8 +89,8 @@ public partial class MainViewViewModel : ViewModelBase
         {
             Items.Add(ConvertToTreeItem(context.GetVariable(key)));
         }
-        
-        var parent = new TreeViewItem(){Header = "Global Context"};
+
+        var parent = new TreeViewItem {Header = "Global Context"};
         parent.Items.Add(ConvertContextToTreeItem(context.GlobalContext));
         Items.Add(parent);
     }
@@ -92,9 +100,9 @@ public partial class MainViewViewModel : ViewModelBase
         var root = new TreeViewItem();
         foreach (var key in c)
         {
-            var parent = new TreeViewItem(){Header = "Parent Context"};
+            var parent = new TreeViewItem {Header = "Parent Context"};
             parent.Items.Add(ConvertToTreeItem(c.GetVariable(key)));
-            
+
             root.Items.Add(ConvertToTreeItem(c.GetVariable(key)));
         }
 
@@ -103,11 +111,11 @@ public partial class MainViewViewModel : ViewModelBase
 
     private TreeViewItem ConvertToTreeItem(JSValue value)
     {
-        var item = new TreeViewItem() {Header = value};
+        var item = new TreeViewItem {Header = value};
         if (value.ValueType == JSValueType.Object)
         {
             var children = ConvertJsObjectToTreeItem(value);
-            
+
             foreach (var child in children)
             {
                 item.Items.Add(child);
@@ -132,19 +140,10 @@ public partial class MainViewViewModel : ViewModelBase
                     item.Items.Add(ConvertJsObjectToTreeItem(child.Value));
                 }
             }
-            
+
             yield return item;
         }
     }
-
-
-    public IRootDock Layout
-    {
-        get => _layout;
-        set => SetProperty(ref _layout, value);
-    }
-
-    public ICommand NewLayout { get; }
 
     private void SetInitialSelectedDocument()
     {
@@ -384,6 +383,17 @@ public partial class MainViewViewModel : ViewModelBase
                 //Debug.WriteLine(ex.Message);
                 //Debug.WriteLine(ex.StackTrace);
             }
+        }
+    }
+
+    protected override void OnLoad()
+    {
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
+        {
+            lifetime.Exit += (sender, args) =>
+            {
+                CloseLayout();
+            };
         }
     }
 }

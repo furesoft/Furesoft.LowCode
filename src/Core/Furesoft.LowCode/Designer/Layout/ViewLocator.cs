@@ -1,6 +1,7 @@
 #nullable enable
 using Avalonia.Controls.Templates;
 using Dock.Model.Core;
+using Furesoft.LowCode.Designer.ViewModels;
 
 namespace Furesoft.LowCode.Designer.Layout;
 
@@ -8,6 +9,11 @@ public class ViewLocator : IDataTemplate
 {
     public Control Build(object? data)
     {
+        if (data is ViewModelBase vm)
+        {
+            vm.Load();
+        }
+
         var name = data?.GetType().FullName?.Replace("ViewModel", "View");
         if (name is null)
         {
