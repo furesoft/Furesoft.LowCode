@@ -21,9 +21,12 @@ public class CsvReaderNode : DataTableNode
         var dataTable = GetTable();
         var indices = new Dictionary<DataColumn, int>();
 
-        foreach (var column in reader.GetColumnSchema())
+        if (dataTable.Columns.Count == 0)
         {
-            dataTable.Columns.Add(new DataColumn(column.ColumnName, column.DataType));
+            foreach (var column in reader.GetColumnSchema())
+            {
+                dataTable.Columns.Add(new DataColumn(column.ColumnName, column.DataType));
+            }
         }
 
         foreach (DataColumn column in dataTable.Columns)

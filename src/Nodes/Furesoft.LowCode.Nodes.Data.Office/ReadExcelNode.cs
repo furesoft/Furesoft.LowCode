@@ -27,9 +27,12 @@ public class ReadExcelNode : DataTableNode
         var data = worksheetPart.Worksheet.GetFirstChild<SheetData>();
         var rows = data.Descendants<Row>();
 
-        foreach (Cell cell in rows.ElementAt(0))
+        if (dataTable.Columns.Count == 0)
         {
-            dataTable.Columns.Add(GetCellValue(spreadsheetDocument, cell));
+            foreach (Cell cell in rows.ElementAt(0))
+            {
+                dataTable.Columns.Add(GetCellValue(spreadsheetDocument, cell));
+            }
         }
 
         foreach (Row row in rows.Skip(1))
