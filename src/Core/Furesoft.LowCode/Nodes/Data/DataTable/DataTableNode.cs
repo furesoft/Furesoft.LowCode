@@ -24,7 +24,10 @@ public abstract class DataTableNode : InputOutputNode
         set
         {
             SetProperty(ref _tableName, value);
-            Description = $"{Action} '{TableName}'";
+            if (Action != TableAction.NoAction)
+            {
+                Description = $"{Action} '{TableName}'";
+            }
         }
     }
 
