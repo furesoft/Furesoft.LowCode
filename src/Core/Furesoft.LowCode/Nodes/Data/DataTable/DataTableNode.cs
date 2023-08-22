@@ -23,7 +23,8 @@ public abstract class DataTableNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)]
     public Evaluatable<string> Path { get; set; }
-    public DataTableNode(TableAction action, string label) : base(label)
+
+    protected DataTableNode(TableAction action, string label) : base(label)
     {
         Action = action;
     }
