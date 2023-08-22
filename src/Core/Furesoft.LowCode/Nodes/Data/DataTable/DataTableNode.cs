@@ -39,7 +39,7 @@ public abstract class DataTableNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)] public Evaluatable<string> Path { get; set; }
 
-    protected void ApplyTransformers()
+    private void ApplyTransformers()
     {
         var table = GetTable();
 
@@ -51,29 +51,33 @@ public abstract class DataTableNode : InputOutputNode
             {
                 var column = new DataColumn(newColumnTransformer.ColumnName);
 
-                table.Columns.Add(column);
-
-                foreach (DataRow row in table.Rows)
+                if (!table.Columns.Contains(column.ColumnName))
                 {
-                    var value = ApplyPattern(newColumnTransformer.Pattern, row);
-                    row.SetField(column, value);
+                    continue;
                 }
+
+                CalculateColumnValues(table, column, newColumnTransformer);
+
+                table.Columns.Add(column);
             }
         }
     }
 
-    private string ApplyPattern(string pattern, DataRow row)
+    private void CalculateColumnValues(System.Data.DataTable table, DataColumn column, NewColumnRule newColumnTransformer)
     {
-        var result = pattern;
-
-        for (var index = 0; index < row.Table.Columns.Count; index++)
+        foreach (DataRow row in table.Rows)
         {
-            var column = row.Table.Columns[index];
+            var context = new Context(Context.GlobalContext);
 
-            result = result.Replace("@" + column.ColumnName, row.ItemArray[index].ToString());
+            for (var index = 0; index < row.Table.Columns.Count; index++)
+            {
+                var c = row.Table.Columns[index];
+
+                context.DefineConstant(c.ColumnName, row.ItemArray[index].ToString());
+            }
+
+            row.SetField(column, context.Eval(newColumnTransformer.Pattern));
         }
-
-        return result;
     }
 
     public override async Task Execute(CancellationToken cancellationToken)
