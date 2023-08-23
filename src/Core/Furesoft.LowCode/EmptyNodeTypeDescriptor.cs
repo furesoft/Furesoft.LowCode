@@ -4,8 +4,6 @@ namespace Furesoft.LowCode;
 
 public partial class EmptyNode
 {
-    #region Custom Type Descriptor Interfaces
-
     public AttributeCollection GetAttributes()
     {
         return TypeDescriptor.GetAttributes(this, true);
@@ -63,6 +61,7 @@ public partial class EmptyNode
                 where property.PropertyType != typeof(IInputPin) && property.PropertyType != typeof(IOutputPin)
                 let attribute = property.Attributes.OfType<BrowsableAttribute>().FirstOrDefault()
                 where attribute == null || attribute.Browsable
+                where !(this is IPipeable  && property.Name == "PipeVariable")
                 select TypeDescriptor.CreateProperty(GetType(), property.Name, property.PropertyType)).ToArray());
     }
 
@@ -70,6 +69,4 @@ public partial class EmptyNode
     {
         return this;
     }
-
-    #endregion
 }

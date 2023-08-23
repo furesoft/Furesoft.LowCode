@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Furesoft.LowCode.Evaluation;
+using Newtonsoft.Json;
 
 namespace Furesoft.LowCode;
+
 public interface IPipeable
 {
-    public ICollection<object> GetPipe();
+    [Browsable(false), JsonIgnore]
+    IEnumerable PipeVariable { get; set; }
 }

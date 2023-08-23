@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
@@ -42,9 +42,9 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
     [Description("The Variable to store the Output in.")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
-    [Browsable(false)]
-    private ICollection<FileSystemInfo> PipeVariable { get; set; }
-    public ICollection<object> GetPipe() => PipeVariable.Cast<object>().ToList();
+
+    public IEnumerable PipeVariable { get; set; }
+
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -73,12 +73,15 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
             ItemType.File => dirInfo.GetFiles(SearchPattern, searchOption),
             ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
             ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption),
-            _ => throw new ArgumentOutOfRangeException("Unknown Type")
+            _ => throw CreateError<InvalidOperationException>("Unknown Type")
         };
+
         PipeVariable = fileInfos.Where(x => x.Attributes.HasFlag(ExcludedFlags)).ToList();
 
-        if (string.IsNullOrEmpty(OutVariable))
+        if (!string.IsNullOrEmpty(OutVariable))
+        {
             SetOutVariable(OutVariable, PipeVariable);
+        }
 
         return ContinueWith(OutputPin, cancellationToken);
     }
