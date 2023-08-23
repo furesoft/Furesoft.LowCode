@@ -11,7 +11,7 @@ using Furesoft.LowCode.Evaluation;
 namespace Furesoft.LowCode.Nodes.IO.Linq;
 [Description("Filters Nodes")]
 [NodeCategory("Linq")]
-public class FilterNode : InputOutputNode,IOutVariableProvider,IPipeable<object>
+public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
 {
     public FilterNode() : base("Filter")
     {
@@ -22,27 +22,28 @@ public class FilterNode : InputOutputNode,IOutVariableProvider,IPipeable<object>
     [Description("What is the filter for the query")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<bool> Condition { get; set; }
-    public ICollection<object> PipeVariable { get; private set; }
-
+    private ICollection<object> PipeVariable { get; set; }
+    private IQueryable _queryable;
     public override Task Execute(CancellationToken cancellationToken)
     {
         var previous = GetPreviousNode<InputOutputNode>();
-        if (previous is IPipeable<object> pipe)
+        if (previous is IPipeable pipe)
         {
-            PipeVariable = pipe.PipeVariable;
+            PipeVariable = pipe.GetPipe();
         }
         else if (previous is IOutVariableProvider outVariableProvider)
         {
-            var pip = new Evaluatable<object>(outVariableProvider.OutVariable);
+            var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
             if (pip is ICollection<object> pipes)
             {
                 PipeVariable = pipes;
             }
         }
+
         List<object> result = new List<object>(PipeVariable.Count);
         foreach (var pi in PipeVariable)
         {
-            SetOutVariable("homp", pi);
+            DefineConstant("$", pi);
             if (Condition)
             {
                 result.Add(pi);
@@ -56,4 +57,5 @@ public class FilterNode : InputOutputNode,IOutVariableProvider,IPipeable<object>
         return ContinueWith(OutputPin, cancellationToken);
     }
 
+    public ICollection<object> GetPipe() => PipeVariable;
 }

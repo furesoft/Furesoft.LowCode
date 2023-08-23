@@ -148,7 +148,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     protected void DefineConstant(string name, object value, Context context = null)
     {
         (context ?? Context).DefineVariable(name)
-            .Assign(Context.GlobalContext.WrapValue(value));
+            .Assign(value);
     }
 
     public Control GetView(ref double width, ref double height)

@@ -8,13 +8,13 @@ using Furesoft.LowCode.Attributes;
 namespace Furesoft.LowCode.Nodes.IO.Linq;
 [Description("Test")]
 [NodeCategory("Linq")]
-internal class TestPipeable : InputOutputNode, IPipeable<object>
+internal class TestPipeable : InputOutputNode, IPipeable
 {
     public TestPipeable() :  base("Testpipe")
     {
     }
 
-    public ICollection<object> PipeVariable { get; } = new List<object>()
+    private ICollection<string> PipeVariable { get; } = new List<string>()
     {
         "hi","bob"
     };
@@ -22,5 +22,10 @@ internal class TestPipeable : InputOutputNode, IPipeable<object>
     public override Task Execute(CancellationToken cancellationToken)
     {
         return ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public ICollection<object> GetPipe()
+    {
+        return PipeVariable.Cast<object>().ToList();
     }
 }

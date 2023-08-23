@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode;
-public interface IPipeable<T>
+public interface IPipeable
 {
-    [Browsable(false)]
-    public ICollection<T> PipeVariable { get; }
+    public ICollection<object> GetPipe();
 }
