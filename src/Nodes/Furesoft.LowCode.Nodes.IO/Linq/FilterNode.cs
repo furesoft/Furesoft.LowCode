@@ -8,8 +8,6 @@ namespace Furesoft.LowCode.Nodes.IO.Linq;
 [NodeCategory("Linq")]
 public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
 {
-    private IQueryable _queryable;
-
     public FilterNode() : base("Filter")
     {
     }
@@ -19,10 +17,11 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
     public Evaluatable<bool> Condition { get; set; }
 
 
-
     [Description("Output Variable")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
+
+    public IEnumerable PipeVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -34,7 +33,7 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
         }
         else if (previous is IOutVariableProvider outVariableProvider)
         {
-            var pip =  Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
+            var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
 
             if (pip is IEnumerable pipes)
             {
@@ -42,17 +41,7 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
             }
         }
 
-        var result = new List<object>();
-
-        foreach (var pi in PipeVariable)
-        {
-            DefineConstant("$", pi);
-
-            if (Condition)
-            {
-                result.Add(pi);
-            }
-        }
+        var result = LazyIteratePipeVariable();
 
         if (!string.IsNullOrEmpty(OutVariable))
         {
@@ -64,5 +53,16 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
         return ContinueWith(OutputPin, cancellationToken);
     }
 
-    public IEnumerable PipeVariable { get; set; }
+    public IEnumerable LazyIteratePipeVariable()
+    {
+        foreach (var pi in PipeVariable)
+        {
+            DefineConstant("$", pi);
+
+            if (Condition)
+            {
+                yield return pi;
+            }
+        }
+    }
 }
