@@ -12,13 +12,23 @@ namespace Furesoft.LowCode.Nodes.ControlFlow;
 [Description("Change control flow based on condition")]
 public class ConditionNode : InputNode
 {
+    private Evaluatable<bool> _condition;
+
     public ConditionNode() : base("Condition")
     {
     }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Required]
-    public Evaluatable<bool> Condition { get; set; }
+    public Evaluatable<bool> Condition
+    {
+        get => _condition;
+        set
+        {
+            SetProperty(ref _condition, value);
+            Description = $"Continue with True if condition '{value.Source}' is true otherwise continue with False";
+        }
+    }
 
     [Pin("True", PinAlignment.Bottom)] public IOutputPin TruePin { get; set; }
 

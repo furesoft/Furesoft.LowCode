@@ -395,10 +395,39 @@ public sealed class DrawingNodeEditor
         PasteNodes();
     }
 
+    private IEnumerable<IConnector> GetConnectionsForNode(INode node)
+    {
+        foreach (var connector in _node.Connectors)
+        {
+            if (connector.Start.Parent == node || connector.End.Parent == node)
+            {
+                yield return connector;
+            }
+        }
+    }
+
+    private List<IConnector> GetConnectionsForNodes(IEnumerable<INode> nodes)
+    {
+        if (nodes == null)
+        {
+            return new();
+        }
+
+        var result = new List<IConnector>();
+
+        foreach (var node in nodes)
+        {
+            var connections = GetConnectionsForNode(node);
+            result.AddRange(connections);
+        }
+
+        return result;
+    }
+
     public void DeleteNodes()
     {
         var selectedNodes = _node.GetSelectedNodes();
-        var selectedConnectors = _node.GetSelectedConnectors();
+        var selectedConnectors = GetConnectionsForNodes(_node.GetSelectedNodes());
         var notify = false;
 
         if (selectedNodes is {Count: > 0})

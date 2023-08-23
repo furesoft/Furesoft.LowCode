@@ -10,6 +10,8 @@ namespace Furesoft.LowCode.Nodes.Scheduling;
 [Description("Continue ellapsed every interval")]
 public class TimerNode : InputOutputNode
 {
+    private double _interval;
+
     public TimerNode() : base("Timer")
     {
     }
@@ -18,7 +20,16 @@ public class TimerNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public double Interval { get; set; }
+    public double Interval
+    {
+        get => _interval;
+        set
+        {
+            SetProperty(ref _interval, value);
+
+            Description = $"Continue ellapsed every {value} milliseconds";
+        }
+    }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {

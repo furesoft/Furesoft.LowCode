@@ -1,0 +1,30 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        xmlns:lowCode="clr-namespace:Furesoft.LowCode"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" WindowStartupLocation="CenterScreen" Width="450"
+        Height="450" Title="Edit Columns"
+        x:Class="Furesoft.LowCode.Nodes.Data.DataTable.Core.ColumnsWindow">
+  <StackPanel>
+    <Button Content="+" Command="{Binding AddColumnCommand}" />
+    <DataGrid ItemsSource="{Binding Columns, Mode=TwoWay}" AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="ColumnName" SortMemberPath="ColumnName" Binding="{Binding ColumnName}" />
+        <DataGridCheckBoxColumn Header="IsReadonly" Binding="{Binding IsReadOnly}" />
+        <DataGridTemplateColumn Header="DataType" Width="*" SortMemberPath="DataType">
+          <!-- ReSharper disable once Xaml.RedundantResource -->
+          <DataTemplate>
+            <ComboBox FontSize="11" SelectedItem="{Binding DataType, Converter={lowCode:TypeComboboxConverter}}">
+              <ComboBoxItem Content="{x:Type system:Boolean}" />
+              <ComboBoxItem Content="{x:Type system:Int32}" />
+              <ComboBoxItem Content="{x:Type system:String}" />
+              <ComboBoxItem Content="{x:Type system:DateTime}" />
+            </ComboBox>
+          </DataTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </StackPanel>
+</Window>

@@ -1,0 +1,14 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lowCode="clr-namespace:Furesoft.LowCode" x:CompileBindings="False"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Furesoft.LowCode.Nodes.Data.DataTable.Core.RowsWindow"
+        WindowStartupLocation="CenterScreen" Width="450"
+        Height="450" Title="Edit Rows">
+  <StackPanel>
+    <Button Content="+" Command="{Binding AddRowCommand}" />
+    <DataGrid Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Rows}" />
+  </StackPanel>
+</Window>

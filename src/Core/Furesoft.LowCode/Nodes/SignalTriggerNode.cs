@@ -9,13 +9,23 @@ namespace Furesoft.LowCode.Nodes;
 [NodeCategory]
 public class SignalTriggerNode : InputOutputNode
 {
+    private string _signal;
     public SignalTriggerNode() : base("Trigger")
     {
     }
 
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public string Signal { get; set; }
+    public string Signal
+    {
+        get => _signal;
+        set
+        {
+            SetProperty(ref _signal, value);
+
+            Description = $"Trigger Signal '{value}'";
+        }
+    }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {

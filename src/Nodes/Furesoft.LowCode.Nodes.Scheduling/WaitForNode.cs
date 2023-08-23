@@ -13,16 +13,27 @@ namespace Furesoft.LowCode.Nodes.Scheduling;
 [Description("Cancel Action After Specific Amount Of Time")]
 public class WaitForNode : InputOutputNode
 {
+    private int _waitTime;
+
     public WaitForNode() : base("Wait For")
     {
     }
 
-    [Pin("Do", PinAlignment.Right)] public IOutputPin DoNode { get; } = null;
+    [Pin("Do", PinAlignment.Right)] public IOutputPin DoNode { get; }
 
     [Description("The time to wait in milliseconds")]
     [DataMember(EmitDefaultValue = false)]
     [Required]
-    public int WaitTime { get; set; }
+    public int WaitTime
+    {
+        get => _waitTime;
+        set
+        {
+            SetProperty(ref _waitTime, value);
+
+            Description = $"Cancel Action After {value} milliseconds";
+        }
+    }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
