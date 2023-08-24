@@ -1,11 +1,10 @@
 using System.Reflection;
 using System.Text;
-using Furesoft.LowCode.Designer.Services.Serializing;
 using Furesoft.LowCode.Editor.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Furesoft.LowCode.Designer.Services;
+namespace Furesoft.LowCode.Designer.Services.Serializing;
 
 internal class NodeSerializer : INodeSerializer
 {
@@ -64,6 +63,11 @@ internal class NodeSerializer : INodeSerializer
         double h = 60;
 
         var view = node.DefiningNode.GetView(ref w, ref h);
+
+        if (view is null)
+        {
+            return;
+        }
 
         view.DataContext = node.DefiningNode;
 

@@ -1,20 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="Verify.NUnit" Version="20.6.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3"/>
+        <PackageReference Include="NUnit" Version="3.13.3"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.5.0"/>
+        <PackageReference Include="Verify.NUnit" Version="20.6.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\src\Core\Furesoft.LowCode\Furesoft.LowCode.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\src\Core\Furesoft.LowCode.Desktop\Furesoft.LowCode.Desktop.csproj" />
+        <ProjectReference Include="..\src\Core\Furesoft.LowCode\Furesoft.LowCode.csproj"/>
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.Data.CSV\Furesoft.LowCode.Nodes.Data.CSV.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.IO.Archives\Furesoft.LowCode.Nodes.IO.Archives.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.Network.REST\Furesoft.LowCode.Nodes.Network.REST.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.Network\Furesoft.LowCode.Nodes.Network.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.Queue\Furesoft.LowCode.Nodes.Queue.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.RPA.Web\Furesoft.LowCode.Nodes.RPA.Web.csproj" />
+        <ProjectReference Include="..\src\Nodes\Furesoft.LowCode.Nodes.Scheduling\Furesoft.LowCode.Nodes.Scheduling.csproj" />
+    </ItemGroup>
 
+
+    <ItemGroup>
+        <None Update="Testfiles\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 
 </Project>

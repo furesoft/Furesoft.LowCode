@@ -1,4 +1,6 @@
-﻿using Furesoft.LowCode.Designer.Debugging;
+﻿using System.Text;
+using Furesoft.LowCode.Designer.Debugging;
+using Furesoft.LowCode.Designer.Services.Serializing;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Nodes;
 using NiL.JS.Core;
@@ -17,6 +19,24 @@ public class Evaluator
         Context = new();
         Debugger = new(Context);
         CredentialStorage = new IsolatedCredentailStorage();
+
+        AppContext.SetData("DesignerMode", true);
+    }
+
+    public Evaluator(Stream strm)
+    {
+        AppContext.SetData("DesignerMode", false);
+
+        var serializer = new NodeSerializer(typeof(ObservableCollection<>));
+        using var streamReader = new StreamReader(strm, Encoding.UTF8);
+        var text = streamReader.ReadToEnd();
+
+        _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
+
+        Context = new();
+        Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+
     }
 
     internal Debugger Debugger { get; }

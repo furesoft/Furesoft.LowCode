@@ -153,6 +153,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     public Control GetView(ref double width, ref double height)
     {
+        if (AppContext.GetData("DesignerMode") is false)
+        {
+            return null;
+        }
+
         Control nodeView = new DefaultNodeView();
 
         var nodeViewAttribute = GetAttribute<NodeViewAttribute>();

@@ -1,0 +1,208 @@
+{
+  "$id": "1",
+  "$type": "Furesoft.LowCode.Editor.MVVM.DrawingNodeViewModel, Furesoft.LowCode.Editor",
+  "Connectors": [
+    {
+      "$id": "2",
+      "$type": "Furesoft.LowCode.Editor.MVVM.ConnectorViewModel, Furesoft.LowCode.Editor",
+      "End": {
+        "$id": "3",
+        "$type": "Furesoft.LowCode.Editor.MVVM.PinViewModel, Furesoft.LowCode.Editor",
+        "Alignment": 3,
+        "CanConnectToMultiplePins": true,
+        "Height": 15.0,
+        "Mode": 1,
+        "Name": "Flow",
+        "Parent": {
+          "$id": "4",
+          "$type": "Furesoft.LowCode.Designer.CustomNodeViewModel, Furesoft.LowCode",
+          "IsRemovable": false,
+          "IsMovable": true,
+          "DefiningNode": {
+            "$id": "5",
+            "$type": "Furesoft.LowCode.Nodes.EntryNode, Furesoft.LowCode",
+            "ID": "95265da9-7f6b-4f8f-9d99-0cf5e7d3ec3f"
+          },
+          "Content": null,
+          "Height": 60.0,
+          "Name": "Entry",
+          "Parent": {
+            "$ref": "1"
+          },
+          "Pins": [
+            {
+              "$ref": "3"
+            }
+          ],
+          "Width": 60.0,
+          "X": 44820.0,
+          "Y": 29790.0
+        },
+        "Width": 15.0,
+        "X": 30.0,
+        "Y": 60.0
+      },
+      "Offset": 30.0,
+      "Orientation": 0,
+      "Parent": {
+        "$ref": "1"
+      },
+      "Start": {
+        "$id": "6",
+        "$type": "Furesoft.LowCode.Editor.MVVM.PinViewModel, Furesoft.LowCode.Editor",
+        "Alignment": 2,
+        "CanConnectToMultiplePins": true,
+        "Height": 15.0,
+        "Mode": 0,
+        "Name": "Flow",
+        "Parent": {
+          "$id": "7",
+          "$type": "Furesoft.LowCode.Designer.CustomNodeViewModel, Furesoft.LowCode",
+          "IsRemovable": true,
+          "IsMovable": true,
+          "DefiningNode": {
+            "$id": "8",
+            "$type": "Furesoft.LowCode.Nodes.Data.CSV.CsvReaderNode, Furesoft.LowCode.Nodes.Data.CSV",
+            "TableName": "testDB",
+            "Path": {
+              "$id": "9",
+              "$type": "Furesoft.LowCode.Evaluation.Evaluatable`1[[System.String, System.Private.CoreLib]], Furesoft.LowCode",
+              "Parent": {
+                "$ref": "8"
+              },
+              "Source": "\"C:\\\\Users\\\\chris\\\\Downloads\\\\test.csv\""
+            },
+            "ID": "c1162447-c4fc-4543-bae0-e89d14145c9a"
+          },
+          "Content": null,
+          "Height": 60.0,
+          "Name": "Read CSV",
+          "Parent": {
+            "$ref": "1"
+          },
+          "Pins": [
+            {
+              "$ref": "6"
+            },
+            {
+              "$id": "10",
+              "$type": "Furesoft.LowCode.Editor.MVVM.PinViewModel, Furesoft.LowCode.Editor",
+              "Alignment": 3,
+              "CanConnectToMultiplePins": true,
+              "Height": 15.0,
+              "Mode": 1,
+              "Name": "Flow",
+              "Parent": {
+                "$ref": "7"
+              },
+              "Width": 15.0,
+              "X": 30.0,
+              "Y": 60.0
+            }
+          ],
+          "Width": 60.0,
+          "X": 44940.0,
+          "Y": 29940.0
+        },
+        "Width": 15.0,
+        "X": 30.0,
+        "Y": 0.0
+      }
+    },
+    {
+      "$id": "11",
+      "$type": "Furesoft.LowCode.Editor.MVVM.ConnectorViewModel, Furesoft.LowCode.Editor",
+      "End": {
+        "$ref": "10"
+      },
+      "Offset": 30.0,
+      "Orientation": 0,
+      "Parent": {
+        "$ref": "1"
+      },
+      "Start": {
+        "$id": "12",
+        "$type": "Furesoft.LowCode.Editor.MVVM.PinViewModel, Furesoft.LowCode.Editor",
+        "Alignment": 2,
+        "CanConnectToMultiplePins": true,
+        "Height": 15.0,
+        "Mode": 0,
+        "Name": "Flow",
+        "Parent": {
+          "$id": "13",
+          "$type": "Furesoft.LowCode.Designer.CustomNodeViewModel, Furesoft.LowCode",
+          "IsRemovable": true,
+          "IsMovable": true,
+          "DefiningNode": {
+            "$id": "14",
+            "$type": "Furesoft.LowCode.Nodes.Data.CSV.CsvWriterNode, Furesoft.LowCode.Nodes.Data.CSV",
+            "TableName": "testDB",
+            "Path": {
+              "$id": "15",
+              "$type": "Furesoft.LowCode.Evaluation.Evaluatable`1[[System.String, System.Private.CoreLib]], Furesoft.LowCode",
+              "Parent": {
+                "$ref": "14"
+              },
+              "Source": "\"C:\\\\Users\\\\chris\\\\Downloads\\\\written.csv\""
+            },
+            "ID": "7d2dca1d-722f-4903-8cd8-b526449558b4"
+          },
+          "Content": null,
+          "Height": 60.0,
+          "Name": "Write CSV",
+          "Parent": {
+            "$ref": "1"
+          },
+          "Pins": [
+            {
+              "$ref": "12"
+            },
+            {
+              "$id": "16",
+              "$type": "Furesoft.LowCode.Editor.MVVM.PinViewModel, Furesoft.LowCode.Editor",
+              "Alignment": 3,
+              "CanConnectToMultiplePins": true,
+              "Height": 15.0,
+              "Mode": 1,
+              "Name": "Flow",
+              "Parent": {
+                "$ref": "13"
+              },
+              "Width": 15.0,
+              "X": 30.0,
+              "Y": 60.0
+            }
+          ],
+          "Width": 60.0,
+          "X": 44880.0,
+          "Y": 30090.0
+        },
+        "Width": 15.0,
+        "X": 30.0,
+        "Y": 0.0
+      }
+    }
+  ],
+  "EnableGrid": true,
+  "EnableSnap": true,
+  "GridCellHeight": 30.0,
+  "GridCellWidth": 30.0,
+  "Nodes": [
+    {
+      "$ref": "4"
+    },
+    {
+      "$ref": "7"
+    },
+    {
+      "$ref": "13"
+    }
+  ],
+  "SnapX": 30.0,
+  "SnapY": 30.0,
+  "Height": 60000.0,
+  "Name": "Main Graph",
+  "Width": 90000.0,
+  "X": 0.0,
+  "Y": 0.0
+}
