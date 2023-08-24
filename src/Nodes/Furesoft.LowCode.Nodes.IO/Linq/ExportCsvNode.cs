@@ -48,7 +48,6 @@ internal class ExportCsvNode : InputOutputNode
         var pipeData = ConvertPreviousToPipeable();
         using (StreamWriter writer = new StreamWriter(TargetPath))
         {
-
             if (pipeData.Cast<object>().Any())
             {
                 // Get the type of the first item in the enumerable
