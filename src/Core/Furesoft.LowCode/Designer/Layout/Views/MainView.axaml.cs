@@ -10,7 +10,6 @@ public partial class MainView : UserControl
         InitializeMenu();
     }
 
-
     private void InitializeMenu()
     {
         var optionsIsDragEnabled = this.FindControl<MenuItem>("OptionsIsDragEnabled");

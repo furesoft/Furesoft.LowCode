@@ -15,9 +15,7 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
     [Description("What is the filter for the query")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<bool> Condition { get; set; }
-
     public IEnumerable PipeVariable { get; set; }
-
     [Description("Output Variable")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }

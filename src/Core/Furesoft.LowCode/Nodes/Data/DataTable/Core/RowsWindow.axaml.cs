@@ -16,42 +16,40 @@ public partial class RowsWindow : Window
 
         foreach (var column in k.Columns)
         {
-
-                DataGrid.Columns.Add(new DataGridTemplateColumn()
+            DataGrid.Columns.Add(new DataGridTemplateColumn
+            {
+                Header = column.ColumnName,
+                IsReadOnly = column.IsReadOnly,
+                CellTemplate = new FuncDataTemplate<RowDataDefinition>((row, e) =>
                 {
-                    Header = column.ColumnName,
-                    IsReadOnly = column.IsReadOnly,
-                    CellTemplate = new FuncDataTemplate<RowDataDefinition>((row, e) =>
+                    if (column.DataType == typeof(bool))
                     {
-                        if (column.DataType == typeof(bool))
+                        var cb = new CheckBox();
+                        cb.IsChecked = row.GetProperty<bool>(column.ColumnName);
+
+                        cb.IsCheckedChanged += (s, ee) =>
                         {
-                            var cb = new CheckBox();
-                            cb.IsChecked = row.GetProperty<bool>(column.ColumnName);
+                            row.SetProperty(column.ColumnName, cb.IsChecked);
+                        };
 
-                            cb.IsCheckedChanged += (s, ee) =>
-                            {
-                                row.SetProperty(column.ColumnName, cb.IsChecked);
-                            };
+                        return cb;
+                    }
+                    else if (column.DataType == typeof(string))
+                    {
+                        var tb = new TextBox();
+                        tb.Text = row.GetProperty<string>(column.ColumnName);
 
-                            return cb;
-                        }
-                        else if (column.DataType == typeof(string))
+                        tb.TextChanged += (s, ee) =>
                         {
-                            var cb = new TextBox();
-                            cb.Text = row.GetProperty<string>(column.ColumnName);
+                            row.SetProperty(column.ColumnName, tb.Text);
+                        };
 
-                            cb.TextChanged += (s, ee) =>
-                            {
-                                row.SetProperty(column.ColumnName, cb.Text);
-                            };
+                        return tb;
+                    }
 
-                            return cb;
-                        }
-
-                        return null;
-                    })
-                });
-
+                    return null;
+                })
+            });
         }
     }
 }

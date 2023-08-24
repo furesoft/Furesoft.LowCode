@@ -13,7 +13,6 @@ public class ViewModelBase : ObservableObject
     [JsonIgnore, Browsable(false)]
     public bool IsLoaded { get; set; }
 
-
     public void Load()
     {
         if (!IsLoaded)

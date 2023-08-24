@@ -1,0 +1,304 @@
+﻿{
+  CaseSensitive: false,
+  IsInitialized: true,
+  Columns: [
+    {
+      AllowDBNull: true,
+      AutoIncrement: false,
+      Caption: ID,
+      ColumnName: ID,
+      DefaultValue: null,
+      Namespace: ,
+      ReadOnly: false,
+      Unique: false,
+      DesignMode: false
+    },
+    {
+      AllowDBNull: true,
+      AutoIncrement: false,
+      Caption: Name,
+      ColumnName: Name,
+      DefaultValue: null,
+      Namespace: ,
+      Ordinal: 1,
+      ReadOnly: false,
+      Unique: false,
+      DesignMode: false
+    },
+    {
+      AllowDBNull: true,
+      AutoIncrement: false,
+      Caption: Phone,
+      ColumnName: Phone,
+      DefaultValue: null,
+      Namespace: ,
+      Ordinal: 2,
+      ReadOnly: false,
+      Unique: false,
+      DesignMode: false
+    },
+    {
+      AllowDBNull: true,
+      AutoIncrement: false,
+      Caption: Postal,
+      ColumnName: Postal,
+      DefaultValue: null,
+      Namespace: ,
+      Ordinal: 3,
+      ReadOnly: false,
+      Unique: false,
+      DesignMode: false
+    }
+  ],
+  DefaultView: [
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          1,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          2,
+          Frieda,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          3,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          4,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          5,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          6,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          7,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          8,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    },
+    {
+      RowVersion: Current,
+      Row: {
+        RowError: ,
+        RowState: Added,
+        ItemArray: [
+          9,
+          Max,
+          1596445532,
+          48936
+        ],
+        HasErrors: false
+      },
+      IsNew: false,
+      IsEdit: false
+    }
+  ],
+  HasErrors: false,
+  Locale: de-DE,
+  Rows: [
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        1,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        2,
+        Frieda,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        3,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        4,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        5,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        6,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        7,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        8,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    },
+    {
+      RowError: ,
+      RowState: Added,
+      ItemArray: [
+        9,
+        Max,
+        1596445532,
+        48936
+      ],
+      HasErrors: false
+    }
+  ],
+  Namespace: ,
+  DesignMode: false
+}
