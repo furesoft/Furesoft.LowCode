@@ -11,7 +11,6 @@ namespace Furesoft.LowCode.Nodes.IO.Archives;
 [NodeView(typeof(IconNodeView), "M1 18H17V5H1M11 12V15H7V12H4L9 7 14 12M0 0H18V4H0")]
 public class ExtractNode : InputOutputNode
 {
-    
     [DataMember(EmitDefaultValue = false)]
     [Required]
     public Evaluatable<string> ArchiveFilename { get; set; }

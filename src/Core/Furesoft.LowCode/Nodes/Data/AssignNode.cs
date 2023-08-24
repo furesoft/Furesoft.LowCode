@@ -39,7 +39,6 @@ public class AssignNode : InputOutputNode
     [Required]
     public Evaluatable<object> Value { get; set; }
 
-
     public override async Task Execute(CancellationToken cancellationToken)
     {
         var jsVar = Context.GetVariable(Name);

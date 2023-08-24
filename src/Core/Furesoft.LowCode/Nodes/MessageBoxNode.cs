@@ -18,7 +18,6 @@ public class MessageBoxNode : InputOutputNode
     {
     }
 
-
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     [Required]

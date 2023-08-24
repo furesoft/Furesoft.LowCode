@@ -65,7 +65,6 @@ public partial class MainViewViewModel : ViewModelBase
     public Evaluator Evaluator { get; set; }
     public ObservableCollection<TreeViewItem> Items { get; set; } = new();
 
-
     public IRootDock Layout
     {
         get => _layout;

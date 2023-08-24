@@ -36,7 +36,6 @@ public class Evaluator
         Context = new();
         Debugger = new(Context);
         CredentialStorage = new IsolatedCredentailStorage();
-
     }
 
     internal Debugger Debugger { get; }

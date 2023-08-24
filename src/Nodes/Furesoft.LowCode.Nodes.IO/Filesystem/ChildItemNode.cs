@@ -45,7 +45,6 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
 
     public IEnumerable PipeVariable { get; set; }
 
-
     public override Task Execute(CancellationToken cancellationToken)
     {
         var searchOption = IsRecurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;

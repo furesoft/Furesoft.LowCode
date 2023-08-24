@@ -26,7 +26,6 @@ public class CommentNode : EmptyNode
         set => SetProperty(ref _comment, value);
     }
 
-
     public override Task Execute(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;

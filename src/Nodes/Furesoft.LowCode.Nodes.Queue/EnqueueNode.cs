@@ -17,7 +17,6 @@ public class EnqueueNode : QueueBaseNode
 
     [DataMember, Required] public Evaluatable<object> Data { get; set; }
 
-
     public override Task Invoke(CancellationToken cancellationToken)
     {
         QueueManager.Instance.Enqueue(Queue, Data);
