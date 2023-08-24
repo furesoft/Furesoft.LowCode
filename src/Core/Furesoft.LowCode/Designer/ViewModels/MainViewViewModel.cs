@@ -167,7 +167,6 @@ public partial class MainViewViewModel : ViewModelBase
         }
     }
 
-
     [RelayCommand]
     public void Cancel()
     {
@@ -212,7 +211,6 @@ public partial class MainViewViewModel : ViewModelBase
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }
 
-
     [RelayCommand]
     public async Task Step()
     {
@@ -239,7 +237,6 @@ public partial class MainViewViewModel : ViewModelBase
             desktopLifetime.Shutdown();
         }
     }
-
 
     public void CloseLayout()
     {
@@ -270,7 +267,6 @@ public partial class MainViewViewModel : ViewModelBase
         }
     }
 
-
     [RelayCommand]
     private void New()
     {
@@ -280,7 +276,6 @@ public partial class MainViewViewModel : ViewModelBase
         editor.Drawing.SetSerializer(editor.Serializer);
         Evaluator = new(editor.Drawing);
     }
-
 
     private List<FilePickerFileType> GetOpenFileTypes()
     {
@@ -304,7 +299,6 @@ public partial class MainViewViewModel : ViewModelBase
             StorageService.All
         };
     }
-
 
     [RelayCommand]
     private async Task Open()
@@ -331,7 +325,6 @@ public partial class MainViewViewModel : ViewModelBase
                 await using var stream = await file.OpenReadAsync();
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
-
 
                 var drawing = editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
 
