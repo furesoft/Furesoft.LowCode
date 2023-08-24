@@ -16,22 +16,19 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<bool> Condition { get; set; }
 
+    public IEnumerable PipeVariable { get; set; }
 
     [Description("Output Variable")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
-
-    public IEnumerable PipeVariable { get; set; }
-
-    public override Task Execute(CancellationToken cancellationToken)
+    public void ConvertPreviousToPipeable()
     {
-        var previous = GetPreviousNode<InputOutputNode>();
-
-        if (previous is IPipeable pipe)
+        var node = GetPreviousNode<InputOutputNode>();
+        if (node is IPipeable pipe)
         {
             PipeVariable = pipe.PipeVariable;
         }
-        else if (previous is IOutVariableProvider outVariableProvider)
+        else if (node is IOutVariableProvider outVariableProvider)
         {
             var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
 
@@ -39,15 +36,21 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
             {
                 PipeVariable = pipes;
             }
+            else
+            {
+                PipeVariable = new List<object>() { pip };
+            }
         }
+    }
+    public override Task Execute(CancellationToken cancellationToken)
+    {
+        ConvertPreviousToPipeable();
 
         var result = LazyIteratePipeVariable();
-
         if (!string.IsNullOrEmpty(OutVariable))
         {
             SetOutVariable(OutVariable, result);
         }
-
         PipeVariable = result;
 
         return ContinueWith(OutputPin, cancellationToken);
