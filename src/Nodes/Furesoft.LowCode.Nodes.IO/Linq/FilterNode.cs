@@ -20,7 +20,7 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
-    public IEnumerable PipeVariable { get; set; }
+    public object PipeVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -54,13 +54,16 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
 
     public IEnumerable LazyIteratePipeVariable()
     {
-        foreach (var pi in PipeVariable)
+        if (PipeVariable is IEnumerable p)
         {
-            DefineConstant("$", pi);
-
-            if (Condition)
+            foreach (var pi in p)
             {
-                yield return pi;
+                DefineConstant("$", pi);
+
+                if (Condition)
+                {
+                    yield return pi;
+                }
             }
         }
     }

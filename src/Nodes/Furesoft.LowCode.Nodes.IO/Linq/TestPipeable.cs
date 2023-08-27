@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Furesoft.LowCode.Attributes;
+﻿using Furesoft.LowCode.Attributes;
 
 namespace Furesoft.LowCode.Nodes.IO.Linq;
 
@@ -11,7 +10,7 @@ internal class TestPipeable : InputOutputNode, IPipeable
     {
     }
 
-    public IEnumerable PipeVariable { get; set; } = new List<string> {"hi", "bob"};
+    public object PipeVariable { get; set; } = new List<string> {"hi", "bob"};
 
     public override Task Execute(CancellationToken cancellationToken)
     {

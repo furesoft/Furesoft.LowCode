@@ -43,7 +43,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
 
-    public IEnumerable PipeVariable { get; set; }
+    public object PipeVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -75,7 +75,7 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
             _ => throw CreateError<InvalidOperationException>("Unknown Type")
         };
 
-        PipeVariable = fileInfos.Where(x => x.Attributes.HasFlag(ExcludedFlags)).ToList();
+        PipeVariable = fileInfos.Where(x => x.Attributes.HasFlag(ExcludedFlags));
 
         if (!string.IsNullOrEmpty(OutVariable))
         {
