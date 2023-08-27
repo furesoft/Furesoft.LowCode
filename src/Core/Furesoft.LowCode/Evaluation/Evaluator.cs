@@ -7,7 +7,7 @@ using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Evaluation;
 
-public class Evaluator
+public class Evaluator : IEvaluator
 {
     private readonly IDrawingNode _drawing;
     public readonly Context Context;
@@ -38,6 +38,19 @@ public class Evaluator
         CredentialStorage = new IsolatedCredentailStorage();
     }
 
+    public Evaluator(string text)
+    {
+        AppContext.SetData("DesignerMode", false);
+
+        var serializer = new NodeSerializer(typeof(ObservableCollection<>));
+
+        _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
+
+        Context = new();
+        Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+    }
+
     internal Debugger Debugger { get; }
 
     public SignalStorage Signals { get; } = new();
@@ -45,7 +58,7 @@ public class Evaluator
 
     public async Task Execute(CancellationToken cancellationToken)
     {
-        InitCredentils();
+        InitCredentials();
 
         var entryNode = _drawing.GetNodes<EntryNode>().First().DefiningNode;
 
@@ -65,7 +78,7 @@ public class Evaluator
         catch (TaskCanceledException) { }
     }
 
-    private void InitCredentils()
+    private void InitCredentials()
     {
         foreach (var credentialName in CredentialStorage.GetKeys())
         {
