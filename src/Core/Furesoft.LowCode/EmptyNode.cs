@@ -28,22 +28,26 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
-    public void ApplyPipe<T>()
+    protected void ApplyPipe<T>()
     {
         var previous = GetPreviousNode<InputOutputNode>();
 
-        if (previous is IPipeable pipe && this is IPipeable p)
+        switch (previous)
         {
-            p.PipeVariable = pipe.PipeVariable;
-        }
-        else if (previous is IOutVariableProvider outVariableProvider)
-        {
-            var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
+            case IPipeable prevPipe when this is IPipeable pipe:
+                pipe.PipeVariable = prevPipe.PipeVariable;
 
-            if (pip is T pipes && this is IPipeable po)
-            {
-                po.PipeVariable = pipes;
-            }
+                break;
+
+            case IOutVariableProvider outVariableProvider:
+                var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
+
+                if (pip is T pipes && this is IPipeable po)
+                {
+                    po.PipeVariable = pipes;
+                }
+
+                break;
         }
     }
 

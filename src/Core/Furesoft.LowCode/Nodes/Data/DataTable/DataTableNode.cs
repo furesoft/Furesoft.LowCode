@@ -46,9 +46,9 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
 
     protected System.Data.DataTable GetTable()
     {
-        if (PipeVariable is System.Data.DataTable d)
+        if (PipeVariable is System.Data.DataTable pipedDataTable)
         {
-            return d;
+            return pipedDataTable;
         }
 
         var value = Context.GetVariable(TableName);
