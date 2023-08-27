@@ -24,21 +24,7 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var previous = GetPreviousNode<InputOutputNode>();
 
-        if (previous is IPipeable pipe)
-        {
-            PipeVariable = pipe.PipeVariable;
-        }
-        else if (previous is IOutVariableProvider outVariableProvider)
-        {
-            var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
-
-            if (pip is IEnumerable pipes)
-            {
-                PipeVariable = pipes;
-            }
-        }
 
         var result = LazyIteratePipeVariable();
 

@@ -1,12 +1,15 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections;
+using System.ComponentModel;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
+using Newtonsoft.Json;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
 
 namespace Furesoft.LowCode.Nodes.Data.DataTable;
 
-public abstract class DataTableNode : InputOutputNode
+public abstract class DataTableNode : InputOutputNode, IPipeable
 {
     private string _tableName;
 
@@ -15,6 +18,7 @@ public abstract class DataTableNode : InputOutputNode
         Action = action;
     }
 
+    [Browsable(false), JsonIgnore]
     public TableAction Action { get; }
 
     [DataMember(EmitDefaultValue = false)]
@@ -29,9 +33,26 @@ public abstract class DataTableNode : InputOutputNode
     }
 
     [DataMember(EmitDefaultValue = false)] public Evaluatable<string> Path { get; set; }
+    public object PipeVariable { get; set; }
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
+        var previous = GetPreviousNode<InputOutputNode>();
+
+        if (previous is IPipeable pipe)
+        {
+            PipeVariable = pipe.PipeVariable;
+        }
+        else if (previous is IOutVariableProvider outVariableProvider)
+        {
+            var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
+
+            if (pip is System.Data.DataTable pipes)
+            {
+                PipeVariable = pipes;
+            }
+        }
+
         await Invoke(cancellationToken);
 
         await ContinueWith(OutputPin, cancellationToken);
@@ -39,6 +60,11 @@ public abstract class DataTableNode : InputOutputNode
 
     protected System.Data.DataTable GetTable()
     {
+        if (PipeVariable is System.Data.DataTable d)
+        {
+            return d;
+        }
+
         var value = Context.GetVariable(TableName);
 
         if (value == JSValue.NotExists)
@@ -55,6 +81,7 @@ public abstract class DataTableNode : InputOutputNode
     protected void SetTable(System.Data.DataTable table)
     {
         DefineConstant(TableName, table);
+        PipeVariable = table;
     }
 
     protected abstract Task Invoke(CancellationToken cancellationToken);
