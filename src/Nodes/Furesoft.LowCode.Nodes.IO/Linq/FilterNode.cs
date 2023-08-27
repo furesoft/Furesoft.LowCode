@@ -24,7 +24,7 @@ public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-
+        ApplyPipe<IEnumerable>();
 
         var result = LazyIteratePipeVariable();
 

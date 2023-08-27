@@ -37,21 +37,7 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var previous = GetPreviousNode<InputOutputNode>();
-
-        if (previous is IPipeable pipe)
-        {
-            PipeVariable = pipe.PipeVariable;
-        }
-        else if (previous is IOutVariableProvider outVariableProvider)
-        {
-            var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
-
-            if (pip is System.Data.DataTable pipes)
-            {
-                PipeVariable = pipes;
-            }
-        }
+        ApplyPipe<System.Data.DataTable>();
 
         await Invoke(cancellationToken);
 
@@ -81,6 +67,7 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
     protected void SetTable(System.Data.DataTable table)
     {
         DefineConstant(TableName, table);
+
         PipeVariable = table;
     }
 
