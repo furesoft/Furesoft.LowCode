@@ -4,10 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:Furesoft.LowCode.Designer.Converters"
              xmlns:projectSystem="clr-namespace:Furesoft.LowCode.ProjectSystem"
+             xmlns:behaviors="clr-namespace:Furesoft.LowCode.Designer.Behaviors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ProjectToolView">
   <Grid Focusable="True" DataContext="{Binding $parent[Window].DataContext.OpenedProject, Mode=TwoWay}">
     <TreeView>
+      <TreeView.Styles>
+        <Style Selector="TreeView > TreeViewItem">
+          <Setter Property="(Interaction.Behaviors)">
+            <BehaviorCollectionTemplate>
+              <BehaviorCollection>
+                <behaviors:OpenDocumentOnDoubleTappedBehavior ViewModel="{Binding $parent[Window].DataContext}" />
+              </BehaviorCollection>
+            </BehaviorCollectionTemplate>
+          </Setter>
+        </Style>
+      </TreeView.Styles>
+
       <TreeView.DataTemplates>
         <DataTemplate DataType="projectSystem:SourceFile">
           <StackPanel Spacing="5" Orientation="Horizontal">

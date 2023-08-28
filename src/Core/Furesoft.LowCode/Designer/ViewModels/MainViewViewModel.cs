@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Avalonia.PropertyGrid.Services;
 using CommunityToolkit.Mvvm.Input;
@@ -12,7 +11,6 @@ using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
-using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Furesoft.LowCode.ProjectSystem;
 using NiL.JS.Core;
@@ -24,6 +22,7 @@ public partial class MainViewViewModel : ViewModelBase
     private readonly DockFactory _dockFactory;
 
     private readonly GraphAnalyzer _graphAnalyzer = new();
+    private readonly NodeFactory _nodeFactory;
 
     private CancellationTokenSource _cancellationTokenSource = new();
 
@@ -37,8 +36,8 @@ public partial class MainViewViewModel : ViewModelBase
 
     public MainViewViewModel()
     {
-        var nodeFactory = new NodeFactory();
-        _dockFactory = new(nodeFactory);
+        _nodeFactory = new();
+        _dockFactory = new(_nodeFactory);
         _dockFactory.FocusedDockableChanged += DockFactoryOnFocusedDockableChanged;
 
         Layout = _dockFactory?.CreateLayout();
@@ -51,11 +50,11 @@ public partial class MainViewViewModel : ViewModelBase
             }
         }
 
-        NewLayout = new RelayCommand(ResetLayout);
-
-        SetInitialSelectedDocument();
 
         OpenedProject = Project.Load("test.zip");
+
+        OpenDocument(OpenedProject.Items[1]);
+        SetInitialSelectedDocument();
 
         CellEditFactoryService.Default.AddFactory(new EvaluatableCellEditFactory());
         CellEditFactoryService.Default.AddFactory(new DataTableColumnsCellEditFactory());
@@ -71,7 +70,25 @@ public partial class MainViewViewModel : ViewModelBase
         set => SetProperty(ref _layout, value);
     }
 
-    public ICommand NewLayout { get; }
+    public void OpenDocument(ProjectItem item)
+    {
+        Document doc = null;
+        if (item is GraphItem gi)
+        {
+            var graphDoc = new GraphDocumentViewModel(_nodeFactory, gi.Name);
+
+            graphDoc.Editor.Load(gi.Content);
+            doc = graphDoc;
+        }
+        else if (item is SourceFile si)
+        {
+            var sourceDoc = new SourceDocumentViewModel(si);
+
+            doc = sourceDoc;
+        }
+
+        _dockFactory.CreateDocument(doc);
+    }
 
     [RelayCommand]
     public void DebugEvaluate()
@@ -147,6 +164,11 @@ public partial class MainViewViewModel : ViewModelBase
 
     private void SetInitialSelectedDocument()
     {
+        if (_dockFactory.DocumentDock.ActiveDockable is null)
+        {
+            return;
+        }
+
         SelectedDocument = _dockFactory.DocumentDock.ActiveDockable as GraphDocumentViewModel;
     }
 
@@ -248,7 +270,8 @@ public partial class MainViewViewModel : ViewModelBase
         }
     }
 
-    public void ResetLayout()
+    [RelayCommand]
+    public void NewLayout()
     {
         if (Layout is not null)
         {
