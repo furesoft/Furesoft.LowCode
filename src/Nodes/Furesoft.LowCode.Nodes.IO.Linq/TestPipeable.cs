@@ -1,4 +1,5 @@
-﻿using Furesoft.LowCode.Attributes;
+﻿using System.ComponentModel;
+using Furesoft.LowCode.Attributes;
 
 namespace Furesoft.LowCode.Nodes.IO.Linq;
 
