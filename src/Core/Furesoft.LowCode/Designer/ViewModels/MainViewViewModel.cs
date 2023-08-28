@@ -178,7 +178,7 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        SelectedDocument = _dockFactory.DocumentDock.ActiveDockable as GraphDocumentViewModel;
+        SelectedDocument = _dockFactory.DocumentDock.ActiveDockable as Document;
     }
 
     private void DockFactoryOnFocusedDockableChanged(object sender, FocusedDockableChangedEventArgs e)
