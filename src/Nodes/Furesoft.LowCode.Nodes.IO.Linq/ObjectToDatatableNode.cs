@@ -8,10 +8,11 @@ namespace Furesoft.LowCode.Nodes.IO.Linq;
 [NodeCategory("Linq")]
 public class ObjectToDatatableNode : DataTableNode
 {
-    public JSValue Obj { get; set; }
     public ObjectToDatatableNode() : base(TableAction.None, "Push Object To Datatable")
     {
     }
+
+    public JSValue Obj { get; set; }
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
@@ -21,6 +22,7 @@ public class ObjectToDatatableNode : DataTableNode
         foreach (var prop in Obj)
         {
         }
-            table.Rows.Add(Obj);
+
+        table.Rows.Add(Obj);
     }
 }
