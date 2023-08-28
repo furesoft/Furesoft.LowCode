@@ -4,5 +4,6 @@ public enum TableAction
 {
     None,
     Read,
-    Write
+    Write,
+    Remove
 }
