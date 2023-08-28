@@ -1,11 +1,13 @@
-﻿using Furesoft.LowCode.Designer.Debugging;
+﻿using System.Text;
+using Furesoft.LowCode.Designer.Debugging;
+using Furesoft.LowCode.Designer.Services.Serializing;
 using Furesoft.LowCode.Editor.Model;
 using Furesoft.LowCode.Nodes;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Evaluation;
 
-public class Evaluator
+public class Evaluator : IEvaluator
 {
     private readonly IDrawingNode _drawing;
     public readonly Context Context;
@@ -14,6 +16,36 @@ public class Evaluator
     public Evaluator(IDrawingNode drawing)
     {
         _drawing = drawing;
+        Context = new();
+        Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+
+        AppContext.SetData("DesignerMode", true);
+    }
+
+    public Evaluator(Stream strm)
+    {
+        AppContext.SetData("DesignerMode", false);
+
+        var serializer = new NodeSerializer(typeof(ObservableCollection<>));
+        using var streamReader = new StreamReader(strm, Encoding.UTF8);
+        var text = streamReader.ReadToEnd();
+
+        _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
+
+        Context = new();
+        Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+    }
+
+    public Evaluator(string text)
+    {
+        AppContext.SetData("DesignerMode", false);
+
+        var serializer = new NodeSerializer(typeof(ObservableCollection<>));
+
+        _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
+
         Context = new();
         Debugger = new(Context);
         CredentialStorage = new IsolatedCredentailStorage();
@@ -26,7 +58,7 @@ public class Evaluator
 
     public async Task Execute(CancellationToken cancellationToken)
     {
-        InitCredentils();
+        InitCredentials();
 
         var entryNode = _drawing.GetNodes<EntryNode>().First().DefiningNode;
 
@@ -46,7 +78,7 @@ public class Evaluator
         catch (TaskCanceledException) { }
     }
 
-    private void InitCredentils()
+    private void InitCredentials()
     {
         foreach (var credentialName in CredentialStorage.GetKeys())
         {

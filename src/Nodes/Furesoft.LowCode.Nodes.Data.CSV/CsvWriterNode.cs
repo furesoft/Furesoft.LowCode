@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
@@ -16,12 +17,26 @@ public class CsvWriterNode : DataTableNode
     {
     }
 
+    [DataMember(EmitDefaultValue = false)] public CsvDelimiter Delimiter { get; set; } = CsvDelimiter.Semikolon;
+
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
-        await using var writer = CsvDataWriter.Create(Path);
+        var options = new CsvDataWriterOptions {Delimiter = GetDelimeter()};
+
+        await using var writer = CsvDataWriter.Create(Path, options);
         var dataTable = GetTable();
 
         var dataTableReader = new DataTableReader(dataTable);
         await writer.WriteAsync(dataTableReader, cancellationToken);
+    }
+
+    private char GetDelimeter()
+    {
+        return Delimiter switch
+        {
+            CsvDelimiter.Comma => ',',
+            CsvDelimiter.Semikolon => ';',
+            _ => ';'
+        };
     }
 }

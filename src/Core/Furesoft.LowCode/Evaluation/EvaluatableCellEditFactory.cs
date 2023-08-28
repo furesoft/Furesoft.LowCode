@@ -35,7 +35,6 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
             SetAndRaise(context, control, instance);
         };
 
-
         var value = context.Property.GetValue(context.Target);
         if (value != null)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
@@ -16,9 +17,22 @@ public class CsvReaderNode : DataTableNode
     {
     }
 
+    [DataMember(EmitDefaultValue = false)] public CsvDelimiter Delimiter { get; set; } = CsvDelimiter.Semikolon;
+
+    private char GetDelimeter()
+    {
+        return Delimiter switch
+        {
+            CsvDelimiter.Comma => ',',
+            CsvDelimiter.Semikolon => ';',
+            _ => ';'
+        };
+    }
+
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
-        var reader = CsvDataReader.Create(Path);
+        var options = new CsvDataReaderOptions {Delimiter = GetDelimeter()};
+        var reader = CsvDataReader.Create(Path, options);
         var dataTable = GetTable();
         var indices = new Dictionary<DataColumn, int>();
 

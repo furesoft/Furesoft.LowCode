@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.NodeViews;
@@ -9,7 +9,7 @@ namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 [NodeCategory("IO/FileSystem")]
 [NodeView(typeof(IconNodeView),
     "M896 209v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v158c0 26.5 21.5 48 48 48h48v96c0 35 29 64 64 64h256v96h-48c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h160c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-48v-96h256c35 0 64-29 64-64v-96h48c26.5 0 48-21.5 48-48z")]
-internal class ChildItemNode : InputOutputNode, IOutVariableProvider
+internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
 {
     public ChildItemNode() : base("Get Directory Items")
     {
@@ -35,16 +35,15 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public bool FollowSymlink { get; set; }
 
-    [Description("Should only the Names be listed")]
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public bool OnlyName { get; set; }
-
     [Description("Filters all Entries and excludes all Entries with that flag")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public FileAttributes ExcludedFlags { get; set; }
 
-    [Required]
+    [Description("The Variable to store the Output in.")]
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }
+
+    public object PipeVariable { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -73,17 +72,14 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider
             ItemType.File => dirInfo.GetFiles(SearchPattern, searchOption),
             ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
             ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption),
-            _ => throw new ArgumentOutOfRangeException("Unknown Type")
+            _ => throw CreateError<InvalidOperationException>("Unknown Type")
         };
-        fileInfos = fileInfos.Where(x => !x.Attributes.HasFlag(ExcludedFlags)).ToArray();
 
-        if (OnlyName)
+        PipeVariable = fileInfos.Where(x => x.Attributes.HasFlag(ExcludedFlags));
+
+        if (!string.IsNullOrEmpty(OutVariable))
         {
-            SetOutVariable(OutVariable, fileInfos.Select(x => x.Name));
-        }
-        else
-        {
-            SetOutVariable(OutVariable, fileInfos);
+            SetOutVariable(OutVariable, PipeVariable);
         }
 
         return ContinueWith(OutputPin, cancellationToken);

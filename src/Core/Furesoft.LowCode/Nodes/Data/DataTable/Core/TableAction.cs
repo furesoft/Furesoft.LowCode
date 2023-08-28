@@ -2,7 +2,8 @@
 
 public enum TableAction
 {
-    NoAction,
+    None,
     Read,
     Write,
+    Remove
 }

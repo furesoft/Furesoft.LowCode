@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -19,6 +20,8 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        AppContext.SetData("DesignerMode", true);
+
         var vm = new MainViewViewModel();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

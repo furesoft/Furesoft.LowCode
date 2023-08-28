@@ -28,6 +28,29 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
+    protected void ApplyPipe<T>()
+    {
+        var previous = GetPreviousNode<InputOutputNode>();
+
+        switch (previous)
+        {
+            case IPipeable prevPipe when this is IPipeable pipe:
+                pipe.PipeVariable = prevPipe.PipeVariable;
+
+                break;
+
+            case IOutVariableProvider outVariableProvider:
+                var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
+
+                if (pip is T pipes && this is IPipeable po)
+                {
+                    po.PipeVariable = pipes;
+                }
+
+                break;
+        }
+    }
+
     [Browsable(false)] public Context Context { get; private set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -148,11 +171,16 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     protected void DefineConstant(string name, object value, Context context = null)
     {
         (context ?? Context).DefineVariable(name)
-            .Assign(Context.GlobalContext.WrapValue(value));
+            .Assign(value);
     }
 
     public Control GetView(ref double width, ref double height)
     {
+        if (AppContext.GetData("DesignerMode") is false)
+        {
+            return null;
+        }
+
         Control nodeView = new DefaultNodeView();
 
         var nodeViewAttribute = GetAttribute<NodeViewAttribute>();
