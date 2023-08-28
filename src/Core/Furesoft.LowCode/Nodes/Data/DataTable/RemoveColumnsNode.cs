@@ -9,7 +9,7 @@ public class RemoveColumnsNode : DataTableNode
 {
     public BindingList<string> Columns { get; set; }
 
-    public RemoveColumnsNode() : base(TableAction.NoAction, "Remove Columns")
+    public RemoveColumnsNode() : base(TableAction.None, "Remove Columns")
     {
     }
 
