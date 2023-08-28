@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
@@ -18,8 +17,7 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
         Action = action;
     }
 
-    [Browsable(false), JsonIgnore]
-    public TableAction Action { get; }
+    [Browsable(false)] [JsonIgnore] public TableAction Action { get; }
 
     [DataMember(EmitDefaultValue = false)]
     public string TableName
@@ -28,7 +26,11 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
         set
         {
             SetProperty(ref _tableName, value);
-            Description = $"{Action} '{TableName}'";
+
+            if (Action != TableAction.None)
+            {
+                Description = $"{Action} '{TableName}'";
+            }
         }
     }
 
