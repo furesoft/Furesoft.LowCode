@@ -41,13 +41,11 @@ public partial class MainViewViewModel : ViewModelBase
         _dockFactory.FocusedDockableChanged += DockFactoryOnFocusedDockableChanged;
 
         Layout = _dockFactory?.CreateLayout();
-        if (Layout is not null)
+        if (Layout is { } root)
         {
             _dockFactory?.InitLayout(Layout);
-            if (Layout is { } root)
-            {
-                root.Navigate.Execute("Home");
-            }
+
+            root.Navigate.Execute("Home");
         }
 
 

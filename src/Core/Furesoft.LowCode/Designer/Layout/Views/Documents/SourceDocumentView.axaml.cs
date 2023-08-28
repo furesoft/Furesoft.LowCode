@@ -27,7 +27,10 @@ public partial class SourceDocumentView : UserControl
         _textmate = Editor.InstallTextMate(options);
 
         Editor.TextChanged += EditorOnTextChanged;
+
+        _textmate.SetGrammar(options.GetScopeByExtension(".js"));
     }
+
 
     private void EditorOnTextChanged(object sender, EventArgs e)
     {
@@ -35,15 +38,22 @@ public partial class SourceDocumentView : UserControl
         vm.Source.Content = Editor.Text;
     }
 
-    protected override void OnLoaded(RoutedEventArgs e)
+    private async Task UpdateEditorTextAsync()
     {
+        await Task.Delay(50); // Warte bis TextMate bereit ist.
+
         var vm = (SourceDocumentViewModel)DataContext;
+        Editor.Document.Text = vm.Source.Content;
+    }
 
-        if (string.IsNullOrEmpty(Editor.Document.Text))
-        {
-            Editor.Document.Text = vm.Source.Content;
-        }
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+        UpdateEditorTextAsync();
+    }
 
-        _textmate.SetGrammar(options.GetScopeByExtension(".js"));
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        Editor.TextChanged -= EditorOnTextChanged;
     }
 }
