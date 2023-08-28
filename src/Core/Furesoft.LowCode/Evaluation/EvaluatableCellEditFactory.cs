@@ -1,4 +1,5 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Controls.Primitives;
+using Avalonia.Media;
 using Avalonia.PropertyGrid.Controls;
 using Avalonia.PropertyGrid.Controls.Factories;
 using AvaloniaEdit;
@@ -21,6 +22,9 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
         }
 
         var control = new TextEditor();
+        control.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+        control.MaxHeight = 40;
+
         control.TextChanged += (s, e) =>
         {
             var instance = (dynamic)Activator.CreateInstance(context.Property.PropertyType, control.Text);
