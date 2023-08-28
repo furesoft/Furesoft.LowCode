@@ -209,7 +209,7 @@ public sealed class DrawingNodeEditor
         }
 
         var selectedNodes = _node.GetSelectedNodes();
-        var selectedConnectors = _node.GetSelectedConnectors();
+        var selectedConnectors = GetConnectionsForNodes(_node.GetSelectedNodes());
 
         if (selectedNodes is not {Count: > 0} && selectedConnectors is not {Count: > 0})
         {
@@ -549,6 +549,6 @@ public sealed class DrawingNodeEditor
     public class Clipboard
     {
         public ISet<INode> SelectedNodes { get; set; }
-        public ISet<IConnector> SelectedConnectors { get; set; }
+        public ICollection<IConnector> SelectedConnectors { get; set; }
     }
 }
