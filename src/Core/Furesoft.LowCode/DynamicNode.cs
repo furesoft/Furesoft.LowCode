@@ -8,17 +8,11 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
     public readonly Dictionary<string, (PinAlignment, PinMode, bool)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
 
+    public Func<DynamicNode, CancellationToken, Task> Action;
+
     public DynamicNode(string label, Control view = null) : base(label)
     {
         View = view;
-
-        TypeDescriptor.AddAttributes(this, new DescriptionAttribute("A simple dynamic node"));
-        TypeDescriptor.AddAttributes(this, new NodeCategoryAttribute("Base"));
-
-        Properties.Add("Customproperty1", 5);
-        Properties.Add("Customproperty2", "Hello");
-        Properties.Add("Customproperty3", DateTime.Now);
-        Properties.Add("out", string.Empty);
     }
 
     [Browsable(false)] public Control View { get; set; }
@@ -30,9 +24,7 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        SetOutVariable(Properties["out"].ToString(), true);
-
-        return Task.CompletedTask;
+        return Action?.Invoke(this, cancellationToken);
     }
 
     #region Custom Type Descriptor Interfaces
