@@ -72,6 +72,17 @@ public partial class MainViewViewModel : ViewModelBase
 
     public void OpenDocument(ProjectItem item)
     {
+        var documentDock = _dockFactory.DocumentDock.VisibleDockables.OfType<Document>()
+            .FirstOrDefault(_ => _.Title == item.Name);
+
+        if (documentDock != null)
+        {
+            SelectedDocument = documentDock;
+            _dockFactory.DocumentDock.ActiveDockable = SelectedDocument;
+
+            return;
+        }
+
         Document doc = null;
         if (item is GraphItem gi)
         {
