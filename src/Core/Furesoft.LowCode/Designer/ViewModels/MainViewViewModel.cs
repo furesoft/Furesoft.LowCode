@@ -304,11 +304,19 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     private void New()
     {
+        var newGraphItem = new GraphItem("newGraph.json", null);
+
         var editor = ((GraphDocumentViewModel)SelectedDocument).Editor;
 
-        editor.Drawing = editor.Factory.CreateDrawing();
-        editor.Drawing.SetSerializer(editor.Serializer);
-        Evaluator = new(editor.Drawing);
+        var drawing = editor.Factory.CreateDrawing();
+        drawing.SetSerializer(editor.Serializer);
+
+        newGraphItem.Content = drawing.GetSerializer().Serialize(drawing);
+
+        OpenedProject.Items.Add(newGraphItem);
+        OpenedProject.Save();
+
+        OpenDocument(newGraphItem);
     }
 
     private List<FilePickerFileType> GetOpenFileTypes()

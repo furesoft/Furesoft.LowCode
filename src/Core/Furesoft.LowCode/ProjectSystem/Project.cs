@@ -16,6 +16,8 @@ public class Project
 
     [JsonIgnore] public ObservableCollection<ProjectItem> Items { get; set; } = new();
 
+    [JsonIgnore] public string Path { get; set; }
+
     public static Project Load(string path)
     {
         using var zip = ZipFile.OpenRead(path);
@@ -23,6 +25,7 @@ public class Project
         var optionsEntry = zip.GetEntry("options.json");
 
         var proj = JsonConvert.DeserializeObject<Project>(new StreamReader(jsonStream).ReadToEnd());
+        proj.Path = path;
 
         if (optionsEntry != null)
         {
@@ -37,7 +40,7 @@ public class Project
                 continue;
             }
 
-            var extension = Path.GetExtension(entry.Name);
+            var extension = System.IO.Path.GetExtension(entry.Name);
             var entryStream = entry.Open();
             var sr = new StreamReader(entryStream);
             var entryContent = sr.ReadToEnd();
@@ -57,14 +60,34 @@ public class Project
 
     public void Save(string path)
     {
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
         WriteMetadata(zip);
         Options.SaveTo(zip.CreateEntry("options.json").Open());
 
         foreach (var item in Items)
         {
-            CreateEntryWithContent(zip, item.Name, item.Content);
+            var name = GetZipEntryName(item);
+
+            CreateEntryWithContent(zip, name, item.Content);
         }
+    }
+
+    private string GetZipEntryName(ProjectItem projectItem) =>
+        projectItem switch
+        {
+            SourceFile => "sources/" + projectItem.Name,
+            GraphItem => "graphs/" + projectItem.Name,
+            _ => projectItem.Name
+        };
+
+    public void Save()
+    {
+        Save(Path);
     }
 
     private static void CreateEntryWithContent(ZipArchive zip, string name, string content)
