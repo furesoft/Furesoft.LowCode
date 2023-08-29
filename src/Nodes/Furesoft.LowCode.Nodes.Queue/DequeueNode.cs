@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.Queue;
 
 [Description("Get data from queue")]
-[NodeView(typeof(IconNodeView),
+[NodeIcon(
     "M322 237v-43h-170v43h170zM429 87v256h-384v-256h384zM429 386c23 0 43-19 43-43l-1-256c0-23-19-42-42-42h-107v-43h-170v43h-107c-24 0-43 19-43 42v256c0 24 19 43 43 43h384z")]
 public class DequeueNode : QueueBaseNode, IOutVariableProvider
 {
@@ -14,8 +13,7 @@ public class DequeueNode : QueueBaseNode, IOutVariableProvider
     {
     }
 
-    [Required, DataMember]
-    public string OutVariable { get; set; }
+    [Required, DataMember] public string OutVariable { get; set; }
 
     public override Task Invoke(CancellationToken cancellationToken)
     {

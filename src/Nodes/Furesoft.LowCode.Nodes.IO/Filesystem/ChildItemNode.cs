@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using Furesoft.LowCode.Attributes;
+﻿using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
-using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [Description("Get Items in a Folder")]
 [NodeCategory("IO/FileSystem")]
-[NodeView(typeof(IconNodeView),
+[NodeIcon(
     "M896 209v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h48v96h-256v-96h48c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-160c-26.5 0-48 21.5-48 48v158c0 26.5 21.5 48 48 48h48v96c0 35 29 64 64 64h256v96h-48c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h160c26.5 0 48-21.5 48-48v-160c0-26.5-21.5-48-48-48h-48v-96h256c35 0 64-29 64-64v-96h48c26.5 0 48-21.5 48-48z")]
 internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
 {

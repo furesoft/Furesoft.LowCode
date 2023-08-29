@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Evaluation;
-using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 
 [Description("Create Items in a Folder")]
 [NodeCategory("IO/FileSystem")]
-[NodeView(typeof(IconNodeView),
+[NodeIcon(
     "M67 216v-43h64v-64h42v64h64v43h-64v64h-42v-64h-64zM45 45c-24 0-42 19-42 43v213c0 24 18 43 42 43h342c24-0 42-19 42-43v-256c-0-24-18-43-42-43h-128l-43 43h-171z")]
 public class CreateNewItem : InputOutputNode
 {
