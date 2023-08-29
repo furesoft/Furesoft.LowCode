@@ -8,6 +8,7 @@ namespace Furesoft.LowCode.Nodes.IO.Linq;
 
 [Description("Filters Nodes")]
 [NodeCategory("Linq")]
+[NodeIcon("M29.8667 64.3333l17.0667-10.6667v-17.0667l29.8667-36.2667h-76.8l29.8667 36.2667z")]
 public class FilterNode : InputOutputNode, IOutVariableProvider, IPipeable
 {
     public FilterNode() : base("Filter")
