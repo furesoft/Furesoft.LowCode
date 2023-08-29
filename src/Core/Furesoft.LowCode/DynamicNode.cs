@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Furesoft.LowCode.Attributes;
 
 namespace Furesoft.LowCode;
 
@@ -8,7 +7,7 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
     public readonly Dictionary<string, (PinAlignment, PinMode, bool)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
 
-    public Func<DynamicNode, CancellationToken, Task> Action;
+    private Func<DynamicNode, CancellationToken, Task> _action;
 
     public DynamicNode(string label, Control view = null) : base(label)
     {
@@ -22,9 +21,14 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
         Pins.Add(name, (alignment, mode, multipleConnections));
     }
 
+    protected Task ContinueWith(string pin, CancellationToken token)
+    {
+        return ContinueWith(null, token, pinMembername: pin);
+    }
+
     public override Task Execute(CancellationToken cancellationToken)
     {
-        return Action?.Invoke(this, cancellationToken);
+        return _action?.Invoke(this, cancellationToken);
     }
 
     #region Custom Type Descriptor Interfaces

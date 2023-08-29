@@ -4,7 +4,9 @@ using AvaloniaEdit.Utils;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.NodeViews;
+using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode;
 
@@ -43,18 +45,11 @@ public partial class NodeFactory : INodeFactory
         return templates;
     }
 
-    public DynamicNode CreateSubGraphNode(string label, Dictionary<string, object> properties,
-        IEnumerable<KeyValuePair<string, (PinAlignment, PinMode, bool)>> Pins, string category,
-        Func<DynamicNode, CancellationToken, Task> action)
+    public DynamicNode CreateSubGraphNode(Dictionary<string, object> properties, GraphItem graph)
     {
-        var node = new DynamicNode(label);
+        var node = new SubgraphNode(graph);
 
         node.Properties.AddRange(properties);
-        node.Pins.AddRange(Pins);
-
-        TypeDescriptor.AddAttributes(node, new NodeCategoryAttribute(category));
-
-        node.Action = action;
 
         return node;
     }

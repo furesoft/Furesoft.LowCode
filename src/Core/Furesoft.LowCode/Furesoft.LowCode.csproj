@@ -73,6 +73,7 @@
       <DependentUpon>RowsWindow.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Remove="Designer\Layout\Views\Tools\ParametersToolView.axaml.cs"/>
   </ItemGroup>
 
   <ItemGroup>
