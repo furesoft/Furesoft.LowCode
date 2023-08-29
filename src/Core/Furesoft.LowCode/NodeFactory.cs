@@ -187,7 +187,8 @@ public partial class NodeFactory : INodeFactory
     {
         static bool IsNormalNode(Type node)
         {
-            return !typeof(INodeFactory).IsAssignableFrom(node) && node != typeof(DynamicNode) && !node.IsAbstract;
+            return !typeof(INodeFactory).IsAssignableFrom(node) && node != typeof(DynamicNode) &&
+                   node != typeof(SubgraphNode) && !node.IsAbstract;
         }
 
         var normalNodes =
