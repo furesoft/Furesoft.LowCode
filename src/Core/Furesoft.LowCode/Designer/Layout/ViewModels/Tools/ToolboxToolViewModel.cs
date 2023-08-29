@@ -7,7 +7,7 @@ using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
 
-public partial class ToolboxToolViewModel : Tool
+public partial class ToolboxToolViewModel : Tool, INodeTemplatesHost
 {
     private readonly Dictionary<string, List<INodeTemplate>> _categorizedNodeTemplates = new();
     [ObservableProperty] private string _searchTerm = string.Empty;
@@ -120,7 +120,8 @@ public partial class ToolboxToolViewModel : Tool
         }
     }
 
-    private TreeViewItem CreateTreeViewItem(string[] spl, StringBuilder currentPathBuilder, Dictionary<string, TreeViewItem> treeCache,
+    private TreeViewItem CreateTreeViewItem(string[] spl, StringBuilder currentPathBuilder,
+        Dictionary<string, TreeViewItem> treeCache,
         TreeViewItem parentItem)
     {
         for (var index = 0; index < spl.Length; index++)

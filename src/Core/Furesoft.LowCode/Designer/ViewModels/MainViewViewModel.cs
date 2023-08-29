@@ -97,6 +97,9 @@ public partial class MainViewViewModel : ViewModelBase
         }
 
         _dockFactory.CreateDocument(doc);
+
+        SelectedDocument = doc;
+        _dockFactory.DocumentDock.ActiveDockable = doc;
     }
 
     [RelayCommand]

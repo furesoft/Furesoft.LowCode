@@ -13,7 +13,7 @@ public partial class GraphDocumentViewModel : Document
 
         _editor.Serializer = new NodeSerializer(typeof(ObservableCollection<>));
         _editor.Factory = nodeFactory;
-        _editor.Templates = _editor.Factory.CreateTemplates();
+        _editor.Templates = new(_editor.Factory.CreateTemplates());
         _editor.Drawing = _editor.Factory.CreateDrawing();
         _editor.Drawing.SetSerializer(_editor.Serializer);
         _editor.Drawing.Name = name;

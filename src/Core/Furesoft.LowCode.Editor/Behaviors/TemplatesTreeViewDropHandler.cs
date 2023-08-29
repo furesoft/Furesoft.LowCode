@@ -22,11 +22,6 @@ public class TemplatesTreeViewDropHandler : DropHandlerBase
         var sourceIndex = nodeTemplatesHost.Templates.IndexOf(sourceItem);
         var targetIndex = nodeTemplatesHost.Templates.IndexOf(targetItem);
 
-        if (sourceIndex < 0 || targetIndex < 0)
-        {
-            return false;
-        }
-
         if (e.DragEffects == DragDropEffects.Copy)
         {
             return false;
