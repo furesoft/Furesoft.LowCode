@@ -5,6 +5,7 @@ using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Behaviors;
 
+
 public class OpenDocumentOnDoubleTappedBehavior : Behavior<Control>
 {
     public static readonly StyledProperty<MainViewViewModel> ViewModelProperty =

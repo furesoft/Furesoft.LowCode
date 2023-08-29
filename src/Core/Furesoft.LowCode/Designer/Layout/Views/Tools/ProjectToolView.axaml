@@ -21,9 +21,21 @@
         </Style>
       </TreeView.Styles>
 
+      <TreeView.Resources>
+        <ContextMenu x:Key="ContextMenu">
+          <MenuItem Header="New">
+            <MenuItem Header="Graph" Command="{Binding $parent[Window].DataContext.NewGraphCommand}" />
+            <MenuItem Header="Source" Command="{Binding $parent[Window].DataContext.NewSourceCommand}" />
+          </MenuItem>
+          <MenuItem Header="Delete" Command="{Binding $parent[Window].DataContext.DeleteCommand}"
+                    CommandParameter="{Binding}" />
+          <MenuItem Header="Rename" />
+        </ContextMenu>
+      </TreeView.Resources>
+
       <TreeView.DataTemplates>
         <DataTemplate DataType="projectSystem:SourceFile">
-          <StackPanel Spacing="5" Orientation="Horizontal">
+          <StackPanel Spacing="5" Orientation="Horizontal" ContextMenu="{StaticResource ContextMenu}">
             <Viewbox Margin="5" VerticalAlignment="Center">
               <Path Classes="node" Data="{StaticResource SourceFileIcon}" />
             </Viewbox>
@@ -32,7 +44,7 @@
           </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="projectSystem:GraphItem">
-          <StackPanel Spacing="5" Orientation="Horizontal">
+          <StackPanel Spacing="5" Orientation="Horizontal" ContextMenu="{StaticResource ContextMenu}">
             <Viewbox Margin="5" VerticalAlignment="Center">
               <Path Classes="node" Data="{StaticResource GraphFileIcon}" />
             </Viewbox>

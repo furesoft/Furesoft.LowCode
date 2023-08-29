@@ -302,7 +302,7 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void New()
+    private void NewGraph()
     {
         var newGraphItem = new GraphItem("newGraph.json", null);
 
@@ -317,6 +317,17 @@ public partial class MainViewViewModel : ViewModelBase
         OpenedProject.Save();
 
         OpenDocument(newGraphItem);
+    }
+
+    [RelayCommand]
+    private void NewSource()
+    {
+        var newSourceItem = new SourceFile("newSource.js", null);
+
+        OpenedProject.Items.Add(newSourceItem);
+        OpenedProject.Save();
+
+        OpenDocument(newSourceItem);
     }
 
     private List<FilePickerFileType> GetOpenFileTypes()
@@ -382,6 +393,21 @@ public partial class MainViewViewModel : ViewModelBase
             catch (Exception)
             {
             }
+        }
+    }
+
+    [RelayCommand]
+    public void Delete(ProjectItem item)
+    {
+        OpenedProject.Items.Remove(item);
+        OpenedProject.Save();
+
+        var documentDock = _dockFactory.DocumentDock.VisibleDockables.OfType<Document>()
+            .FirstOrDefault(_ => _.Title == item.Name);
+
+        if (documentDock != null)
+        {
+            _dockFactory.DocumentDock.VisibleDockables.Remove(documentDock);
         }
     }
 
