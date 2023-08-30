@@ -10,4 +10,5 @@ public abstract class ProjectItem
 
     public string Name { get; set; }
     public string Content { get; set; }
+    public string Id { get; set; }
 }

@@ -8,8 +8,8 @@ public class SourceDocumentViewModel : Document
     public SourceDocumentViewModel(SourceFile source)
     {
         Source = source;
-        Id = source.Name;
         Title = source.Name;
+        Id = source.Id;
     }
 
     public SourceFile Source { get; set; }

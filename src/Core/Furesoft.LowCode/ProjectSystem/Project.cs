@@ -47,8 +47,8 @@ public class Project
 
             ProjectItem item = extension switch
             {
-                ".json" => new GraphItem(entry.Name, entryContent),
-                ".js" => new SourceFile(entry.Name, entryContent),
+                ".json" => new GraphItem(entry.Name.Replace(".json", ""), entryContent),
+                ".js" => new SourceFile(entry.Name.Replace(".js", ""), entryContent),
                 _ => null
             };
 
@@ -80,8 +80,8 @@ public class Project
     private string GetZipEntryName(ProjectItem projectItem) =>
         projectItem switch
         {
-            SourceFile => "sources/" + projectItem.Name,
-            GraphItem => "graphs/" + projectItem.Name,
+            SourceFile => $"sources/{projectItem.Name}.js",
+            GraphItem => $"graphs/{projectItem.Name}.json",
             _ => projectItem.Name
         };
 

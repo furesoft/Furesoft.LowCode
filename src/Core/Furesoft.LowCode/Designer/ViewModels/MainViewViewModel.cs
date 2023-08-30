@@ -71,8 +71,8 @@ public partial class MainViewViewModel : ViewModelBase
 
     public void OpenDocument(ProjectItem item)
     {
-        var documentDock = _dockFactory.DocumentDock.VisibleDockables.OfType<Document>()
-            .FirstOrDefault(_ => _.Title == item.Name);
+        var documentDock = _dockFactory.DocumentDock.VisibleDockables!.OfType<Document>()
+            .FirstOrDefault(_ => _.Id == item.Id);
 
         if (documentDock != null)
         {
@@ -85,7 +85,7 @@ public partial class MainViewViewModel : ViewModelBase
         Document doc = null;
         if (item is GraphItem gi)
         {
-            var graphDoc = new GraphDocumentViewModel(_nodeFactory, gi.Name);
+            var graphDoc = new GraphDocumentViewModel(_nodeFactory, gi);
 
             graphDoc.Editor.Load(gi.Content);
             doc = graphDoc;
@@ -99,7 +99,7 @@ public partial class MainViewViewModel : ViewModelBase
 
         _dockFactory.CreateDocument(doc);
 
-        SelectedDocument = doc;
+        SelectedDocument = doc!;
         _dockFactory.DocumentDock.ActiveDockable = doc;
     }
 
@@ -217,7 +217,7 @@ public partial class MainViewViewModel : ViewModelBase
 
         if (selectedNodes != null)
         {
-            SelectedNode = selectedNodes.FirstOrDefault().DefiningNode;
+            SelectedNode = selectedNodes.First().DefiningNode;
         }
         else
         {
@@ -303,10 +303,10 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async void NewGraph()
+    private async Task NewGraph()
     {
         var name = await Prompt.Show("New Graph", "Name");
-        var newGraphItem = new GraphItem($"{name}.json", null);
+        var newGraphItem = new GraphItem(name, null);
 
         var editor = ((GraphDocumentViewModel)SelectedDocument).Editor;
 
@@ -322,10 +322,10 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async void NewSource()
+    private async Task NewSource()
     {
         var name = await Prompt.Show("New Source", "Name");
-        var newSourceItem = new SourceFile($"{name}.js", null);
+        var newSourceItem = new SourceFile(name, null);
 
         OpenedProject.Items.Add(newSourceItem);
         OpenedProject.Save();

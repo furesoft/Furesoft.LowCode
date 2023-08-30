@@ -1,5 +1,6 @@
 ﻿using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Designer.Services.Serializing;
+using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 
@@ -7,7 +8,7 @@ public partial class GraphDocumentViewModel : Document
 {
     [ObservableProperty] private EditorViewModel _editor;
 
-    public GraphDocumentViewModel(NodeFactory nodeFactory, string name)
+    public GraphDocumentViewModel(NodeFactory nodeFactory, GraphItem item)
     {
         _editor = new();
 
@@ -16,8 +17,8 @@ public partial class GraphDocumentViewModel : Document
         _editor.Templates = new(_editor.Factory.CreateTemplates());
         _editor.Drawing = _editor.Factory.CreateDrawing();
         _editor.Drawing.SetSerializer(_editor.Serializer);
-        _editor.Drawing.Name = name;
-        Title = name;
-        Id = name;
+        _editor.Drawing.Name = item.Name;
+        Title = item.Name;
+        Id = item.Id;
     }
 }
