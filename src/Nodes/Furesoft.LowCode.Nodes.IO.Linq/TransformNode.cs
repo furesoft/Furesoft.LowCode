@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.Serialization;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.IO.Linq;
@@ -11,6 +12,7 @@ public class TransformNode : LinqNode
     {
     }
 
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<object> Transformer { get; set; }
 
     protected override IEnumerable Iterate(IEnumerable src)
