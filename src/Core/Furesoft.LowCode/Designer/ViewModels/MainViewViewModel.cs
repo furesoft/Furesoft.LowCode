@@ -9,6 +9,7 @@ using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.Layout.ViewModels;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
+using Furesoft.LowCode.Designer.Views;
 using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
@@ -302,9 +303,10 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void NewGraph()
+    private async void NewGraph()
     {
-        var newGraphItem = new GraphItem("newGraph.json", null);
+        var name = await Prompt.Show("New Graph", "Name");
+        var newGraphItem = new GraphItem($"{name}.json", null);
 
         var editor = ((GraphDocumentViewModel)SelectedDocument).Editor;
 
@@ -320,9 +322,10 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void NewSource()
+    private async void NewSource()
     {
-        var newSourceItem = new SourceFile("newSource.js", null);
+        var name = await Prompt.Show("New Source", "Name");
+        var newSourceItem = new SourceFile($"{name}.js", null);
 
         OpenedProject.Items.Add(newSourceItem);
         OpenedProject.Save();
