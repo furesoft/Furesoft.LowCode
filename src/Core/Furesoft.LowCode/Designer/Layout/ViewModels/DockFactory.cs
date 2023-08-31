@@ -4,7 +4,6 @@ using Dock.Model.Core;
 using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Designer.Layout.Models.Tools;
-using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels;
@@ -142,7 +141,9 @@ public class DockFactory : Factory
             (
                 new ToolDock
                 {
-                    ActiveDockable = null, VisibleDockables = CreateList<IDockable>(debugLocalsTool), Alignment = Alignment.Bottom
+                    ActiveDockable = null,
+                    VisibleDockables = CreateList<IDockable>(debugLocalsTool),
+                    Alignment = Alignment.Bottom
                 }
             )
         };

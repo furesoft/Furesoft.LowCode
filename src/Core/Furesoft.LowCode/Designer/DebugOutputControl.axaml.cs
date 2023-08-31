@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
-using Furesoft.LowCode.Nodes;
 
 namespace Furesoft.LowCode.Designer;
 

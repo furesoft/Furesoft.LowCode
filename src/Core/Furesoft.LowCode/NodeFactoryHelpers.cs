@@ -2,8 +2,6 @@
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor;
 using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Evaluation;
-using Furesoft.LowCode.Nodes;
 
 namespace Furesoft.LowCode;
 
@@ -97,7 +95,7 @@ public partial class NodeFactory
             var value = (dynamic)prop.GetValue(node);
 
             value ??= Activator.CreateInstance(prop.PropertyType, "");
-            
+
             value.Parent = node;
 
             prop.SetValue(node, value);

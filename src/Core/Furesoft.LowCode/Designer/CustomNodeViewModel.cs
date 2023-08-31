@@ -1,6 +1,4 @@
-﻿using Furesoft.LowCode.Analyzing;
-
-namespace Furesoft.LowCode.Designer;
+﻿namespace Furesoft.LowCode.Designer;
 
 public class CustomNodeViewModel : NodeViewModel
 {

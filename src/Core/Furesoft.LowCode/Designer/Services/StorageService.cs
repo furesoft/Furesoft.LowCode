@@ -15,6 +15,13 @@ internal static class StorageService
         MimeTypes = new[] {"application/json"}
     };
 
+    public static FilePickerFileType Project { get; } = new("Project")
+    {
+        Patterns = new[] {"*.zip"},
+        AppleUniformTypeIdentifiers = new[] {"public.zip"},
+        MimeTypes = new[] {"application/gzip"}
+    };
+
     public static FilePickerFileType ImageSvg { get; } = new("Svg")
     {
         Patterns = new[] {"*.svg"},

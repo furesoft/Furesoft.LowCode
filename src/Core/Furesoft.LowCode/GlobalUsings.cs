@@ -1,3 +1,10 @@
 ﻿global using System;
 global using Avalonia.Controls;
 global using Avalonia.Markup.Xaml;
+global using Furesoft.LowCode.Analyzing;
+global using Furesoft.LowCode.Designer.Layout.ViewModels;
+global using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
+global using Furesoft.LowCode.Designer.Views;
+global using Furesoft.LowCode.Evaluation;
+global using Furesoft.LowCode.Nodes;
+global using Furesoft.LowCode.ProjectSystem;

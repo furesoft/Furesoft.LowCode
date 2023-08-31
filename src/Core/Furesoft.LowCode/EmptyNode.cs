@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Designer.ViewModels;
-using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Analyzers;
 using Furesoft.LowCode.NodeViews;
 using Newtonsoft.Json;
@@ -28,6 +26,43 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
+    [Browsable(false)] public Context Context { get; private set; }
+
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Browsable(false)]
+    [JsonIgnore]
+    public string Label
+    {
+        get => _label;
+        set => SetProperty(ref _label, value);
+    }
+
+    [Browsable(false)]
+    [DataMember(EmitDefaultValue = false)]
+    public Guid ID { get; set; }
+
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    [Browsable(false)]
+    [JsonIgnore]
+    public string Description
+    {
+        get => _description;
+        set => SetProperty(ref _description, value);
+    }
+
+    [DataMember(IsRequired = false, EmitDefaultValue = false)]
+    public bool ShowDescription
+    {
+        get => _showDescription;
+        set => SetProperty(ref _showDescription, value);
+    }
+
+    /// <summary>
+    ///     Gets the previously executed node
+    /// </summary>
+    [Browsable(false)]
+    public EmptyNode PreviousNode { get; set; }
+
     protected void ApplyPipe<T>()
     {
         var previous = GetPreviousNode<InputOutputNode>();
@@ -50,41 +85,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
                 break;
         }
     }
-
-    [Browsable(false)] public Context Context { get; private set; }
-
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    [Browsable(false), JsonIgnore]
-    public string Label
-    {
-        get => _label;
-        set => SetProperty(ref _label, value);
-    }
-
-    [Browsable(false)]
-    [DataMember(EmitDefaultValue = false)]
-    public Guid ID { get; set; }
-
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    [Browsable(false), JsonIgnore]
-    public string Description
-    {
-        get => _description;
-        set => SetProperty(ref _description, value);
-    }
-
-    [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public bool ShowDescription
-    {
-        get => _showDescription;
-        set => SetProperty(ref _showDescription, value);
-    }
-
-    /// <summary>
-    ///     Gets the previously executed node
-    /// </summary>
-    [Browsable(false)]
-    public EmptyNode PreviousNode { get; set; }
 
     public abstract Task Execute(CancellationToken cancellationToken);
 
@@ -117,13 +117,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         node._evaluator.Debugger.CurrentNode = node;
         node.Options = _evaluator.Options;
 
-        try
-        {
-            await node?.Execute(cancellationToken);
-        }
-        catch (OutVariableException)
-        {
-        }
+        await node?.Execute(cancellationToken);
     }
 
     protected Exception CreateError(string msg)

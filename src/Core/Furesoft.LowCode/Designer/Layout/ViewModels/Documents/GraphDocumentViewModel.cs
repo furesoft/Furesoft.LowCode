@@ -1,6 +1,5 @@
 ﻿using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Designer.Services.Serializing;
-using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Analyzing;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Nodes.Analyzers;
 

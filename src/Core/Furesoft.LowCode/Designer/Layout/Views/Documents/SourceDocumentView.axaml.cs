@@ -2,7 +2,6 @@
 using AvaloniaEdit;
 using AvaloniaEdit.Indentation.CSharp;
 using AvaloniaEdit.TextMate;
-using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
 using TextMateSharp.Grammars;
 
 namespace Furesoft.LowCode.Designer.Layout.Views.Documents;

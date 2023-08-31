@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Data;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Newtonsoft.Json;
 using NiL.JS.Core;
@@ -66,7 +65,8 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
         }
     }
 
-    private void CalculateColumnValues(System.Data.DataTable table, DataColumn column, NewColumnRule newColumnTransformer)
+    private void CalculateColumnValues(System.Data.DataTable table, DataColumn column,
+        NewColumnRule newColumnTransformer)
     {
         foreach (DataRow row in table.Rows)
         {
@@ -137,7 +137,7 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
     }
 
     //Fullname: @Firstname - @Lastname
-    private class NewColumnRule : TransformerRule
+    private sealed class NewColumnRule : TransformerRule
     {
         public string ColumnName { get; set; }
         public string Pattern { get; set; }

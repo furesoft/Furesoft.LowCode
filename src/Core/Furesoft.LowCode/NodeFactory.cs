@@ -4,9 +4,7 @@ using AvaloniaEdit.Utils;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor.Model;
-using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.NodeViews;
-using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode;
 

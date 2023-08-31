@@ -1,10 +1,8 @@
 ﻿using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
 using Furesoft.LowCode.Designer.ViewModels;
-using Furesoft.LowCode.ProjectSystem;
 
 namespace Furesoft.LowCode.Designer.Behaviors;
-
 
 public class OpenDocumentOnDoubleTappedBehavior : Behavior<Control>
 {

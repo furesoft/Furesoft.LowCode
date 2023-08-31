@@ -1,6 +1,4 @@
-﻿using Furesoft.LowCode.Analyzing;
-
-namespace Furesoft.LowCode.Nodes.Analyzers;
+﻿namespace Furesoft.LowCode.Nodes.Analyzers;
 
 public class EntryNodeAnalyzer : GraphAnalyzerBase<EntryNode>
 {

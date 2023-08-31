@@ -6,14 +6,7 @@ using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
 using Dock.Model.Mvvm.Controls;
-using Furesoft.LowCode.Analyzing;
-using Furesoft.LowCode.Designer.Layout.ViewModels;
-using Furesoft.LowCode.Designer.Layout.ViewModels.Documents;
-using Furesoft.LowCode.Designer.Views;
-using Furesoft.LowCode.Evaluation;
-using Furesoft.LowCode.Nodes;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
-using Furesoft.LowCode.ProjectSystem;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
@@ -41,10 +34,10 @@ public partial class MainViewViewModel : ViewModelBase
         _dockFactory = new(_nodeFactory);
         _dockFactory.FocusedDockableChanged += DockFactoryOnFocusedDockableChanged;
 
-        Layout = _dockFactory?.CreateLayout();
+        Layout = _dockFactory.CreateLayout();
         if (Layout is { } root)
         {
-            _dockFactory?.InitLayout(Layout);
+            _dockFactory.InitLayout(Layout);
 
             root.Navigate.Execute("Home");
         }
@@ -274,32 +267,22 @@ public partial class MainViewViewModel : ViewModelBase
 
     public void CloseLayout()
     {
-        if (Layout is IDock dock)
+        if (Layout is IDock dock && dock.Close.CanExecute(null))
         {
-            if (dock.Close.CanExecute(null))
-            {
-                dock.Close.Execute(null);
-            }
+            dock.Close.Execute(null);
         }
     }
 
     [RelayCommand]
     public void NewLayout()
     {
-        if (Layout is not null)
+        if (Layout is not null && Layout.Close.CanExecute(null))
         {
-            if (Layout.Close.CanExecute(null))
-            {
-                Layout.Close.Execute(null);
-            }
+            Layout.Close.Execute(null);
         }
 
-        var layout = _dockFactory?.CreateLayout();
-        if (layout is not null)
-        {
-            Layout = layout;
-            _dockFactory?.InitLayout(layout);
-        }
+        Layout = _dockFactory.CreateLayout();
+        _dockFactory.InitLayout(Layout);
     }
 
     [RelayCommand]
@@ -335,7 +318,7 @@ public partial class MainViewViewModel : ViewModelBase
 
     private List<FilePickerFileType> GetOpenFileTypes()
     {
-        return new() {StorageService.Json, StorageService.All};
+        return new() {StorageService.Project, StorageService.Json};
     }
 
     private static List<FilePickerFileType> GetSaveFileTypes()
@@ -343,24 +326,9 @@ public partial class MainViewViewModel : ViewModelBase
         return new() {StorageService.Json, StorageService.All};
     }
 
-    private static List<FilePickerFileType> GetExportFileTypes()
-    {
-        return new()
-        {
-            StorageService.ImagePng,
-            StorageService.ImageSvg,
-            StorageService.Pdf,
-            StorageService.Xps,
-            StorageService.ImageSkp,
-            StorageService.All
-        };
-    }
-
     [RelayCommand]
     private async Task Open()
     {
-        var editor = ((GraphDocumentViewModel)SelectedDocument).Editor;
-
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
         {
@@ -369,33 +337,16 @@ public partial class MainViewViewModel : ViewModelBase
 
         var result = await storageProvider.OpenFilePickerAsync(new()
         {
-            Title = "Open drawing", FileTypeFilter = GetOpenFileTypes(), AllowMultiple = false
+            Title = "Open Project", FileTypeFilter = GetOpenFileTypes(), AllowMultiple = false
         });
 
         var file = result.FirstOrDefault();
 
         if (file is not null)
         {
-            try
-            {
-                await using var stream = await file.OpenReadAsync();
-                using var reader = new StreamReader(stream);
-                var json = await reader.ReadToEndAsync();
+            await using var stream = await file.OpenReadAsync();
 
-                var drawing = editor.Serializer.Deserialize<DrawingNodeViewModel>(json);
-
-                if (drawing is null)
-                {
-                    return;
-                }
-
-                editor.Drawing = drawing;
-                editor.Drawing.SetSerializer(editor.Serializer);
-                editor.Drawing.SelectionChanged += DrawingOnSelectionChanged;
-            }
-            catch (Exception)
-            {
-            }
+            OpenedProject = Project.Load(file.Path.ToString());
         }
     }
 
@@ -446,7 +397,6 @@ public partial class MainViewViewModel : ViewModelBase
             catch (Exception)
             {
                 //Debug.WriteLine(ex.Message);
-                //Debug.WriteLine(ex.StackTrace);
             }
         }
     }
