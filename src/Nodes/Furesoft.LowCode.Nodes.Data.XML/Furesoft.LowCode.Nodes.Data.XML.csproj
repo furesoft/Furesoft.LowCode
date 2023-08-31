@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Furesoft.LowCode.Nodes.Data.XML</RootNamespace>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ImplicitUsings>true</ImplicitUsings>
+    <Authors>furesoft</Authors>
+    <RepositoryUrl>https://github.com/furesoft/Furesoft.LowCode</RepositoryUrl>
+    <PackageTags>lowcode, visual, scripting, nodes, graph</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Furesoft.LowCode\Furesoft.LowCode.csproj"/>
+  </ItemGroup>
+
+</Project>
