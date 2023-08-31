@@ -197,10 +197,10 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public void Cancel()
     {
-        Layout.Navigate.Execute("Home");
-
         _cancellationTokenSource.Cancel();
         _cancellationTokenSource = new();
+
+        Layout.Navigate.Execute("Home");
     }
 
     private void DrawingOnSelectionChanged(object sender, EventArgs e)

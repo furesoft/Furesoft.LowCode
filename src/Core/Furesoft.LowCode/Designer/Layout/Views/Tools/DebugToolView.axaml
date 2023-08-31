@@ -1,0 +1,27 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.DebugToolView">
+  <StackPanel DataContext="{Binding $parent[Window].DataContext}" Spacing="5">
+    <StackPanel Orientation="Horizontal" Margin="5">
+      <Button ToolTip.Tip="Step" Command="{Binding StepCommand}">
+        <PathIcon Data="M2.5 2.25A.5.5 90 013 2.75.5.5 90 012.5 3.25.5.5 90 012 2.75.5.5 90 012.5 2.25M5.365.965 4.9675 2.6875 3.25 2.29 4.2 1.695C3.8475 1.125 3.2175.75 2.5.75 1.5125.75.6925 1.465.53 2.4075L.0375 2.32C.24 1.145 1.265.25 2.5.25 3.395.25 4.1825.7225 4.625 1.43L5.365.965Z" />
+      </Button>
+      <Button ToolTip.Tip="Continue" Command="{Binding ContinueCommand}">
+        <PathIcon Data="M.44 3.03H.2V.22H.44V3.03zM1.21 2.89 1.02 2.8V.45L1.21.36 2.85 1.53V1.72L1.21 2.89zM2.58 1.62 1.26.68V2.57L2.58 1.62z" />
+      </Button>
+      <Button ToolTip.Tip="Cancel" Command="{Binding CancelCommand}">
+        <PathIcon Data="M4.73 5.71 5.71 6.68 6.68 5.71 5.71 4.73 6.68 3.75 5.71 2.78 4.73 3.75 3.75 2.78 2.78 3.75 3.75 4.73 2.78 5.71 3.75 6.68ZM.34 4.73C.34 2.3 2.3.34 4.73.34L4.73.34C7.16.34 9.12 2.3 9.13 4.73L9.13 4.73C9.12 7.16 7.16 9.12 4.73 9.13L4.73 9.13C2.3 9.12.34 7.16.34 4.73L.34 4.73ZM1.37 4.73C1.37 6.59 2.88 8.09 4.73 8.09L4.73 8.09C6.59 8.09 8.09 6.59 8.09 4.73L8.09 4.73C8.09 2.88 6.59 1.37 4.73 1.37L4.73 1.37C2.88 1.37 1.37 2.88 1.37 4.73L1.37 4.73Z" />
+      </Button>
+    </StackPanel>
+
+    <Grid ColumnDefinitions="*,60" RowDefinitions="35,*" Focusable="True">
+      <TextBox Margin="3" Grid.Column="0" Grid.Row="0" Height="35" Watermark="Type Expression" Text="{Binding Text}" />
+      <Button Margin="3" Grid.Column="1" Grid.Row="0" Content="Eval" Command="{Binding DebugEvaluateCommand}" />
+
+      <TreeView Margin="3" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Items}" />
+    </Grid>
+  </StackPanel>
+</UserControl>

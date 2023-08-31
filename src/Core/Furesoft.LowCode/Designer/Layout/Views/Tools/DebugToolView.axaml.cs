@@ -1,8 +1,8 @@
 ﻿namespace Furesoft.LowCode.Designer.Layout.Views.Tools;
 
-public partial class DebugLocalsToolView : UserControl
+public partial class DebugToolView : UserControl
 {
-    public DebugLocalsToolView()
+    public DebugToolView()
     {
         InitializeComponent();
     }
@@ -12,4 +12,3 @@ public partial class DebugLocalsToolView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 }
-

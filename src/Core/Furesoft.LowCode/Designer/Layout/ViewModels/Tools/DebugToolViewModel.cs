@@ -2,6 +2,6 @@
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
 
-public class DebugLocalsToolViewModel : Tool
+public class DebugToolViewModel : Tool
 {
 }

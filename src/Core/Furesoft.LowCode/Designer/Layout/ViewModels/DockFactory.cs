@@ -113,7 +113,7 @@ public class DockFactory : Factory
     {
         var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
         var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
-        var debugLocalsTool = new DebugLocalsToolViewModel {Id = "DebugLocals", Title = "Locals"};
+        var debugLocalsTool = new DebugToolViewModel {Id = "Debug", Title = "Debug"};
 
         var rightDebugDock = new ProportionalDock
         {
