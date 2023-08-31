@@ -18,42 +18,41 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.1" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.4" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.1"/>
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.4"/>
+    <PackageReference Include="Avalonia.Controls.PanAndZoom" Version="11.0.0"/>
     <PackageReference Include="Avalonia.Skia" Version="11.0.4"/>
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.4"/>
-    <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.1" />
-    <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
+    <PackageReference Include="Avalonia.Xaml.Interactions.DragAndDrop" Version="11.0.2"/>
+    <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.1"/>
+    <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12"/>
     <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.1.6"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.4"/>
-    <PackageReference Include="Dock.Avalonia" Version="11.0.0" />
-    <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0" />
-    <PackageReference Include="Dock.Model.Avalonia" Version="11.0.0" />
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0" />
-    <PackageReference Include="MessageBox.Avalonia" Version="3.1.4" />
+    <PackageReference Include="Dock.Avalonia" Version="11.0.0"/>
+    <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0"/>
+    <PackageReference Include="Dock.Model.Avalonia" Version="11.0.0"/>
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0"/>
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.4"/>
 
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NiL.JS" Version="2.5.1665" />
-    <PackageReference Include="Splat" Version="14.7.1" />
+    <PackageReference Include="NiL.JS" Version="2.5.1665"/>
+    <PackageReference Include="ReactiveMarbles.PropertyChanged" Version="2.0.27"/>
+    <PackageReference Include="Splat" Version="14.7.1"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Furesoft.LowCode.Editor\Furesoft.LowCode.Editor.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="Designer\Layout\Views\Tools\ConsoleToolView.axaml" />
-    <AdditionalFiles Include="Designer\Layout\Views\Tools\DebugOutputToolView.axaml" />
-    <AdditionalFiles Include="Designer\Layout\Views\Tools\ErrorsToolView.axaml" />
-    <AdditionalFiles Include="Designer\Styles\Icons.axaml" />
-    <AdditionalFiles Include="Designer\Styles\Nodes.axaml" />
-    <AdditionalFiles Include="Designer\Styles\Themes.axaml" />
-    <AdditionalFiles Include="Designer\Views\MainView.axaml" />
-    <AdditionalFiles Include="Designer\Views\MainWindow.axaml" />
-    <AdditionalFiles Include="Designer\Views\MenuView.axaml" />
+    <AdditionalFiles Include="Designer\Layout\Views\Tools\ConsoleToolView.axaml"/>
+    <AdditionalFiles Include="Designer\Layout\Views\Tools\DebugOutputToolView.axaml"/>
+    <AdditionalFiles Include="Designer\Layout\Views\Tools\ErrorsToolView.axaml"/>
+    <AdditionalFiles Include="Designer\Styles\Icons.axaml"/>
+    <AdditionalFiles Include="Designer\Styles\Nodes.axaml"/>
+    <AdditionalFiles Include="Designer\Styles\Themes.axaml"/>
+    <AdditionalFiles Include="Designer\Views\MainView.axaml"/>
+    <AdditionalFiles Include="Designer\Views\MainWindow.axaml"/>
+    <AdditionalFiles Include="Designer\Views\MenuView.axaml"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -77,15 +76,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Nodes\Views\AssignNodeView.axaml" />
-    <UpToDateCheckInput Remove="Nodes\Views\CommentView.axaml" />
-    <UpToDateCheckInput Remove="Nodes\Views\ConditionView.axaml" />
-    <UpToDateCheckInput Remove="Nodes\Views\DefaultNodeView.axaml" />
-    <UpToDateCheckInput Remove="Nodes\Views\EntryView.axaml" />
-    <UpToDateCheckInput Remove="Nodes\Views\IconNodeView.axaml" />
+    <UpToDateCheckInput Remove="Nodes\Views\AssignNodeView.axaml"/>
+    <UpToDateCheckInput Remove="Nodes\Views\CommentView.axaml"/>
+    <UpToDateCheckInput Remove="Nodes\Views\ConditionView.axaml"/>
+    <UpToDateCheckInput Remove="Nodes\Views\DefaultNodeView.axaml"/>
+    <UpToDateCheckInput Remove="Nodes\Views\EntryView.axaml"/>
+    <UpToDateCheckInput Remove="Nodes\Views\IconNodeView.axaml"/>
+
   </ItemGroup>
-
-
 
 
 </Project>

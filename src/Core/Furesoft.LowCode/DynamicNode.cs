@@ -4,7 +4,7 @@ namespace Furesoft.LowCode;
 
 public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 {
-    public readonly Dictionary<string, (PinAlignment, PinMode, bool)> Pins = new();
+    public readonly List<(string Name, PinAlignment Alignment, PinMode mode, bool)> Pins = new();
     public readonly Dictionary<string, object> Properties = new();
 
     private Func<DynamicNode, CancellationToken, Task> _action;
@@ -18,7 +18,7 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 
     public void AddPin(string name, PinAlignment alignment, PinMode mode, bool multipleConnections = false)
     {
-        Pins.Add(name, (alignment, mode, multipleConnections));
+        Pins.Add((name, alignment, mode, multipleConnections));
     }
 
     protected Task ContinueWith(string pin, CancellationToken token)

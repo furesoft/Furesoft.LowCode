@@ -15,6 +15,7 @@
             <BehaviorCollectionTemplate>
               <BehaviorCollection>
                 <behaviors:OpenDocumentOnDoubleTappedBehavior ViewModel="{Binding $parent[Window].DataContext}" />
+                <ContextDragBehavior />
               </BehaviorCollection>
             </BehaviorCollectionTemplate>
           </Setter>
@@ -22,6 +23,8 @@
       </TreeView.Styles>
 
       <TreeView.Resources>
+        <behaviors:SubgraphTreeViewDropHandler x:Key="SubgraphTreeViewDropHandler" />
+
         <ContextMenu x:Key="ContextMenu">
           <MenuItem Header="New">
             <MenuItem Header="Graph" Command="{Binding $parent[Window].DataContext.NewGraphCommand}" />
@@ -33,9 +36,19 @@
         </ContextMenu>
       </TreeView.Resources>
 
+      <Interaction.Behaviors>
+        <ContextDropBehavior Handler="{StaticResource SubgraphTreeViewDropHandler}" />
+      </Interaction.Behaviors>
+
       <TreeView.DataTemplates>
         <DataTemplate DataType="projectSystem:SourceFile">
           <StackPanel Spacing="5" Orientation="Horizontal" ContextMenu="{StaticResource ContextMenu}">
+            <Interaction.Behaviors>
+              <BehaviorCollection>
+                <ContextDragBehavior />
+              </BehaviorCollection>
+            </Interaction.Behaviors>
+
             <Viewbox Margin="5" VerticalAlignment="Center">
               <Path Classes="node" Data="{StaticResource SourceFileIcon}" />
             </Viewbox>
@@ -45,6 +58,12 @@
         </DataTemplate>
         <DataTemplate DataType="projectSystem:GraphItem">
           <StackPanel Spacing="5" Orientation="Horizontal" ContextMenu="{StaticResource ContextMenu}">
+            <Interaction.Behaviors>
+              <BehaviorCollection>
+                <ContextDragBehavior />
+              </BehaviorCollection>
+            </Interaction.Behaviors>
+
             <Viewbox Margin="5" VerticalAlignment="Center">
               <Path Classes="node" Data="{StaticResource GraphFileIcon}" />
             </Viewbox>

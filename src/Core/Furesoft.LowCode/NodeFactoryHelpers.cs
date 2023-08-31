@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Editor;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode;
 
@@ -76,7 +75,7 @@ public partial class NodeFactory
             var pin = pinArray[i];
             var (baseX, baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, (Editor.Model.PinAlignment)pin.Alignment,
+            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, pin.Alignment,
                 pin.Name, pin.MultipleConnections);
         }
     }
