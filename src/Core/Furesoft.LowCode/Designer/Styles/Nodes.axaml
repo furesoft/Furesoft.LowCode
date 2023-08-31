@@ -7,10 +7,22 @@
     <Setter Property="StrokeThickness" Value="2" />
   </Style>
 
+  <Style Selector="Border.node">
+    <Setter Property="Background" Value="{DynamicResource NodeBackgroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource NodeForegroundBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="CornerRadius" Value="2" />
+  </Style>
+
   <Style Selector="Path.node">
     <Setter Property="Fill" Value="{DynamicResource NodeForegroundBrush}" />
     <Setter Property="Stroke" Value="{DynamicResource NodeForegroundBrush}" />
     <Setter Property="StrokeThickness" Value="1" />
+  </Style>
+
+  <Style Selector="PathIcon.node">
+    <Setter Property="Background" Value="{DynamicResource NodeForegroundBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource NodeForegroundBrush}" />
   </Style>
 
   <Style Selector="Ellipse.node">
