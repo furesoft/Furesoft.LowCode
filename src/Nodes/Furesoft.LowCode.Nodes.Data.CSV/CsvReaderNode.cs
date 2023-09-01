@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Sylvan.Data.Csv;
@@ -16,21 +17,13 @@ public class CsvReaderNode : DataTableNode
     {
     }
 
-    [DataMember(EmitDefaultValue = false)] public CsvDelimiter Delimiter { get; set; } = CsvDelimiter.Semikolon;
+    [DataMember(EmitDefaultValue = false)] public Evaluatable<char> Delimiter { get; set; } = new Evaluatable<char>(";");
 
-    private char GetDelimeter()
-    {
-        return Delimiter switch
-        {
-            CsvDelimiter.Comma => ',',
-            CsvDelimiter.Semikolon => ';',
-            _ => ';'
-        };
-    }
+
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {
-        var options = new CsvDataReaderOptions {Delimiter = GetDelimeter()};
+        var options = new CsvDataReaderOptions { Delimiter = Delimiter };
         var reader = CsvDataReader.Create(Path, options);
         var dataTable = GetTable();
         var indices = new Dictionary<DataColumn, int>();
