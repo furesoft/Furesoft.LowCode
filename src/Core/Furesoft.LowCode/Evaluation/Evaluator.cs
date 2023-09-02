@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Furesoft.LowCode.Designer.Debugging;
 using Furesoft.LowCode.Designer.Services.Serializing;
-using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Reporters;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Evaluation;
@@ -9,15 +9,13 @@ namespace Furesoft.LowCode.Evaluation;
 public class Evaluator : IEvaluator
 {
     private readonly IDrawingNode _drawing;
-    public readonly Context Context;
+    public Context Context;
     public OptionsProvider Options;
 
     public Evaluator(IDrawingNode drawing)
     {
         _drawing = drawing;
-        Context = new();
-        Debugger = new(Context);
-        CredentialStorage = new IsolatedCredentailStorage();
+        Init();
 
         AppContext.SetData("DesignerMode", true);
     }
@@ -32,28 +30,27 @@ public class Evaluator : IEvaluator
 
         _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
 
-        Context = new();
-        Debugger = new(Context);
-        CredentialStorage = new IsolatedCredentailStorage();
+        Init();
     }
 
     public Evaluator(string text)
     {
         AppContext.SetData("DesignerMode", false);
+        Progress = new ConsoleProgressReporter();
 
         var serializer = new NodeSerializer(typeof(ObservableCollection<>));
 
         _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
 
-        Context = new();
-        Debugger = new(Context);
-        CredentialStorage = new IsolatedCredentailStorage();
+        Init();
     }
 
-    internal Debugger Debugger { get; }
+    internal Debugger Debugger { get; set; }
 
     public SignalStorage Signals { get; } = new();
     public ICredentialStorage CredentialStorage { get; set; }
+
+    public IProgressReporter Progress { get; set; }
 
     public async Task Execute(CancellationToken cancellationToken)
     {
@@ -75,6 +72,14 @@ public class Evaluator : IEvaluator
             await entryNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
+    }
+
+    private void Init()
+    {
+        Context = new();
+        Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+        Progress = new DesignerProgressReporter();
     }
 
     private void InitCredentials()
