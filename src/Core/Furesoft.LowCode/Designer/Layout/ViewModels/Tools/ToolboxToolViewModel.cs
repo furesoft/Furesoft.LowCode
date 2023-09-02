@@ -3,7 +3,6 @@ using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Attributes;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
 
@@ -19,6 +18,9 @@ public partial class ToolboxToolViewModel : Tool, INodeTemplatesHost
         var templates = factory.CreateTemplates();
         CategorizeTemplates(templates);
         TransformToTree();
+
+        Id = "Toolbox";
+        Title = Id;
     }
 
     public ObservableCollection<object> Templates { get; set; } = new();

@@ -34,11 +34,11 @@ public class DockFactory : Factory
 
     public override IRootDock CreateLayout()
     {
-        var toolboxTool = new ToolboxToolViewModel(_nodeFactory) {Id = "Toolbox", Title = "Toolbox"};
-        var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
-        var errorTool = new ErrorsToolViewModel {Id = "Errors", Title = "Errors"};
-        var projectTool = new ProjectToolViewModel {Id = "Project", Title = "Project"};
-        var parametersTool = new ParametersToolViewModel {Id = "Parameters", Title = "Parameters"};
+        var toolboxTool = new ToolboxToolViewModel(_nodeFactory);
+        var propertiesTool = new PropertiesToolViewModel();
+        var errorTool = new ErrorsToolViewModel();
+        var projectTool = new ProjectToolViewModel();
+        var parametersTool = new ParametersToolViewModel();
 
         var leftDock = new ProportionalDock
         {
@@ -112,9 +112,9 @@ public class DockFactory : Factory
 
     private ProportionalDock CreateDebugView(PropertiesToolViewModel propertiesTool)
     {
-        var consoleTool = new ConsoleToolViewModel {Id = "Console", Title = "Console"};
-        var debugOutputTool = new DebugOutputToolViewModel {Id = "DebugOutput", Title = "Debug Output"};
-        var debugLocalsTool = new DebugToolViewModel {Id = "Debug", Title = "Debug"};
+        var consoleTool = new ConsoleToolViewModel();
+        var debugOutputTool = new DebugOutputToolViewModel();
+        var debugLocalsTool = new DebugToolViewModel();
 
         var rightDebugDock = new ProportionalDock
         {
@@ -176,7 +176,8 @@ public class DockFactory : Factory
             ["DebugOutput"] = () => new DebugOutputTool(),
             ["Toolbox"] = () => new ToolBoxTool(),
             ["Errors"] = () => new ErrorTool(),
-            ["Project"] = () => new ProjectTool()
+            ["Project"] = () => new ProjectTool(),
+            ["Parameters"] = () => new ParametersTool(),
         };
 
         DockableLocator = new Dictionary<string, Func<IDockable>>
