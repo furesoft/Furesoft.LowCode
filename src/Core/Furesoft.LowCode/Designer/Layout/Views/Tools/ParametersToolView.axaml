@@ -5,7 +5,7 @@
              xmlns:lowCode="clr-namespace:Furesoft.LowCode.Designer.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ParametersToolView">
-  <TabControl>
+  <TabControl DataContext="{Binding $parent[Window].DataContext.SelectedDocument.Props}">
     <TabItem Header="Pins">
       <StackPanel>
         <Button Content="+" Command="{Binding AddPinCommand}" />

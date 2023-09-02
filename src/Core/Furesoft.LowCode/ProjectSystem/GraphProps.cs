@@ -1,9 +1,22 @@
-﻿using Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters;
+﻿using CommunityToolkit.Mvvm.Input;
+using Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters;
 
 namespace Furesoft.LowCode.ProjectSystem;
 
-public class GraphProps
+public partial class GraphProps : ObservableObject
 {
-    public List<PropertyDescriptor> Properties { get; set; } = new();
-    public List<PinDescriptor> Pins { get; set; } = new();
+    public ObservableCollection<PropertyDescriptor> Properties { get; set; } = new();
+    public ObservableCollection<PinDescriptor> Pins { get; set; } = new();
+
+    [RelayCommand]
+    public void AddProperty()
+    {
+        Properties.Add(new());
+    }
+
+    [RelayCommand]
+    public void AddPin()
+    {
+        Pins.Add(new());
+    }
 }
