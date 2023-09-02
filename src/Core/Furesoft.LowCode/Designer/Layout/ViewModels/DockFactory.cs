@@ -38,6 +38,7 @@ public class DockFactory : Factory
         var propertiesTool = new PropertiesToolViewModel {Id = "Properties", Title = "Properties"};
         var errorTool = new ErrorsToolViewModel {Id = "Errors", Title = "Errors"};
         var projectTool = new ProjectToolViewModel {Id = "Project", Title = "Project"};
+        var parametersTool = new ParametersToolViewModel {Id = "Parameters", Title = "Parameters"};
 
         var leftDock = new ProportionalDock
         {
@@ -65,7 +66,7 @@ public class DockFactory : Factory
                 new ToolDock
                 {
                     ActiveDockable = propertiesTool,
-                    VisibleDockables = CreateList<IDockable>(propertiesTool, errorTool),
+                    VisibleDockables = CreateList<IDockable>(propertiesTool, errorTool, parametersTool),
                     Alignment = Alignment.Right,
                     GripMode = GripMode.Visible
                 }

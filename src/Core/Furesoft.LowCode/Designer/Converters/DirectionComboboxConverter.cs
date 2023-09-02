@@ -1,6 +1,6 @@
 ﻿namespace Furesoft.LowCode.Designer.Converters;
 
-public class TypeComboboxConverter : ValueConverter<TypeComboboxConverter, ComboBoxItem>
+public class DirectionComboboxConverter : ValueConverter<DirectionComboboxConverter, ComboBoxItem>
 {
     protected override object Convert(ComboBoxItem value, Type targetType, object parameter)
     {
@@ -9,6 +9,6 @@ public class TypeComboboxConverter : ValueConverter<TypeComboboxConverter, Combo
 
     public override object ConvertBack(ComboBoxItem value, Type targetType, object parameter)
     {
-        return value.Content;
+        return Enum.Parse<PinMode>(value.Content.ToString());
     }
 }
