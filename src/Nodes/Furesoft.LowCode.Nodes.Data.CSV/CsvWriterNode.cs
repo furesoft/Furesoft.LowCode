@@ -35,6 +35,7 @@ public class CsvWriterNode : DataTableNode
         {
             CsvDelimiter.Comma => ',',
             CsvDelimiter.Semikolon => ';',
+            CsvDelimiter.Tab => '\t',
             _ => ';'
         };
     }

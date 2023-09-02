@@ -3,5 +3,6 @@
 public enum CsvDelimiter
 {
     Comma,
-    Semikolon
+    Semikolon,
+    Tab
 }

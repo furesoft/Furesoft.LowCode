@@ -24,6 +24,7 @@ public class CsvReaderNode : DataTableNode
         {
             CsvDelimiter.Comma => ',',
             CsvDelimiter.Semikolon => ';',
+            CsvDelimiter.Tab => '\t',
             _ => ';'
         };
     }
