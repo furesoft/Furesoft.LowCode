@@ -1,12 +1,11 @@
 using System.Reflection;
 using System.Text;
-using Furesoft.LowCode.Editor.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Furesoft.LowCode.Designer.Services.Serializing;
 
-internal class NodeSerializer : INodeSerializer
+public class NodeSerializer : INodeSerializer
 {
     private readonly JsonSerializerSettings _settings;
 

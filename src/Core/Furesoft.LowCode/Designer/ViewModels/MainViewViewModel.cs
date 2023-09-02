@@ -7,6 +7,7 @@ using Dock.Model.Core;
 using Dock.Model.Core.Events;
 using Dock.Model.Mvvm.Controls;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
+using Furesoft.LowCode.ProjectSystem.Items;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
@@ -75,20 +76,12 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        Document doc = null;
-        if (item is GraphItem gi)
+        Document doc = item switch
         {
-            var graphDoc = new GraphDocumentViewModel(_nodeFactory, gi);
-
-            graphDoc.Editor.Load(gi.Content);
-            doc = graphDoc;
-        }
-        else if (item is SourceFile si)
-        {
-            var sourceDoc = new SourceDocumentViewModel(si);
-
-            doc = sourceDoc;
-        }
+            GraphItem gi => new GraphDocumentViewModel(_nodeFactory, gi),
+            SourceFileItem si => new SourceDocumentViewModel(si),
+            _ => null
+        };
 
         _dockFactory.CreateDocument(doc);
 
@@ -289,14 +282,14 @@ public partial class MainViewViewModel : ViewModelBase
     private async Task NewGraph()
     {
         var name = await Prompt.Show("New Graph", "Name");
-        var newGraphItem = new GraphItem(name, null);
+        var newGraphItem = new GraphItem(name, null, new());
 
         var editor = ((GraphDocumentViewModel)SelectedDocument).Editor;
 
         var drawing = editor.Factory.CreateDrawing();
         drawing.SetSerializer(editor.Serializer);
 
-        newGraphItem.Content = drawing.GetSerializer().Serialize(drawing);
+        newGraphItem.Drawing = drawing;
 
         OpenedProject.Items.Add(newGraphItem);
         OpenedProject.Save();
@@ -308,7 +301,7 @@ public partial class MainViewViewModel : ViewModelBase
     private async Task NewSource()
     {
         var name = await Prompt.Show("New Source", "Name");
-        var newSourceItem = new SourceFile(name, null);
+        var newSourceItem = new SourceFileItem(name, null);
 
         OpenedProject.Items.Add(newSourceItem);
         OpenedProject.Save();

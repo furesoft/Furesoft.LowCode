@@ -1,4 +1,6 @@
 ﻿using System.IO.Compression;
+using Furesoft.LowCode.Designer.Services.Serializing;
+using Furesoft.LowCode.ProjectSystem.Items;
 using Newtonsoft.Json;
 
 namespace Furesoft.LowCode.ProjectSystem;
@@ -47,8 +49,8 @@ public class Project
 
             ProjectItem item = extension switch
             {
-                ".json" => new GraphItem(entry.Name.Replace(".json", ""), entryContent),
-                ".js" => new SourceFile(entry.Name.Replace(".js", ""), entryContent),
+                ".json" => new GraphItem(entry.Name.Replace(".json", ""), DeserializeGraph(entryContent), new()),
+                ".js" => new SourceFileItem(entry.Name.Replace(".js", ""), entryContent),
                 _ => null
             };
 
@@ -56,6 +58,11 @@ public class Project
         }
 
         return proj;
+    }
+
+    private static IDrawingNode DeserializeGraph(string entryContent)
+    {
+        return new NodeSerializer(typeof(ObservableCollection<>)).Deserialize<DrawingNodeViewModel>(entryContent);
     }
 
     public void Save(string path)
@@ -73,17 +80,19 @@ public class Project
         {
             var name = GetZipEntryName(item);
 
-            CreateEntryWithContent(zip, name, item.Content);
+            CreateEntryWithContent(zip, name, item.ToString());
         }
     }
 
-    private string GetZipEntryName(ProjectItem projectItem) =>
-        projectItem switch
+    private string GetZipEntryName(ProjectItem projectItem)
+    {
+        return projectItem switch
         {
-            SourceFile => $"sources/{projectItem.Name}.js",
+            SourceFileItem => $"sources/{projectItem.Name}.js",
             GraphItem => $"graphs/{projectItem.Name}.json",
             _ => projectItem.Name
         };
+    }
 
     public void Save()
     {

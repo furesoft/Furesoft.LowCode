@@ -1,5 +1,6 @@
 ﻿using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.NodeViews;
+using Furesoft.LowCode.ProjectSystem.Items;
 
 namespace Furesoft.LowCode.Nodes;
 
@@ -21,7 +22,7 @@ public class SubgraphNode : DynamicNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var subevaluator = new Evaluator(GraphItem.Content);
+        var subevaluator = new Evaluator(GraphItem.Drawing);
 
         await subevaluator.Execute(cancellationToken);
 
