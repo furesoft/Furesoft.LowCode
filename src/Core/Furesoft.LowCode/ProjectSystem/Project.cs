@@ -49,7 +49,7 @@ public class Project
 
             ProjectItem item = extension switch
             {
-                ".json" => new GraphItem(entry.Name.Replace(".json", ""), DeserializeGraph(entryContent), new()),
+                ".json" => DeserializeGraph(entryContent),
                 ".js" => new SourceFileItem(entry.Name.Replace(".js", ""), entryContent),
                 _ => null
             };
@@ -60,9 +60,9 @@ public class Project
         return proj;
     }
 
-    private static IDrawingNode DeserializeGraph(string entryContent)
+    private static GraphItem DeserializeGraph(string entryContent)
     {
-        return new NodeSerializer(typeof(ObservableCollection<>)).Deserialize<DrawingNodeViewModel>(entryContent);
+        return new NodeSerializer(typeof(ObservableCollection<>)).Deserialize<GraphItem>(entryContent);
     }
 
     public void Save(string path)

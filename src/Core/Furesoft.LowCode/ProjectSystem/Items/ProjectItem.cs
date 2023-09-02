@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.ProjectSystem.Items;
+﻿using Newtonsoft.Json;
+
+namespace Furesoft.LowCode.ProjectSystem.Items;
 
 public abstract class ProjectItem
 {
@@ -7,6 +9,7 @@ public abstract class ProjectItem
         Name = name;
     }
 
-    public string Name { get; set; }
+    [JsonIgnore] public string Name { get; set; }
+
     public string Id { get; set; }
 }

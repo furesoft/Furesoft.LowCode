@@ -9,6 +9,15 @@
              x:Class="Furesoft.LowCode.Designer.Layout.Views.Tools.ProjectToolView">
   <Grid Focusable="True" DataContext="{Binding $parent[Window].DataContext.OpenedProject, Mode=TwoWay}">
     <TreeView>
+      <TreeView.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="New">
+            <MenuItem Header="Graph" Command="{Binding $parent[Window].DataContext.NewGraphCommand}" />
+            <MenuItem Header="Source" Command="{Binding $parent[Window].DataContext.NewSourceCommand}" />
+          </MenuItem>
+        </ContextMenu>
+      </TreeView.ContextMenu>
+
       <TreeView.Styles>
         <Style Selector="TreeView > TreeViewItem">
           <Setter Property="(Interaction.Behaviors)">

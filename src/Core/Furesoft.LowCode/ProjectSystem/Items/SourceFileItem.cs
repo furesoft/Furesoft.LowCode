@@ -5,6 +5,7 @@ public class SourceFileItem : ProjectItem
     public SourceFileItem(string name, string content) : base(name)
     {
         Content = content;
+        Id = Guid.NewGuid().ToString();
     }
 
     public string Content { get; set; }

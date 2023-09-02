@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using Furesoft.LowCode.ProjectSystem.Items;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -45,7 +46,7 @@ public class NodeSerializer : INodeSerializer
             }
         }
 
-        if (obj is DrawingNodeViewModel dvm)
+        if (obj is GraphItem {Drawing: DrawingNodeViewModel dvm})
         {
             foreach (var n in dvm.Nodes)
             {

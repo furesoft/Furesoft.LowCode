@@ -7,10 +7,11 @@ public class GraphItem : ProjectItem
 {
     [JsonIgnore] public NodeSerializer Serializer = new(typeof(ObservableCollection<>));
 
-    public GraphItem(string name, IDrawingNode drawing, GraphProps graphProps) : base(name)
+    public GraphItem(string id, IDrawingNode drawing, GraphProps graphProps) : base(null)
     {
-        Id = Guid.NewGuid().ToString();
+        Id = id;
         Drawing = drawing;
+        Name = drawing.Name;
         Props = graphProps;
     }
 
@@ -19,6 +20,6 @@ public class GraphItem : ProjectItem
 
     public override string ToString()
     {
-        return Serializer.Serialize(Drawing);
+        return Serializer.Serialize(this);
     }
 }

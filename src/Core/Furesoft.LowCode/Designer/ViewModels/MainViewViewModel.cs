@@ -282,14 +282,15 @@ public partial class MainViewViewModel : ViewModelBase
     private async Task NewGraph()
     {
         var name = await Prompt.Show("New Graph", "Name");
-        var newGraphItem = new GraphItem(name, null, new());
+        var id = Guid.NewGuid().ToString();
 
         var editor = ((GraphDocumentViewModel)SelectedDocument).Editor;
 
         var drawing = editor.Factory.CreateDrawing();
         drawing.SetSerializer(editor.Serializer);
+        drawing.Name = name;
 
-        newGraphItem.Drawing = drawing;
+        var newGraphItem = new GraphItem(id, drawing, new());
 
         OpenedProject.Items.Add(newGraphItem);
         OpenedProject.Save();
