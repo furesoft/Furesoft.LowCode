@@ -2,12 +2,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:converters="clr-namespace:Furesoft.LowCode.Designer.Converters"
+             xmlns:controls="clr-namespace:Furesoft.LowCode.Editor.Controls"
+             mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100" Height="60" Width="60"
              x:Class="Furesoft.LowCode.NodeViews.IconNodeView">
   <Grid>
     <Ellipse Classes="node" />
+
     <Viewbox Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
       <Path Classes="node" Data="{Binding $parent[UserControl].Tag}" />
     </Viewbox>
+
+    <ProgressBar Value="{Binding Progress.Progress, Mode=TwoWay}" Width="{Binding $parent[controls:Node].Width}"
+                 Height="{Binding $parent[controls:Node].Height}" HorizontalAlignment="Center"
+                 VerticalAlignment="Center">
+      <ProgressBar.Template>
+        <ControlTemplate>
+          <Grid>
+            <Border Name="PART_Indicator" />
+
+            <Arc Stroke="Green" StrokeThickness="2"
+                 StartAngle="-90" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+              <Arc.SweepAngle>
+                <MultiBinding Converter="{converters:RangeToSweepConverter}">
+                  <Binding RelativeSource="{RelativeSource AncestorType=ProgressBar}" Path="Value" />
+                  <Binding RelativeSource="{RelativeSource AncestorType=ProgressBar}" Path="Minimum" />
+                  <Binding RelativeSource="{RelativeSource AncestorType=ProgressBar}" Path="Maximum" />
+                </MultiBinding>
+              </Arc.SweepAngle>
+            </Arc>
+          </Grid>
+        </ControlTemplate>
+      </ProgressBar.Template>
+    </ProgressBar>
   </Grid>
 </UserControl>

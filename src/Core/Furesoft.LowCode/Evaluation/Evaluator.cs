@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Furesoft.LowCode.Designer.Debugging;
 using Furesoft.LowCode.Designer.Services.Serializing;
-using Furesoft.LowCode.Editor.Model;
+using Furesoft.LowCode.Reporters;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Evaluation;
@@ -9,15 +9,13 @@ namespace Furesoft.LowCode.Evaluation;
 public class Evaluator : IEvaluator
 {
     private readonly IDrawingNode _drawing;
-    public readonly Context Context;
+    public Context Context;
     public OptionsProvider Options;
 
     public Evaluator(IDrawingNode drawing)
     {
         _drawing = drawing;
-        Context = new();
-        Debugger = new(Context);
-        CredentialStorage = new IsolatedCredentailStorage();
+        Init();
 
         AppContext.SetData("DesignerMode", true);
     }
@@ -32,9 +30,7 @@ public class Evaluator : IEvaluator
 
         _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
 
-        Context = new();
-        Debugger = new(Context);
-        CredentialStorage = new IsolatedCredentailStorage();
+        Init();
     }
 
     public Evaluator(string text)
@@ -45,12 +41,10 @@ public class Evaluator : IEvaluator
 
         _drawing = serializer.Deserialize<DrawingNodeViewModel>(text);
 
-        Context = new();
-        Debugger = new(Context);
-        CredentialStorage = new IsolatedCredentailStorage();
+        Init();
     }
 
-    internal Debugger Debugger { get; }
+    internal Debugger Debugger { get; set; }
 
     public SignalStorage Signals { get; } = new();
     public ICredentialStorage CredentialStorage { get; set; }
@@ -77,6 +71,13 @@ public class Evaluator : IEvaluator
         catch (TaskCanceledException) { }
     }
 
+    private void Init()
+    {
+        Context = new();
+        Debugger = new(Context);
+        CredentialStorage = new IsolatedCredentailStorage();
+    }
+
     private void InitCredentials()
     {
         foreach (var credentialName in CredentialStorage.GetKeys())
@@ -98,6 +99,11 @@ public class Evaluator : IEvaluator
         node._evaluator = this;
         node._evaluator.Debugger.CurrentNode = node;
         node.Options = Options;
+
+        if (AppContext.GetData("DesignerMode") is false)
+        {
+            node.Progress = new ConsoleProgressReporter();
+        }
 
         node.OnInit();
     }

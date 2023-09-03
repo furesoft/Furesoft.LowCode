@@ -26,6 +26,8 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
+    [Browsable(false), JsonIgnore] public ProgressReporter Progress { get; set; } = new();
+
     [Browsable(false)] public Context Context { get; private set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -75,7 +77,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
                 break;
 
             case IOutVariableProvider outVariableProvider:
-                var pip = Evaluate(new Evaluatable<object>(outVariableProvider.OutVariable));
+                var pip = Evaluate<object>(outVariableProvider);
 
                 if (pip is T pipes && this is IPipeable po)
                 {
@@ -147,6 +149,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         return Context.Eval(src.Source).As<T>();
     }
 
+    protected T Evaluate<T>(IOutVariableProvider src)
+    {
+        return Context.Eval(src.OutVariable).As<T>();
+    }
+
     protected void SetOutVariable(string name, object value)
     {
         if (string.IsNullOrEmpty(name))
@@ -208,5 +215,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         return TypeDescriptor.GetAttributes(this)
             .OfType<T>().FirstOrDefault();
+    }
+
+    protected void ReportProgress(int percent, string message)
+    {
+        Progress.Progress = percent;
+        Progress.Message = message;
     }
 }
