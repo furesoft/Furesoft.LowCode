@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
@@ -21,9 +20,10 @@ public class ConsoleOutNode : InputOutputNode, ICompilationNode
     [Required]
     public Evaluatable<string> Message { get; set; }
 
-    public void Compile(StringBuilder builder)
+    public void Compile(CodeWriter builder)
     {
-        builder.AppendLine($"System.Console.WriteLine({Message.Source});");
+        builder.AppendCall("System.Console.WriteLine", Message.Source);
+        builder.AppendSymbol(';');
     }
 
     public override Task Execute(CancellationToken cancellationToken)

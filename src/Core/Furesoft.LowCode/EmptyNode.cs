@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Text;
 using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Nodes.Analyzers;
@@ -225,8 +224,9 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         Progress.Message = message;
     }
 
-    protected void CompilePin(IOutputPin pin, StringBuilder builder,
-        [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
+    protected void CompilePin(IOutputPin pin, CodeWriter builder,
+        [CallerArgumentExpression(nameof(pin))]
+        string pinMembername = null)
     {
         var nodes = GetConnectedNodes(pinMembername, PinMode.Output);
 

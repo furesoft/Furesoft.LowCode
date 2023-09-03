@@ -1,8 +1,6 @@
-﻿using System.Text;
-
-namespace Furesoft.LowCode.Compilation;
+﻿namespace Furesoft.LowCode.Compilation;
 
 public interface ICompilationNode
 {
-    void Compile(StringBuilder builder);
+    void Compile(CodeWriter builder);
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Text;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Analyzers;
@@ -19,9 +18,15 @@ public class EntryNode : OutputNode, ICompilationNode
 
     [Browsable(false)] public new bool ShowDescription { get; set; }
 
-    public void Compile(StringBuilder builder)
+    public void Compile(CodeWriter builder)
     {
+        builder.BeginFunctionDecl(Drawing.Name);
+
+        builder.BeginBlock();
+
         CompilePin(OutputPin, builder);
+
+        builder.EndBlock();
     }
 
     public override Task Execute(CancellationToken cancellationToken)

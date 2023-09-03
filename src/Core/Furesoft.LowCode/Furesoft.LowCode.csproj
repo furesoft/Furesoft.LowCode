@@ -85,4 +85,10 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Reference Include="NUglify">
+      <HintPath>..\..\..\..\..\..\.nuget\packages\nuglify\1.20.7\lib\net5.0\NUglify.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
