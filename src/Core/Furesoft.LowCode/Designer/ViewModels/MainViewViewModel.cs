@@ -215,7 +215,11 @@ public partial class MainViewViewModel : ViewModelBase
     [RelayCommand]
     public async Task Evaluate()
     {
-        Evaluator = new(((GraphDocumentViewModel)SelectedDocument).Editor.Drawing);
+        //run main graph
+        Evaluator = new(OpenedProject, true);
+
+        //run current selected graph
+        //Evaluator = new(((GraphDocumentViewModel)SelectedDocument).Editor.Drawing);
 
         await Evaluator.Execute(_cancellationTokenSource.Token);
     }

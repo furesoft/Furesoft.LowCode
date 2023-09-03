@@ -14,6 +14,8 @@ public class Project
     public string Name { get; set; }
     public string Version { get; set; }
 
+    public string MainGraph { get; set; } = "Main Graph";
+
     [JsonIgnore] public OptionsProvider Options { get; } = new();
 
     [JsonIgnore] public ObservableCollection<ProjectItem> Items { get; set; } = new();
@@ -117,5 +119,14 @@ public class Project
         var proj = new Project {Name = name, Version = version};
 
         return proj;
+    }
+
+    public IDrawingNode GetMainGraph()
+    {
+        return (from item in Items
+            where item.Name == MainGraph
+            where item is GraphItem
+            let graph = (GraphItem)item
+            select graph.Drawing).First();
     }
 }

@@ -19,12 +19,22 @@ public class Evaluator : IEvaluator
         _drawing = drawing;
         Init();
 
-        AppContext.SetData("DesignerMode", true);
+        SetDesignerMode(true);
+    }
+
+    public Evaluator(Project project, bool designerMode)
+    {
+        var mainGraphNode = project.GetMainGraph();
+
+        _drawing = mainGraphNode;
+        Init();
+
+        SetDesignerMode(designerMode);
     }
 
     public Evaluator(Stream strm)
     {
-        AppContext.SetData("DesignerMode", false);
+        SetDesignerMode(false);
 
         var serializer = new NodeSerializer(typeof(ObservableCollection<>));
         using var streamReader = new StreamReader(strm, Encoding.UTF8);
@@ -37,7 +47,7 @@ public class Evaluator : IEvaluator
 
     public Evaluator(string text)
     {
-        AppContext.SetData("DesignerMode", false);
+        SetDesignerMode(false);
 
         var serializer = new NodeSerializer(typeof(ObservableCollection<>));
 
@@ -75,6 +85,11 @@ public class Evaluator : IEvaluator
             await entryNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
+    }
+
+    private static void SetDesignerMode(bool value)
+    {
+        AppContext.SetData("DesignerMode", value);
     }
 
     private void Init()
