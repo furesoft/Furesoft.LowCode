@@ -102,9 +102,14 @@ public class CodeWriter
 
     public CodeWriter AppendCall(string func, params object[] args)
     {
-        return Append(func)
+        return AppendIdentifier(func)
             .AppendSymbol('(')
             .Append(string.Join(", ", args).Trim(), false)
             .AppendSymbol(')');
+    }
+
+    public CodeWriter Throw(string message)
+    {
+        return Append(message, false).AppendSymbol(';');
     }
 }
