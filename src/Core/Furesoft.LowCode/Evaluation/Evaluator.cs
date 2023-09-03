@@ -1,8 +1,10 @@
-﻿using System.Text;
-using Furesoft.LowCode.Designer.Debugging;
+﻿using System.Diagnostics;
+using System.Text;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Designer.Services.Serializing;
 using Furesoft.LowCode.Reporters;
 using NiL.JS.Core;
+using Debugger = Furesoft.LowCode.Designer.Debugging.Debugger;
 
 namespace Furesoft.LowCode.Evaluation;
 
@@ -56,6 +58,10 @@ public class Evaluator : IEvaluator
         var entryNode = _drawing.GetNodes<EntryNode>().First().DefiningNode;
 
         InitNode(entryNode);
+
+        var compiler = new GraphCompiler();
+        var compiledGraphSource = compiler.Compile(entryNode);
+        Debug.WriteLine("Compiled Graph: " + compiledGraphSource);
 
         foreach (var signal in GetSignals())
         {

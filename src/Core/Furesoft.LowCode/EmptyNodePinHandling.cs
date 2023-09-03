@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode;
 
@@ -22,6 +21,15 @@ public partial class EmptyNode
         string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Output);
+    }
+
+    public IEnumerable<string> GetPinNames(PinMode mode)
+    {
+        var pinType = mode == PinMode.Input ? typeof(IInputPin) : typeof(IOutputPin);
+
+        return from p in GetType().GetProperties()
+            where p.PropertyType == pinType
+            select p.Name;
     }
 
     public EmptyNode GetInput(IInputPin pin,
