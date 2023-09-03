@@ -26,6 +26,8 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
+    [Browsable(false), JsonIgnore] public ProgressReporter Progress { get; set; } = new();
+
     [Browsable(false)] public Context Context { get; private set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -215,8 +217,9 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             .OfType<T>().FirstOrDefault();
     }
 
-    protected void ReportProgress(byte percent, string message)
+    protected void ReportProgress(int percent, string message)
     {
-        _evaluator.Progress?.Report(percent, message);
+        Progress.Progress = percent;
+        Progress.Message = message;
     }
 }

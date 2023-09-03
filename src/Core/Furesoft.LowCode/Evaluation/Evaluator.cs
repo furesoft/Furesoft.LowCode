@@ -36,7 +36,6 @@ public class Evaluator : IEvaluator
     public Evaluator(string text)
     {
         AppContext.SetData("DesignerMode", false);
-        Progress = new ConsoleProgressReporter();
 
         var serializer = new NodeSerializer(typeof(ObservableCollection<>));
 
@@ -49,8 +48,6 @@ public class Evaluator : IEvaluator
 
     public SignalStorage Signals { get; } = new();
     public ICredentialStorage CredentialStorage { get; set; }
-
-    public IProgressReporter Progress { get; set; }
 
     public async Task Execute(CancellationToken cancellationToken)
     {
@@ -79,7 +76,6 @@ public class Evaluator : IEvaluator
         Context = new();
         Debugger = new(Context);
         CredentialStorage = new IsolatedCredentailStorage();
-        Progress = new DesignerProgressReporter();
     }
 
     private void InitCredentials()
@@ -103,6 +99,11 @@ public class Evaluator : IEvaluator
         node._evaluator = this;
         node._evaluator.Debugger.CurrentNode = node;
         node.Options = Options;
+
+        if (AppContext.GetData("DesignerMode") is false)
+        {
+            node.Progress = new ConsoleProgressReporter();
+        }
 
         node.OnInit();
     }

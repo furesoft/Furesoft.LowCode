@@ -1,17 +1,10 @@
 ﻿namespace Furesoft.LowCode.Reporters;
 
-public class ConsoleProgressReporter : IProgressReporter
+public class ConsoleProgressReporter : ProgressReporter
 {
     private const char _block = '■';
     private const string _back = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
     private const string _twirl = "-\\|/";
-
-    public void Report(byte percentProgress, string message)
-    {
-        WriteProgressBar(percentProgress, true);
-
-        Console.Write($" {message}");
-    }
 
     public static void WriteProgressBar(int percent, bool update = false)
     {
@@ -39,5 +32,10 @@ public class ConsoleProgressReporter : IProgressReporter
         }
 
         Console.Write(_twirl[progress % _twirl.Length]);
+    }
+
+    protected override void ProgressReported()
+    {
+        WriteProgressBar(Progress, true);
     }
 }
