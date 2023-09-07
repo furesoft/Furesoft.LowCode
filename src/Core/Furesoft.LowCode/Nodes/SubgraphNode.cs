@@ -21,17 +21,18 @@ public class SubgraphNode : DynamicNode, ICompilationNode
 
     public GraphItem GraphItem { get; set; }
 
+    public void Compile(CodeWriter builder)
+    {
+        builder.AppendCall(GraphItem.Name);
+    }
+
     public override async Task Execute(CancellationToken cancellationToken)
     {
         var subevaluator = new Evaluator(GraphItem.Drawing);
+        subevaluator.Context = Context;
 
         await subevaluator.Execute(cancellationToken);
 
         await ContinueWith("Output Flow", cancellationToken);
-    }
-
-    public void Compile(CodeWriter builder)
-    {
-        builder.AppendCall(GraphItem.Name);
     }
 }
