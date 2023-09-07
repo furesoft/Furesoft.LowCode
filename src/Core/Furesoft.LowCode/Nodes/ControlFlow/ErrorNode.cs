@@ -21,13 +21,13 @@ public class ErrorNode : InputNode, ICompilationNode
     [Required]
     public Evaluatable<string> Message { get; set; }
 
+    public void Compile(CodeWriter builder)
+    {
+        builder.Throw(Message.Source);
+    }
+
     public override Task Execute(CancellationToken cancellationToken)
     {
         throw CreateError(Message);
-    }
-
-    public void Compile(CodeWriter builder)
-    {
-        builder.Throw(Message);
     }
 }

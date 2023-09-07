@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using Furesoft.LowCode.Designer;
+using Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters;
 using Furesoft.LowCode.Editor;
+using PropertyDescriptor = System.ComponentModel.PropertyDescriptor;
 
 namespace Furesoft.LowCode;
 
@@ -64,10 +66,10 @@ public partial class NodeFactory
     }
 
     private static void AddPins(
-        IEnumerable<(string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)> pins,
+        IEnumerable<PinDescriptor> pins,
         NodeViewModel viewModel, Func<int, (double, double)> positionMapper)
     {
-        var pinArray = pins as (string Name, PinAlignment Alignment, PinMode Mode, bool MultipleConnections)[] ??
+        var pinArray = pins as PinDescriptor[] ??
                        pins.ToArray();
 
         for (var i = 0; i < pinArray.Length; i++)
@@ -75,7 +77,7 @@ public partial class NodeFactory
             var pin = pinArray[i];
             var (baseX, baseY) = positionMapper(i);
 
-            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Mode, pin.Alignment,
+            viewModel.AddPin((baseX, baseY), (PinSize, PinSize), pin.Direction, pin.Alignment,
                 pin.Name, pin.MultipleConnections);
         }
     }

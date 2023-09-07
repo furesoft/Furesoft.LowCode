@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
+using Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters;
+using PropDescriptor = Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters.PropertyDescriptor;
+using PropertyDescriptor = System.ComponentModel.PropertyDescriptor;
 
 namespace Furesoft.LowCode;
 
 public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 {
-    public readonly List<(string Name, PinAlignment Alignment, PinMode mode, bool)> Pins = new();
-    public readonly Dictionary<string, object> Properties = new();
+    public readonly List<PinDescriptor> Pins = new();
+    public readonly List<PropDescriptor> Properties = new();
 
     private Func<DynamicNode, CancellationToken, Task> _action;
 
@@ -18,7 +21,7 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 
     public void AddPin(string name, PinAlignment alignment, PinMode mode, bool multipleConnections = false)
     {
-        Pins.Add((name, alignment, mode, multipleConnections));
+        Pins.Add(new(name, mode, alignment, multipleConnections));
     }
 
     protected Task ContinueWith(string pin, CancellationToken token)
@@ -89,7 +92,8 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
 
         foreach (var property in Properties)
         {
-            var descriptor = new DynamicNodePropertyDescriptor(property.Key, null, property.Value.GetType());
+            var descriptor = new DynamicNodePropertyDescriptor(property.Name, null, property.Type);
+            descriptor.SetValue(this, property.Value);
 
             result.Add(descriptor);
         }

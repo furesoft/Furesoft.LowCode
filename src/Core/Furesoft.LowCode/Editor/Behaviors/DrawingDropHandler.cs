@@ -64,7 +64,7 @@ public class DrawingDropHandler : DefaultDropHandler
                     }
 
                     var factory = new NodeFactory();
-                    var subgraphNode = factory.CreateSubGraphNode(new(), item);
+                    var subgraphNode = factory.CreateSubGraphNode(item);
                     PlaceNode(drawing, subgraphNode, point);
 
                     return true;

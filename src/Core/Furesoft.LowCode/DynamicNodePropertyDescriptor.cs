@@ -28,9 +28,14 @@ internal class DynamicNodePropertyDescriptor : PropertyDescriptor
 
     public override object GetValue(object component)
     {
-        if (component is DynamicNode dn && dn.Properties.TryGetValue(Name, out var value))
+        if (component is DynamicNode dn)
         {
-            return value;
+            var prop = dn.Properties.FirstOrDefault(p => p.Name == Name);
+
+            if (prop != null)
+            {
+                return prop.Value;
+            }
         }
 
         return null;
@@ -40,7 +45,13 @@ internal class DynamicNodePropertyDescriptor : PropertyDescriptor
     {
         if (component is DynamicNode dn)
         {
-            dn.Properties[Name] = default;
+            var prop = dn.Properties.FirstOrDefault(p => p.Name == Name);
+
+            if (prop != null)
+            {
+                // Assuming default value for type can be null
+                prop.Value = default;
+            }
         }
     }
 
@@ -48,7 +59,12 @@ internal class DynamicNodePropertyDescriptor : PropertyDescriptor
     {
         if (component is DynamicNode dn)
         {
-            dn.Properties[Name] = value;
+            var prop = dn.Properties.FirstOrDefault(p => p.Name == Name);
+
+            if (prop != null)
+            {
+                prop.Value = value;
+            }
         }
     }
 

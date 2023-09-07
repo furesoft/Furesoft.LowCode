@@ -27,7 +27,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
-    [Browsable(false), JsonIgnore] public ProgressReporter Progress { get; set; } = new();
+    [Browsable(false)] [JsonIgnore] public ProgressReporter Progress { get; set; } = new();
 
     [Browsable(false)] public Context Context { get; private set; }
 
@@ -237,7 +237,14 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
                 continue;
             }
 
+            node.Drawing = Drawing;
+
             cnode.Compile(builder);
         }
+    }
+
+    protected bool HasConnection(IOutputPin pin, [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
+    {
+        return GetConnectedNodes(pinMembername, PinMode.Output).Any();
     }
 }

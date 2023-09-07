@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
-using AvaloniaEdit.Utils;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Designer;
+using Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters;
 using Furesoft.LowCode.NodeViews;
 using Furesoft.LowCode.ProjectSystem.Items;
 
@@ -43,13 +43,16 @@ public partial class NodeFactory : INodeFactory
         return templates;
     }
 
-    public INode CreateSubGraphNode(Dictionary<string, object> properties, GraphItem graph)
+    public INode CreateSubGraphNode(GraphItem graph)
     {
         var node = new SubgraphNode(graph);
 
-        node.Properties.AddRange(properties);
+        node.Properties.AddRange(graph.Props.Properties);
+
+        node.Pins.AddRange(graph.Props.Pins);
 
         double width = 0, height = 0;
+
         return CreateNode(node, node.Pins, (0, 0), nodeView: node.GetView(ref width, ref height));
     }
 
@@ -59,7 +62,7 @@ public partial class NodeFactory : INodeFactory
     }
 
     private static CustomNodeViewModel CreateNode(EmptyNode node,
-        IEnumerable<(string Name, PinAlignment Alignment, PinMode mode, bool)> pins,
+        IEnumerable<PinDescriptor> pins,
         (double x, double y) position, double width = 60, double height = 60, Control nodeView = null)
     {
         var leftPins =
@@ -124,9 +127,9 @@ public partial class NodeFactory : INodeFactory
 
         var pins =
             from pin in pinData
-            select (pin.Item1.Name ?? pin.prop.Name,
-                pin.Item1.Alignment,
+            select new PinDescriptor(pin.Item1.Name ?? pin.prop.Name,
                 pin.prop.PropertyType == typeof(IOutputPin) ? PinMode.Output : PinMode.Input,
+                pin.Item1.Alignment,
                 pin.Item1.AllowMultipleConnections);
 
         var nodeView = emptyNode.GetView(ref width, ref height);

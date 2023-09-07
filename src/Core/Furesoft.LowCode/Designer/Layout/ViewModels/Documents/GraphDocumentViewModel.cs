@@ -22,6 +22,8 @@ public partial class GraphDocumentViewModel : Document
         _editor.Drawing.SetSerializer(_editor.Serializer);
         _editor.Drawing.Name = item.Name;
 
+
+        item.Props ??= new();
         _props = item.Props;
 
         Title = item.Name;

@@ -30,27 +30,25 @@ public class CodeWriter
 
     public CodeWriter Append(string src, bool indent = true)
     {
-        var indentation = new string('\t', indentLevel);
-
         if (indent)
         {
-            _builder.Append($"{indentation}{src}");
+            Indent();
         }
-        else
-        {
-            _builder.Append(src);
-        }
+
+        _builder.Append(src);
+
 
         return this;
     }
 
-    public CodeWriter Append(char src)
+    private void Indent()
     {
-        var indentation = new string('\t', indentLevel);
+        _builder.Append(new string('\t', indentLevel));
+    }
 
-        _builder.Append($"{indentation}{src}");
-
-        return this;
+    public CodeWriter Append(char src, bool indent = false)
+    {
+        return Append(src.ToString(), indent);
     }
 
     public CodeWriter AppendSymbol(char c)
@@ -110,6 +108,11 @@ public class CodeWriter
 
     public CodeWriter Throw(string message)
     {
-        return Append(message, false).AppendSymbol(';');
+        return Append("throw ").Append(message, false).AppendSymbol(';');
+    }
+
+    public CodeWriter AppendStatementHead(string keyword, string condition)
+    {
+        return AppendKeyword(keyword).AppendSymbol('(').Append(condition, false).AppendSymbol(')').BeginBlock();
     }
 }

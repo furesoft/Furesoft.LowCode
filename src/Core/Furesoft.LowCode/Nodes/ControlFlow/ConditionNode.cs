@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.NodeViews;
 
 namespace Furesoft.LowCode.Nodes.ControlFlow;
@@ -9,7 +10,7 @@ namespace Furesoft.LowCode.Nodes.ControlFlow;
 [NodeCategory("Control Flow")]
 [NodeView(typeof(ConditionView))]
 [Description("Change control flow based on condition")]
-public class ConditionNode : InputNode
+public class ConditionNode : InputNode, ICompilationNode
 {
     private Evaluatable<bool> _condition;
 
@@ -32,6 +33,21 @@ public class ConditionNode : InputNode
     [Pin("True", PinAlignment.Bottom)] public IOutputPin TruePin { get; set; }
 
     [Pin("False", PinAlignment.Right)] public IOutputPin FalsePin { get; set; }
+
+    public void Compile(CodeWriter builder)
+    {
+        builder.AppendStatementHead("if", Condition.Source);
+        CompilePin(TruePin, builder);
+        builder.EndBlock();
+
+        if (HasConnection(FalsePin))
+        {
+            builder.AppendKeyword("else");
+            builder.BeginBlock();
+            CompilePin(FalsePin, builder);
+            builder.EndBlock();
+        }
+    }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
