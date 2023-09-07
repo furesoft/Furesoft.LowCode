@@ -224,6 +224,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         Progress.Message = message;
     }
 
+    protected Task ContinueWith(string pin, CancellationToken token)
+    {
+        return ContinueWith(null, token, pinMembername: pin);
+    }
+
     protected void CompilePin(IOutputPin pin, CodeWriter builder,
         [CallerArgumentExpression(nameof(pin))]
         string pinMembername = null)

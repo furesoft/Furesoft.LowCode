@@ -24,11 +24,6 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
         Pins.Add(new(name, mode, alignment, multipleConnections));
     }
 
-    protected Task ContinueWith(string pin, CancellationToken token)
-    {
-        return ContinueWith(null, token, pinMembername: pin);
-    }
-
     public override Task Execute(CancellationToken cancellationToken)
     {
         return _action?.Invoke(this, cancellationToken);
