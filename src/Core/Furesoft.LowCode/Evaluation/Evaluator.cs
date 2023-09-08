@@ -108,6 +108,7 @@ public class Evaluator : IEvaluator
         CredentialStorage = new IsolatedCredentailStorage();
 
         Context.DefineConstant("executeNode", Context.GlobalContext.ProxyValue(executeNode));
+        Context.DefineConstructor(typeof(Console));
     }
 
     private void executeNode(string graphName, string nodeID)

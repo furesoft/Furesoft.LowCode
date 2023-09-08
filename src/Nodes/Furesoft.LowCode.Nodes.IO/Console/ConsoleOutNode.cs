@@ -22,7 +22,7 @@ public class ConsoleOutNode : InputOutputNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("System.Console.WriteLine", Message);
+        builder.AppendCall("console.log", Message);
         builder.AppendSymbol(';');
         builder.AppendLine();
 
