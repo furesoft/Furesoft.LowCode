@@ -16,6 +16,7 @@ public class CustomNodeViewModel : NodeViewModel
 
     public EmptyNode DefiningNode { get; set; }
 
+
     public override bool CanRemove()
     {
         return IsRemovable;

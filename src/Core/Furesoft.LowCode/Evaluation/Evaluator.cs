@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using Furesoft.LowCode.Compilation;
+using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Designer.Services.Serializing;
+using Furesoft.LowCode.ProjectSystem.Items;
 using Furesoft.LowCode.Reporters;
 using NiL.JS.Core;
 using Debugger = Furesoft.LowCode.Designer.Debugging.Debugger;
@@ -11,11 +13,15 @@ namespace Furesoft.LowCode.Evaluation;
 public class Evaluator : IEvaluator
 {
     private readonly IDrawingNode _drawing;
+    private readonly Project project;
     public Context Context;
     public OptionsProvider Options;
 
     public Evaluator(IDrawingNode drawing)
     {
+        project = Project.Create(drawing.Name, "1.0.0");
+        project.Items.Add(new GraphItem(Guid.NewGuid().ToString(), drawing, new()));
+
         _drawing = drawing;
         Init();
 
@@ -24,6 +30,8 @@ public class Evaluator : IEvaluator
 
     public Evaluator(Project project, bool designerMode)
     {
+        this.project = project;
+
         var mainGraphNode = project.GetMainGraph();
 
         _drawing = mainGraphNode;
@@ -72,6 +80,7 @@ public class Evaluator : IEvaluator
         var compiler = new GraphCompiler();
         var compiledGraphSource = compiler.Compile(entryNode);
         Debug.WriteLine("Compiled Graph: " + compiledGraphSource);
+        var r = Context.Eval(compiledGraphSource + "\nMainGraph();");
 
         foreach (var signal in GetSignals())
         {
@@ -97,6 +106,27 @@ public class Evaluator : IEvaluator
         Context = new();
         Debugger = new(Context);
         CredentialStorage = new IsolatedCredentailStorage();
+
+        Context.DefineConstant("executeNode", Context.GlobalContext.ProxyValue(executeNode));
+    }
+
+    private void executeNode(string graphName, string nodeID)
+    {
+        var id = Guid.Parse(nodeID);
+
+        var items = project.Items.OfType<GraphItem>();
+        var graph = (from item in items
+            where item.Name == graphName
+            select item.Drawing).First();
+
+        var selectedNode = (from node in graph.Nodes
+            let cn = (CustomNodeViewModel)node
+            where cn.DefiningNode.ID == id
+            select cn).First();
+
+        selectedNode.DefiningNode.ExecutionMode = ExecutionMode.Script;
+        selectedNode.DefiningNode.Context = Context;
+        selectedNode.DefiningNode.Execute(default).GetAwaiter().GetResult();
     }
 
     private void InitCredentials()
