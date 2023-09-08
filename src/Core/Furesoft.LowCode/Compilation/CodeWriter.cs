@@ -58,7 +58,7 @@ public class CodeWriter
         return this;
     }
 
-    public CodeWriter AppendLine(string src)
+    public CodeWriter AppendLine(string src = null)
     {
         return Append($"{src}{Environment.NewLine}");
     }
@@ -102,8 +102,30 @@ public class CodeWriter
     {
         return AppendIdentifier(func)
             .AppendSymbol('(')
-            .Append(string.Join(", ", args).Trim(), false)
+            .Append(string.Join(", ", args.Select(argTransform)).Trim(), false)
             .AppendSymbol(')');
+    }
+
+    private object argTransform(object arg)
+    {
+        var argType = arg.GetType();
+
+        if (argType.IsGenericType && argType.GetGenericTypeDefinition().Name == "Evaluatable`1")
+        {
+            return ((dynamic)arg).Source;
+        }
+
+        if (arg is string s)
+        {
+            return $"\"{s}\"";
+        }
+
+        if (arg is Guid id)
+        {
+            return argTransform(id.ToString());
+        }
+
+        return arg;
     }
 
     public CodeWriter Throw(string message)

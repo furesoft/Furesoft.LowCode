@@ -8,6 +8,7 @@ using Furesoft.LowCode.NodeViews;
 using Newtonsoft.Json;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
+using ExecutionMode = Furesoft.LowCode.Evaluation.ExecutionMode;
 
 namespace Furesoft.LowCode;
 
@@ -29,7 +30,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
     [Browsable(false)] [JsonIgnore] public ProgressReporter Progress { get; set; } = new();
 
-    [Browsable(false)] public Context Context { get; private set; }
+    [Browsable(false)] public Context Context { get; internal set; }
 
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Browsable(false)]
@@ -65,6 +66,8 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     /// </summary>
     [Browsable(false)]
     public EmptyNode PreviousNode { get; set; }
+
+    [Browsable(false)] public ExecutionMode ExecutionMode { get; set; } = ExecutionMode.Graph;
 
     protected void ApplyPipe<T>()
     {
@@ -176,6 +179,10 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             .Assign(value);
     }
 
+    public virtual void Compile(CodeWriter builder)
+    {
+    }
+
     public Control GetView(ref double width, ref double height)
     {
         if (AppContext.GetData("DesignerMode") is false)
@@ -237,14 +244,9 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
 
         foreach (var node in nodes)
         {
-            if (node is not ICompilationNode cnode)
-            {
-                continue;
-            }
-
             node.Drawing = Drawing;
 
-            cnode.Compile(builder);
+            node.Compile(builder);
         }
     }
 

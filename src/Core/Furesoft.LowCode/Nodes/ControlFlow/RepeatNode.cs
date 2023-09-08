@@ -10,7 +10,7 @@ namespace Furesoft.LowCode.Nodes.ControlFlow;
 [NodeCategory("Control Flow")]
 [Description("Repeats an Action X Times")]
 [NodeIcon("m18 12v2a4 4 0 01-4 4H0M4 22 0 18 4 14M0 10V8A4 4 0 014 4h14m-4-4 4 4-4 4")]
-public class RepeatNode : InputOutputNode, ICompilationNode
+public class RepeatNode : InputOutputNode
 {
     public RepeatNode() : base("Repeat")
     {
@@ -36,7 +36,7 @@ public class RepeatNode : InputOutputNode, ICompilationNode
         await ContinueWith(OutputPin, cancellationToken);
     }
 
-    public void Compile(CodeWriter builder)
+    public override void Compile(CodeWriter builder)
     {
         builder
             .AppendLine($"for (let index = 0; index < {Times}; index++)")

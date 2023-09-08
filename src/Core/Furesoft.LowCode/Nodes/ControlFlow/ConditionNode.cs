@@ -10,7 +10,7 @@ namespace Furesoft.LowCode.Nodes.ControlFlow;
 [NodeCategory("Control Flow")]
 [NodeView(typeof(ConditionView))]
 [Description("Change control flow based on condition")]
-public class ConditionNode : InputNode, ICompilationNode
+public class ConditionNode : InputNode
 {
     private Evaluatable<bool> _condition;
 
@@ -34,7 +34,7 @@ public class ConditionNode : InputNode, ICompilationNode
 
     [Pin("False", PinAlignment.Right)] public IOutputPin FalsePin { get; set; }
 
-    public void Compile(CodeWriter builder)
+    public override void Compile(CodeWriter builder)
     {
         builder.AppendStatementHead("if", Condition.Source);
         CompilePin(TruePin, builder);

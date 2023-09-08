@@ -6,10 +6,7 @@ public class GraphCompiler
     {
         var sb = new CodeWriter();
 
-        if (entry is ICompilationNode cn)
-        {
-            cn.Compile(sb);
-        }
+        entry.Compile(sb);
 
         return sb.ToString();
     }

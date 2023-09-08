@@ -10,7 +10,7 @@ namespace Furesoft.LowCode.Nodes;
 [NodeView(typeof(EntryView))]
 [Description("The starting node of the graph")]
 [GraphAnalyzer(typeof(EntryNodeAnalyzer))]
-public class EntryNode : OutputNode, ICompilationNode
+public class EntryNode : OutputNode
 {
     public EntryNode() : base("Entry")
     {
@@ -18,7 +18,7 @@ public class EntryNode : OutputNode, ICompilationNode
 
     [Browsable(false)] public new bool ShowDescription { get; set; }
 
-    public void Compile(CodeWriter builder)
+    public override void Compile(CodeWriter builder)
     {
         builder.BeginFunctionDecl(Drawing.Name);
 

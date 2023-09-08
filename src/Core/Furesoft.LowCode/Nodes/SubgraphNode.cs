@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.Nodes;
 
 [IgnoreTemplate]
 [NodeView(typeof(SubgraphView))]
-public class SubgraphNode : DynamicNode, ICompilationNode
+public class SubgraphNode : DynamicNode
 {
     public SubgraphNode(GraphItem graphItem) : base(null)
     {
@@ -21,7 +21,7 @@ public class SubgraphNode : DynamicNode, ICompilationNode
 
     public GraphItem GraphItem { get; set; }
 
-    public void Compile(CodeWriter builder)
+    public override void Compile(CodeWriter builder)
     {
         builder.AppendCall(GraphItem.Name);
     }
