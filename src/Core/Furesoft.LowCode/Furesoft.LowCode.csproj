@@ -28,17 +28,17 @@
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12"/>
     <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.1.6"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.4"/>
-    <PackageReference Include="Dock.Avalonia" Version="11.0.0"/>
+    <PackageReference Include="Dock.Avalonia" Version="11.0.0.2"/>
     <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0"/>
-    <PackageReference Include="Dock.Model.Avalonia" Version="11.0.0"/>
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0"/>
+    <PackageReference Include="Dock.Model.Avalonia" Version="11.0.0.2"/>
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.2"/>
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.4"/>
 
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NiL.JS" Version="2.5.1665"/>
+    <PackageReference Include="NiL.JS" Version="2.5.1673"/>
     <PackageReference Include="ReactiveMarbles.PropertyChanged" Version="2.0.27"/>
     <PackageReference Include="Splat" Version="14.7.1"/>
   </ItemGroup>
