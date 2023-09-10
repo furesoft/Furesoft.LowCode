@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Network", "Network", "{5D6A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.Data.XML", "src\Nodes\Furesoft.LowCode.Nodes.Data.XML\Furesoft.LowCode.Nodes.Data.XML.csproj", "{D85C9D67-DFD9-452B-BE06-FEEC22E5A517}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.Data.Dbf", "src\Nodes\Furesoft.LowCode.Nodes.Data.Dbf\Furesoft.LowCode.Nodes.Data.Dbf.csproj", "{14762B7E-B54A-4C0E-A41D-FAA02C248939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{D85C9D67-DFD9-452B-BE06-FEEC22E5A517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D85C9D67-DFD9-452B-BE06-FEEC22E5A517}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D85C9D67-DFD9-452B-BE06-FEEC22E5A517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14762B7E-B54A-4C0E-A41D-FAA02C248939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14762B7E-B54A-4C0E-A41D-FAA02C248939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14762B7E-B54A-4C0E-A41D-FAA02C248939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14762B7E-B54A-4C0E-A41D-FAA02C248939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B70813DA-E939-4626-BE32-D2A9DDC2604F} = {2C2DF358-D705-4340-818C-82BAF9418269}
@@ -119,5 +125,6 @@ Global
 		{65F76CE1-F957-4B80-A185-0D1870D17345} = {5D6A062C-E6CD-4177-A48E-1D5B64727555}
 		{D8127C26-21EC-439E-86B2-466A85B4FA8D} = {5D6A062C-E6CD-4177-A48E-1D5B64727555}
 		{D85C9D67-DFD9-452B-BE06-FEEC22E5A517} = {588F0A0E-8E84-41A3-9F8E-9A67A0461BB4}
+		{14762B7E-B54A-4C0E-A41D-FAA02C248939} = {588F0A0E-8E84-41A3-9F8E-9A67A0461BB4}
 	EndGlobalSection
 EndGlobal

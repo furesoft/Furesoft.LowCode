@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.CSV\Furesoft.LowCode.Nodes.Data.CSV.csproj" />
+    <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.Dbf\Furesoft.LowCode.Nodes.Data.Dbf.csproj"/>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.Office\Furesoft.LowCode.Nodes.Data.Office.csproj" />
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.XML\Furesoft.LowCode.Nodes.Data.XML.csproj"/>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.IO.Archives\Furesoft.LowCode.Nodes.IO.Archives.csproj" />
