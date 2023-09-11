@@ -97,7 +97,7 @@ public partial class NodeFactory
 
             value ??= Activator.CreateInstance(prop.PropertyType, "");
 
-            value.Parent = node;
+            value.Context = node.Context;
 
             prop.SetValue(node, value);
         }

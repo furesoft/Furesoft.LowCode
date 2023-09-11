@@ -137,4 +137,9 @@ public class CodeWriter
     {
         return AppendKeyword(keyword).AppendSymbol('(').Append(condition, false).AppendSymbol(')').BeginBlock();
     }
+
+    public void AppendComment(string comment)
+    {
+        Append($" // {comment} \n");
+    }
 }

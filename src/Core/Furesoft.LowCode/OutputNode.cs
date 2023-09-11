@@ -14,6 +14,9 @@ public abstract class OutputNode : EmptyNode
     public override void Compile(CodeWriter builder)
     {
         builder.AppendCall($"executeNode", Drawing.Name, ID);
+        builder.AppendSymbol(';');
+        builder.AppendComment("execute " + this.GetClassName());
+
         CompilePin(OutputPin, builder);
     }
 }

@@ -127,8 +127,27 @@ public class Evaluator : IEvaluator
 
         selectedNode.DefiningNode.ExecutionMode = ExecutionMode.Script;
         selectedNode.DefiningNode.Context = Context;
+        SetEvaluatableContexts(selectedNode.DefiningNode);
+
         selectedNode.DefiningNode.Execute(default).GetAwaiter().GetResult();
     }
+
+
+    private void SetEvaluatableContexts(EmptyNode selectedNodeDefiningNode)
+    {
+        // Check all the properties of the selectedNodeDefiningNode
+        var properties = selectedNodeDefiningNode.GetType().GetProperties();
+
+        foreach (var prop in properties)
+        {
+            if (prop.PropertyType.Name == typeof(Evaluatable<>).Name)
+            {
+                dynamic evaluatable = prop.GetValue(selectedNodeDefiningNode);
+                evaluatable.Context = Context;
+            }
+        }
+    }
+
 
     private void InitCredentials()
     {

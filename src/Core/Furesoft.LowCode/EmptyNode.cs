@@ -97,6 +97,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     protected async Task ContinueWith(IOutputPin pin, CancellationToken cancellationToken, Context context = null,
         [CallerArgumentExpression("pin")] string pinMembername = null)
     {
+        if (ExecutionMode == ExecutionMode.Script)
+        {
+            return;
+        }
+
         _evaluator.Debugger.ResetWait();
 
         var nodes = GetConnectedNodes(pinMembername, PinMode.Output);

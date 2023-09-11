@@ -30,7 +30,8 @@ internal class EvaluatableCellEditFactory : AbstractCellEditFactory
             var instance = (dynamic)Activator.CreateInstance(context.Property.PropertyType, control.Text);
             try
             {
-                instance.Parent = (EmptyNode)context.Target;
+                var parent = (EmptyNode)context.Target;
+                instance.Context = parent.Context;
             }
             catch (Exception ex)
             {

@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.Dbf\Furesoft.LowCode.Nodes.Data.Dbf.csproj"/>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.Office\Furesoft.LowCode.Nodes.Data.Office.csproj" />
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Data.XML\Furesoft.LowCode.Nodes.Data.XML.csproj"/>
+    <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.Imaging\Furesoft.LowCode.Nodes.Imaging.csproj"/>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.IO.Archives\Furesoft.LowCode.Nodes.IO.Archives.csproj" />
       <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.IO.Linq\Furesoft.LowCode.Nodes.IO.Linq.csproj"/>
     <ProjectReference Include="..\..\Nodes\Furesoft.LowCode.Nodes.IO\Furesoft.LowCode.Nodes.IO.csproj" />
