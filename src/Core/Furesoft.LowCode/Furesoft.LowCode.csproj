@@ -26,7 +26,7 @@
     <PackageReference Include="Avalonia.Xaml.Interactions.DragAndDrop" Version="11.0.2"/>
     <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.1"/>
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12"/>
-    <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.1.6"/>
+    <PackageReference Include="bodong.Avalonia.PropertyGrid" Version="11.0.4.1"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.4"/>
     <PackageReference Include="Dock.Avalonia" Version="11.0.0.2"/>
     <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0"/>
