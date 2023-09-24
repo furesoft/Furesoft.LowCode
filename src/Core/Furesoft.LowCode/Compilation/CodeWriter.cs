@@ -18,6 +18,8 @@ public class CodeWriter
     {
         AppendLine("{");
         indentLevel++;
+        Indent();
+
         return this;
     }
 
@@ -115,9 +117,19 @@ public class CodeWriter
             return ((dynamic)arg).Source;
         }
 
+        if (argType.IsEnum)
+        {
+            return $"{argType.Name}.{arg}";
+        }
+
         if (arg is string s)
         {
             return $"\"{s}\"";
+        }
+
+        if (arg is char c)
+        {
+            return $"\"{c}\"";
         }
 
         if (arg is Guid id)

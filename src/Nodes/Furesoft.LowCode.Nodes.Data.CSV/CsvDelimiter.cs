@@ -2,7 +2,7 @@
 
 public enum CsvDelimiter
 {
-    Comma,
-    Semikolon,
-    Tab
+    Comma = ',',
+    Semikolon = ';',
+    Tab = '\t'
 }

@@ -1,6 +1,5 @@
-﻿using System.Data;
+﻿using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
-using Sylvan.Data.Csv;
 
 namespace Furesoft.LowCode.Nodes.Data.CSV;
 
@@ -10,38 +9,16 @@ public class CsvReaderNode : CsvNode
     {
     }
 
-    protected override async Task Invoke(CancellationToken cancellationToken)
+    protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var options = new CsvDataReaderOptions {Delimiter = GetDelimiter()};
-        var reader = CsvDataReader.Create(Path, options);
-        var dataTable = GetTable();
-        var indices = new Dictionary<DataColumn, int>();
+        SetTable(ScriptInitializer.ReadCsv(Path, Delimiter, GetTable()));
 
-        if (dataTable.Columns.Count == 0)
-        {
-            foreach (var column in reader.GetColumnSchema())
-            {
-                dataTable.Columns.Add(new DataColumn(column.ColumnName, column.DataType));
-            }
-        }
+        return Task.CompletedTask;
+    }
 
-        foreach (DataColumn column in dataTable.Columns)
-        {
-            var index = reader.GetOrdinal(column.ColumnName);
-
-            indices[column] = index;
-        }
-
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            var row = dataTable.NewRow();
-
-            foreach (var index in indices)
-            {
-                row[index.Key] = reader.GetValue(index.Value);
-            }
-
-            dataTable.Rows.Add(row);
-        }
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendKeyword("let").AppendIdentifier(TableName.AsEvaluatable()).AppendSymbol('=');
+        builder.AppendCall("readCSV", Path, Delimiter).AppendSymbol(';');
     }
 }

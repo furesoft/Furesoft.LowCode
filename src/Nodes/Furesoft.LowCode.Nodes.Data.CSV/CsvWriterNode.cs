@@ -1,6 +1,5 @@
-﻿using System.Data;
+﻿using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
-using Sylvan.Data.Csv;
 
 namespace Furesoft.LowCode.Nodes.Data.CSV;
 
@@ -10,14 +9,15 @@ public class CsvWriterNode : CsvNode
     {
     }
 
-    protected override async Task Invoke(CancellationToken cancellationToken)
+    protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var options = new CsvDataWriterOptions {Delimiter = GetDelimiter()};
+        ScriptInitializer.WriteCsv(Path, Delimiter, GetTable());
 
-        await using var writer = CsvDataWriter.Create(Path, options);
-        var dataTable = GetTable();
+        return Task.CompletedTask;
+    }
 
-        var dataTableReader = new DataTableReader(dataTable);
-        await writer.WriteAsync(dataTableReader, cancellationToken);
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("writeCsv", Path, Delimiter, TableName.AsEvaluatable()).AppendSymbol(';');
     }
 }

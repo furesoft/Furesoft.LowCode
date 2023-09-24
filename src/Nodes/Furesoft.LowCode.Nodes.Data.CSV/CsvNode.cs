@@ -15,15 +15,4 @@ public abstract class CsvNode : DataTableNode
     }
 
     [DataMember(EmitDefaultValue = false)] public CsvDelimiter Delimiter { get; set; } = CsvDelimiter.Semikolon;
-
-    protected char GetDelimiter()
-    {
-        return Delimiter switch
-        {
-            CsvDelimiter.Comma => ',',
-            CsvDelimiter.Semikolon => ';',
-            CsvDelimiter.Tab => '\t',
-            _ => ';'
-        };
-    }
 }
