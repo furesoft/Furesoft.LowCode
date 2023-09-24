@@ -77,6 +77,11 @@ public class Evaluator : IEvaluator
 
         InitNode(entryNode);
 
+        ScriptInitalizerContext c = new ScriptInitalizerContext();
+        c.AddInitializers();
+
+        c.RunInitalizers(Context);
+
         var compiler = new GraphCompiler();
         var compiledGraphSource = compiler.Compile(entryNode);
         Debug.WriteLine("Compiled Graph: " + compiledGraphSource);
@@ -108,6 +113,7 @@ public class Evaluator : IEvaluator
         CredentialStorage = new IsolatedCredentailStorage();
 
         Context.DefineConstant("executeNode", Context.GlobalContext.ProxyValue(executeNode));
+        //  Context.DefineConstant("pipe", Context.GlobalContext.ProxyValue(pipe));
         Context.DefineConstructor(typeof(Console));
     }
 

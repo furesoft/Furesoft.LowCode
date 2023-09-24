@@ -1,6 +1,4 @@
-﻿using PropertyModels.Extensions;
-
-namespace Furesoft.LowCode;
+﻿namespace Furesoft.LowCode;
 
 public class SignalStorage
 {
@@ -8,7 +6,7 @@ public class SignalStorage
 
     public void Register(string name, EmptyNode node)
     {
-        if (!Signals.Contains(_ => _.Name == name))
+        if (!Signals.Any(_ => _.Name == name))
         {
             Signals.Add(new(name));
         }

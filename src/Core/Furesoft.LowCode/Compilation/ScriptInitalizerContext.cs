@@ -7,6 +7,10 @@ public class ScriptInitalizerContext
 {
     private List<IScriptModuleInitalizer> _initializers = new();
 
+    public ScriptInitalizerContext()
+    {
+    }
+
     public void AddInitializers(Assembly assembly)
     {
         foreach (var type in assembly.GetTypes())
@@ -16,6 +20,21 @@ public class ScriptInitalizerContext
                 continue;
             }
 
+            AddInitializer(type);
+        }
+    }
+
+    public void AddInitializers()
+    {
+        var types =
+            from assembly in AppDomain.CurrentDomain.GetAssemblies()
+            from type in assembly.GetTypes()
+            where !type.IsInterface
+            where type.IsAssignableTo(typeof(IScriptModuleInitalizer))
+            select type;
+
+        foreach (var type in types)
+        {
             AddInitializer(type);
         }
     }
