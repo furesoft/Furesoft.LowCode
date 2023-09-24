@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
-using MsBox.Avalonia;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes;
 
@@ -26,11 +26,13 @@ public class MessageBoxNode : InputOutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var box = MessageBoxManager
-            .GetMessageBoxStandard(Title, Message);
-
-        await box.ShowWindowAsync();
+        ScriptInitializer.ShowMessageBox(Title, Message);
 
         await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("showMessageBox", Title, Message).AppendSymbol(';');
     }
 }

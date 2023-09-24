@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.ControlFlow;
@@ -42,5 +43,16 @@ public class CatchNode : InputNode
 
             await ContinueWith(OnErrorPin, cancellationToken, subContext);
         }
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendKeyword("try").BeginBlock();
+        CompilePin(DoPin, builder);
+        builder.EndBlock();
+
+        builder.AppendKeyword("catch").AppendSymbol('(').AppendIdentifier(ErrorName).AppendSymbol(')').BeginBlock();
+        CompilePin(OnErrorPin, builder);
+        builder.EndBlock();
     }
 }

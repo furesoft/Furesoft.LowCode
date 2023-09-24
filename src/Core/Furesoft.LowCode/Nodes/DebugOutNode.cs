@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes;
 
@@ -27,5 +28,10 @@ public class DebugOutNode : InputOutputNode
         OutputWriter.WriteLine(Message);
 
         return ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("outputWriter.WriteLine", Message).AppendSymbol(';');
     }
 }
