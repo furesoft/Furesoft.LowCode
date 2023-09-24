@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Analyzers;
 
 namespace Furesoft.LowCode.Nodes;
@@ -33,5 +34,14 @@ public class SignalNode : OutputNode
     public override async Task Execute(CancellationToken cancellationToken)
     {
         await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter writer)
+    {
+        var callbackWriter = new CodeWriter();
+        CompilePin(OutputPin, callbackWriter);
+
+        var callback = "function (arg) {\n\t" + callbackWriter + "\n}\n";
+        writer.AppendCall("subscribe", Signal, callback.AsEvaluatable()).AppendSymbol(';').AppendSymbol('\n');
     }
 }

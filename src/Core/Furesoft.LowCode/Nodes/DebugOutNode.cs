@@ -32,6 +32,8 @@ public class DebugOutNode : InputOutputNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("outputWriter.WriteLine", Message).AppendSymbol(';');
+        builder.AppendCall("outputWriter.WriteLine", Message).AppendSymbol(';').AppendLine();
+
+        CompilePin(OutputPin, builder);
     }
 }

@@ -66,7 +66,6 @@ public class Evaluator : IEvaluator
 
     internal Debugger Debugger { get; set; }
 
-    public SignalStorage Signals { get; } = new();
     public ICredentialStorage CredentialStorage { get; set; }
 
     public async Task Execute(CancellationToken cancellationToken)
@@ -83,20 +82,13 @@ public class Evaluator : IEvaluator
         c.RunInitalizers(Context);
 
         var compiler = new GraphCompiler();
-        var compiledGraphSource = compiler.Compile(entryNode);
+        var compiledGraphSource = compiler.Compile(_drawing);
         Debug.WriteLine("Compiled Graph: " + compiledGraphSource);
         var r = Context.Eval(compiledGraphSource + "\nMainGraph();");
 
-        foreach (var signal in GetSignals())
-        {
-            InitNode(signal);
-
-            Signals.Register(signal.Signal, signal);
-        }
-
         try
         {
-            await entryNode.Execute(cancellationToken);
+            //await entryNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
     }

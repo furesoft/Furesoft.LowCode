@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes;
 
@@ -10,6 +11,7 @@ namespace Furesoft.LowCode.Nodes;
 public class SignalTriggerNode : InputOutputNode
 {
     private string _signal;
+
     public SignalTriggerNode() : base("Trigger")
     {
     }
@@ -29,8 +31,13 @@ public class SignalTriggerNode : InputOutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        await _evaluator.Signals.Trigger(Signal, token: cancellationToken);
+        SignalStorage.Trigger(Signal);
 
         await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("trigger", Signal).AppendSymbol(';');
     }
 }
