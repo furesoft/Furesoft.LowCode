@@ -9,9 +9,9 @@ public class ScriptInitializer : IScriptModuleInitalizer
 {
     public void InitEngine(Context context)
     {
-        context.DefineConstructor(typeof(CsvDelimiter));
-        context.DefineVariable("writeCsv").Assign(context.GlobalContext.ProxyValue(WriteCsv));
-        context.DefineVariable("readCsv").Assign(context.GlobalContext.ProxyValue(ReadCsv));
+        context.Import(typeof(CsvDelimiter));
+        context.Import("writeCsv", WriteCsv);
+        context.Import("readCsv", ReadCsv);
     }
 
     public static async void WriteCsv(string path, CsvDelimiter delimiter, System.Data.DataTable dataTable)

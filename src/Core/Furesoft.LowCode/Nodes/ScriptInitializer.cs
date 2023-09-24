@@ -8,8 +8,8 @@ public class ScriptInitializer : IScriptModuleInitalizer
 {
     public void InitEngine(Context context)
     {
-        context.DefineConstant("outputWriter", context.GlobalContext.ProxyValue(DebugOutNode.OutputWriter));
-        context.DefineConstant("showMessageBox", context.GlobalContext.ProxyValue(ShowMessageBox));
+        context.Import("outputWriter", DebugOutNode.OutputWriter);
+        context.Import("showMessageBox", ShowMessageBox);
     }
 
     public static async void ShowMessageBox(string title, string message)
