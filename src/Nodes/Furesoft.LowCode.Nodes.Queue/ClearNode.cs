@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes.Queue;
 
@@ -17,5 +18,12 @@ public class ClearNode : QueueBaseNode
         QueueManager.Instance.ClearQueue(Queue);
 
         return Task.CompletedTask;
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("clearQueue", Queue).AppendSymbol(';').AppendSymbol('\n');
+
+        CompilePin(OutputPin, builder);
     }
 }

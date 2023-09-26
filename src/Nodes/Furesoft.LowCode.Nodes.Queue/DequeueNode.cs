@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes.Queue;
 
@@ -13,7 +14,7 @@ public class DequeueNode : QueueBaseNode, IOutVariableProvider
     {
     }
 
-    [Required, DataMember] public string OutVariable { get; set; }
+    [Required] [DataMember] public string OutVariable { get; set; }
 
     public override Task Invoke(CancellationToken cancellationToken)
     {
@@ -21,5 +22,13 @@ public class DequeueNode : QueueBaseNode, IOutVariableProvider
         SetOutVariable(OutVariable, value);
 
         return Task.CompletedTask;
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendKeyword("var").AppendIdentifier(OutVariable).AppendSymbol('=')
+            .AppendCall("dequeue", Queue).AppendSymbol(';').AppendSymbol('\n');
+
+        CompilePin(OutputPin, builder);
     }
 }

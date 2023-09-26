@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.Queue;
@@ -25,5 +26,16 @@ public class ProcessNode : QueueBaseNode
 
             await ContinueWith(DoPin, cancellationToken, subContext);
         }
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        var callbackWriter = new CodeWriter();
+        CompilePin(DoPin, callbackWriter);
+
+        var callback = "function (item) {\n\t" + callbackWriter + "\n}\n";
+        builder.AppendCall("processQueue", Queue, callback.AsEvaluatable()).AppendSymbol(';').AppendSymbol('\n');
+
+        CompilePin(OutputPin, builder);
     }
 }

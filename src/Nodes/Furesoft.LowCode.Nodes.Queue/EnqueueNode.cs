@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.Queue;
@@ -21,5 +22,12 @@ public class EnqueueNode : QueueBaseNode
         QueueManager.Instance.Enqueue(Queue, Data);
 
         return Task.CompletedTask;
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("enqueue", Queue, Data).AppendSymbol(';').AppendSymbol('\n');
+
+        CompilePin(OutputPin, builder);
     }
 }
