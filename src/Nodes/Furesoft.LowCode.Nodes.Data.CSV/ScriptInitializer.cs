@@ -11,7 +11,7 @@ public class ScriptInitializer : IScriptModuleInitalizer
     public void InitEngine(Context context)
     {
         context.Import(typeof(CsvDelimiter));
-        context.Import("CSV", typeof(ScriptInitializer));
+        context.ImportAsObject<ScriptInitializer>("CSV");
     }
 
     [JavaScriptName("write")]

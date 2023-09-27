@@ -20,7 +20,9 @@ public static class StringExtensions
         context.DefineConstructor(type);
     }
 
-    public static void ImportAsObject(this Context context, Type type, string name = null) {
+    public static void ImportAsObject<T>(this Context context, string name = null) {
+        Type type = typeof(T);
+        
         if(!type.IsStatic()) {
             throw new InvalidOperationException($"Type '{type.FullName}' must be static");
         }
@@ -29,6 +31,7 @@ public static class StringExtensions
             name = type.Name;
         }
 
+        //ToDo: falls das nicht funktioniert 'DefineConstruktor" probieren
         context.DefineConstant(name, context.GlobalContext.WrapValue(Activator.CreateInstance(type)));
     }
 }
