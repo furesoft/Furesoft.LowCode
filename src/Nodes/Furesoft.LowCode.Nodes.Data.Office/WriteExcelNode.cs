@@ -1,9 +1,6 @@
 ﻿using System.ComponentModel;
-using System.Data;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
@@ -19,55 +16,15 @@ public class WriteExcelNode : DataTableNode
     {
     }
 
-    protected override async Task Invoke(CancellationToken cancellationToken)
+    protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var dataTable = GetTable();
-        using var spreadsheetDocument = SpreadsheetDocument.Create(Path, SpreadsheetDocumentType.Workbook);
+        ScriptInitializer.WriteExcel(Path, GetTable());
 
-        var workbookpart = spreadsheetDocument.AddWorkbookPart();
-        workbookpart.Workbook = new();
+        return Task.CompletedTask;
+    }
 
-        var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
-        worksheetPart.Worksheet = new(new SheetData());
-
-        var sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
-
-        var sheet = new Sheet
-        {
-            Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPart),
-            SheetId = 1,
-            Name = dataTable.TableName ?? "Sheet1"
-        };
-        sheets.Append(sheet);
-
-        var worksheet = worksheetPart.Worksheet;
-        var sheetData = worksheet.GetFirstChild<SheetData>();
-
-        var headerRow = new Row();
-        foreach (DataColumn column in dataTable.Columns)
-        {
-            var cell = new Cell();
-            cell.DataType = CellValues.String;
-            cell.CellValue = new(column.ColumnName);
-            headerRow.AppendChild(cell);
-        }
-
-        sheetData.AppendChild(headerRow);
-
-        foreach (DataRow dr in dataTable.Rows)
-        {
-            var row = new Row();
-            foreach (DataColumn column in dataTable.Columns)
-            {
-                var cell = new Cell();
-                cell.DataType = CellValues.String;
-                cell.CellValue = new(dr[column].ToString());
-                row.AppendChild(cell);
-            }
-
-            sheetData.AppendChild(row);
-        }
-
-        spreadsheetDocument.Save();
+    public override void Compile(CodeWriter builder)
+    {
+        CompileWriteCall(builder, "XLS.write", Path, TableName.AsEvaluatable());
     }
 }

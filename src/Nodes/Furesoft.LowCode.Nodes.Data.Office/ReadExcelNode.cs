@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
@@ -17,49 +16,15 @@ public class ReadExcelNode : DataTableNode
     {
     }
 
-    protected override async Task Invoke(CancellationToken cancellationToken)
+    protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var dataTable = GetTable();
+        ScriptInitializer.ReadExcel(Path, GetTable());
 
-        using var spreadsheetDocument = SpreadsheetDocument.Open(Path, false);
-
-        var worksheetPart = spreadsheetDocument.WorkbookPart.GetPartsOfType<WorksheetPart>().First();
-        var data = worksheetPart.Worksheet.GetFirstChild<SheetData>();
-        var rows = data.Descendants<Row>();
-
-        if (dataTable.Columns.Count == 0)
-        {
-            foreach (Cell cell in rows.ElementAt(0))
-            {
-                dataTable.Columns.Add(GetCellValue(spreadsheetDocument, cell));
-            }
-        }
-
-        foreach (Row row in rows.Skip(1))
-        {
-            var tempRow = dataTable.NewRow();
-
-            for (int i = 0; i < row.Descendants<Cell>().Count(); i++)
-            {
-                tempRow[i] = GetCellValue(spreadsheetDocument, row.Descendants<Cell>().ElementAt(i));
-            }
-
-            dataTable.Rows.Add(tempRow);
-        }
+        return Task.CompletedTask;
     }
 
-    public string GetCellValue(SpreadsheetDocument document, Cell cell)
+    public override void Compile(CodeWriter builder)
     {
-        var stringTablePart = document.WorkbookPart!.SharedStringTablePart;
-        var value = cell.CellValue!.InnerXml;
-
-        if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
-        {
-            return stringTablePart!.SharedStringTable.ChildElements[int.Parse(value)].InnerText;
-        }
-        else
-        {
-            return value;
-        }
+        CompileReadCall(builder, "XLS.read", Path);
     }
 }

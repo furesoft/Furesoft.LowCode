@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 
@@ -15,9 +16,15 @@ public class WriteXmlNode : DataTableNode
     {
     }
 
-    protected override async Task Invoke(CancellationToken cancellationToken)
+    protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var table = GetTable();
-        table.WriteXml(Path);
+        ScriptInitializer.WriteXml(Path, GetTable());
+
+        return Task.CompletedTask;
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        CompileWriteCall(builder, "XML.write", Path, TableName.AsEvaluatable());
     }
 }

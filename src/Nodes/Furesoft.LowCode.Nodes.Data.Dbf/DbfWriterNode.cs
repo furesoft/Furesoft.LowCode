@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Data;
-using System.Text;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
-using SocialExplorer.IO.FastDBF;
 
 namespace Furesoft.LowCode.Nodes.Data.Dbf;
 
@@ -20,75 +18,13 @@ public class DbfWriterNode : DataTableNode
 
     protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var table = GetTable();
-
-        var dbfFile = new DbfFile(Encoding.GetEncoding(1252));
-        dbfFile.Open(Path, FileMode.Create);
-
-        foreach (DataColumn column in table.Columns)
-        {
-            dbfFile.Header.AddColumn(new(column.ColumnName, GetDbfType(column.DataType)));
-        }
-
-        WriteRecords(table, dbfFile);
-
-        dbfFile.Close();
+        ScriptInitializer.WriteDbf(Path, GetTable());
 
         return Task.CompletedTask;
     }
 
-    private static void WriteRecords(System.Data.DataTable table, DbfFile dbfFile)
+    public override void Compile(CodeWriter builder)
     {
-        foreach (DataRow row in table.Rows)
-        {
-            var dbfRecord = new DbfRecord(dbfFile.Header);
-
-            for (var colIndex = 0; colIndex < row.ItemArray.Length; colIndex++)
-            {
-                dbfRecord[colIndex] = row.ItemArray[colIndex].ToString();
-            }
-
-            dbfFile.Write(dbfRecord);
-        }
-    }
-
-    private DbfColumn.DbfColumnType GetDbfType(Type columnDataType)
-    {
-        if (columnDataType == typeof(DateTime))
-        {
-            return DbfColumn.DbfColumnType.Date;
-        }
-
-        if (columnDataType == typeof(int))
-        {
-            return DbfColumn.DbfColumnType.Integer;
-        }
-
-        if (columnDataType == typeof(string))
-        {
-            return DbfColumn.DbfColumnType.Character;
-        }
-
-        if (columnDataType == typeof(bool))
-        {
-            return DbfColumn.DbfColumnType.Boolean;
-        }
-
-        if (columnDataType == typeof(float))
-        {
-            return DbfColumn.DbfColumnType.Float;
-        }
-
-        if (columnDataType == typeof(byte[]))
-        {
-            return DbfColumn.DbfColumnType.Binary;
-        }
-
-        if (columnDataType == typeof(decimal))
-        {
-            return DbfColumn.DbfColumnType.Number;
-        }
-
-        throw new ArgumentException($"Unsupported data type {columnDataType}");
+        CompileWriteCall(builder, "DBF.write", Path, TableName.AsEvaluatable());
     }
 }

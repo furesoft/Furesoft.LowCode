@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Data;
-using System.Text;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
-using SocialExplorer.IO.FastDBF;
 
 namespace Furesoft.LowCode.Nodes.Data.Dbf;
 
@@ -20,58 +18,13 @@ public class DbfReaderNode : DataTableNode
 
     protected override Task Invoke(CancellationToken cancellationToken)
     {
-        var dataTable = GetTable();
-        var dbfFile = new DbfFile(Encoding.GetEncoding(1252));
-
-        dbfFile.Open(Path, FileMode.Open);
-
-        ReadColumns(dbfFile, dataTable);
-        ReadRecords(dbfFile, dataTable);
-
-        dbfFile.Close();
+        ScriptInitializer.ReadDbf(Path, GetTable());
 
         return Task.CompletedTask;
     }
 
-    private static void ReadRecords(DbfFile dbfFile, System.Data.DataTable dataTable)
+    public override void Compile(CodeWriter builder)
     {
-        for (int recordIndex = 0; recordIndex < dbfFile.Header.RecordCount; recordIndex++)
-        {
-            var record = dbfFile.Read(recordIndex);
-            var row = dataTable.NewRow();
-
-            for (int colIndex = 0; colIndex < record.ColumnCount; colIndex++)
-            {
-                //ToDo: convert resulting string to row datatype
-                row[colIndex] = record[colIndex];
-            }
-        }
-    }
-
-    private void ReadColumns(DbfFile dbfFile, System.Data.DataTable dataTable)
-    {
-        for (int colIndex = 0; colIndex < dbfFile.Header.ColumnCount; colIndex++)
-        {
-            var dbfColumn = dbfFile.Header[colIndex];
-            var column = new DataColumn(dbfColumn.Name, GetTypeFromDbfType(dbfColumn.ColumnType));
-
-            dataTable.Columns.Add(column);
-        }
-    }
-
-    private Type GetTypeFromDbfType(DbfColumn.DbfColumnType dbfColumnType)
-    {
-        return dbfColumnType switch
-        {
-            DbfColumn.DbfColumnType.Date => typeof(DateTime),
-            DbfColumn.DbfColumnType.Integer => typeof(int),
-            DbfColumn.DbfColumnType.Character => typeof(string),
-            DbfColumn.DbfColumnType.Boolean => typeof(bool),
-            DbfColumn.DbfColumnType.Float => typeof(float),
-            DbfColumn.DbfColumnType.Binary => typeof(byte[]),
-            DbfColumn.DbfColumnType.Number => typeof(decimal),
-
-            _ => throw new ArgumentException($"Unsupported column data type {dbfColumnType}")
-        };
+        CompileReadCall(builder, "DBF.read", Path);
     }
 }

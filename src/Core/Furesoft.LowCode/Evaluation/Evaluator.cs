@@ -76,7 +76,7 @@ public class Evaluator : IEvaluator
 
         InitNode(entryNode);
 
-        ScriptInitalizerContext c = new ScriptInitalizerContext();
+        var c = new ScriptInitalizerContext();
         c.AddInitializers();
 
         c.RunInitalizers(Context);
@@ -84,7 +84,7 @@ public class Evaluator : IEvaluator
         var compiler = new GraphCompiler();
         var compiledGraphSource = compiler.Compile(_drawing);
         Debug.WriteLine("Compiled Graph: " + compiledGraphSource);
-        var r = Context.Eval(compiledGraphSource + "\nMainGraph();");
+        Context.Eval(compiledGraphSource + "\nMainGraph();");
 
         try
         {
