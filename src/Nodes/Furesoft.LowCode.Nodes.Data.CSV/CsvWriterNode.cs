@@ -18,6 +18,6 @@ public class CsvWriterNode : CsvNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("writeCsv", Path, Delimiter, TableName.AsEvaluatable()).AppendSymbol(';');
+        builder.AppendCall("CSV.write", Path, Delimiter, TableName.AsEvaluatable()).AppendSymbol(';');
     }
 }

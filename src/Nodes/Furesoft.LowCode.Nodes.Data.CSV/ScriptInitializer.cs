@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Furesoft.LowCode.Compilation;
 using NiL.JS.Core;
+using NiL.JS.Core.Interop;
 using Sylvan.Data.Csv;
 
 namespace Furesoft.LowCode.Nodes.Data.CSV;
@@ -10,10 +11,10 @@ public class ScriptInitializer : IScriptModuleInitalizer
     public void InitEngine(Context context)
     {
         context.Import(typeof(CsvDelimiter));
-        context.Import("writeCsv", WriteCsv);
-        context.Import("readCsv", ReadCsv);
+        context.Import("CSV", typeof(ScriptInitializer));
     }
 
+    [JavaScriptName("write")]
     public static async void WriteCsv(string path, CsvDelimiter delimiter, System.Data.DataTable dataTable)
     {
         var options = new CsvDataWriterOptions {Delimiter = (char)delimiter};
@@ -25,6 +26,7 @@ public class ScriptInitializer : IScriptModuleInitalizer
         await writer.WriteAsync(dataTableReader);
     }
 
+    [JavaScriptName("read")]
     public static System.Data.DataTable ReadCsv(string path, CsvDelimiter delimiter, System.Data.DataTable dataTable)
     {
         var options = new CsvDataReaderOptions {Delimiter = (char)delimiter};

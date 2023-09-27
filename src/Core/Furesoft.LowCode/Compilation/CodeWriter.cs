@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using NUglify;
 
 namespace Furesoft.LowCode.Compilation;
 
@@ -85,7 +84,7 @@ public class CodeWriter
     {
         var result = _builder.ToString();
 
-        return _minify ? Uglify.Js(result).Code : result;
+        return result;
     }
 
     public CodeWriter AppendKeyword(string keyword)

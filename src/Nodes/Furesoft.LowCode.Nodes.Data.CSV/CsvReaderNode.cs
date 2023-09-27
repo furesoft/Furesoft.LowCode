@@ -19,6 +19,6 @@ public class CsvReaderNode : CsvNode
     public override void Compile(CodeWriter builder)
     {
         builder.AppendKeyword("let").AppendIdentifier(TableName.AsEvaluatable()).AppendSymbol('=');
-        builder.AppendCall("readCSV", Path, Delimiter).AppendSymbol(';');
+        builder.AppendCall("CSV.Read", Path, Delimiter).AppendSymbol(';');
     }
 }
