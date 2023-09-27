@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
-using SharpCompress.Readers;
 
 namespace Furesoft.LowCode.Nodes.IO.Archives;
 
@@ -24,20 +24,15 @@ public class ExtractNode : InputOutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        await using Stream stream = File.OpenRead(ArchiveFilename);
-        var reader = ReaderFactory.Open(stream);
-
-        while (reader.MoveToNextEntry())
-        {
-            if (reader.Entry.IsDirectory)
-            {
-                continue;
-            }
-
-            Console.WriteLine(reader.Entry.Key);
-            reader.WriteEntryToDirectory(OutputDirectory, new() {ExtractFullPath = true, Overwrite = true});
-        }
+        ScriptInitializer.Extract(ArchiveFilename, OutputDirectory);
 
         await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("Archive.extract", ArchiveFilename, OutputDirectory).AppendSymbol(';');
+
+        CompilePin(OutputPin, builder);
     }
 }

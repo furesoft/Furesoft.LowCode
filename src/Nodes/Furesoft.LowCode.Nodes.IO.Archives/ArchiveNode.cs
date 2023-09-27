@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
 using SharpCompress.Common;
-using SharpCompress.Writers;
 
 namespace Furesoft.LowCode.Nodes.IO.Archives;
 
@@ -33,12 +33,15 @@ public class ArchiveNode : InputOutputNode
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        await using (var zip = File.OpenWrite(OutputFilename))
-        using (var zipWriter = WriterFactory.Open(zip, Type, CompressionType.Deflate))
-        {
-            zipWriter.WriteAll(Path, SearchPattern, SearchOption);
-        }
+        ScriptInitializer.ArchiveDirectory(Type, OutputFilename, Path, SearchOption, SearchPattern);
 
         await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        builder.AppendCall("Archive.archive", Type, OutputFilename, Path, SearchOption, SearchPattern)
+            .AppendSymbol(';');
+        CompilePin(OutputPin, builder);
     }
 }
