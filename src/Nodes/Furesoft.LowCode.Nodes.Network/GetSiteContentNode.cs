@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.Network;
@@ -24,11 +25,16 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var client = new HttpClient();
-        var content = await client.GetStringAsync(URL, cancellationToken);
-
+        var content = ScriptInitializer.GetSiteContent(URL);
         SetOutVariable(OutVariable, content);
 
         await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        CompileReadCall(builder, OutVariable, "Network.getSiteContent", URL);
+
+        CompilePin(OutputPin, builder);
     }
 }

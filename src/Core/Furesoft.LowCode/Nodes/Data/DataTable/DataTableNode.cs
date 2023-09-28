@@ -115,16 +115,6 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
         return value.As<System.Data.DataTable>();
     }
 
-    protected void CompileReadCall(CodeWriter builder, string function, params object[] args)
-    {
-        builder.AppendKeyword("let").AppendIdentifier(TableName).AppendSymbol('=');
-        builder.AppendCall(function, args).AppendSymbol(';');
-    }
-
-    protected void CompileWriteCall(CodeWriter builder, string function, params object[] args)
-    {
-        builder.AppendCall(function, args).AppendSymbol(';');
-    }
 
     protected void SetTable(System.Data.DataTable table)
     {

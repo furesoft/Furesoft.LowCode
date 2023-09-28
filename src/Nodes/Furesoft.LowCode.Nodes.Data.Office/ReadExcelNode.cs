@@ -25,6 +25,6 @@ public class ReadExcelNode : DataTableNode
 
     public override void Compile(CodeWriter builder)
     {
-        CompileReadCall(builder, "XLS.read", Path);
+        CompileReadCall(builder, TableName, "XLS.read", Path);
     }
 }

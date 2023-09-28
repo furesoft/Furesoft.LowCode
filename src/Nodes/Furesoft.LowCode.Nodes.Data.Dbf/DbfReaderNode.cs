@@ -25,6 +25,6 @@ public class DbfReaderNode : DataTableNode
 
     public override void Compile(CodeWriter builder)
     {
-        CompileReadCall(builder, "DBF.read", Path);
+        CompileReadCall(builder, TableName, "DBF.read", Path);
     }
 }

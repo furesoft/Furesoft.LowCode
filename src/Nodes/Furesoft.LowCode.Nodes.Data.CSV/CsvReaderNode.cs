@@ -18,6 +18,6 @@ public class CsvReaderNode : CsvNode
 
     public override void Compile(CodeWriter builder)
     {
-        CompileReadCall(builder, "CSV.read", Path, Delimiter);
+        CompileReadCall(builder, TableName, "CSV.read", Path, Delimiter);
     }
 }

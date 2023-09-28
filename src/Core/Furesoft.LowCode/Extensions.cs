@@ -19,6 +19,7 @@ public static class StringExtensions
         context.DefineConstructor(type);
     }
 
+   //ToDo: maybe allow concat objects
     public static void ImportAsObject<T>(this Context context, string name = null)
     {
         Type type = typeof(T);

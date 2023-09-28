@@ -245,7 +245,12 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         [CallerArgumentExpression(nameof(pin))]
         string pinMembername = null)
     {
-        var nodes = GetConnectedNodes(pinMembername, PinMode.Output);
+        CompilePin(pinMembername, builder);
+    }
+
+    internal void CompilePin(string pinName, CodeWriter builder)
+    {
+        var nodes = GetConnectedNodes(pinName, PinMode.Output);
 
         foreach (var node in nodes)
         {

@@ -25,6 +25,6 @@ public class ReadXmlNode : DataTableNode
 
     public override void Compile(CodeWriter builder)
     {
-        CompileReadCall(builder, "XML.read", Path, GetTable());
+        CompileReadCall(builder, TableName, "XML.read", Path, GetTable());
     }
 }
