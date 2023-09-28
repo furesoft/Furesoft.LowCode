@@ -22,11 +22,7 @@ public class ConsoleOutNode : InputOutputNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("console.log", Message);
-        builder.AppendSymbol(';');
-        builder.AppendLine();
-
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "console.log", Message);
     }
 
     public override Task Execute(CancellationToken cancellationToken)

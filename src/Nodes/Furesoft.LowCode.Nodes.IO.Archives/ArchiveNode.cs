@@ -40,8 +40,6 @@ public class ArchiveNode : InputOutputNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("Archive.archive", Type, OutputFilename, Path, SearchOption, SearchPattern)
-            .AppendSymbol(';');
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "Archive.archive", Type, OutputFilename, Path, SearchOption, SearchPattern);
     }
 }

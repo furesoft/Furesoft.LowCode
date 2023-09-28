@@ -31,11 +31,7 @@ public class ConsoleInNode : InputOutputNode, IOutVariableProvider
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendKeyword("var")
-            .AppendIdentifier(OutVariable)
-            .AppendSymbol('=')
-            .AppendCall("System.Console.ReadLine")
-            .AppendSymbol(';');
+        CompileReadCall(builder, OutVariable, "System.Console.ReadLine");
     }
 
     public override Task Execute(CancellationToken cancellationToken)

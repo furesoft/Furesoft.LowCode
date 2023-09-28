@@ -26,8 +26,6 @@ public class EnqueueNode : QueueBaseNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("enqueue", Queue, Data).AppendSymbol(';').AppendSymbol('\n');
-
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "Queue.enqueue", Queue);
     }
 }

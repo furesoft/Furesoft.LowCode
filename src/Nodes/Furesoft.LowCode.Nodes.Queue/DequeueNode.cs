@@ -26,9 +26,6 @@ public class DequeueNode : QueueBaseNode, IOutVariableProvider
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendKeyword("var").AppendIdentifier(OutVariable).AppendSymbol('=')
-            .AppendCall("dequeue", Queue).AppendSymbol(';').AppendSymbol('\n');
-
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "Queue.dequeue", Queue);
     }
 }

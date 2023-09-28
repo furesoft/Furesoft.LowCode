@@ -257,6 +257,11 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             node.Drawing = Drawing;
 
             node.Compile(builder);
+
+            if (node is OutputNode)
+            {
+                node.CompilePin("OutputPin", builder);
+            }
         }
     }
 

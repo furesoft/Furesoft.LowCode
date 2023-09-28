@@ -31,8 +31,6 @@ public class ExtractNode : InputOutputNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("Archive.extract", ArchiveFilename, OutputDirectory).AppendSymbol(';');
-
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "Archive.extract", ArchiveFilename, OutputDirectory);
     }
 }

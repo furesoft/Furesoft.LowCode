@@ -8,8 +8,6 @@ public class GraphCompiler
 
         entry.Compile(sb);
 
-       //ToDo: add automatic output pin compilation
-
         return sb.ToString();
     }
 

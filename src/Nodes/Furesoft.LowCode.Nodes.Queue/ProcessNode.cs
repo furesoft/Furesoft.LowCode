@@ -34,8 +34,6 @@ public class ProcessNode : QueueBaseNode
         CompilePin(DoPin, callbackWriter);
 
         var callback = "function (item) {\n\t" + callbackWriter + "\n}\n";
-        builder.AppendCall("processQueue", Queue, callback.AsEvaluatable()).AppendSymbol(';').AppendSymbol('\n');
-
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "Queue.process", Queue, callback.AsEvaluatable());
     }
 }

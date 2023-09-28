@@ -22,8 +22,6 @@ public class ClearNode : QueueBaseNode
 
     public override void Compile(CodeWriter builder)
     {
-        builder.AppendCall("clearQueue", Queue).AppendSymbol(';').AppendSymbol('\n');
-
-        CompilePin(OutputPin, builder);
+        CompileWriteCall(builder, "Queue.clear", Queue);
     }
 }
