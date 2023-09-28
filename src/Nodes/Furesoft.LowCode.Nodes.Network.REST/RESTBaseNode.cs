@@ -31,36 +31,4 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     public BindingList<string> Headers { get; set; } = new();
 
     [Required] public string OutVariable { get; set; }
-
-    private void ApplyHeaders()
-    {
-        foreach (var header in Headers)
-        {
-            var spl = header
-                .Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-            client.DefaultRequestHeaders.Add(spl[0], spl[1]);
-        }
-    }
-
-    public sealed override async Task Execute(CancellationToken cancellationToken)
-    {
-        ApplyHeaders();
-        client.BaseAddress = new(URL);
-
-        var response = await Invoke(cancellationToken);
-
-        if (response.IsSuccessStatusCode)
-        {
-            SetOutVariable(OutVariable, await response.Content.ReadAsStringAsync(cancellationToken));
-            await ContinueWith(SuccessPin, cancellationToken);
-        }
-        else
-        {
-            SetOutVariable(OutVariable, response.ReasonPhrase);
-            await ContinueWith(FailurePin, cancellationToken);
-        }
-    }
-
-    public abstract Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken);
 }

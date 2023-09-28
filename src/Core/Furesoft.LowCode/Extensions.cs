@@ -19,10 +19,10 @@ public static class StringExtensions
         context.DefineConstructor(type);
     }
 
-   //ToDo: maybe allow concat objects
+    //ToDo: maybe allow concat objects
     public static void ImportAsObject<T>(this Context context, string name = null)
     {
-        Type type = typeof(T);
+        var type = typeof(T);
 
         if (string.IsNullOrEmpty(name))
         {
@@ -30,5 +30,15 @@ public static class StringExtensions
         }
 
         context.DefineConstructor(type, name);
+    }
+
+    public static void ImportAsSubObject<T>(this Context context, string rootObjName, string name = null)
+    {
+        var c = new Context();
+        c.ImportAsObject<T>(name);
+
+        context.GetVariable(rootObjName)
+            .DefineProperty(name)
+            .Assign(c.GetVariable(name));
     }
 }

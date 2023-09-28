@@ -8,6 +8,8 @@ public class ScriptInitializer : IScriptModuleInitalizer
 {
     public void InitEngine(Context context)
     {
+        context.DefineConstructor(typeof(Result));
+
         context.Import("outputWriter", DebugOutNode.OutputWriter);
         context.Import("showMessageBox", ShowMessageBox);
         context.Import("subscribe", SignalStorage.Register);
