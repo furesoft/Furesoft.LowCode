@@ -35,7 +35,9 @@ public class Evaluator : IEvaluator
         var mainGraphNode = project.GetMainGraph();
 
         _drawing = mainGraphNode;
+
         Init();
+        ExecuteProjectSources();
 
         SetDesignerMode(designerMode);
     }
@@ -91,6 +93,14 @@ public class Evaluator : IEvaluator
             //await entryNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
+    }
+
+    private void ExecuteProjectSources()
+    {
+        foreach (var sourceFileItem in project.Items.OfType<SourceFileItem>()) //ToDo: exclude compiled js file
+        {
+            Context.Eval(sourceFileItem.Content);
+        }
     }
 
     private static void SetDesignerMode(bool value)
