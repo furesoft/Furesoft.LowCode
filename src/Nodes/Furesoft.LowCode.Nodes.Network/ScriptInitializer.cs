@@ -13,7 +13,8 @@ public class ScriptInitializer : IScriptModuleInitalizer
     }
 
     [JavaScriptName("getSiteContent")]
-    public static string GetSiteContent(string url) {
+    public static string GetSiteContent(string url)
+    {
         var client = new HttpClient();
         var content = client.GetStringAsync(url).GetAwaiter().GetResult();
 

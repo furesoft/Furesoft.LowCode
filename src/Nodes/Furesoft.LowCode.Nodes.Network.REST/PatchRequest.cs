@@ -11,7 +11,7 @@ public class PatchRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    [DataMember(EmitDefaultValue = false)] 
+    [DataMember(EmitDefaultValue = false)]
     [Required]
     public Evaluatable<object> Content { get; set; }
 
