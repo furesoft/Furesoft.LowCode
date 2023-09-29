@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
@@ -31,4 +32,28 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     public BindingList<string> Headers { get; set; } = new();
 
     [Required] public string OutVariable { get; set; }
+
+    protected void CompileRequest(CodeWriter builder, HttpMethod method, object content = null)
+    {
+        CompileReadCall(builder, OutVariable, "Network.Rest.sendRequest", method, URL, Headers, content);
+    }
+
+    protected async Task ExecuteRequest(HttpMethod method, CancellationToken cancellationToken, object content = null)
+    {
+        var result = ScriptInitializer.SendRequest(method, URL, Headers, content);
+
+        if (result.IsSuccess)
+        {
+            SetOutVariable(OutVariable, result.Value);
+
+            await ContinueWith(SuccessPin, cancellationToken);
+        }
+        else
+        {
+            SetOutVariable(OutVariable, result.Value);
+
+            await ContinueWith(FailurePin, cancellationToken);
+        }
+    }
+
 }

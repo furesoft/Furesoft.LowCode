@@ -13,22 +13,11 @@ public class GetRequest : RestBaseNode, IOutVariableProvider
 
     public override async Task Execute(CancellationToken cancellationToken)
     {
-        var result = ScriptInitializer.SendRequest(HttpMethod.Get, URL, Headers);
-
-        if (result.IsSuccess)
-        {
-            SetOutVariable(OutVariable, result.Value);
-            await ContinueWith(SuccessPin, cancellationToken);
-        }
-        else
-        {
-            SetOutVariable(OutVariable, result.Value);
-            await ContinueWith(FailurePin, cancellationToken);
-        }
+        await ExecuteRequest(HttpMethod.Get, cancellationToken);
     }
 
     public override void Compile(CodeWriter builder)
     {
-        CompileReadCall(builder, OutVariable, "Network.Rest.sendRequest", HttpMethod.Get, URL, Headers);
+        CompileRequest(builder, HttpMethod.Get);
     }
 }
