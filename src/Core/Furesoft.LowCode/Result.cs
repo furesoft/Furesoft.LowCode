@@ -24,4 +24,10 @@ public class Result
     {
         return new(false, error);
     }
+
+    public static Result Failure<T>(string message)
+        where T : Exception
+    {
+        return Failure(Activator.CreateInstance(typeof(T), message));
+    }
 }

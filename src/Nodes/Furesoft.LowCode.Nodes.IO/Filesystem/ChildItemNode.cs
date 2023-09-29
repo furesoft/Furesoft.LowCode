@@ -1,4 +1,5 @@
 ﻿using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.IO.Filesystem;
@@ -45,41 +46,27 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
 
     public override Task Execute(CancellationToken cancellationToken)
     {
-        var searchOption = IsRecurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+        var result = ScriptInitalizer.ChildItem(IsRecurse, SearchPattern, FolderPath, FollowSymlink, ExcludedFlags, ItemType);
 
-        if (string.IsNullOrEmpty(SearchPattern))
+        if (result.IsSuccess)
         {
-            SearchPattern = "*";
-        }
+            PipeVariable = result.Value;
 
-        var dirInfo = new DirectoryInfo(FolderPath);
-        if (FollowSymlink)
-        {
-            if (dirInfo.ResolveLinkTarget(true) is DirectoryInfo resolvedDir)
+            if (!string.IsNullOrEmpty(OutVariable))
             {
-                dirInfo = resolvedDir;
-            }
-            else
-            {
-                throw CreateError<IOException>("Resolved Symlink doesn't link to a Directory");
+                SetOutVariable(OutVariable, PipeVariable);
             }
         }
-
-        var fileInfos = ItemType switch
+        else
         {
-            ItemType.File => dirInfo.GetFiles(SearchPattern, searchOption),
-            ItemType.Folder => dirInfo.GetDirectories(SearchPattern, searchOption),
-            ItemType.All => dirInfo.GetFileSystemInfos(SearchPattern, searchOption),
-            _ => throw CreateError<InvalidOperationException>("Unknown Type")
-        };
-
-        PipeVariable = fileInfos.Where(x => x.Attributes.HasFlag(ExcludedFlags));
-
-        if (!string.IsNullOrEmpty(OutVariable))
-        {
-            SetOutVariable(OutVariable, PipeVariable);
+            throw (Exception)result.Value;
         }
 
         return ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        CompileWriteCall(builder, "FS.childItem", IsRecurse, SearchPattern, FolderPath, FollowSymlink, ExcludedFlags, ItemType);
     }
 }

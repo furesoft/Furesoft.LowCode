@@ -28,7 +28,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
-    [Browsable(false)] [JsonIgnore] public ProgressReporter Progress { get; set; } = new();
+    [Browsable(false)][JsonIgnore] public ProgressReporter Progress { get; set; } = new();
 
     [Browsable(false)] public Context Context { get; internal set; }
 
@@ -128,7 +128,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         node._evaluator.Debugger.CurrentNode = node;
         node.Options = _evaluator.Options;
 
-        await node?.Execute(cancellationToken);
+        await node?.Execute(cancellationToken, isRecurse: node?.GetIsRecurse());
     }
 
     protected Exception CreateError(string msg)
