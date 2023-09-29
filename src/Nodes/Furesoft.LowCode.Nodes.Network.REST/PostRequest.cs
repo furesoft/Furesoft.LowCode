@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Furesoft.LowCode.Compilation;
+using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
@@ -9,12 +11,17 @@ public class PostRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    [DataMember(EmitDefaultValue = false)][Required] public string Content { get; set; }
+    [DataMember(EmitDefaultValue = false)][Required] public Evaluatable<object> Content { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public new string OutVariable { get; set; }
 
-    public override Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken)
+    public override async Task Execute(CancellationToken cancellationToken)
     {
-        return client.PostAsync("/", new StringContent(Content), cancellationToken);
+        await ExecuteRequest(HttpMethod.Post, cancellationToken, Content);
+    }
+
+    public override void Compile(CodeWriter builder)
+    {
+        CompileRequest(builder, HttpMethod.Post);
     }
 }
