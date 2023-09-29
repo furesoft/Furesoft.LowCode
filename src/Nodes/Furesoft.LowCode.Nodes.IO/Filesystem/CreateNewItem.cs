@@ -25,7 +25,7 @@ public class CreateNewItem : InputOutputNode
 
     [Description("Which item should be created")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
-    public ItemTypes ItemType { get; set; }
+    public ItemType ItemType { get; set; }
 
     public override Task Execute(CancellationToken cancellationToken)
     {
@@ -33,10 +33,10 @@ public class CreateNewItem : InputOutputNode
         {
             switch (ItemType)
             {
-                case ItemTypes.Directory:
+                case ItemType.Directory:
                     Directory.CreateDirectory(Path.Combine(path, ItemName));
                     break;
-                case ItemTypes.File:
+                case ItemType.File:
                     File.Create(Path.Combine(path, ItemName));
                     break;
                 default:

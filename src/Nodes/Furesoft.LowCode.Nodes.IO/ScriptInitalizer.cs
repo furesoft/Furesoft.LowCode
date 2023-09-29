@@ -10,6 +10,7 @@ public class ScriptInitalizer : IScriptModuleInitalizer
     public void InitEngine(Context context)
     {
         context.DefineConstructor(typeof(System.Console));
+        context.DefineConstructor(typeof(ItemType));
 
         context.ImportAsObject<ScriptInitalizer>("FS");
     }
@@ -41,7 +42,7 @@ public class ScriptInitalizer : IScriptModuleInitalizer
         var fileInfos = itemType switch
         {
             ItemType.File => dirInfo.GetFiles(searchPattern, searchOption),
-            ItemType.Folder => dirInfo.GetDirectories(searchPattern, searchOption),
+            ItemType.Directory => dirInfo.GetDirectories(searchPattern, searchOption),
             ItemType.All => dirInfo.GetFileSystemInfos(searchPattern, searchOption),
             _ => null
         };

@@ -75,6 +75,7 @@ public class CopyItemNode : InputOutputNode
             {
                 var sourceEntryPath = Path.GetFullPath(entry);
                 var destinationEntryPath = Path.Combine(destinationPath, Path.GetFileName(entry));
+
                 if (Directory.Exists(sourceEntryPath))
                 {
                     CopyFilesRecursively(sourceEntryPath, destinationEntryPath);

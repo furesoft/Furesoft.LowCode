@@ -3,6 +3,6 @@
 public enum ItemType
 {
     File,
-    Folder,
+    Directory,
     All
 }

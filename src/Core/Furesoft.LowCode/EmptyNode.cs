@@ -128,7 +128,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         node._evaluator.Debugger.CurrentNode = node;
         node.Options = _evaluator.Options;
 
-        await node?.Execute(cancellationToken, isRecurse: node?.GetIsRecurse());
+        await node?.Execute(cancellationToken);
     }
 
     protected Exception CreateError(string msg)

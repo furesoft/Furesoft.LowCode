@@ -137,7 +137,7 @@ public class Evaluator : IEvaluator
         selectedNode.DefiningNode.Context = Context;
         SetEvaluatableContexts(selectedNode.DefiningNode);
 
-        selectedNode.DefiningNode.Execute(default, isRecurse: selectedNode.DefiningNode.GetIsRecurse()).GetAwaiter().GetResult();
+        selectedNode.DefiningNode.Execute(default).GetAwaiter().GetResult();
     }
 
 
