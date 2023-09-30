@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.Nodes.Imaging;
+﻿using Furesoft.LowCode.Compilation;
+
+namespace Furesoft.LowCode.Nodes.Imaging;
 
 public class LoadImageNode : ImageNode
 {
@@ -6,16 +8,8 @@ public class LoadImageNode : ImageNode
     {
     }
 
-    protected override Task Invoke(CancellationToken cancellationToken)
+    public override void Compile(CodeWriter builder)
     {
-        PipeVariable = Image.Load(Filename);
-
-        if (!string.IsNullOrEmpty(ImageName))
-        {
-            Context.DefineConstant(ImageName,
-                Context.GlobalContext.WrapValue(PipeVariable));
-        }
-
-        return Task.CompletedTask;
+        CompileReadCall(builder, ImageName, "Image.Load", Filename);
     }
 }

@@ -11,11 +11,6 @@ public class DeleteRequest : RestBaseNode, IOutVariableProvider
 
     [DataMember(EmitDefaultValue = false)] public new string OutVariable { get; set; }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        await ExecuteRequest(HttpMethod.Delete, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         CompileRequest(builder, HttpMethod.Delete);

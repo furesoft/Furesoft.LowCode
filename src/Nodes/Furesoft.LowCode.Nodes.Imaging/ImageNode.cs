@@ -31,15 +31,4 @@ public abstract class ImageNode : InputOutputNode, IPipeable
 
         return value.As<Image>();
     }
-
-    protected abstract Task Invoke(CancellationToken cancellationToken);
-
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        ApplyPipe<Image>();
-
-        await Invoke(cancellationToken);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
 }

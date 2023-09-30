@@ -31,13 +31,6 @@ public class ArchiveNode : InputOutputNode
 
     [DataMember(EmitDefaultValue = false)] public SearchOption SearchOption { get; set; }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        ScriptInitializer.ArchiveDirectory(Type, OutputFilename, Path, SearchOption, SearchPattern);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         CompileWriteCall(builder, "Archive.archive", Type, OutputFilename, Path, SearchOption, SearchPattern);

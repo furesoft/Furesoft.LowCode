@@ -47,13 +47,4 @@ public abstract class WebNode : InputOutputNode
 
         return browser;
     }
-
-    public sealed override async Task Execute(CancellationToken cancellationToken)
-    {
-        await Invoke(cancellationToken);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
-
-    protected abstract Task Invoke(CancellationToken cancellationToken);
 }

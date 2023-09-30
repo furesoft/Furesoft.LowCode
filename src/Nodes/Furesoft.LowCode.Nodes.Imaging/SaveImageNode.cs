@@ -1,4 +1,6 @@
-﻿namespace Furesoft.LowCode.Nodes.Imaging;
+﻿using Furesoft.LowCode.Compilation;
+
+namespace Furesoft.LowCode.Nodes.Imaging;
 
 public class SaveImageNode : ImageNode
 {
@@ -6,10 +8,8 @@ public class SaveImageNode : ImageNode
     {
     }
 
-
-    protected override async Task Invoke(CancellationToken cancellationToken)
+    public override void Compile(CodeWriter builder)
     {
-        var img = GetImage();
-        await img.SaveAsync(Filename, cancellationToken);
+        builder.AppendCall(ImageName + ".Save", Filename);
     }
 }

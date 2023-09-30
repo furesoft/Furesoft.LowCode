@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Compilation;
-using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.ControlFlow;
 
@@ -20,21 +19,8 @@ public class RepeatNode : InputOutputNode
     [Required]
     public Evaluatable<int> Times { get; set; }
 
-
     [Pin("Do", PinAlignment.Right)] public IOutputPin DoPin { get; set; }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        for (var i = 0; i < Times; i++)
-        {
-            var context = new Context(Context);
-            context.DefineConstant("index", i);
-
-            await ContinueWith(DoPin, cancellationToken, context);
-        }
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
 
     public override void Compile(CodeWriter builder)
     {

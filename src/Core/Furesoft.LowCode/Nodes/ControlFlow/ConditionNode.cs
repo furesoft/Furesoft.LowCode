@@ -48,14 +48,4 @@ public class ConditionNode : InputNode
             builder.EndBlock();
         }
     }
-
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        if (Condition)
-        {
-            return ContinueWith(TruePin, cancellationToken);
-        }
-
-        return ContinueWith(FalsePin, cancellationToken);
-    }
 }

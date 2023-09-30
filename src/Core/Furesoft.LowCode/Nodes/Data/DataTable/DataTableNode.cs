@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Data;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 using Newtonsoft.Json;
 using NiL.JS.Core;
@@ -82,17 +81,6 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
 
             row.SetField(column, context.Eval(newColumnTransformer.Pattern));
         }
-    }
-
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        ApplyPipe<System.Data.DataTable>();
-
-        await Invoke(cancellationToken);
-
-        ApplyTransformers();
-
-        await ContinueWith(OutputPin, cancellationToken);
     }
 
     protected System.Data.DataTable GetTable()

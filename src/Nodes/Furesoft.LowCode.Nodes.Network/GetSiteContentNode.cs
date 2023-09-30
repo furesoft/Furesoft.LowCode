@@ -23,14 +23,6 @@ public class GetSiteContentNode : InputOutputNode, IOutVariableProvider
     [Required]
     public string OutVariable { get; set; }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        var content = ScriptInitializer.GetSiteContent(URL);
-        SetOutVariable(OutVariable, content);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         CompileReadCall(builder, OutVariable, "Network.getSiteContent", URL);

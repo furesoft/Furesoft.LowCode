@@ -25,9 +25,4 @@ public class ErrorNode : InputNode
     {
         builder.Throw(Message.Source);
     }
-
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        throw CreateError(Message);
-    }
 }

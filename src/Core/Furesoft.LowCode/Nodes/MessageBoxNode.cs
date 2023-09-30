@@ -24,13 +24,6 @@ public class MessageBoxNode : InputOutputNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<string> Title { get; set; }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        ScriptInitializer.ShowMessageBox(Title, Message);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         builder.AppendCall("showMessageBox", Title, Message).AppendSymbol(';');

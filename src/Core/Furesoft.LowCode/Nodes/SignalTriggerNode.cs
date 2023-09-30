@@ -31,13 +31,6 @@ public class SignalTriggerNode : InputOutputNode
         }
     }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        SignalStorage.Trigger(Signal);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         builder.AppendCall("trigger", Signal).AppendSymbol(';');

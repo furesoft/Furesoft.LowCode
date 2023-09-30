@@ -28,9 +28,4 @@ public class EntryNode : OutputNode
 
         builder.EndBlock();
     }
-
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        return ContinueWith(OutputPin, cancellationToken);
-    }
 }

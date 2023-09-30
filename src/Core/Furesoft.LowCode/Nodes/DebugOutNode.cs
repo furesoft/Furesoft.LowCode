@@ -23,13 +23,6 @@ public class DebugOutNode : InputOutputNode
     [Required]
     public Evaluatable<string> Message { get; set; }
 
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        OutputWriter.WriteLine(Message);
-
-        return ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         builder.AppendCall("outputWriter.WriteLine", Message).AppendSymbol(';').AppendLine();

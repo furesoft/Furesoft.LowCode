@@ -11,14 +11,11 @@ public class PostRequest : RestBaseNode, IOutVariableProvider
     {
     }
 
-    [DataMember(EmitDefaultValue = false)][Required] public Evaluatable<object> Content { get; set; }
+    [DataMember(EmitDefaultValue = false)]
+    [Required]
+    public Evaluatable<object> Content { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public new string OutVariable { get; set; }
-
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        await ExecuteRequest(HttpMethod.Post, cancellationToken, Content);
-    }
 
     public override void Compile(CodeWriter builder)
     {

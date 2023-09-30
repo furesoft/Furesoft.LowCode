@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Compilation;
-using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.Queue;
 
@@ -15,18 +14,6 @@ public class ProcessNode : QueueBaseNode
     }
 
     [Pin("Do", PinAlignment.Right)] public IOutputPin DoPin { get; set; }
-
-    public override async Task Invoke(CancellationToken cancellationToken)
-    {
-        while (QueueManager.Instance.GetItemCountInQueue(Queue) > 0)
-        {
-            var subContext = new Context(Context);
-            subContext.DefineConstant("item",
-                Context.GlobalContext.WrapValue(QueueManager.Instance.Dequeue<object>(Queue)));
-
-            await ContinueWith(DoPin, cancellationToken, subContext);
-        }
-    }
 
     public override void Compile(CodeWriter builder)
     {

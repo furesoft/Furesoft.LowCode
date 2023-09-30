@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Compilation;
-using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.Data;
 
@@ -44,22 +43,5 @@ public class AssignNode : InputOutputNode
             .AppendSymbol('=')
             .Append(Value.Source, false)
             .AppendSymbol(';');
-    }
-
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        var jsVar = Context.GetVariable(Name);
-        var value = Context.Eval(Value.Source);
-
-        if (jsVar == JSValue.NotExists)
-        {
-            Context.DefineVariable(Name, true).Assign(value);
-        }
-        else
-        {
-            jsVar.Assign(value);
-        }
-
-        await ContinueWith(OutputPin, cancellationToken);
     }
 }

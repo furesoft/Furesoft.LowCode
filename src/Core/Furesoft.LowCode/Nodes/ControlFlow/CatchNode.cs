@@ -2,7 +2,6 @@
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
 using Furesoft.LowCode.Compilation;
-using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes.ControlFlow;
 
@@ -28,21 +27,6 @@ public class CatchNode : InputNode
     {
         get => _errorName;
         set => SetProperty(ref _errorName, value);
-    }
-
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        try
-        {
-            await ContinueWith(DoPin, cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            var subContext = new Context(Context);
-            DefineConstant(ErrorName, ex, subContext);
-
-            await ContinueWith(OnErrorPin, cancellationToken, subContext);
-        }
     }
 
     public override void Compile(CodeWriter builder)

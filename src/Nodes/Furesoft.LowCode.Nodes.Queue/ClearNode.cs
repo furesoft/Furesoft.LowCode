@@ -12,14 +12,6 @@ public class ClearNode : QueueBaseNode
     {
     }
 
-
-    public override Task Invoke(CancellationToken cancellationToken)
-    {
-        QueueManager.Instance.ClearQueue(Queue);
-
-        return Task.CompletedTask;
-    }
-
     public override void Compile(CodeWriter builder)
     {
         CompileWriteCall(builder, "Queue.clear", Queue);

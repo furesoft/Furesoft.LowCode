@@ -28,7 +28,7 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         ID = Guid.NewGuid();
     }
 
-    [Browsable(false)][JsonIgnore] public ProgressReporter Progress { get; set; } = new();
+    [Browsable(false)] [JsonIgnore] public ProgressReporter Progress { get; set; } = new();
 
     [Browsable(false)] public Context Context { get; internal set; }
 
@@ -61,17 +61,12 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         set => SetProperty(ref _showDescription, value);
     }
 
-    /// <summary>
-    ///     Gets the previously executed node
-    /// </summary>
-    [Browsable(false)]
-    public EmptyNode PreviousNode { get; set; }
-
     [Browsable(false)] public ExecutionMode ExecutionMode { get; set; } = ExecutionMode.Graph;
 
     protected void ApplyPipe<T>()
     {
-        var previous = GetPreviousNode<InputOutputNode>();
+        //ToDo: convert to pipe js call
+        EmptyNode previous = null;
 
         switch (previous)
         {
@@ -92,45 +87,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         }
     }
 
-    public abstract Task Execute(CancellationToken cancellationToken);
-
-    protected async Task ContinueWith(IOutputPin pin, CancellationToken cancellationToken, Context context = null,
-        [CallerArgumentExpression("pin")] string pinMembername = null)
-    {
-        if (ExecutionMode == ExecutionMode.Script)
-        {
-            return;
-        }
-
-        _evaluator.Debugger.ResetWait();
-
-        var nodes = GetConnectedNodes(pinMembername, PinMode.Output);
-
-        foreach (var node in nodes)
-        {
-            if (_evaluator.Debugger.IsAttached)
-            {
-                await _evaluator.Debugger.WaitTask;
-            }
-
-            await InitAndExecuteNode(context, cancellationToken, node);
-
-            cancellationToken.ThrowIfCancellationRequested();
-        }
-    }
-
-    private async Task InitAndExecuteNode(Context context, CancellationToken cancellationToken, EmptyNode node)
-    {
-        node._evaluator = _evaluator;
-        node.Context = context ?? _evaluator.Context;
-        node.Drawing = Drawing;
-        node.PreviousNode = this;
-        node._evaluator.Debugger.CurrentNode = node;
-        node.Options = _evaluator.Options;
-
-        await node?.Execute(cancellationToken);
-    }
-
     protected Exception CreateError(string msg)
     {
         return new GraphException(new(msg), this);
@@ -140,22 +96,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         where TException : Exception
     {
         return new GraphException((Exception)Activator.CreateInstance(typeof(TException), msg), this);
-    }
-
-    protected T GetPreviousNode<T>()
-        where T : EmptyNode
-    {
-        if (PreviousNode is T node)
-        {
-            return node;
-        }
-
-        return PreviousNode?.GetPreviousNode<T>();
-    }
-
-    protected T Evaluate<T>(Evaluatable<T> src)
-    {
-        return Context.Eval(src.Source).As<T>();
     }
 
     protected T Evaluate<T>(IOutVariableProvider src)
@@ -234,11 +174,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     {
         Progress.Progress = percent;
         Progress.Message = message;
-    }
-
-    protected Task ContinueWith(string pin, CancellationToken token)
-    {
-        return ContinueWith(null, token, pinMembername: pin);
     }
 
     protected void CompilePin(IOutputPin pin, CodeWriter builder,

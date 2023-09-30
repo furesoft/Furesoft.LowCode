@@ -16,14 +16,6 @@ public class DequeueNode : QueueBaseNode, IOutVariableProvider
 
     [Required] [DataMember] public string OutVariable { get; set; }
 
-    public override Task Invoke(CancellationToken cancellationToken)
-    {
-        var value = QueueManager.Instance.Dequeue<object>(Queue);
-        SetOutVariable(OutVariable, value);
-
-        return Task.CompletedTask;
-    }
-
     public override void Compile(CodeWriter builder)
     {
         CompileWriteCall(builder, "Queue.dequeue", Queue);

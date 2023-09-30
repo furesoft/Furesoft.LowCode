@@ -22,13 +22,6 @@ public class ExtractNode : InputOutputNode
     [Required]
     public Evaluatable<string> OutputDirectory { get; set; }
 
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        ScriptInitializer.Extract(ArchiveFilename, OutputDirectory);
-
-        await ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
         CompileWriteCall(builder, "Archive.extract", ArchiveFilename, OutputDirectory);

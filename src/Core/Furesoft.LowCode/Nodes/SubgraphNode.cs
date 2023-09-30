@@ -25,14 +25,4 @@ public class SubgraphNode : DynamicNode
     {
         builder.AppendCall(GraphItem.Name);
     }
-
-    public override async Task Execute(CancellationToken cancellationToken)
-    {
-        var subevaluator = new Evaluator(GraphItem.Drawing);
-        subevaluator.Context = Context;
-
-        await subevaluator.Execute(cancellationToken);
-
-        await ContinueWith("Output Flow", cancellationToken);
-    }
 }

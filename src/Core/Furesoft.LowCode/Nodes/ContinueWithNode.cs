@@ -9,9 +9,4 @@ public class ContinueWithNode : InputOutputNode
     }
 
     public string PinName { get; set; }
-
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        return ContinueWith(PinName, cancellationToken);
-    }
 }

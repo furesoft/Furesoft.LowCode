@@ -125,19 +125,18 @@ public class Evaluator : IEvaluator
 
         var items = project.Items.OfType<GraphItem>();
         var graph = (from item in items
-                     where item.Name == graphName
-                     select item.Drawing).First();
+            where item.Name == graphName
+            select item.Drawing).First();
 
         var selectedNode = (from node in graph.Nodes
-                            let cn = (CustomNodeViewModel)node
-                            where cn.DefiningNode.ID == id
-                            select cn).First();
+            let cn = (CustomNodeViewModel)node
+            where cn.DefiningNode.ID == id
+            select cn).First();
 
         selectedNode.DefiningNode.ExecutionMode = ExecutionMode.Script;
         selectedNode.DefiningNode.Context = Context;
-        SetEvaluatableContexts(selectedNode.DefiningNode);
 
-        selectedNode.DefiningNode.Execute(default).GetAwaiter().GetResult();
+        SetEvaluatableContexts(selectedNode.DefiningNode);
     }
 
 

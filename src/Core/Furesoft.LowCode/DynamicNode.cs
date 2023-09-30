@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters;
 using PropDescriptor = Furesoft.LowCode.Designer.Layout.Models.Tools.Parameters.PropertyDescriptor;
 using PropertyDescriptor = System.ComponentModel.PropertyDescriptor;
@@ -10,7 +11,7 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
     public readonly List<PinDescriptor> Pins = new();
     public readonly List<PropDescriptor> Properties = new();
 
-    private Func<DynamicNode, CancellationToken, Task> _action;
+    private Action<CodeWriter, DynamicNode> _action;
 
     public DynamicNode(string label, Control view = null) : base(label)
     {
@@ -24,9 +25,9 @@ public class DynamicNode : EmptyNode, ICustomTypeDescriptor
         Pins.Add(new(name, mode, alignment, multipleConnections));
     }
 
-    public override Task Execute(CancellationToken cancellationToken)
+    public override void Compile(CodeWriter builder)
     {
-        return _action?.Invoke(this, cancellationToken);
+        _action?.Invoke(builder, this);
     }
 
     #region Custom Type Descriptor Interfaces

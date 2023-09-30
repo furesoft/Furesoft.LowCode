@@ -24,11 +24,4 @@ public class ConsoleOutNode : InputOutputNode
     {
         CompileWriteCall(builder, "console.log", Message);
     }
-
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        System.Console.WriteLine(Message);
-
-        return ContinueWith(OutputPin, cancellationToken);
-    }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;
 
@@ -31,10 +32,8 @@ public class WaitNode : InputOutputNode
         }
     }
 
-    public override async Task Execute(CancellationToken cancellationToken)
+    public override void Compile(CodeWriter builder)
     {
-        await Task.Delay(WaitTime, cancellationToken);
-
-        await ContinueWith(OutputPin, cancellationToken);
+        CompileWriteCall(builder, "delay", WaitTime);
     }
 }

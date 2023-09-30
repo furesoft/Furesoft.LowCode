@@ -44,29 +44,9 @@ internal class ChildItemNode : InputOutputNode, IOutVariableProvider, IPipeable
 
     public object PipeVariable { get; set; }
 
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        var result = ScriptInitalizer.ChildItem(IsRecurse, SearchPattern, FolderPath, FollowSymlink, ExcludedFlags, ItemType);
-
-        if (result.IsSuccess)
-        {
-            PipeVariable = result.Value;
-
-            if (!string.IsNullOrEmpty(OutVariable))
-            {
-                SetOutVariable(OutVariable, PipeVariable);
-            }
-        }
-        else
-        {
-            throw (Exception)result.Value;
-        }
-
-        return ContinueWith(OutputPin, cancellationToken);
-    }
-
     public override void Compile(CodeWriter builder)
     {
-        CompileWriteCall(builder, "FS.childItem", IsRecurse, SearchPattern, FolderPath, FollowSymlink, ExcludedFlags, ItemType);
+        CompileWriteCall(builder, "FS.childItem", IsRecurse, SearchPattern, FolderPath, FollowSymlink, ExcludedFlags,
+            ItemType);
     }
 }

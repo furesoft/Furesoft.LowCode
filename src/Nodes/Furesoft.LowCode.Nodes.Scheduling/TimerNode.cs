@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
-using Timer = System.Timers.Timer;
+using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;
 
@@ -31,16 +31,12 @@ public class TimerNode : InputOutputNode
         }
     }
 
-    public override async Task Execute(CancellationToken cancellationToken)
+    public override void Compile(CodeWriter builder)
     {
-        var timer = new Timer();
-        timer.Interval = Interval;
-        timer.Elapsed += async (sender, args) =>
-        {
-            await ContinueWith(EllapsedPin, cancellationToken);
-        };
-        timer.Start();
+        var callbackWriter = new CodeWriter();
+        CompilePin(OutputPin, callbackWriter);
 
-        await ContinueWith(OutputPin, cancellationToken);
+        var callback = "function (arg) {\n\t" + callbackWriter + "\n}\n";
+        builder.AppendCall("setInterval", Interval, callback.AsEvaluatable()).AppendSymbol(';').AppendSymbol('\n');
     }
 }

@@ -37,23 +37,4 @@ public abstract class RestBaseNode : InputNode, IOutVariableProvider
     {
         CompileReadCall(builder, OutVariable, "Network.Rest.sendRequest", method, URL, Headers, content);
     }
-
-    protected async Task ExecuteRequest(HttpMethod method, CancellationToken cancellationToken, object content = null)
-    {
-        var result = ScriptInitializer.SendRequest(method, URL, Headers, content);
-
-        if (result.IsSuccess)
-        {
-            SetOutVariable(OutVariable, result.Value);
-
-            await ContinueWith(SuccessPin, cancellationToken);
-        }
-        else
-        {
-            SetOutVariable(OutVariable, result.Value);
-
-            await ContinueWith(FailurePin, cancellationToken);
-        }
-    }
-
 }

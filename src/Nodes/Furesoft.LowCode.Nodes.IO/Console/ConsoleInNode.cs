@@ -33,12 +33,4 @@ public class ConsoleInNode : InputOutputNode, IOutVariableProvider
     {
         CompileReadCall(builder, OutVariable, "System.Console.ReadLine");
     }
-
-    public override Task Execute(CancellationToken cancellationToken)
-    {
-        var input = System.Console.ReadLine();
-        SetOutVariable(OutVariable, input);
-
-        return ContinueWith(OutputPin, cancellationToken);
-    }
 }
