@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Furesoft.LowCode.Nodes.RPA.Web</RootNamespace>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="PuppeteerSharp" Version="11.0.6"/>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="PuppeteerSharp" Version="13.0.2" />
   </ItemGroup>
 
   <ItemGroup>

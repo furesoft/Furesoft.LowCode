@@ -36,7 +36,7 @@ public class Debugger
     {
         var data = new DebuggerData
         {
-            CallStack = CurrentNode.GetCallStack(), Locals = new(GetLocalsFromContext(), CurrentNode.GetType())
+            //CallStack = CurrentNode.GetCallStack(), Locals = new(GetLocalsFromContext(), CurrentNode.GetType())
         };
 
         return data;
