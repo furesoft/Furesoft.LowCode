@@ -2,24 +2,15 @@
 
 namespace Furesoft.LowCode.Designer.Debugging;
 
-public class DebuggerLocals : CustomTypeDescriptor
+public class DebuggerLocals(Dictionary<string, object> properties, Type nodeType) : CustomTypeDescriptor
 {
-    private readonly Type _nodeType;
-    private readonly Dictionary<string, object> _properties;
-
-    public DebuggerLocals(Dictionary<string, object> properties, Type nodeType)
-    {
-        _properties = properties;
-        _nodeType = nodeType;
-    }
-
     public override PropertyDescriptorCollection GetProperties()
     {
         var result = new PropertyDescriptorCollection(null);
 
-        foreach (var property in _properties)
+        foreach (var property in properties)
         {
-            result.Add(new DebuggerLocal(property, _nodeType));
+            result.Add(new DebuggerLocal(property, nodeType));
         }
 
         return result;

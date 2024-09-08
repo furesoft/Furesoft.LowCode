@@ -1,12 +1,7 @@
 ﻿namespace Furesoft.LowCode.Analyzing;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class GraphAnalyzerAttribute : Attribute
+public class GraphAnalyzerAttribute(Type type) : Attribute
 {
-    public GraphAnalyzerAttribute(Type type)
-    {
-        Type = type;
-    }
-
-    public Type Type { get; set; }
+    public Type Type { get; set; } = type;
 }

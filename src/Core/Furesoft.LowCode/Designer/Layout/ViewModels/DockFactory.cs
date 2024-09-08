@@ -8,15 +8,9 @@ using Furesoft.LowCode.Designer.Layout.ViewModels.Tools;
 
 namespace Furesoft.LowCode.Designer.Layout.ViewModels;
 
-public class DockFactory : Factory
+public class DockFactory(NodeFactory nodeFactory) : Factory
 {
-    private readonly NodeFactory _nodeFactory;
     private IRootDock _rootDock;
-
-    public DockFactory(NodeFactory nodeFactory)
-    {
-        _nodeFactory = nodeFactory;
-    }
 
     public DocumentDock DocumentDock { get; private set; }
 
@@ -34,7 +28,7 @@ public class DockFactory : Factory
 
     public override IRootDock CreateLayout()
     {
-        var toolboxTool = new ToolboxToolViewModel(_nodeFactory);
+        var toolboxTool = new ToolboxToolViewModel(nodeFactory);
         var propertiesTool = new PropertiesToolViewModel();
         var errorTool = new ErrorsToolViewModel();
         var projectTool = new ProjectToolViewModel();

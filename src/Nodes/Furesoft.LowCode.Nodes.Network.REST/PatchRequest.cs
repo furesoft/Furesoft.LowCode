@@ -1,24 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Evaluation;
 
 namespace Furesoft.LowCode.Nodes.Network.REST;
 
-public class PatchRequest : RestBaseNode, IOutVariableProvider
+public class PatchRequest() : RestBaseNode("PATCH"), IOutVariableProvider
 {
-    public PatchRequest() : base("PATCH")
-    {
-    }
-
     [DataMember(EmitDefaultValue = false)]
     [Required]
     public Evaluatable<object> Content { get; set; }
 
     [DataMember(EmitDefaultValue = false)] public new string OutVariable { get; set; }
 
-    public override void Compile(CodeWriter builder)
+    public override Task<HttpResponseMessage> Invoke(CancellationToken cancellationToken)
     {
-        CompileRequest(builder, HttpMethod.Patch);
+        return client.PatchAsync("/", new StringContent((string)Content), cancellationToken);
     }
 }

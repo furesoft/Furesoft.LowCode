@@ -3,9 +3,4 @@
 namespace Furesoft.LowCode;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class NodeIconAttribute : NodeViewAttribute
-{
-    public NodeIconAttribute(string svgPath) : base(typeof(IconNodeView), svgPath)
-    {
-    }
-}
+public class NodeIconAttribute(string svgPath) : NodeViewAttribute(typeof(IconNodeView), svgPath);

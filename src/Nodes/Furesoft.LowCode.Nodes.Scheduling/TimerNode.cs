@@ -2,19 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
-using Furesoft.LowCode.Compilation;
+using Timer = System.Timers.Timer;
 
 namespace Furesoft.LowCode.Nodes.Scheduling;
 
 [NodeCategory("Scheduling")]
 [Description("Continue ellapsed every interval")]
-public class TimerNode : InputOutputNode
+public class TimerNode() : InputOutputNode("Timer")
 {
     private double _interval;
-
-    public TimerNode() : base("Timer")
-    {
-    }
 
     [Pin("Ellapsed", PinAlignment.Right)] public IOutputPin EllapsedPin { get; set; }
 
@@ -31,12 +27,16 @@ public class TimerNode : InputOutputNode
         }
     }
 
-    public override void Compile(CodeWriter builder)
+    public override async Task Execute(CancellationToken cancellationToken)
     {
-        var callbackWriter = new CodeWriter();
-        CompilePin(OutputPin, callbackWriter);
+        var timer = new Timer();
+        timer.Interval = Interval;
+        timer.Elapsed += async (sender, args) =>
+        {
+            await ContinueWith(EllapsedPin, cancellationToken);
+        };
+        timer.Start();
 
-        var callback = "function (arg) {\n\t" + callbackWriter + "\n}\n";
-        builder.AppendCall("setInterval", Interval, callback.AsEvaluatable()).AppendSymbol(';').AppendSymbol('\n');
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

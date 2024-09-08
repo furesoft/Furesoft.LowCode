@@ -8,16 +8,11 @@ using NiL.JS.Extensions;
 
 namespace Furesoft.LowCode.Nodes.Data.DataTable;
 
-public abstract class DataTableNode : InputOutputNode, IPipeable
+public abstract class DataTableNode(TableAction action, string label) : InputOutputNode(label), IPipeable
 {
     private string _tableName;
 
-    protected DataTableNode(TableAction action, string label) : base(label)
-    {
-        Action = action;
-    }
-
-    [Browsable(false)] [JsonIgnore] public TableAction Action { get; }
+    [Browsable(false)] [JsonIgnore] public TableAction Action { get; } = action;
 
     [DataMember(EmitDefaultValue = false)]
     public string TableName
@@ -103,6 +98,16 @@ public abstract class DataTableNode : InputOutputNode, IPipeable
         return value.As<System.Data.DataTable>();
     }
 
+    public override async Task Execute(CancellationToken cancellationToken)
+    {
+        ApplyPipe<System.Data.DataTable>();
+
+        await Invoke(cancellationToken);
+
+        ApplyTransformers();
+
+        await ContinueWith(OutputPin, cancellationToken);
+    }
 
     protected void SetTable(System.Data.DataTable table)
     {

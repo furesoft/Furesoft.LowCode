@@ -1,23 +1,15 @@
 ﻿namespace Furesoft.LowCode.Editor.Model;
 
-public sealed class DrawingNodeEditor
+public sealed class DrawingNodeEditor(IDrawingNode node, IDrawingNodeFactory factory)
 {
-    private readonly IDrawingNodeFactory _factory;
-    private readonly IDrawingNode _node;
     private string _clipboard;
     private IConnector _connector;
     private double _pressedX = double.NaN;
     private double _pressedY = double.NaN;
 
-    public DrawingNodeEditor(IDrawingNode node, IDrawingNodeFactory factory)
-    {
-        _node = node;
-        _factory = factory;
-    }
-
     public T Clone<T>(T source)
     {
-        var serialize = _node.GetSerializer();
+        var serialize = node.GetSerializer();
         if (serialize is null)
         {
             return default;
@@ -30,9 +22,9 @@ public sealed class DrawingNodeEditor
 
     public bool IsPinConnected(IPin pin)
     {
-        if (_node.Connectors is not null)
+        if (node.Connectors is not null)
         {
-            foreach (var connector in _node.Connectors)
+            foreach (var connector in node.Connectors)
             {
                 if (connector.Start == pin || connector.End == pin)
                 {
@@ -58,9 +50,9 @@ public sealed class DrawingNodeEditor
     {
         if (_connector is not null)
         {
-            if (_node.Connectors is not null)
+            if (node.Connectors is not null)
             {
-                _node.Connectors.Remove(_connector);
+                node.Connectors.Remove(_connector);
             }
 
             _connector = null;
@@ -124,7 +116,7 @@ public sealed class DrawingNodeEditor
 
     public void ConnectorLeftPressed(IPin pin, bool showWhenMoving)
     {
-        if (_node.Connectors is null)
+        if (node.Connectors is null)
         {
             return;
         }
@@ -145,7 +137,7 @@ public sealed class DrawingNodeEditor
                 y += pin.Parent.Y;
             }
 
-            var end = _factory.CreatePin();
+            var end = factory.CreatePin();
             end.Parent = null;
             end.X = x;
             end.Y = y;
@@ -153,8 +145,8 @@ public sealed class DrawingNodeEditor
             end.Height = pin.Height;
             end.OnCreated();
 
-            var connector = _factory.CreateConnector();
-            connector.Parent = _node;
+            var connector = factory.CreateConnector();
+            connector.Parent = node;
             connector.Start = pin;
             connector.End = end;
             pin.OnConnected();
@@ -163,7 +155,7 @@ public sealed class DrawingNodeEditor
 
             if (showWhenMoving)
             {
-                _node.Connectors.Add(connector);
+                node.Connectors.Add(connector);
             }
 
             _connector = connector;
@@ -171,8 +163,8 @@ public sealed class DrawingNodeEditor
         else
         {
             if (_connector.Start != pin && _connector.Start.Mode != pin.Mode
-                                        && !_node.Connectors.Any(_ => _.Start == _connector.Start && _.End == pin)
-                                        && !_node.Connectors.Any(_ => _.Start == pin && _.End == _connector.Start))
+                                        && !node.Connectors.Any(_ => _.Start == _connector.Start && _.End == pin)
+                                        && !node.Connectors.Any(_ => _.Start == pin && _.End == _connector.Start))
             {
                 var end = _connector.End;
                 _connector.End = pin;
@@ -181,8 +173,8 @@ public sealed class DrawingNodeEditor
 
                 if (!showWhenMoving)
                 {
-                    _node.Connectors ??= _factory.CreateList<IConnector>();
-                    _node.Connectors.Add(_connector);
+                    node.Connectors ??= factory.CreateList<IConnector>();
+                    node.Connectors.Add(_connector);
                 }
 
                 _connector = null;
@@ -202,14 +194,14 @@ public sealed class DrawingNodeEditor
 
     public void CutNodes()
     {
-        var serializer = _node.GetSerializer();
+        var serializer = node.GetSerializer();
         if (serializer is null)
         {
             return;
         }
 
-        var selectedNodes = _node.GetSelectedNodes();
-        var selectedConnectors = GetConnectionsForNodes(_node.GetSelectedNodes());
+        var selectedNodes = node.GetSelectedNodes();
+        var selectedConnectors = GetConnectionsForNodes(node.GetSelectedNodes());
 
         if (selectedNodes is not {Count: > 0} && selectedConnectors is not {Count: > 0})
         {
@@ -222,13 +214,13 @@ public sealed class DrawingNodeEditor
 
         if (clipboard.SelectedNodes is not null)
         {
-            foreach (var node in clipboard.SelectedNodes)
+            foreach (var node1 in clipboard.SelectedNodes)
             {
-                if (node.CanRemove())
+                if (node1.CanRemove())
                 {
-                    _node.Nodes?.Remove(node);
-                    node.OnRemoved();
-                    NotifyPinsRemoved(node);
+                    node.Nodes?.Remove(node1);
+                    node1.OnRemoved();
+                    NotifyPinsRemoved(node1);
                 }
             }
         }
@@ -239,30 +231,30 @@ public sealed class DrawingNodeEditor
             {
                 if (connector.CanRemove())
                 {
-                    _node.Connectors?.Remove(connector);
+                    node.Connectors?.Remove(connector);
                     connector.OnRemoved();
                 }
             }
         }
 
-        _node.NotifyDeselectedNodes();
-        _node.NotifyDeselectedConnectors();
+        node.NotifyDeselectedNodes();
+        node.NotifyDeselectedConnectors();
 
-        _node.SetSelectedNodes(null);
-        _node.SetSelectedConnectors(null);
-        _node.NotifySelectionChanged();
+        node.SetSelectedNodes(null);
+        node.SetSelectedConnectors(null);
+        node.NotifySelectionChanged();
     }
 
     public void CopyNodes()
     {
-        var serializer = _node.GetSerializer();
+        var serializer = node.GetSerializer();
         if (serializer is null)
         {
             return;
         }
 
-        var selectedNodes = _node.GetSelectedNodes();
-        var selectedConnectors = _node.GetSelectedConnectors();
+        var selectedNodes = node.GetSelectedNodes();
+        var selectedConnectors = node.GetSelectedConnectors();
 
         if (selectedNodes is not {Count: > 0} && selectedConnectors is not {Count: > 0})
         {
@@ -276,7 +268,7 @@ public sealed class DrawingNodeEditor
 
     public void PasteNodes()
     {
-        var serializer = _node.GetSerializer();
+        var serializer = node.GetSerializer();
         if (serializer is null)
         {
             return;
@@ -296,11 +288,11 @@ public sealed class DrawingNodeEditor
             return;
         }
 
-        _node.NotifyDeselectedNodes();
-        _node.NotifyDeselectedConnectors();
+        node.NotifyDeselectedNodes();
+        node.NotifyDeselectedConnectors();
 
-        _node.SetSelectedNodes(null);
-        _node.SetSelectedConnectors(null);
+        node.SetSelectedNodes(null);
+        node.SetSelectedConnectors(null);
 
         var selectedNodes = new HashSet<INode>();
         var selectedConnectors = new HashSet<IConnector>();
@@ -321,22 +313,22 @@ public sealed class DrawingNodeEditor
             var deltaX = double.IsNaN(pressedX) ? 0.0 : pressedX - minX;
             var deltaY = double.IsNaN(pressedY) ? 0.0 : pressedY - minY;
 
-            foreach (var node in clipboard.SelectedNodes)
+            foreach (var node1 in clipboard.SelectedNodes)
             {
-                if (node.CanMove())
+                if (node1.CanMove())
                 {
-                    node.Move(deltaX, deltaY);
+                    node1.Move(deltaX, deltaY);
                 }
 
-                node.Parent = _node;
+                node1.Parent = node;
 
-                _node.Nodes?.Add(node);
-                node.OnCreated();
+                node.Nodes?.Add(node1);
+                node1.OnCreated();
 
-                if (node.CanSelect())
+                if (node1.CanSelect())
                 {
-                    selectedNodes.Add(node);
-                    node.OnSelected();
+                    selectedNodes.Add(node1);
+                    node1.OnSelected();
                 }
             }
         }
@@ -345,9 +337,9 @@ public sealed class DrawingNodeEditor
         {
             foreach (var connector in clipboard.SelectedConnectors)
             {
-                connector.Parent = _node;
+                connector.Parent = node;
 
-                _node.Connectors?.Add(connector);
+                node.Connectors?.Add(connector);
                 connector.OnCreated();
 
                 if (connector.CanSelect())
@@ -358,29 +350,29 @@ public sealed class DrawingNodeEditor
             }
         }
 
-        _node.NotifyDeselectedNodes();
+        node.NotifyDeselectedNodes();
 
         if (selectedNodes.Count > 0)
         {
-            _node.SetSelectedNodes(selectedNodes);
+            node.SetSelectedNodes(selectedNodes);
         }
         else
         {
-            _node.SetSelectedNodes(null);
+            node.SetSelectedNodes(null);
         }
 
-        _node.NotifyDeselectedConnectors();
+        node.NotifyDeselectedConnectors();
 
         if (selectedConnectors.Count > 0)
         {
-            _node.SetSelectedConnectors(selectedConnectors);
+            node.SetSelectedConnectors(selectedConnectors);
         }
         else
         {
-            _node.SetSelectedConnectors(null);
+            node.SetSelectedConnectors(null);
         }
 
-        _node.NotifySelectionChanged();
+        node.NotifySelectionChanged();
 
         _pressedX = double.NaN;
         _pressedY = double.NaN;
@@ -395,11 +387,11 @@ public sealed class DrawingNodeEditor
         PasteNodes();
     }
 
-    private IEnumerable<IConnector> GetConnectionsForNode(INode node)
+    private IEnumerable<IConnector> GetConnectionsForNode(INode node1)
     {
-        foreach (var connector in _node.Connectors)
+        foreach (var connector in node.Connectors)
         {
-            if (connector.Start.Parent == node || connector.End.Parent == node)
+            if (connector.Start.Parent == node1 || connector.End.Parent == node1)
             {
                 yield return connector;
             }
@@ -426,25 +418,25 @@ public sealed class DrawingNodeEditor
 
     public void DeleteNodes()
     {
-        var selectedNodes = _node.GetSelectedNodes();
-        var selectedConnectors = GetConnectionsForNodes(_node.GetSelectedNodes());
+        var selectedNodes = node.GetSelectedNodes();
+        var selectedConnectors = GetConnectionsForNodes(node.GetSelectedNodes());
         var notify = false;
 
         if (selectedNodes is {Count: > 0})
         {
-            foreach (var node in selectedNodes)
+            foreach (var node1 in selectedNodes)
             {
-                if (node.CanRemove())
+                if (node1.CanRemove())
                 {
-                    _node.Nodes?.Remove(node);
-                    node.OnRemoved();
-                    NotifyPinsRemoved(node);
+                    node.Nodes?.Remove(node1);
+                    node1.OnRemoved();
+                    NotifyPinsRemoved(node1);
                 }
             }
 
-            _node.NotifyDeselectedNodes();
+            node.NotifyDeselectedNodes();
 
-            _node.SetSelectedNodes(null);
+            node.SetSelectedNodes(null);
             notify = true;
         }
 
@@ -454,20 +446,20 @@ public sealed class DrawingNodeEditor
             {
                 if (connector.CanRemove())
                 {
-                    _node.Connectors?.Remove(connector);
+                    node.Connectors?.Remove(connector);
                     connector.OnRemoved();
                 }
             }
 
-            _node.NotifyDeselectedConnectors();
+            node.NotifyDeselectedConnectors();
 
-            _node.SetSelectedConnectors(null);
+            node.SetSelectedConnectors(null);
             notify = true;
         }
 
         if (notify)
         {
-            _node.NotifySelectionChanged();
+            node.NotifySelectionChanged();
         }
     }
 
@@ -475,14 +467,14 @@ public sealed class DrawingNodeEditor
     {
         var notify = false;
 
-        if (_node.Nodes is not null)
+        if (node.Nodes is not null)
         {
-            _node.NotifyDeselectedNodes();
+            node.NotifyDeselectedNodes();
 
-            _node.SetSelectedNodes(null);
+            node.SetSelectedNodes(null);
 
             var selectedNodes = new HashSet<INode>();
-            var nodes = _node.Nodes;
+            var nodes = node.Nodes;
 
             foreach (var node in nodes)
             {
@@ -495,19 +487,19 @@ public sealed class DrawingNodeEditor
 
             if (selectedNodes.Count > 0)
             {
-                _node.SetSelectedNodes(selectedNodes);
+                node.SetSelectedNodes(selectedNodes);
                 notify = true;
             }
         }
 
-        if (_node.Connectors is not null)
+        if (node.Connectors is not null)
         {
-            _node.NotifyDeselectedConnectors();
+            node.NotifyDeselectedConnectors();
 
-            _node.SetSelectedConnectors(null);
+            node.SetSelectedConnectors(null);
 
             var selectedConnectors = new HashSet<IConnector>();
-            var connectors = _node.Connectors;
+            var connectors = node.Connectors;
 
             foreach (var connector in connectors)
             {
@@ -520,25 +512,25 @@ public sealed class DrawingNodeEditor
 
             if (selectedConnectors.Count > 0)
             {
-                _node.SetSelectedConnectors(selectedConnectors);
+                node.SetSelectedConnectors(selectedConnectors);
                 notify = true;
             }
         }
 
         if (notify)
         {
-            _node.NotifySelectionChanged();
+            node.NotifySelectionChanged();
         }
     }
 
     public void DeselectAllNodes()
     {
-        _node.NotifyDeselectedNodes();
-        _node.NotifyDeselectedConnectors();
+        node.NotifyDeselectedNodes();
+        node.NotifyDeselectedConnectors();
 
-        _node.SetSelectedNodes(null);
-        _node.SetSelectedConnectors(null);
-        _node.NotifySelectionChanged();
+        node.SetSelectedNodes(null);
+        node.SetSelectedConnectors(null);
+        node.NotifySelectionChanged();
 
         if (IsConnectorMoving())
         {

@@ -7,13 +7,9 @@ namespace Furesoft.LowCode.Nodes;
 
 [NodeView(typeof(CommentView))]
 [Description("A comment")]
-public class CommentNode : EmptyNode
+public class CommentNode() : EmptyNode("Comment")
 {
     private string _comment = "This is a comment";
-
-    public CommentNode() : base("Comment")
-    {
-    }
 
     [Browsable(false)] public new bool ShowDescription { get; set; }
 
@@ -23,5 +19,10 @@ public class CommentNode : EmptyNode
     {
         get => _comment;
         set => SetProperty(ref _comment, value);
+    }
+
+    public override Task Execute(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
     }
 }

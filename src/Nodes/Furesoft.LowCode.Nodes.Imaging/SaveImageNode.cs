@@ -1,15 +1,12 @@
-﻿using Furesoft.LowCode.Compilation;
+﻿using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace Furesoft.LowCode.Nodes.Imaging;
 
-public class SaveImageNode : ImageNode
+public class SaveImageNode() : ImageNode("Save Image")
 {
-    public SaveImageNode() : base("Save Image")
+    protected override async Task Invoke(CancellationToken cancellationToken)
     {
-    }
-
-    public override void Compile(CodeWriter builder)
-    {
-        builder.AppendCall(ImageName + ".Save", Filename);
+        var img = GetImage();
+        await img.SaveAsync(File.OpenWrite((string)Filename), new JpegEncoder(), cancellationToken);
     }
 }

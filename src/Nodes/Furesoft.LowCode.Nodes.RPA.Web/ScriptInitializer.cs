@@ -1,4 +1,4 @@
-using Furesoft.LowCode.Compilation;
+using Furesoft.LowCode.Evaluation;
 using NiL.JS.Core;
 using NiL.JS.Core.Interop;
 using PuppeteerSharp;
@@ -17,7 +17,7 @@ public class ScriptInitializer : IScriptModuleInitalizer
     [JavaScriptName("openBrowser")]
     public static Result OpenBrowser(string url, bool useHeadless)
     {
-        using var browserFetcher = new BrowserFetcher();
+        var browserFetcher = new BrowserFetcher();
         browserFetcher.DownloadAsync();
 
         var browser = Puppeteer.LaunchAsync(new() { Headless = useHeadless }).GetAwaiter().GetResult();

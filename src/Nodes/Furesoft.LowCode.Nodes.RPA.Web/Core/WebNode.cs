@@ -8,14 +8,10 @@ namespace Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 [NodeCategory("Automation/Web")]
 [GraphAnalyzer(typeof(WebBrowserAnalyzer))]
-public abstract class WebNode : InputOutputNode
+public abstract class WebNode(string label) : InputOutputNode(label)
 {
     protected const string PageVariableName = "browserPage";
     protected const string BrowserVariableName = "browser";
-
-    protected WebNode(string label) : base(label)
-    {
-    }
 
     protected Page GetPage()
     {
@@ -47,4 +43,13 @@ public abstract class WebNode : InputOutputNode
 
         return browser;
     }
+
+    public sealed override async Task Execute(CancellationToken cancellationToken)
+    {
+        await Invoke(cancellationToken);
+
+        await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    protected abstract Task Invoke(CancellationToken cancellationToken);
 }

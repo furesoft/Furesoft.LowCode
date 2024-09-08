@@ -3,12 +3,8 @@ using Runly;
 
 namespace RunlyRunner;
 
-public class GraphRunner : Job<GraphRunnerConfig>
+public class GraphRunner(GraphRunnerConfig config) : Job<GraphRunnerConfig>(config)
 {
-    public GraphRunner(GraphRunnerConfig config) : base(config)
-    {
-    }
-
     public override async Task<Result> ProcessAsync()
     {
         var evaluator = new Evaluator(Config.Graph);

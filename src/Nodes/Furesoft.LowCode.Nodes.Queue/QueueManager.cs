@@ -7,12 +7,7 @@ public class QueueManager : IDisposable
     public static readonly QueueManager Instance = new();
     private readonly Dictionary<string, IPersistentQueue> _queues = new();
 
-    public QueueManager()
-    {
-        BasePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-    }
-
-    public string BasePath { get; set; }
+    public string BasePath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
     public void Dispose()
     {

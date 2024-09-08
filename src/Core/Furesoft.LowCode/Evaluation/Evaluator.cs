@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Designer;
 using Furesoft.LowCode.Designer.Services.Serializing;
 using Furesoft.LowCode.ProjectSystem.Items;
@@ -16,6 +15,8 @@ public class Evaluator : IEvaluator
     private readonly Project project;
     public Context Context;
     public OptionsProvider Options;
+
+    public SignalStorage Signals { get; } = new();
 
     public Evaluator(IDrawingNode drawing)
     {
@@ -78,26 +79,23 @@ public class Evaluator : IEvaluator
 
         InitNode(entryNode);
 
-        var c = new ScriptInitalizerContext();
-        c.AddInitializers();
+        foreach (var signal in GetSignals())
+        {
+            InitNode(signal);
 
-        c.RunInitalizers(Context);
-
-        var compiler = new GraphCompiler();
-        var compiledGraphSource = compiler.Compile(_drawing);
-        Debug.WriteLine("Compiled Graph: " + compiledGraphSource);
-        Context.Eval(compiledGraphSource + "\nMainGraph();");
+            Signals.Register(signal.Signal, signal);
+        }
 
         try
         {
-            //await entryNode.Execute(cancellationToken);
+            await entryNode.Execute(cancellationToken);
         }
         catch (TaskCanceledException) { }
     }
 
     private void ExecuteProjectSources()
     {
-        foreach (var sourceFileItem in project.Items.OfType<SourceFileItem>()) //ToDo: exclude compiled js file
+        foreach (var sourceFileItem in project.Items.OfType<SourceFileItem>())
         {
             Context.Eval(sourceFileItem.Content);
         }
@@ -139,8 +137,7 @@ public class Evaluator : IEvaluator
         SetEvaluatableContexts(selectedNode.DefiningNode);
     }
 
-
-    private void SetEvaluatableContexts(EmptyNode selectedNodeDefiningNode)
+    internal void SetEvaluatableContexts(EmptyNode selectedNodeDefiningNode)
     {
         // Check all the properties of the selectedNodeDefiningNode
         var properties = selectedNodeDefiningNode.GetType().GetProperties();

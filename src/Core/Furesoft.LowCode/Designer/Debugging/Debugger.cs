@@ -2,19 +2,13 @@
 
 namespace Furesoft.LowCode.Designer.Debugging;
 
-public class Debugger
+public class Debugger(Context context)
 {
-    private readonly Context _context;
     private TaskCompletionSource _waitTaskSource;
-
-    public Debugger(Context context)
-    {
-        _context = context;
-    }
 
     public EmptyNode CurrentNode { get; set; }
 
-    public List<EmptyNode> BreakPointNodes { get; set; } = new();
+    public List<EmptyNode> BreakPointNodes { get; } = new();
 
     public bool IsAttached { get; set; }
     public Task WaitTask => _waitTaskSource?.Task;
@@ -36,7 +30,7 @@ public class Debugger
     {
         var data = new DebuggerData
         {
-            //CallStack = CurrentNode.GetCallStack(), Locals = new(GetLocalsFromContext(), CurrentNode.GetType())
+            CallStack = CurrentNode.GetCallStack(), Locals = new(GetLocalsFromContext(), CurrentNode.GetType())
         };
 
         return data;
@@ -44,7 +38,7 @@ public class Debugger
 
     public object Evaluate(string src)
     {
-        return _context.Eval(src).Value;
+        return context.Eval(src).Value;
     }
 
     internal void ResetWait()
@@ -59,6 +53,6 @@ public class Debugger
 
     private Dictionary<string, object> GetLocalsFromContext()
     {
-        return _context.ToDictionary(local => local, local => _context.GetVariable(local).Value);
+        return context.ToDictionary(local => local, local => context.GetVariable(local).Value);
     }
 }

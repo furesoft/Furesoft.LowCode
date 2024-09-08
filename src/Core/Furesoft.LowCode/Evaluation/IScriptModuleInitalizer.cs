@@ -1,6 +1,6 @@
 ﻿using NiL.JS.Core;
 
-namespace Furesoft.LowCode.Compilation;
+namespace Furesoft.LowCode.Evaluation;
 
 public interface IScriptModuleInitalizer
 {

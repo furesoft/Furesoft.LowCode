@@ -95,20 +95,13 @@ public class NodeSerializer : INodeSerializer
         streamWriter.Write(text);
     }
 
-    private class ListContractResolver : DefaultContractResolver
+    private class ListContractResolver(Type listType) : DefaultContractResolver
     {
-        private readonly Type _listType;
-
-        public ListContractResolver(Type listType)
-        {
-            _listType = listType;
-        }
-
         public override JsonContract ResolveContract(Type type)
         {
             if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>))
             {
-                return base.ResolveContract(_listType.MakeGenericType(type.GenericTypeArguments[0]));
+                return base.ResolveContract(listType.MakeGenericType(type.GenericTypeArguments[0]));
             }
 
             return base.ResolveContract(type);

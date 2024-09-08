@@ -4,15 +4,8 @@ using Furesoft.LowCode.Designer;
 
 namespace Furesoft.LowCode.Analyzing;
 
-public class AnalyzerContext
+public class AnalyzerContext(CustomNodeViewModel viewModel)
 {
-    private readonly CustomNodeViewModel _viewModel;
-
-    public AnalyzerContext(CustomNodeViewModel viewModel)
-    {
-        _viewModel = viewModel;
-    }
-
     public AdjancencyMatrix AdjancencyMatrix { get; set; }
 
     public IEnumerable<IGraphAnalyzer> GetAnalyzers(EmptyNode node)
@@ -32,7 +25,7 @@ public class AnalyzerContext
     /// <returns></returns>
     public bool IsInputConnected<T>(int maxIndirection = -1)
     {
-        return IsConnectedRecursive<T>(PinMode.Input, maxIndirection, _viewModel);
+        return IsConnectedRecursive<T>(PinMode.Input, maxIndirection, viewModel);
     }
 
     /// <summary>
@@ -43,7 +36,7 @@ public class AnalyzerContext
     /// <returns></returns>
     public bool IsOutputConnected<T>(int indirectionLength = -1)
     {
-        return IsConnectedRecursive<T>(PinMode.Output, indirectionLength, _viewModel);
+        return IsConnectedRecursive<T>(PinMode.Output, indirectionLength, viewModel);
     }
 
     private bool IsConnectedRecursive<T>(PinMode mode, int indirectionLength, CustomNodeViewModel node)
@@ -143,24 +136,24 @@ public class AnalyzerContext
     public bool IsNodePresentInGraph<T>()
         where T : EmptyNode
     {
-        return _viewModel.DefiningNode.Drawing
+        return viewModel.DefiningNode.Drawing
             .GetNodes<T>()
             .Any();
     }
 
     public bool HasConnection(IInputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        return AdjancencyMatrix[_viewModel].Any(_ => _.Mode == PinMode.Output);
+        return AdjancencyMatrix[viewModel].Any(_ => _.Mode == PinMode.Output);
     }
 
     public bool HasConnection(IOutputPin pin, [CallerArgumentExpression("pin")] string pinMembername = null)
     {
-        return AdjancencyMatrix[_viewModel].Any(_ => _.Mode == PinMode.Output);
+        return AdjancencyMatrix[viewModel].Any(_ => _.Mode == PinMode.Output);
     }
 
     public IEnumerable<EmptyNode> FindDisconnectedNodes()
     {
-        return _viewModel.DefiningNode.Drawing.Nodes
+        return viewModel.DefiningNode.Drawing.Nodes
             .OfType<EmptyNode>()
             .Where(node => !IsInputConnected<EmptyNode>() && !IsOutputConnected<EmptyNode>())
             .ToList();

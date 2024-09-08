@@ -1,5 +1,6 @@
-﻿using Furesoft.LowCode.Compilation;
+﻿using Furesoft.LowCode.Evaluation;
 using NiL.JS.Core;
+using SixLabors.ImageSharp;
 
 namespace Furesoft.LowCode.Nodes.Imaging;
 

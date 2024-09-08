@@ -2,19 +2,12 @@
 
 namespace Furesoft.LowCode.Designer.Debugging;
 
-public class DebuggerLocal : PropertyDescriptor
+public class DebuggerLocal(KeyValuePair<string, object> property, Type nodeType)
+    : PropertyDescriptor(property.Key, null)
 {
-    private readonly KeyValuePair<string, object> _property;
-
-    public DebuggerLocal(KeyValuePair<string, object> property, Type nodeType) : base(property.Key, null)
-    {
-        _property = property;
-        ComponentType = nodeType;
-    }
-
-    public override Type ComponentType { get; }
+    public override Type ComponentType { get; } = nodeType;
     public override bool IsReadOnly => true;
-    public override Type PropertyType => _property.Value.GetType();
+    public override Type PropertyType => property.Value.GetType();
 
     public override bool CanResetValue(object component)
     {
@@ -23,7 +16,7 @@ public class DebuggerLocal : PropertyDescriptor
 
     public override object GetValue(object component)
     {
-        return _property.Value;
+        return property.Value;
     }
 
     public override void ResetValue(object component)

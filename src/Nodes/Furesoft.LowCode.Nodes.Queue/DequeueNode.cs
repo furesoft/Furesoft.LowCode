@@ -1,23 +1,21 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Compilation;
 
 namespace Furesoft.LowCode.Nodes.Queue;
 
 [Description("Get data from queue")]
 [NodeIcon(
     "M322 237v-43h-170v43h170zM429 87v256h-384v-256h384zM429 386c23 0 43-19 43-43l-1-256c0-23-19-42-42-42h-107v-43h-170v43h-107c-24 0-43 19-43 42v256c0 24 19 43 43 43h384z")]
-public class DequeueNode : QueueBaseNode, IOutVariableProvider
+public class DequeueNode() : QueueBaseNode("Get Data From Queue"), IOutVariableProvider
 {
-    public DequeueNode() : base("Get Data From Queue")
-    {
-    }
-
     [Required] [DataMember] public string OutVariable { get; set; }
 
-    public override void Compile(CodeWriter builder)
+    public override Task Invoke(CancellationToken cancellationToken)
     {
-        CompileWriteCall(builder, "Queue.dequeue", Queue);
+        var value = QueueManager.Instance.Dequeue<object>(Queue);
+        SetOutVariable(OutVariable, value);
+
+        return Task.CompletedTask;
     }
 }

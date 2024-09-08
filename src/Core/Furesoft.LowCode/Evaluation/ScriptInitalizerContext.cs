@@ -1,7 +1,7 @@
 using System.Reflection;
 using NiL.JS.Core;
 
-namespace Furesoft.LowCode.Compilation;
+namespace Furesoft.LowCode.Evaluation;
 
 public class ScriptInitalizerContext
 {

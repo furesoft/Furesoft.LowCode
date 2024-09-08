@@ -5,13 +5,9 @@ using Furesoft.LowCode.Nodes.Data.DataTable.Core;
 namespace Furesoft.LowCode.Nodes.Data.DataTable;
 
 [NodeCategory("Data")]
-public class RemoveColumnsNode : DataTableNode
+public class RemoveColumnsNode() : DataTableNode(TableAction.None, "Remove Columns")
 {
     public BindingList<string> Columns { get; set; }
-
-    public RemoveColumnsNode() : base(TableAction.None, "Remove Columns")
-    {
-    }
 
     protected override async Task Invoke(CancellationToken cancellationToken)
     {

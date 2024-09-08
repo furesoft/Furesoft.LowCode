@@ -2,14 +2,9 @@
 
 namespace Furesoft.LowCode.ProjectSystem.Items;
 
-public abstract class ProjectItem
+public abstract class ProjectItem(string name)
 {
-    public ProjectItem(string name)
-    {
-        Name = name;
-    }
-
-    [JsonIgnore] public string Name { get; set; }
+    [JsonIgnore] public string Name { get; set; } = name;
 
     public string Id { get; set; }
 }

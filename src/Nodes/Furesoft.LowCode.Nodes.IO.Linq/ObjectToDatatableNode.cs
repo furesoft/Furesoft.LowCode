@@ -6,12 +6,8 @@ using NiL.JS.Core;
 namespace Furesoft.LowCode.Nodes.IO.Linq;
 
 [NodeCategory("Linq")]
-public class ObjectToDatatableNode : DataTableNode
+public class ObjectToDatatableNode() : DataTableNode(TableAction.None, "Push Object To Datatable")
 {
-    public ObjectToDatatableNode() : base(TableAction.None, "Push Object To Datatable")
-    {
-    }
-
     public JSValue Obj { get; set; }
 
     protected override async Task Invoke(CancellationToken cancellationToken)

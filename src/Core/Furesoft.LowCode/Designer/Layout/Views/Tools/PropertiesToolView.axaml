@@ -16,7 +16,7 @@
 
         <controls:PropertyGrid Name="properties" AllowFilter="True" AllowQuickFilter="False" AllowToggleView="False"
                                ShowStyle="Alphabetic" ShowTitle="False"
-                               SelectedObject="{Binding SelectedNode, Mode=TwoWay}" />
+                               DataContext="{Binding SelectedNode, Mode=TwoWay}" />
       </StackPanel>
     </ScrollViewer>
   </Grid>

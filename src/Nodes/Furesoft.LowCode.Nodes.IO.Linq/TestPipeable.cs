@@ -5,12 +5,8 @@ namespace Furesoft.LowCode.Nodes.IO.Linq;
 
 [Description("Test")]
 [NodeCategory("Linq")]
-internal class TestPipeable : InputOutputNode, IPipeable
+internal class TestPipeable() : InputOutputNode("Testpipe"), IPipeable
 {
-    public TestPipeable() : base("Testpipe")
-    {
-    }
-
     public object PipeVariable { get; set; } = new List<string> {"hi", "bob"};
 
     public override Task Execute(CancellationToken cancellationToken)

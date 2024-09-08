@@ -1,63 +1,33 @@
 namespace Furesoft.LowCode.Editor.Model;
 
-public sealed class ConnectorCreatedEventArgs : EventArgs
+public sealed class ConnectorCreatedEventArgs(IConnector connector) : EventArgs
 {
-    public ConnectorCreatedEventArgs(IConnector connector)
-    {
-        Connector = connector;
-    }
-
-    public IConnector Connector { get; }
+    public IConnector Connector { get; } = connector;
 }
 
-public sealed class ConnectorRemovedEventArgs : EventArgs
+public sealed class ConnectorRemovedEventArgs(IConnector connector) : EventArgs
 {
-    public ConnectorRemovedEventArgs(IConnector connector)
-    {
-        Connector = connector;
-    }
-
-    public IConnector Connector { get; }
+    public IConnector Connector { get; } = connector;
 }
 
-public sealed class ConnectorSelectedEventArgs : EventArgs
+public sealed class ConnectorSelectedEventArgs(IConnector connector) : EventArgs
 {
-    public ConnectorSelectedEventArgs(IConnector connector)
-    {
-        Connector = connector;
-    }
-
-    public IConnector Connector { get; }
+    public IConnector Connector { get; } = connector;
 }
 
-public sealed class ConnectorDeselectedEventArgs : EventArgs
+public sealed class ConnectorDeselectedEventArgs(IConnector connector) : EventArgs
 {
-    public ConnectorDeselectedEventArgs(IConnector connector)
-    {
-        Connector = connector;
-    }
-
-    public IConnector Connector { get; }
+    public IConnector Connector { get; } = connector;
 }
 
-public sealed class ConnectorStartChangedEventArgs : EventArgs
+public sealed class ConnectorStartChangedEventArgs(IConnector connector) : EventArgs
 {
-    public ConnectorStartChangedEventArgs(IConnector connector)
-    {
-        Connector = connector;
-    }
-
-    public IConnector Connector { get; }
+    public IConnector Connector { get; } = connector;
 }
 
-public sealed class ConnectorEndChangedEventArgs : EventArgs
+public sealed class ConnectorEndChangedEventArgs(IConnector connector) : EventArgs
 {
-    public ConnectorEndChangedEventArgs(IConnector connector)
-    {
-        Connector = connector;
-    }
-
-    public IConnector Connector { get; }
+    public IConnector Connector { get; } = connector;
 }
 
 public interface IConnector

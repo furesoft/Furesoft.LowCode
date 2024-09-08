@@ -23,25 +23,18 @@ public class DebugOutputControl : TemplatedControl
     }
 }
 
-public class DebugOutputWriter : TextWriter
+public class DebugOutputWriter(DebugOutputControl debugOutputControl) : TextWriter
 {
-    private readonly DebugOutputControl _debugOutputControl;
-
-    public DebugOutputWriter(DebugOutputControl debugOutputControl)
-    {
-        _debugOutputControl = debugOutputControl;
-    }
-
     public override Encoding Encoding { get; }
 
     public override void Write(char value)
     {
         Dispatcher.UIThread.Invoke(() =>
         {
-            var currentText = _debugOutputControl.GetValue(DebugOutputControl.OutputTextProperty);
+            var currentText = debugOutputControl.GetValue(DebugOutputControl.OutputTextProperty);
             currentText += value;
 
-            _debugOutputControl.SetValue(DebugOutputControl.OutputTextProperty, currentText);
+            debugOutputControl.SetValue(DebugOutputControl.OutputTextProperty, currentText);
         });
     }
 }

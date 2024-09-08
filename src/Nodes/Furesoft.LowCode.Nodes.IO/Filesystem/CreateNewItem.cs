@@ -8,12 +8,8 @@ namespace Furesoft.LowCode.Nodes.IO.Filesystem;
 [NodeCategory("IO/FileSystem")]
 [NodeIcon(
     "M67 216v-43h64v-64h42v64h64v43h-64v64h-42v-64h-64zM45 45c-24 0-42 19-42 43v213c0 24 18 43 42 43h342c24-0 42-19 42-43v-256c-0-24-18-43-42-43h-128l-43 43h-171z")]
-public class CreateNewItem : InputOutputNode
+public class CreateNewItem() : InputOutputNode("Create New Item")
 {
-    public CreateNewItem() : base("Create New Item")
-    {
-    }
-
     [Description("Where should the items be created")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public BindingList<Evaluatable<string>> TargetPaths { get; set; } = new();

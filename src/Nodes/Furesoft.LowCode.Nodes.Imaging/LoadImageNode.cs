@@ -1,15 +1,19 @@
-﻿using Furesoft.LowCode.Compilation;
+﻿using SixLabors.ImageSharp;
 
 namespace Furesoft.LowCode.Nodes.Imaging;
 
-public class LoadImageNode : ImageNode
+public class LoadImageNode() : ImageNode("Load Image")
 {
-    public LoadImageNode() : base("Load Image")
+    protected override Task Invoke(CancellationToken cancellationToken)
     {
-    }
+        PipeVariable = Image.Load(Filename);
 
-    public override void Compile(CodeWriter builder)
-    {
-        CompileReadCall(builder, ImageName, "Image.Load", Filename);
+        if (!string.IsNullOrEmpty(ImageName))
+        {
+            Context.DefineConstant(ImageName,
+                Context.GlobalContext.WrapValue(PipeVariable));
+        }
+
+        return Task.CompletedTask;
     }
 }

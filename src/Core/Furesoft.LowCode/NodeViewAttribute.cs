@@ -1,19 +1,14 @@
 ﻿namespace Furesoft.LowCode;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class NodeViewAttribute : Attribute
+public class NodeViewAttribute(Type type) : Attribute
 {
-    public NodeViewAttribute(Type type)
-    {
-        Type = type;
-    }
-
     public NodeViewAttribute(Type type, object parameter) : this(type)
     {
         Parameter = parameter;
     }
 
-    public Type Type { get; set; }
+    public Type Type { get; set; } = type;
     public object Parameter { get; set; }
 
     public int MinWidth { get; set; }

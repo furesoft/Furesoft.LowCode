@@ -75,25 +75,16 @@ public class ConsoleControl : TemplatedControl
         }
     }
 
-    public class Writer : TextWriter
+    public class Writer(TextBlock output, ScrollViewer scrollViewer) : TextWriter
     {
-        private readonly TextBlock _output;
-        private readonly ScrollViewer _scrollViewer;
-
-        public Writer(TextBlock output, ScrollViewer scrollViewer)
-        {
-            _output = output;
-            _scrollViewer = scrollViewer;
-        }
-
         public override Encoding Encoding { get; }
 
         public override void Write(char value)
         {
             Dispatcher.UIThread.Post(() =>
             {
-                _output.Text += value;
-                _scrollViewer.ScrollToEnd();
+                output.Text += value;
+                scrollViewer.ScrollToEnd();
             });
         }
     }

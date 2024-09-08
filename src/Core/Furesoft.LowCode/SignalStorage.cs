@@ -1,46 +1,38 @@
-﻿using NiL.JS.Core;
+﻿using PropertyModels.Extensions;
 
 namespace Furesoft.LowCode;
 
-public static class SignalStorage
+public class SignalStorage
 {
-    private static List<Signal> Signals { get; set; } = new();
+    public ObservableCollection<Signal> Signals { get; } = new();
 
-    public static void Register(string name, ICallable callback)
+    public void Register(string name, EmptyNode node)
     {
-        if (!Signals.Any(_ => _.Name == name))
+        if (!Signals.Contains(_ => _.Name == name))
         {
             Signals.Add(new(name));
         }
 
-        Signals.First(_ => _.Name == name).RegisteredCallableHandlers.Add(callback);
+        Signals.First(_ => _.Name == name).RegisteredNodeHandlers.Add(node);
     }
 
-    public static void Trigger(string name, object value = null)
+    public async Task Trigger(string name, object value = null, CancellationToken token = default)
     {
-        var args = new Arguments(Context.CurrentGlobalContext);
-
-        foreach (var handler in Signals!.FirstOrDefault(_ => _.Name == name)?.RegisteredCallableHandlers!)
+        foreach (var handlerNode in Signals!.FirstOrDefault(_ => _.Name == name)?.RegisteredNodeHandlers!)
         {
             if (value != null)
             {
-                args.Add(value);
+                handlerNode.Context.DefineConstant(name, handlerNode.Context.GlobalContext.WrapValue(value));
             }
 
-            handler.Call(null, args);
+            await handlerNode.Execute(token);
         }
     }
 
-    public class Signal
+    public class Signal(string name)
     {
-        public Signal(string name)
-        {
-            Name = name;
-            RegisteredCallableHandlers = new();
-        }
-
-        public string Name { get; set; }
-        public List<ICallable> RegisteredCallableHandlers { get; set; }
+        public string Name { get; } = name;
+        public List<EmptyNode> RegisteredNodeHandlers { get; } = new();
 
         public override string ToString()
         {

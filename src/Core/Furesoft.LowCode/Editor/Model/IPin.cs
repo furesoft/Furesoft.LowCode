@@ -1,101 +1,56 @@
 namespace Furesoft.LowCode.Editor.Model;
 
-public sealed class PinCreatedEventArgs : EventArgs
+public sealed class PinCreatedEventArgs(IPin pin) : EventArgs
 {
-    public PinCreatedEventArgs(IPin pin)
-    {
-        Pin = pin;
-    }
-
-    public IPin Pin { get; }
+    public IPin Pin { get; } = pin;
 }
 
-public sealed class PinRemovedEventArgs : EventArgs
+public sealed class PinRemovedEventArgs(IPin pin) : EventArgs
 {
-    public PinRemovedEventArgs(IPin pin)
-    {
-        Pin = pin;
-    }
-
-    public IPin Pin { get; }
+    public IPin Pin { get; } = pin;
 }
 
-public sealed class PinMovedEventArgs : EventArgs
+public sealed class PinMovedEventArgs(IPin pin, double x, double y) : EventArgs
 {
-    public PinMovedEventArgs(IPin pin, double x, double y)
-    {
-        X = x;
-        Y = y;
-        Pin = pin;
-    }
+    public IPin Pin { get; } = pin;
 
-    public IPin Pin { get; }
+    public double X { get; } = x;
 
-    public double X { get; }
-
-    public double Y { get; }
+    public double Y { get; } = y;
 }
 
-public sealed class PinSelectedEventArgs : EventArgs
+public sealed class PinSelectedEventArgs(IPin pin) : EventArgs
 {
-    public PinSelectedEventArgs(IPin pin)
-    {
-        Pin = pin;
-    }
-
-    public IPin Pin { get; }
+    public IPin Pin { get; } = pin;
 }
 
-public class PinDeselectedEventArgs : EventArgs
+public class PinDeselectedEventArgs(IPin pin) : EventArgs
 {
-    public PinDeselectedEventArgs(IPin pin)
-    {
-        Pin = pin;
-    }
-
-    public IPin Pin { get; }
+    public IPin Pin { get; } = pin;
 }
 
-public sealed class PinResizedEventArgs : EventArgs
+public sealed class PinResizedEventArgs(IPin pin, double x, double y, double width, double height)
+    : EventArgs
 {
-    public PinResizedEventArgs(IPin pin, double x, double y, double width, double height)
-    {
-        Pin = pin;
-        X = x;
-        Y = y;
-        Width = width;
-        Height = height;
-    }
+    public IPin Pin { get; } = pin;
 
-    public IPin Pin { get; }
+    public double X { get; } = x;
 
-    public double X { get; }
+    public double Y { get; } = y;
 
-    public double Y { get; }
+    public double Width { get; } = width;
 
-    public double Width { get; }
-
-    public double Height { get; }
+    public double Height { get; } = height;
 }
 
-public sealed class PinConnectedEventArgs : EventArgs
+public sealed class PinConnectedEventArgs(IPin pin) : EventArgs
 {
-    public PinConnectedEventArgs(IPin pin)
-    {
-        Pin = pin;
-    }
-
-    public IPin Pin { get; }
+    public IPin Pin { get; } = pin;
 }
 
-public sealed class PinDisconnectedEventArgs : EventArgs
+public sealed class PinDisconnectedEventArgs(IPin pin) : EventArgs
 {
-    public PinDisconnectedEventArgs(IPin pin)
-    {
-        Pin = pin;
-    }
-
-    public IPin Pin { get; }
+    public IPin Pin { get; } = pin;
 }
 
 public interface IPin

@@ -1,5 +1,4 @@
-﻿using Furesoft.LowCode.Compilation;
-using MsBox.Avalonia;
+﻿using MsBox.Avalonia;
 using NiL.JS.Core;
 
 namespace Furesoft.LowCode.Nodes;
@@ -12,8 +11,6 @@ public class ScriptInitializer : IScriptModuleInitalizer
 
         context.Import("outputWriter", DebugOutNode.OutputWriter);
         context.Import("showMessageBox", ShowMessageBox);
-        context.Import("subscribe", SignalStorage.Register);
-        context.Import("trigger", SignalStorage.Trigger);
     }
 
     public static async void ShowMessageBox(string title, string message)

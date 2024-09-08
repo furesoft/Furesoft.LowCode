@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Furesoft.LowCode.Attributes;
-using Furesoft.LowCode.Compilation;
+using MsBox.Avalonia;
 
 namespace Furesoft.LowCode.Nodes;
 
@@ -10,12 +10,8 @@ namespace Furesoft.LowCode.Nodes;
 [NodeIcon(
     "M16,2H7.979C6.88,2,6,2.88,6,3.98V12c0,1.1,0.9,2,2,2h8c1.1,0,2-0.9,2-2V4C18,2.9,17.1,2,16,2z M16,12H8V4h8V12z M4,10H2v6  c0,1.1,0.9,2,2,2h6v-2H4V10z")]
 [Description("Shows a message in a new window")]
-public class MessageBoxNode : InputOutputNode
+public class MessageBoxNode() : InputOutputNode("MessageBox")
 {
-    public MessageBoxNode() : base("MessageBox")
-    {
-    }
-
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     [Description("The message to display")]
     [Required]
@@ -24,8 +20,13 @@ public class MessageBoxNode : InputOutputNode
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<string> Title { get; set; }
 
-    public override void Compile(CodeWriter builder)
+    public override async Task Execute(CancellationToken cancellationToken)
     {
-        builder.AppendCall("showMessageBox", Title, Message).AppendSymbol(';');
+        var box = MessageBoxManager
+            .GetMessageBoxStandard(Title, Message);
+
+        await box.ShowWindowAsync();
+
+        await ContinueWith(OutputPin, cancellationToken);
     }
 }

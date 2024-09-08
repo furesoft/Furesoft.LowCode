@@ -1,4 +1,4 @@
-﻿using Furesoft.LowCode.Compilation;
+﻿using Furesoft.LowCode.Evaluation;
 using Furesoft.LowCode.Nodes.IO.Filesystem;
 using NiL.JS.Core;
 using NiL.JS.Core.Interop;
@@ -9,7 +9,6 @@ public class ScriptInitalizer : IScriptModuleInitalizer
 {
     public void InitEngine(Context context)
     {
-        context.DefineConstructor(typeof(System.Console));
         context.DefineConstructor(typeof(ItemType));
 
         context.ImportAsObject<ScriptInitalizer>("FS");

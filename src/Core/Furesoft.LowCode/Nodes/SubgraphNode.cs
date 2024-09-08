@@ -1,5 +1,4 @@
 ﻿using Furesoft.LowCode.Attributes;
-using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.NodeViews;
 using Furesoft.LowCode.ProjectSystem.Items;
 
@@ -21,8 +20,13 @@ public class SubgraphNode : DynamicNode
 
     public GraphItem GraphItem { get; set; }
 
-    public override void Compile(CodeWriter builder)
+    public override async Task Execute(CancellationToken cancellationToken)
     {
-        builder.AppendCall(GraphItem.Name);
+        var subevaluator = new Evaluator(GraphItem.Drawing);
+        subevaluator.Context = Context;
+
+        await subevaluator.Execute(cancellationToken);
+
+        await ContinueWith("Output Flow", cancellationToken);
     }
 }

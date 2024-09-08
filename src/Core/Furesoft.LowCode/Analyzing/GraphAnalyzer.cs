@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using Furesoft.LowCode.Designer;
-using Furesoft.LowCode.Editor.Model;
 
 namespace Furesoft.LowCode.Analyzing;
 

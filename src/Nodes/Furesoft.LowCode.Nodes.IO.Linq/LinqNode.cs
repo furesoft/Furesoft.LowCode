@@ -6,12 +6,8 @@ using Furesoft.LowCode.Attributes;
 namespace Furesoft.LowCode.Nodes.IO.Linq;
 
 [NodeCategory("Data/Linq")]
-public abstract class LinqNode : InputOutputNode, IOutVariableProvider, IPipeable
+public abstract class LinqNode(string label) : InputOutputNode(label), IOutVariableProvider, IPipeable
 {
-    protected LinqNode(string label) : base(label)
-    {
-    }
-
     [Description("Output Variable")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public string OutVariable { get; set; }

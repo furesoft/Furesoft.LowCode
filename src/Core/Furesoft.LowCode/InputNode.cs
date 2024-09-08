@@ -2,11 +2,7 @@
 
 namespace Furesoft.LowCode;
 
-public abstract class InputNode : EmptyNode
+public abstract class InputNode(string label) : EmptyNode(label)
 {
-    protected InputNode(string label) : base(label)
-    {
-    }
-
     [Pin("Flow", PinAlignment.Top)] public IInputPin InputPin { get; set; }
 }

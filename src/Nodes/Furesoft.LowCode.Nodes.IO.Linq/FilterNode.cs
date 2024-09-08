@@ -7,12 +7,8 @@ namespace Furesoft.LowCode.Nodes.IO.Linq;
 
 [Description("Filters Nodes")]
 [NodeIcon("M29.8667 64.3333l17.0667-10.6667v-17.0667l29.8667-36.2667h-76.8l29.8667 36.2667z")]
-public class FilterNode : LinqNode
+public class FilterNode() : LinqNode("Filter")
 {
-    public FilterNode() : base("Filter")
-    {
-    }
-
     [Description("What is the filter for the query")]
     [DataMember(IsRequired = false, EmitDefaultValue = false)]
     public Evaluatable<bool> Condition { get; set; }

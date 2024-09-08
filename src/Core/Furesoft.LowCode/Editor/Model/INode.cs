@@ -1,81 +1,46 @@
 ﻿namespace Furesoft.LowCode.Editor.Model;
 
-public sealed class NodeCreatedEventArgs : EventArgs
+public sealed class NodeCreatedEventArgs(INode node) : EventArgs
 {
-    public NodeCreatedEventArgs(INode node)
-    {
-        Node = node;
-    }
-
-    public INode Node { get; }
+    public INode Node { get; } = node;
 }
 
-public sealed class NodeRemovedEventArgs : EventArgs
+public sealed class NodeRemovedEventArgs(INode node) : EventArgs
 {
-    public NodeRemovedEventArgs(INode node)
-    {
-        Node = node;
-    }
-
-    public INode Node { get; }
+    public INode Node { get; } = node;
 }
 
-public sealed class NodeMovedEventArgs : EventArgs
+public sealed class NodeMovedEventArgs(INode node, double x, double y) : EventArgs
 {
-    public NodeMovedEventArgs(INode node, double x, double y)
-    {
-        X = x;
-        Y = y;
-        Node = node;
-    }
+    public INode Node { get; } = node;
 
-    public INode Node { get; }
+    public double X { get; } = x;
 
-    public double X { get; }
-
-    public double Y { get; }
+    public double Y { get; } = y;
 }
 
-public sealed class NodeSelectedEventArgs : EventArgs
+public sealed class NodeSelectedEventArgs(INode node) : EventArgs
 {
-    public NodeSelectedEventArgs(INode node)
-    {
-        Node = node;
-    }
-
-    public INode Node { get; }
+    public INode Node { get; } = node;
 }
 
-public sealed class NodeDeselectedEventArgs : EventArgs
+public sealed class NodeDeselectedEventArgs(INode node) : EventArgs
 {
-    public NodeDeselectedEventArgs(INode node)
-    {
-        Node = node;
-    }
-
-    public INode Node { get; }
+    public INode Node { get; } = node;
 }
 
-public sealed class NodeResizedEventArgs : EventArgs
+public sealed class NodeResizedEventArgs(INode node, double x, double y, double width, double height)
+    : EventArgs
 {
-    public NodeResizedEventArgs(INode node, double x, double y, double width, double height)
-    {
-        Node = node;
-        X = x;
-        Y = y;
-        Width = width;
-        Height = height;
-    }
+    public INode Node { get; } = node;
 
-    public INode Node { get; }
+    public double X { get; } = x;
 
-    public double X { get; }
+    public double Y { get; } = y;
 
-    public double Y { get; }
+    public double Width { get; } = width;
 
-    public double Width { get; }
-
-    public double Height { get; }
+    public double Height { get; } = height;
 }
 
 public interface INode

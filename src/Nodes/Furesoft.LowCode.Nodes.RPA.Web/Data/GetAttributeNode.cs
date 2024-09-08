@@ -4,12 +4,8 @@ using Furesoft.LowCode.Nodes.RPA.Web.Core;
 
 namespace Furesoft.LowCode.Nodes.RPA.Web.Data;
 
-public class GetAttributeNode : WebNode, IOutVariableProvider
+public class GetAttributeNode() : WebNode("Get Attribute"), IOutVariableProvider
 {
-    public GetAttributeNode() : base("Get Attribute")
-    {
-    }
-
     [DataMember(EmitDefaultValue = false)]
     [Required]
     public string Selector { get; set; } = string.Empty;

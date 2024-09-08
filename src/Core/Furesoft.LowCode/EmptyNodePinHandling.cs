@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using Furesoft.LowCode.Attributes;
-using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Designer;
 
 namespace Furesoft.LowCode;
@@ -22,17 +21,6 @@ public partial class EmptyNode
         string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Output);
-    }
-
-    protected void CompileReadCall(CodeWriter builder, string name, string function, params object[] args)
-    {
-        builder.AppendKeyword("let").AppendIdentifier(name).AppendSymbol('=');
-        builder.AppendCall(function, args).AppendSymbol(';');
-    }
-
-    protected void CompileWriteCall(CodeWriter builder, string function, params object[] args)
-    {
-        builder.AppendCall(function, args).AppendSymbol(';');
     }
 
     public IEnumerable<string> GetPinNames(PinMode mode)

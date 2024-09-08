@@ -2,16 +2,10 @@
 
 namespace Furesoft.LowCode;
 
-public class Result
+public class Result(bool isSuccess, object value)
 {
-    public Result(bool isSuccess, object value)
-    {
-        IsSuccess = isSuccess;
-        Value = value;
-    }
-
-    public bool IsSuccess { get; set; }
-    public object Value { get; set; }
+    public bool IsSuccess { get; set; } = isSuccess;
+    public object Value { get; set; } = value;
 
     [JavaScriptName("ok")]
     public static Result Ok(object result)

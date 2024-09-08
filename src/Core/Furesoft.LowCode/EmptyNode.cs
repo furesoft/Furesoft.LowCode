@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Furesoft.LowCode.Compilation;
 using Furesoft.LowCode.Designer.ViewModels;
 using Furesoft.LowCode.Nodes.Analyzers;
 using Furesoft.LowCode.NodeViews;
@@ -21,6 +20,12 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
     private string _label;
     private bool _showDescription;
     public OptionsProvider Options;
+
+    /// <summary>
+    ///     Gets the previously executed node
+    /// </summary>
+    [Browsable(false)]
+    public EmptyNode PreviousNode { get; set; }
 
     protected EmptyNode(string label)
     {
@@ -124,10 +129,6 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
             .Assign(value);
     }
 
-    public virtual void Compile(CodeWriter builder)
-    {
-    }
-
     public Control GetView(ref double width, ref double height)
     {
         if (AppContext.GetData("DesignerMode") is false)
@@ -176,32 +177,49 @@ public abstract partial class EmptyNode : ViewModelBase, ICustomTypeDescriptor
         Progress.Message = message;
     }
 
-    protected void CompilePin(IOutputPin pin, CodeWriter builder,
-        [CallerArgumentExpression(nameof(pin))]
-        string pinMembername = null)
-    {
-        CompilePin(pinMembername, builder);
-    }
-
-    internal void CompilePin(string pinName, CodeWriter builder)
-    {
-        var nodes = GetConnectedNodes(pinName, PinMode.Output);
-
-        foreach (var node in nodes)
-        {
-            node.Drawing = Drawing;
-
-            node.Compile(builder);
-
-            if (node is OutputNode)
-            {
-                node.CompilePin("OutputPin", builder);
-            }
-        }
-    }
-
     protected bool HasConnection(IOutputPin pin, [CallerArgumentExpression(nameof(pin))] string pinMembername = null)
     {
         return GetConnectedNodes(pinMembername, PinMode.Output).Any();
+    }
+
+    protected async Task ContinueWith(IOutputPin pin, CancellationToken cancellationToken, Context context = null,
+        [CallerArgumentExpression("pin")] string pinMembername = null)
+    {
+        _evaluator.Debugger.ResetWait();
+
+        var nodes = GetConnectedNodes(pinMembername, PinMode.Output);
+
+        foreach (var node in nodes)
+        {
+            if (_evaluator.Debugger.IsAttached)
+            {
+                await _evaluator.Debugger.WaitTask;
+            }
+
+            await InitAndExecuteNode(context, cancellationToken, node);
+
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+    }
+
+    protected Task ContinueWith(string pin, CancellationToken token)
+    {
+        return ContinueWith(null, token, pinMembername: pin);
+    }
+
+    public abstract Task Execute(CancellationToken cancellationToken);
+
+    private async Task InitAndExecuteNode(Context context, CancellationToken cancellationToken, EmptyNode node)
+    {
+        node._evaluator = _evaluator;
+        node.Context = context ?? _evaluator.Context;
+        node.Drawing = Drawing;
+        node.PreviousNode = this;
+        node._evaluator.Debugger.CurrentNode = node;
+        node.Options = _evaluator.Options;
+
+        node._evaluator.SetEvaluatableContexts(node);
+
+        await node?.Execute(cancellationToken);
     }
 }

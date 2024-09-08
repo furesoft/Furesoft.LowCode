@@ -27,4 +27,13 @@ public abstract class QueueBaseNode : InputOutputNode
             Description = Label + " " + value;
         }
     }
+
+    public sealed override async Task Execute(CancellationToken cancellationToken)
+    {
+        await Invoke(cancellationToken);
+
+        await ContinueWith(OutputPin, cancellationToken);
+    }
+
+    public abstract Task Invoke(CancellationToken cancellationToken);
 }

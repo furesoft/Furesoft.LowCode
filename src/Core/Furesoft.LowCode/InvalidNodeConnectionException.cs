@@ -1,8 +1,3 @@
 ﻿namespace Furesoft.LowCode;
 
-public class InvalidNodeConnectionException : Exception
-{
-    public InvalidNodeConnectionException(string msg) : base(msg)
-    {
-    }
-}
+public class InvalidNodeConnectionException(string msg) : Exception(msg);

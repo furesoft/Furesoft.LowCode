@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Furesoft.LowCode.Editor.Model;
 using Newtonsoft.Json;
 
 namespace Furesoft.LowCode.Designer.ViewModels;
