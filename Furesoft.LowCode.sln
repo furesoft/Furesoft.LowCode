@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Nodes.Imag
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{7EDB16D9-158A-49DE-9B99-689B4D270166}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Furesoft.LowCode.Browser", "src\Core\Furesoft.LowCode.Browser\Furesoft.LowCode.Browser.csproj", "{4259C58E-A172-420D-A516-C81931AF3BB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{CE4870D8-4A45-423A-B513-7B59D553AF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE4870D8-4A45-423A-B513-7B59D553AF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE4870D8-4A45-423A-B513-7B59D553AF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4259C58E-A172-420D-A516-C81931AF3BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4259C58E-A172-420D-A516-C81931AF3BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4259C58E-A172-420D-A516-C81931AF3BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4259C58E-A172-420D-A516-C81931AF3BB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E184983C-2E4E-48B9-AAC4-BE3559C8B0FA} = {2C2DF358-D705-4340-818C-82BAF9418269}

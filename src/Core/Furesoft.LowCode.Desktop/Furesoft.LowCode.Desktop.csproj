@@ -35,13 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="App.axaml.cs">
-      <DependentUpon>App.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Avalonia.Themes.Fluent">
       <HintPath>..\..\..\..\..\..\.nuget\packages\avalonia.themes.fluent\11.0.2\lib\net6.0\Avalonia.Themes.Fluent.dll</HintPath>
     </Reference>

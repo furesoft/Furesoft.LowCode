@@ -72,6 +72,11 @@
       <DependentUpon>RowsWindow.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Remove="Designer\Layout\Views\Documents\NewEditor\IOperation.cs" />
+    <Compile Update="App.axaml.cs">
+      <DependentUpon>App.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -89,6 +94,11 @@
     <Reference Include="NUglify">
       <HintPath>..\..\..\..\..\..\.nuget\packages\nuglify\1.20.7\lib\net5.0\NUglify.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Designer\Layout\Views\Documents\NewEditor\" />
   </ItemGroup>
 
 </Project>

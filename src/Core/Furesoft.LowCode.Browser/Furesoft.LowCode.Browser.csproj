@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0-browser</TargetFramework>
+        <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
+        <WasmMainJSPath>wwwroot\main.js</WasmMainJSPath>
+        <WasmRuntimeAssetsLocation>./_framework</WasmRuntimeAssetsLocation>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <RootNamespace>Furesoft.Lowcode.Browser</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <WasmExtraFilesToDeploy Include="wwwroot\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia.Browser" Version="11.1.4" />
+        <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="8.0.10" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Furesoft.LowCode\Furesoft.LowCode.csproj" />
+    </ItemGroup>
+
+</Project>

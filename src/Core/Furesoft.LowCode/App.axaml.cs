@@ -1,11 +1,7 @@
-using System;
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml;
 using Furesoft.LowCode.Designer.ViewModels;
-using Furesoft.LowCode.Designer.Views;
 
-namespace Furesoft.LowCode.Desktop;
+namespace Furesoft.LowCode;
 
 public class App : Application
 {
