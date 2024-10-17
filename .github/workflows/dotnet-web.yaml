@@ -1,0 +1,37 @@
+name: gh-pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.*
+
+      - name: install wasm tools
+        run: dotnet workload install wasm-tools
+
+      - name: install wasm tools experimental
+        run: dotnet workload install wasi-experimental
+
+      - name: build
+        run: dotnet build --configuration Debug --output src/Core/Furesoft.LowCode.Browser/build src/Core/Furesoft.LowCode.Browser/Furesoft.LowCode.Browser.csproj
+
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: main # The branch the action should deploy from.
+          BRANCH: gh-pages-from-actions # The branch the action should deploy to.
+          FOLDER: src/Core/Furesoft.LowCode.Browser/build/AppBundle/
+          SINGLE_COMMIT: true
