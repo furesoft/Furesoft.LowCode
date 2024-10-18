@@ -43,7 +43,7 @@ public partial class MainViewViewModel : ViewModelBase
             root.Navigate.Execute("Home");
         }
 
-        OpenedProject = Project.Load("test.zip");
+        OpenedProject = new Project();//Project.Load("test.zip");
 
         OpenDocument(OpenedProject.Items[1]);
         SetInitialSelectedDocument();
