@@ -7,7 +7,7 @@ namespace Furesoft.LowCode.ProjectSystem;
 
 public class Project
 {
-    private Project()
+    public Project()
     {
     }
 
