@@ -7,4 +7,7 @@ A framwork to combine extendability and lowcode. It can be used to build plugins
 
 Instead of writing code the user combines nodes in a graph. There are some primitive nodes like Condition or Messagebox but more components can be added with modules like nodes for interacting with a REST api.
 
+![image](https://github.com/user-attachments/assets/a47c4b39-32f1-4aa2-9f0b-dd5c5b18a49e)
+
+
 * [Editor](https://github.com/wieslawsoltes/NodeEditor)
