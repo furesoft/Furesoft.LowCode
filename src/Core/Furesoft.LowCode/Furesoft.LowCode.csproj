@@ -101,4 +101,12 @@
     <Folder Include="Designer\Layout\Views\Documents\NewEditor\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Remove="test.zip" />
+    <EmbeddedResource Include="test.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

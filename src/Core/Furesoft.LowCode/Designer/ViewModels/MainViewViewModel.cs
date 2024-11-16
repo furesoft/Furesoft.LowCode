@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.ApplicationLifetimes;
+﻿using System.Reflection;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Avalonia.PropertyGrid.Services;
 using CommunityToolkit.Mvvm.Input;
@@ -43,7 +44,7 @@ public partial class MainViewViewModel : ViewModelBase
             root.Navigate.Execute("Home");
         }
 
-        OpenedProject = new Project();//Project.Load("test.zip");
+        OpenedProject = Project.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("Furesoft.LowCode.test.zip"));
 
         OpenDocument(OpenedProject.Items[1]);
         SetInitialSelectedDocument();
@@ -343,7 +344,7 @@ public partial class MainViewViewModel : ViewModelBase
         {
             await using var stream = await file.OpenReadAsync();
 
-            OpenedProject = Project.Load(file.Path.ToString());
+            OpenedProject = Project.Load(stream);
         }
     }
 

@@ -22,14 +22,32 @@ public class Project
 
     [JsonIgnore] public string Path { get; set; }
 
-    public static Project Load(string path)
+    public static Project Create()
     {
-        using var zip = ZipFile.OpenRead(path);
+        var project = new Project();
+
+        project.Name = "New Project";
+        project.Version = "1.0.0.0";
+        project.MainGraph = "Main Graph";
+
+        var factory = new DrawingNodeFactory();
+        //var drawing = factory.
+     /*   project.Items = new ObservableCollection<ProjectItem>()
+        {
+            new GraphItem("Main Graph", drawing, new GraphProps())
+        };
+*/
+        return project;
+    }
+
+    public static Project Load(Stream path)
+    {
+        using var zip = new ZipArchive(path);
         using var jsonStream = zip.GetEntry("meta.json")!.Open();
         var optionsEntry = zip.GetEntry("options.json");
 
         var proj = JsonConvert.DeserializeObject<Project>(new StreamReader(jsonStream).ReadToEnd());
-        proj.Path = path;
+       // proj.Path = path;
 
         if (optionsEntry != null)
         {
